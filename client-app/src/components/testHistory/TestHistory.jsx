@@ -6,19 +6,7 @@ import { Box } from "@mui/material";
 function TestHistory() {
   return (
     <>
-      <Box
-        sx={{
-          backgroundColor: "red",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          textAlign: "center",
-          alignItems: "center",
-        }}
-      >
-        <DlandUlCharts />
-        <ResultTestHistory />
-      </Box>
+      <Box>dfgfdghyjykjku</Box>
     </>
   );
 }
