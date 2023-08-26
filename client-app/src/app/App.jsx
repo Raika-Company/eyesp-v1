@@ -6,10 +6,6 @@ import Navbar from "../components/navbar/Navbar";
 import { lightTheme } from "./Palette";
 import "./App.css";
 import SpeedTest from "../components/speedtest/SpeedTest";
-import { useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { lightTheme } from "./Palette";
-import "./App.css";
 
 function App() {
   return (
@@ -25,5 +21,4 @@ function App() {
   );
 }
 
-export default App;
 export default App;
