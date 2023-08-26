@@ -1,23 +1,5 @@
 import { createTheme } from '@mui/material';
 
-
-const darkPalette = {
-    primary: {
-        main: '#bb86fc',
-    },
-    secondary: {
-        main: '#03dac6',
-    },
-    background: {
-        default: '#17202A',
-        paper: '#1f1f1f',
-    },
-    text: {
-        primary: '#fff',
-        secondary: '#aaa',
-    },
-};
-
 export const lightTheme = createTheme({
     direction: "rtl",
     palette: {
@@ -97,11 +79,34 @@ export const lightTheme = createTheme({
                 },
             },
         },
+        MuiDrawer: {
+            styleOverrides: {
+                root: {
+                    direction: "rtl", 
+                },
+            },
+        },
     },
 });
 
+// const darkPalette = {
+//     primary: {
+//         main: '#bb86fc',
+//     },
+//     secondary: {
+//         main: '#03dac6',
+//     },
+//     background: {
+//         default: '#17202A',
+//         paper: '#1f1f1f',
+//     },
+//     text: {
+//         primary: '#fff',
+//         secondary: '#aaa',
+//     },
+// };
 
-export const darkTheme = createTheme({
-    palette: darkPalette,
-    direction: 'rtl',
-});
+// export const darkTheme = createTheme({
+//     palette: darkPalette,
+//     direction: 'rtl',
+// });
