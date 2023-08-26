@@ -1,12 +1,21 @@
+import { Box } from "@mui/material";
 import React from "react";
 import DlandUlCharts from "./DlandUlCharts";
-import ResultTestHistory from "./ResultTestHistory";
-import { Box } from "@mui/material";
-
+import ResultHistory from "./ResultTestHistory";
 function TestHistory() {
   return (
     <>
-      <Box>dfgfdghyjykjku</Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          paddingTop: "10em",
+        }}
+      >
+        <DlandUlCharts />
+        <ResultHistory />
+      </Box>
     </>
   );
 }
