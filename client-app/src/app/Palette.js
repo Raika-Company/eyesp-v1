@@ -29,36 +29,56 @@ export const lightTheme = createTheme({
         },
         background: {
             default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
-            paper: "white", // Set the default background color for Paper components
+            paper: "white",
         },
     },
     typography: {
         h1: {
-            fontFamily: "IranianSans, serif",
+            fontFamily: "PeidaBold, serif",
         },
         h2: {
-            fontFamily: "IranianSans, serif",
+            fontFamily: "PeidaBold, serif",
         },
         h3: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaSemiBold, serif",
             fontSize: "36px"
         },
         h4: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaSemiBold, serif",
+            textEdge: "cap",
+            leadingTrim: "both",
+            fontSize: 30,
+            fontWeight: 600,
+            lineHeight: "normal",
+            fontStyle: "normal",
+
         },
         h5: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaMedium, serif",
+            color: "#A4A4A4",
+            fontWeight: 700,
+            fontSize: 25,
+            lineHeight: "normal",
+            fontStyle: "normal",
         },
         h6: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaMedium, serif",
+            fontSize: 25
         },
         body1: {
-            fontFamily: "Harmattan, sans-serif",
+            fontFamily: "PeydaMedium, sans-serif",
             fontSize: 18
         },
         body2: {
-            fontFamily: "Harmattan, sans-serif",
+            fontFamily: "PeydaMedium, sans-serif",
+            fontSize: 16
         },
+        subtitle1: {
+            fontFamily: "PeydaMedium, sans-serif",
+            fontSize: 16,
+            opacity: 0.3,
+            color: "#000"
+        }
     },
     components: {
         MuiInputLabel: {
