@@ -6,6 +6,7 @@ import Navbar from "../components/navbar/Navbar";
 import { lightTheme } from "./Palette";
 import "./App.css";
 import SpeedTest from "../components/speedtest/SpeedTest";
+import TestHistory from "../components/testHistory/TestHistory";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<SpeedTest />} />
+          <Route path="/test-history" element={<TestHistory />} />
         </Routes>
       </Router>
     </ThemeProvider>
