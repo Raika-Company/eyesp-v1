@@ -4,6 +4,12 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
+body {
+  background-image: url('./assets/image/background.svg');
+  background-size: cover; /* Adjust this as needed */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 @font-face {
   font-family: PeydaBold;
