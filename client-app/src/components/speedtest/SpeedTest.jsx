@@ -6,9 +6,12 @@ import DrawMeter from "./DrawMeter";
 import DownloadHide from "../../app/assets/image/download-hide.svg";
 import UploadHide from "../../app/assets/image/upload-hide.svg";
 import PingHide from "../../app/assets/image/ping-hide.svg";
+import Download from "../../app/assets/image/download.svg";
+import Upload from "../../app/assets/image/upload.svg";
+import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
-import StartAnimation from "./StartAnimation";
+
 
 const Divider = () => (
   <Box
@@ -22,13 +25,13 @@ const Divider = () => (
   />
 );
 
-const SpeedBox = ({ title, iconSrc, altText }) => (
+const SpeedBox = ({ title, iconSrc, altText, value }) => (
   <Box>
     <Typography>{title}</Typography>
     <Box display="flex" alignItems="center" gap={1}>
       <img src={iconSrc} alt={altText} />
       <Typography component="span" marginX="0.5rem">
-        --
+        {value !== null ? value : "--"}
       </Typography>
       <Typography component="span">Mbps</Typography>
     </Box>
@@ -66,8 +69,13 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
 const SpeedTest = () => {
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
 
+  const [pingValue, setPingValue] = useState(null);
+  const [downloadSpeedValue, setDownloadSpeedValue] = useState(null);
+
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
+    setPingValue(80);
+    setDownloadSpeedValue(40.2);
   };
 
   return (
@@ -85,21 +93,27 @@ const SpeedTest = () => {
         }}
         marginY="10vh"
       >
-        <SpeedBox title="پینگ" iconSrc={PingHide} altText="before ping icon" />
+        <SpeedBox
+          title="پینگ"
+          iconSrc={Ping}
+          altText="ping icon"
+          value={isGoButtonVisible ? null : pingValue}
+        />
         <Divider />
         <SpeedBox
           title="سرعت آپلود"
           iconSrc={UploadHide}
           altText="before upload icon"
+          value={null}
         />
         <Divider />
         <SpeedBox
           title="سرعت دانلود"
           iconSrc={DownloadHide}
           altText="before download icon"
+          value={isGoButtonVisible ? null : downloadSpeedValue}
         />
       </Box>
-
       <Box
         sx={{
           display: "flex",
