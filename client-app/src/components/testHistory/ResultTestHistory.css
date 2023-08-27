@@ -1,6 +1,6 @@
 /* Style the scrollbar thumb for WebKit-based browsers (Chrome, Safari) */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #126AED; /* Blue color for the scrollbar thumb */
+  background-color: #5e7ba6 !important; /* Blue color for the scrollbar thumb */
   border-radius: 6px; /* Rounded corners for the thumb */
   width: 10px; /* Adjust the width as needed */
 }
@@ -12,6 +12,7 @@
 
 /* Style the scrollbar thumb for Firefox */
 .custom-scrollbar {
-  scrollbar-color: #126AED #E0E0E0; /* Blue thumb and gray track for Firefox */
+  overflow-y: scroll;
+  scrollbar-color: #126AED #E0E0E0 !important; /* Blue thumb and gray track for Firefox */
   scrollbar-width: thin; /* Adjust the width as needed */
 }

@@ -1,9 +1,8 @@
-import { Box } from "@mui/material";
+import { Box, Slider } from "@mui/material";
 import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
-import "./ResultTestHistory.css";
 
 function ResultTestHistory() {
   const elements = Array(20)
@@ -18,17 +17,15 @@ function ResultTestHistory() {
           paddingBottom: "2em",
         }}
       >
-        <typography>1403/12/27</typography>
-        <typography>ایرانسل - تهران</typography>
-        <typography style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
+        <p>1403/12/27</p>
+        <p>ایرانسل - تهران</p>
+        <p style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
           42Mbps
-        </typography>
-        <typography
-          style={{ transform: "translateX(-63px)", color: "#126AED" }}
-        >
+        </p>
+        <p style={{ transform: "translateX(-63px)", color: "#126AED" }}>
           62Mbps
-        </typography>
-        <typography
+        </p>
+        <p
           style={{
             marginLeft: "11em",
             transform: "translateX(-132px)",
@@ -36,7 +33,7 @@ function ResultTestHistory() {
           }}
         >
           35ms
-        </typography>
+        </p>
       </Box>
     ));
   return (
@@ -76,7 +73,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography style={{ marginLeft: "1em" }}>پینگ</typography>
+            <p style={{ marginLeft: "1em" }}>پینگ</p>
           </Box>
           <Box
             sx={{
@@ -91,7 +88,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography>دانلود</typography>
+            <p>دانلود</p>
           </Box>
           <Box
             sx={{
@@ -106,7 +103,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography>آپلود</typography>
+            <p>آپلود</p>
           </Box>{" "}
           <Box
             sx={{
@@ -115,7 +112,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <typography>اپراتور-سرور</typography>
+            <p>اپراتور-سرور</p>
           </Box>{" "}
           <Box
             sx={{
@@ -124,7 +121,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <typography>تاریخ</typography>
+            <p>تاریخ</p>
           </Box>{" "}
         </Box>
         <Box
@@ -136,8 +133,8 @@ function ResultTestHistory() {
             flexDirection: "column",
             justifyContent: "start",
             marginTop: "1em",
+            overflowY: "scroll", // Use default scrollbar for scrolling
           }}
-          className="custom-scrollbar"
         >
           {elements}
         </Box>
