@@ -143,3 +143,5 @@ export default function SpeedTest() {
     </Container>
   );
 }
+
+export default SpeedTest;
