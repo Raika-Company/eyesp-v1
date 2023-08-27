@@ -61,7 +61,7 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function SpeedTest() {
+const SpeedTest = () => {
   return (
     <Container component="main" maxWidth="lg">
       <Box
