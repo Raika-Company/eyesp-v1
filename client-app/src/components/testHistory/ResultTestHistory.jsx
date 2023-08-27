@@ -3,8 +3,40 @@ import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
+import "./ResultTestHistory.css";
 
 function ResultTestHistory() {
+  const elements = Array(20)
+    .fill()
+    .map((_, index) => (
+      <Box
+        key={index}
+        sx={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          justifyContent: "space-around",
+          paddingBottom: "2em",
+        }}
+      >
+        <p>1403/12/27</p>
+        <p>ایرانسل - تهران</p>
+        <p style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
+          42Mbps
+        </p>
+        <p style={{ transform: "translateX(-63px)", color: "#126AED" }}>
+          62Mbps
+        </p>
+        <p
+          style={{
+            marginLeft: "11em",
+            transform: "translateX(-132px)",
+            color: "#DB7F12",
+          }}
+        >
+          35ms
+        </p>
+      </Box>
+    ));
   return (
     <>
       <Box
@@ -38,7 +70,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <p>پینگ</p>
+            <p style={{ marginLeft: "1em" }}>پینگ</p>
           </Box>
           <Box
             sx={{
@@ -88,6 +120,22 @@ function ResultTestHistory() {
           >
             <p>تاریخ</p>
           </Box>{" "}
+        </Box>
+        <Box
+          sx={{
+            height: "70%",
+            borderBottomLeftRadius: "2em",
+            borderBottomRightRadius: "2em",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+            marginTop: "1em",
+            overflowY: "scroll", // Add a scroll bar for overflow content
+            scrollbarColor: "blue",
+          }}
+          className="custom-scrollbar"
+        >
+          {elements}
         </Box>
       </Box>
     </>
