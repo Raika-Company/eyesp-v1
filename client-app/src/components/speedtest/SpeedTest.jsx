@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import DrawMeter from "./DrawMeter";
 
 import DownloadHide from "../../app/assets/image/download-hide.svg";
 import UploadHide from "../../app/assets/image/upload-hide.svg";
@@ -131,10 +132,21 @@ const SpeedTest = () => {
             GO
           </AnimatedButton>
         ) : (
-          <StartAnimation />
+          <DrawMeter
+            amount={0.2}
+            bk={
+              /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                ? "#1B70EE1C"
+                : "#1B70EE1C"
+            }
+            fg={"#1B70EE1C"}
+            progress={0.3}
+            prog={0.3}
+            mbps={20}
+            isDl={true}
+          />
         )}
       </Box>
-
       <Box
         display="flex"
         flexDirection="row"
