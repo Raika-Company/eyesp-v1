@@ -45,10 +45,21 @@ export const lightTheme = createTheme({
         },
         h4: {
             fontFamily: "PeydaSemiBold, serif",
+            textEdge: "cap",
+            leadingTrim: "both",
+            fontSize: 30,
+            fontWeight: 600,
+            lineHeight: "normal",
+            fontStyle: "normal",
+
         },
         h5: {
             fontFamily: "PeydaMedium, serif",
-            fontSize: 28
+            color: "#A4A4A4",
+            fontWeight: 700,
+            fontSize: 25,
+            lineHeight: "normal",
+            fontStyle: "normal",
         },
         h6: {
             fontFamily: "PeydaMedium, serif",
@@ -62,6 +73,12 @@ export const lightTheme = createTheme({
             fontFamily: "PeydaMedium, sans-serif",
             fontSize: 16
         },
+        subtitle1: {
+            fontFamily: "PeydaMedium, sans-serif",
+            fontSize: 16,
+            opacity: 0.3,
+            color: "#000"
+        }
     },
     components: {
         MuiInputLabel: {
