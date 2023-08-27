@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Box, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 import DownloadHide from "../../app/assets/image/download-hide.svg";
 import UploadHide from "../../app/assets/image/upload-hide.svg";
 import PingHide from "../../app/assets/image/ping-hide.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
+import StartAnimation from "./StartAnimation";
 
 const Divider = () => (
   <Box
@@ -39,15 +40,15 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
   "&::after": {
     content: '""',
     position: "absolute",
-    top: "-10px",
-    left: "-10px",
-    right: "-10px",
-    bottom: "-10px",
+    top: "-5px",
+    left: "-5px",
+    right: "-5px",
+    bottom: "-5px",
     borderRadius: "50%",
-    border: "6px solid rgba(112, 168, 252, 0.6)", // #70A8FC with some transparency
-    animation: "$ringAnimation 1.5s infinite",
+    border: "6px solid rgba(54, 129, 241, 0.8)", // #70A8FC with some transparency
+    animation: "ringAnimation 3s infinite",
     transform: "scale(1)",
-    opacity: 0,
+    opacity: 0.6,
   },
   "@keyframes ringAnimation": {
     "0%": {
@@ -62,6 +63,12 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
 }));
 
 const SpeedTest = () => {
+  const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
+
+  const handleButtonClick = () => {
+    setIsGoButtonVisible(false);
+  };
+
   return (
     <Container component="main" maxWidth="lg">
       <Box
@@ -99,37 +106,49 @@ const SpeedTest = () => {
           alignItems: "center",
         }}
       >
-        <AnimatedButton
-          sx={{
-            height: "16rem",
-            width: "16rem",
-            borderRadius: "50%",
-            borderColor: "transparent",
-            borderWidth: "6px",
-            borderStyle: "solid",
-            backgroundImage:
-              "linear-gradient(white, white), linear-gradient(to left, #70A8FC, #3681F1)",
-            backgroundOrigin: "border-box",
-            backgroundClip: "padding-box, border-box",
-            boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
-            fontSize: "4rem",
-            fontWeight: "400",
-            lineHeight: "normal",
-            fontStyle: "normal",
-          }}
-          variant="outlined"
-        >
-          GO
-        </AnimatedButton>
+        {isGoButtonVisible ? (
+          <AnimatedButton
+            onClick={handleButtonClick}
+            sx={{
+              height: "16rem",
+              width: "16rem",
+              borderRadius: "50%",
+              borderColor: "transparent",
+              borderWidth: "6px",
+              borderStyle: "solid",
+              backgroundImage:
+                "linear-gradient(white, white), linear-gradient(to left, #70A8FC, #3681F1)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
+              fontSize: "4rem",
+              fontWeight: "400",
+              lineHeight: "normal",
+              fontStyle: "normal",
+            }}
+            variant="outlined"
+          >
+            GO
+          </AnimatedButton>
+        ) : (
+          <StartAnimation />
+        )}
       </Box>
 
-      <Box display="flex" flexDirection="row" alignItems="center" justifyContent="center" gap={10} marginY="10dvh">
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        gap={10}
+        marginY="10dvh"
+      >
         <Box display="flex" flexDirection="row" gap={3}>
           <Box display="flex" flexDirection="column" textAlign="right">
             <Typography component="span">همراه اول</Typography>
             <Typography component="span">51.15.57.153</Typography>
           </Box>
-          <img src={Person} alt="Person Icon"/>
+          <img src={Person} alt="Person Icon" />
         </Box>
         <Box display="flex" flexDirection="row" gap={3}>
           <Box display="flex" flexDirection="column">
@@ -137,11 +156,11 @@ const SpeedTest = () => {
             <Typography component="span">تهران - امام</Typography>
             <Button>تغییر سرور</Button>
           </Box>
-          <img src={Globe} alt="Globe Icon"/>
+          <img src={Globe} alt="Globe Icon" />
         </Box>
       </Box>
     </Container>
   );
-}
+};
 
 export default SpeedTest;
