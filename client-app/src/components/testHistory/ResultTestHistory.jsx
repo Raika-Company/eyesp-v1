@@ -130,8 +130,6 @@ function ResultTestHistory() {
             flexDirection: "column",
             justifyContent: "start",
             marginTop: "1em",
-            overflowY: "scroll", // Add a scroll bar for overflow content
-            scrollbarColor: "blue",
           }}
           className="custom-scrollbar"
         >
