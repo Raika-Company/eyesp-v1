@@ -10,7 +10,7 @@ function TestHistory() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          paddingTop: "10em",
+          paddingTop: "3em",
         }}
       >
         <DlandUlCharts />
