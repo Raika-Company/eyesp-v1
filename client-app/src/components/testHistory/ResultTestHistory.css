@@ -1,0 +1,19 @@
+/* ResultTestHistory.css */
+
+/* Style the scrollbar thumb for WebKit-based browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #126AED; /* Blue color for the scrollbar thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  width: 10px; /* Adjust the width as needed */
+}
+
+/* Style the scrollbar track for WebKit-based browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #E0E0E0; /* Gray color for the scrollbar track */
+}
+
+/* Style the scrollbar thumb for Firefox */
+.custom-scrollbar {
+  scrollbar-color: #126AED #E0E0E0; /* Blue thumb and gray track for Firefox */
+  scrollbar-width: thin; /* Adjust the width as needed */
+}
