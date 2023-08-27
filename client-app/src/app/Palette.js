@@ -60,7 +60,8 @@ export const lightTheme = createTheme({
             fontSize: 16,
             opacity: 0.3,
             color: "#000"
-        }
+        },
+        fontFamily: "PeydaMedium"
     },
     components: {
         MuiInputLabel: {
@@ -88,25 +89,3 @@ export const lightTheme = createTheme({
         },
     },
 });
-
-// const darkPalette = {
-//     primary: {
-//         main: '#bb86fc',
-//     },
-//     secondary: {
-//         main: '#03dac6',
-//     },
-//     background: {
-//         default: '#17202A',
-//         paper: '#1f1f1f',
-//     },
-//     text: {
-//         primary: '#fff',
-//         secondary: '#aaa',
-//     },
-// };
-
-// export const darkTheme = createTheme({
-//     palette: darkPalette,
-//     direction: 'rtl',
-// });
