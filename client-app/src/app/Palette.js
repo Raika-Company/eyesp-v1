@@ -29,35 +29,38 @@ export const lightTheme = createTheme({
         },
         background: {
             default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
-            paper: "white", // Set the default background color for Paper components
+            paper: "white",
         },
     },
     typography: {
         h1: {
-            fontFamily: "IranianSans, serif",
+            fontFamily: "PeidaBold, serif",
         },
         h2: {
-            fontFamily: "IranianSans, serif",
+            fontFamily: "PeidaBold, serif",
         },
         h3: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaSemiBold, serif",
             fontSize: "36px"
         },
         h4: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaSemiBold, serif",
         },
         h5: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaMedium, serif",
+            fontSize: 28
         },
         h6: {
-            fontFamily: "IranYekan, serif",
+            fontFamily: "PeydaMedium, serif",
+            fontSize: 25
         },
         body1: {
-            fontFamily: "Harmattan, sans-serif",
+            fontFamily: "PeydaMedium, sans-serif",
             fontSize: 18
         },
         body2: {
-            fontFamily: "Harmattan, sans-serif",
+            fontFamily: "PeydaMedium, sans-serif",
+            fontSize: 16
         },
     },
     components: {
