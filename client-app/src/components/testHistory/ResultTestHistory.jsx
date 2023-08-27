@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
@@ -18,17 +18,21 @@ function ResultTestHistory() {
           paddingBottom: "2em",
         }}
       >
-        <typography>1403/12/27</typography>
-        <typography>ایرانسل - تهران</typography>
-        <typography style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
+        <Typography sx={{ transform: "translateX(18px)" }}>
+          1403/12/27
+        </Typography>
+        <Typography sx={{ transform: "translateX(18px)" }}>
+          ایرانسل - تهران
+        </Typography>
+        <Typography style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
           42Mbps
-        </typography>
-        <typography
+        </Typography>
+        <Typography
           style={{ transform: "translateX(-63px)", color: "#126AED" }}
         >
           62Mbps
-        </typography>
-        <typography
+        </Typography>
+        <Typography
           style={{
             marginLeft: "11em",
             transform: "translateX(-132px)",
@@ -36,7 +40,7 @@ function ResultTestHistory() {
           }}
         >
           35ms
-        </typography>
+        </Typography>
       </Box>
     ));
   return (
@@ -76,7 +80,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography style={{ marginLeft: "1em" }}>پینگ</typography>
+            <Typography style={{ marginLeft: "1em" }}>پینگ</Typography>
           </Box>
           <Box
             sx={{
@@ -91,7 +95,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography>دانلود</typography>
+            <Typography>دانلود</Typography>
           </Box>
           <Box
             sx={{
@@ -106,7 +110,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <typography>آپلود</typography>
+            <Typography>آپلود</Typography>
           </Box>{" "}
           <Box
             sx={{
@@ -115,7 +119,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <typography>اپراتور-سرور</typography>
+            <Typography>اپراتور-سرور</Typography>
           </Box>{" "}
           <Box
             sx={{
@@ -124,7 +128,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <typography>تاریخ</typography>
+            <Typography>تاریخ</Typography>
           </Box>{" "}
         </Box>
         <Box
