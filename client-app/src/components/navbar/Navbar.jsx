@@ -1,8 +1,18 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useHistory } from "react-router-dom";
-import Logo from "../../app/assets/image/logo.svg"
+import { useNavigate } from "react-router-dom";
+import Logo from "../../app/assets/image/logo.svg";
 
 const pages = [
   ["صفحه اصلی", "/"],
@@ -12,7 +22,7 @@ const pages = [
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleOpenDrawer = () => {
     setDrawerOpen(true);
@@ -30,21 +40,19 @@ export default function Navbar() {
   return (
     <AppBar component="nav" position="static">
       <Toolbar>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Logo alt="speedtest.com site" height="30px"/>
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <img src={Logo} alt="speedtest.com site" height="30px" />
           <Typography variant="h6" sx={{ marginLeft: 2 }}>
             Speedtest.com
           </Typography>
         </Box>
-        
-        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <Typography variant="h6">
-            Speedtest.com
-          </Typography>
-          <img src="/path/to/logo.svg" alt="Speedtest.com Logo" height="30px" sx={{ marginLeft: 2 }} />
+
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Typography variant="h6">Speedtest.com</Typography>
+          <img src={Logo} alt="speedtest.com site" height="30px"/>
         </Box>
-        
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           {pages.map(([text, path]) => (
             <Typography
               key={text}
@@ -56,15 +64,20 @@ export default function Navbar() {
             </Typography>
           ))}
         </Box>
-        
-        <IconButton edge="start" color="inherit" onClick={handleOpenDrawer} sx={{ display: { xs: 'block', md: 'none' } }}>
+
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleOpenDrawer}
+          sx={{ display: { xs: "block", md: "none" } }}
+        >
           <MenuIcon />
         </IconButton>
 
         <Drawer anchor="left" open={drawerOpen} onClose={handleCloseDrawer}>
           <List>
             {pages.map(([text, path]) => (
-              <ListItem button key={text} onClick={() => navigateTo(path)}>
+              <ListItem key={text} onClick={() => navigateTo(path)}>
                 <ListItemText primary={text} />
               </ListItem>
             ))}

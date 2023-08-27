@@ -22,13 +22,13 @@ export const lightTheme = createTheme({
     direction: "rtl",
     palette: {
         primary: {
-            main: "#526D82"
+            main: "#126AED"
         },
         secondary: {
-            main: "#27374D"
+            main: "#DB7F12"
         },
         background: {
-            default: "#9DB2BF",
+            default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
             paper: "white", // Set the default background color for Paper components
         },
     },
