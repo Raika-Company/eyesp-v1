@@ -18,15 +18,17 @@ function ResultTestHistory() {
           paddingBottom: "2em",
         }}
       >
-        <p>1403/12/27</p>
-        <p>ایرانسل - تهران</p>
-        <p style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
+        <typography>1403/12/27</typography>
+        <typography>ایرانسل - تهران</typography>
+        <typography style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
           42Mbps
-        </p>
-        <p style={{ transform: "translateX(-63px)", color: "#126AED" }}>
+        </typography>
+        <typography
+          style={{ transform: "translateX(-63px)", color: "#126AED" }}
+        >
           62Mbps
-        </p>
-        <p
+        </typography>
+        <typography
           style={{
             marginLeft: "11em",
             transform: "translateX(-132px)",
@@ -34,7 +36,7 @@ function ResultTestHistory() {
           }}
         >
           35ms
-        </p>
+        </typography>
       </Box>
     ));
   return (
@@ -65,12 +67,16 @@ function ResultTestHistory() {
             }}
           >
             <img
-              style={{ marginBottom: "2em", marginRight: "1em" }}
+              style={{
+                marginBottom: "2em",
+                marginRight: "10px",
+                transform: "translate(12px)",
+              }}
               src={ping}
               alt="ping"
             />
 
-            <p style={{ marginLeft: "1em" }}>پینگ</p>
+            <typography style={{ marginLeft: "1em" }}>پینگ</typography>
           </Box>
           <Box
             sx={{
@@ -85,7 +91,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <p>دانلود</p>
+            <typography>دانلود</typography>
           </Box>
           <Box
             sx={{
@@ -100,7 +106,7 @@ function ResultTestHistory() {
               alt="ping"
             />
 
-            <p>آپلود</p>
+            <typography>آپلود</typography>
           </Box>{" "}
           <Box
             sx={{
@@ -109,7 +115,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <p>اپراتور-سرور</p>
+            <typography>اپراتور-سرور</typography>
           </Box>{" "}
           <Box
             sx={{
@@ -118,7 +124,7 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <p>تاریخ</p>
+            <typography>تاریخ</typography>
           </Box>{" "}
         </Box>
         <Box
