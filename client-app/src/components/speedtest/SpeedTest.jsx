@@ -1,4 +1,8 @@
+// React core and hooks
 import React, { useState } from "react";
+
+// Third-party libraries or components
+// Import Material-UI components and styles
 import {
   Button,
   Container,
@@ -10,8 +14,14 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
-import DrawMeter from "./DrawMeter";
 
+// Local components
+// Importing custom drawn meter component and accordion for modular structure
+import DrawMeter from "./DrawMeter";
+import CustomAccordion from './CustomAccordion';
+
+// Assets
+// Importing images used in the speed test component
 import DownloadHide from "../../app/assets/image/download-hide.svg";
 import UploadHide from "../../app/assets/image/upload-hide.svg";
 import PingHide from "../../app/assets/image/ping-hide.svg";
@@ -21,6 +31,13 @@ import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
 
+// Constants
+// Defining some constants for color coding
+const TRANSPARENT_BLUE = "rgba(54, 129, 241, 0.8)";
+const SECONDARY_BG = "#1B70EE1C";
+
+// Components
+// Divider component to visually separate sections
 const Divider = () => (
   <Box
     sx={{
@@ -33,6 +50,7 @@ const Divider = () => (
   />
 );
 
+// SpeedBox displays speed statistics such as ping, upload, and download speeds
 const SpeedBox = ({ title, iconSrc, altText, value }) => (
   <Box>
     <Typography>{title}</Typography>
@@ -46,6 +64,7 @@ const SpeedBox = ({ title, iconSrc, altText, value }) => (
   </Box>
 );
 
+// AnimatedButton is a button with animation effect used for starting the speed test
 const AnimatedButton = styled(Button)(({ theme }) => ({
   position: "relative",
   overflow: "visible",
@@ -58,7 +77,7 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
     right: "-5px",
     bottom: "-5px",
     borderRadius: "50%",
-    border: "6px solid rgba(54, 129, 241, 0.8)", // #70A8FC with some transparency
+    border: `6px solid ${TRANSPARENT_BLUE}`,
     animation: "ringAnimation 3s infinite",
     transform: "scale(1)",
     opacity: 0.6,
@@ -75,20 +94,51 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+// InformationBox displays information about a server or user IP
+const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
+  <Box display="flex" flexDirection="row" gap={3}>
+    <Box display="flex" flexDirection="column" textAlign="right">
+      <Typography component="span">{title}</Typography>
+      <Typography component="span">{value}</Typography>
+      {buttonLabel ? <Button>{buttonLabel}</Button> : null}
+    </Box>
+    <img src={iconSrc} alt={altText} />
+  </Box>
+);
+
+// SpeedTest is the main component that orchestrates the layout and functionality of the speed test application
+/**
+ * SpeedTest Component
+ * 
+ * This is the primary component responsible for executing and displaying the internet speed test.
+ * 
+ * Structure:
+ * - Contains state for handling visibility of the GO button, accordion expansion status, and speed data results.
+ * - Provides handlers for starting the speed test and toggling the accordion expansion.
+ * - Renders the various UI components for the speed test: meters, buttons, and information boxes.
+ * - Relies on a series of child components for specific UI elements: DrawMeter, CustomAccordion, SpeedBox, etc.
+ * - Adapts its display based on the viewport size (responsive design).
+ * 
+ * @returns {React.Element} Rendered component
+ */
 const SpeedTest = () => {
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
-
-  const [pingValue, setPingValue] = useState(null);
-  const [downloadSpeedValue, setDownloadSpeedValue] = useState(null);
+  const [expanded, setExpanded] = useState(false);
+  const [speedData, setSpeedData] = useState({
+    ping: null,
+    downloadSpeed: null,
+  });
 
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
-    setPingValue(80);
-    setDownloadSpeedValue(40.2);
+    setSpeedData({
+      ping: 80,
+      downloadSpeed: 40.2,
+    });
   };
 
   return (
-    <Box component="main" height="100dvh" >
+    <Box component="main" height="100dvh">
       <Container maxWidth="lg">
         <Box
           display="flex"
@@ -108,7 +158,7 @@ const SpeedTest = () => {
             title="پینگ"
             iconSrc={PingHide}
             altText="ping icon"
-            value={isGoButtonVisible ? null : pingValue}
+            value={isGoButtonVisible ? null : speedData.ping}
           />
           <Divider />
           <SpeedBox
@@ -122,7 +172,7 @@ const SpeedTest = () => {
             title="سرعت دانلود"
             iconSrc={DownloadHide}
             altText="before download icon"
-            value={isGoButtonVisible ? null : downloadSpeedValue}
+            value={isGoButtonVisible ? null : speedData.downloadSpeed}
           />
         </Box>
         <Box
@@ -182,48 +232,23 @@ const SpeedTest = () => {
           marginY="10dvh"
           sx={{ display: { xs: "none", md: "flex" } }}
         >
-          <Box display="flex" flexDirection="row" gap={3}>
-            <Box display="flex" flexDirection="column" textAlign="right">
-              <Typography component="span">همراه اول</Typography>
-              <Typography component="span">51.15.57.153</Typography>
-            </Box>
-            <img src={Person} alt="Person Icon" />
-          </Box>
-          <Box display="flex" flexDirection="row" gap={3}>
-            <Box display="flex" flexDirection="column">
-              <Typography component="h6">سرور مقصد</Typography>
-              <Typography component="span">تهران - امام</Typography>
-              <Button>تغییر سرور</Button>
-            </Box>
-            <img src={Globe} alt="Globe Icon" />
-          </Box>
+          <InformationBox
+            title="همراه اول"
+            value="51.15.57.153"
+            iconSrc={Person}
+            altText="Person Icon"
+          />
+
+          <InformationBox
+            title="سرور مقصد"
+            value="تهران - امام"
+            iconSrc={Globe}
+            altText="Globe Icon"
+            buttonLabel="تغییر سرور"
+          />
         </Box>
       </Container>
-      <Accordion sx={{ display: { xs: "block", md: "none" }, position: 'fixed', bottom: 0, width: '100%', zIndex: 2 }}>
-        <AccordionSummary
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Box display="flex" flexDirection="row" justifyContent="space-between" gap={3} width="100%">
-            <Box display="flex" flexDirection="column">
-              <Typography component="h6">همراه اول</Typography>
-              <Typography variant="body1">51.15.57.153</Typography>
-            </Box>
-            <ExpandMoreIcon fontSize="large" sx={{ transform: 'rotate(-180deg)', marginRight: "32px" }} />
-            <img src={Person} alt="Person Icon" width="64px"/>
-          </Box>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box  display="flex" flexDirection="row" justifyContent="space-between" gap={3} width="100%">
-            <Box display="flex" flexDirection="column">
-              <Typography component="h6">سرور مقصد</Typography>
-              <Typography variant="body1">تهران - امام</Typography>
-              <Button>تغییر سرور</Button>
-            </Box>
-            <img src={Globe} alt="Globe Icon" width="64px"/>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+      <CustomAccordion expanded={expanded} setExpanded={setExpanded} Person={Person} Globe={Globe} />
     </Box>
   );
 };
