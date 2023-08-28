@@ -104,7 +104,7 @@ function DlandUlCharts() {
             }}
           >
             <LineChart
-              width={isSmScreen ? 350 : isMdScreen ? 600 : 900}
+              width={isSmScreen ? 350 : isMdScreen ? 600 : 1000}
               height={isSmScreen ? 300 : 400}
               series={[
                 { data: pData, color: chartColors[0] },
