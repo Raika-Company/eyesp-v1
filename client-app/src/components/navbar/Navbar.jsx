@@ -80,9 +80,6 @@ export default function Navbar() {
           }}
         >
           <img src={Logo} alt="speedtest.com site" height="30px" />
-          <Typography variant="h4" color="primary">
-            SPEEDTEST.COM
-          </Typography>
         </Box>
 
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
