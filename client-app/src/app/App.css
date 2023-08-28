@@ -4,13 +4,14 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
+/* 
 body {
   background-image: url('./assets/image/back.svg');
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: left bottom; /* Change the background image position */
+  background-position: left bottom; 
   background-size: contain;
-}
+} */
 
 
 @font-face {

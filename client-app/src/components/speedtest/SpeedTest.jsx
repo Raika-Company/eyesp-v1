@@ -1,5 +1,6 @@
 // React core and hooks
 import React, { useState } from "react";
+import backgroundImage from "../../app/assets/image/back.svg";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
@@ -138,7 +139,17 @@ const SpeedTest = () => {
   };
 
   return (
-    <Box component="main" height="100dvh">
+    <Box
+      component="main"
+      height="100dvh"
+      sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "left bottom",
+        backgroundSize: "contain",
+      }}
+    >
       <Container maxWidth="lg">
         <Box
           display="flex"
