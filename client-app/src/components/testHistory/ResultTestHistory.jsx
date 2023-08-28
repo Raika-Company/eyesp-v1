@@ -1,10 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
 
 function ResultTestHistory() {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+
   const elements = Array(20)
     .fill()
     .map((_, index) => (
@@ -12,29 +16,60 @@ function ResultTestHistory() {
         key={index}
         sx={{
           display: "flex",
+          width: isSmScreen ? "60%" : "100%",
+          marginLeft: isSmScreen ? "7em" : "0",
           flexDirection: "row-reverse",
           justifyContent: "space-around",
           paddingBottom: "2em",
+          transform: "translateX(24px)",
         }}
       >
-        <Typography sx={{ transform: "translateX(18px)" }}>
+        <Typography
+          sx={{
+            transform: isMdScreen ? "translateX(18px)" : "none",
+            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+            transform: isSmScreen ? "translateX(-26px)" : "none",
+          }}
+        >
           1403/12/27
         </Typography>
-        <Typography sx={{ transform: "translateX(18px)" }}>
+        <Typography
+          sx={{
+            transform: isMdScreen ? "translateX(18px)" : "none",
+            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+            transform: isSmScreen ? "translateX(-33px)" : "none",
+          }}
+        >
           ایرانسل - تهران
         </Typography>
-        <Typography style={{ transform: "translateX(-9px)", color: "#EF676B" }}>
+        <Typography
+          sx={{
+            transform: isMdScreen ? "translateX(-9px)" : "none",
+            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+            transform: isSmScreen ? "translateX(-62px)" : "none",
+
+            color: "#EF676B",
+          }}
+        >
           42Mbps
         </Typography>
         <Typography
-          style={{ transform: "translateX(-63px)", color: "#126AED" }}
+          sx={{
+            transform: isMdScreen ? "translateX(-63px)" : "none",
+            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+            transform: isSmScreen ? "translateX(-93px)" : "none",
+
+            color: "#126AED",
+          }}
         >
           62Mbps
         </Typography>
         <Typography
-          style={{
-            marginLeft: "11em",
-            transform: "translateX(-132px)",
+          sx={{
+            transform: isMdScreen ? "translateX(-132px)" : "none",
+            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+
+            transform: isSmScreen ? "translateX(-125px)" : "none",
             color: "#DB7F12",
           }}
         >
@@ -42,15 +77,22 @@ function ResultTestHistory() {
         </Typography>
       </Box>
     ));
+
   return (
     <>
       <Box
         sx={{
-          width: "60em",
-          height: "20em",
+          width: isSmScreen ? "90vw" : isMdScreen ? "90vw" : "70vw",
+          height: "60vdh",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
-          margin: " 3em auto",
+          // marginLeft: isSmScreen ? "1em" : isMdScreen ? "1em" : "10em",
+          // marginTop: "2em",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: "24px",
         }}
       >
         <Box
@@ -65,51 +107,82 @@ function ResultTestHistory() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
             }}
           >
+            <Typography
+              sx={{
+                marginLeft: isSmScreen ? "0px" : "1em",
+                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+              }}
+            >
+              پینگ
+            </Typography>
             <img
               style={{
-                marginBottom: "2em",
-                marginRight: "10px",
-                transform: "translate(12px)",
+                marginBottom: isSmScreen ? "5px" : "2em",
+                // marginRight: isSmScreen ? "0" : "1em",
+                width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
+                transform: isSmScreen ? "translate(4px)" : "translate(12px)",
               }}
               src={ping}
               alt="ping"
             />
-
-            <Typography style={{ marginLeft: "1em" }}>پینگ</Typography>
           </Box>
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              transform: isSmScreen ? "translateX(0px)" : "translateX(-24px)",
             }}
           >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+              }}
+            >
+              دانلود
+            </Typography>
             <img
-              style={{ marginBottom: "2em", marginRight: "1em" }}
+              style={{
+                marginBottom: isSmScreen ? "5px" : "2em",
+                // marginRight: isSmScreen ? "0" : "1em",
+                width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
+              }}
               src={download}
               alt="ping"
             />
-
-            <Typography>دانلود</Typography>
           </Box>
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              transform: isSmScreen
+                ? ""
+                : isMdScreen
+                ? "translateX(-32px)"
+                : "translateX(-45px)",
             }}
           >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+              }}
+            >
+              آپلود
+            </Typography>
             <img
-              style={{ marginBottom: "2em", marginRight: "1em" }}
+              style={{
+                marginBottom: isSmScreen ? "5px" : "2em",
+                // marginRight: isSmScreen ? "0" : "1em",
+                width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
+              }}
               src={upload}
               alt="ping"
             />
-
-            <Typography>آپلود</Typography>
           </Box>{" "}
           <Box
             sx={{
@@ -118,7 +191,14 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <Typography>اپراتور-سرور</Typography>
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                transform: isSmScreen ? "translateX(0px)" : "translateX(-35px)",
+              }}
+            >
+              اپراتور-سرور
+            </Typography>
           </Box>{" "}
           <Box
             sx={{
@@ -127,19 +207,24 @@ function ResultTestHistory() {
               justifyContent: "center",
             }}
           >
-            <Typography>تاریخ</Typography>
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+              }}
+            >
+              تاریخ
+            </Typography>
           </Box>{" "}
         </Box>
         <Box
           sx={{
-            height: "70%",
+            height: "30dvh",
             borderBottomLeftRadius: "2em",
             borderBottomRightRadius: "2em",
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
-            marginTop: "1em",
-            overflowY: "scroll", // Use default scrollbar for scrolling
+            overflowY: "scroll", // Enable the vertical scrollbar
           }}
         >
           {elements}
@@ -148,5 +233,4 @@ function ResultTestHistory() {
     </>
   );
 }
-
 export default ResultTestHistory;
