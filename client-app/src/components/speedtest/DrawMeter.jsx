@@ -1,5 +1,31 @@
+/**
+ * @file DrawMeter.js
+ * This file contains the `DrawMeter` component which renders a meter gauge 
+ * on a canvas to visualize download/upload speed.
+ */
+
+// External dependencies
 import React, { useRef, useEffect } from "react";
 
+/**
+ * DrawMeter Component
+ *
+ * This component renders a canvas that visually represents a meter gauge 
+ * to depict the speed in Mbps. The dial on the gauge indicates the speed 
+ * dynamically. The meter is styled with a gradient and the dial rotates 
+ * based on the mbps prop. 
+ * 
+ * Props:
+ * @param {number} amount - Not directly used within the component. Potential for enhancement.
+ * @param {string} bk - Background color for the meter gauge.
+ * @param {string} fg - Foreground color for numbers and certain parts of the meter gauge.
+ * @param {number} progress - Not directly used within the component. Potential for enhancement.
+ * @param {number} prog - Not directly used within the component. Potential for enhancement.
+ * @param {number} [mbps=0.0001] - Mbps speed value to be depicted on the gauge.
+ * @param {boolean} [isDl=false] - Indicates if the speed is download (true) or upload (false).
+ * 
+ * @returns {React.Element} Rendered DrawMeter component.
+ */
 function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
   const canvasRef = useRef(null);
 
