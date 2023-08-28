@@ -88,8 +88,8 @@ const SpeedTest = () => {
   };
 
   return (
-    <>
-      <Container component="main" maxWidth="lg">
+    <Box component="main" height="100dvh" >
+      <Container maxWidth="lg">
         <Box
           display="flex"
           flexDirection="row"
@@ -157,7 +157,7 @@ const SpeedTest = () => {
               GO
             </AnimatedButton>
           ) : (
-            <Box marginTop="10dvh">
+            <Box marginTop="10dvh" width="100%">
               <DrawMeter
                 amount={0.2}
                 bk={
@@ -199,32 +199,32 @@ const SpeedTest = () => {
           </Box>
         </Box>
       </Container>
-      <Accordion sx={{ display: { xs: "block", md: "none" } }}>
+      <Accordion sx={{ display: { xs: "block", md: "none" }, position: 'fixed', bottom: 0, width: '100%', zIndex: 2 }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Box display="flex" flexDirection="row" gap={3}>
-            <Box display="flex" flexDirection="column" textAlign="right">
-              <Typography component="span">همراه اول</Typography>
-              <Typography component="span">51.15.57.153</Typography>
+          <Box display="flex" flexDirection="row" justifyContent="space-between" gap={3} width="100%">
+            <Box display="flex" flexDirection="column">
+              <Typography component="h6">همراه اول</Typography>
+              <Typography variant="body1">51.15.57.153</Typography>
             </Box>
-            <img src={Person} alt="Person Icon" />
+            <ExpandMoreIcon fontSize="large" sx={{ transform: 'rotate(-180deg)', marginRight: "32px" }} />
+            <img src={Person} alt="Person Icon" width="64px"/>
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <Box display="flex" flexDirection="row" gap={3}>
+          <Box  display="flex" flexDirection="row" justifyContent="space-between" gap={3} width="100%">
             <Box display="flex" flexDirection="column">
               <Typography component="h6">سرور مقصد</Typography>
-              <Typography component="span">تهران - امام</Typography>
+              <Typography variant="body1">تهران - امام</Typography>
               <Button>تغییر سرور</Button>
             </Box>
-            <img src={Globe} alt="Globe Icon" />
+            <img src={Globe} alt="Globe Icon" width="64px"/>
           </Box>
         </AccordionDetails>
       </Accordion>
-    </>
+    </Box>
   );
 };
 

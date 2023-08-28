@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material';
 export const lightTheme = createTheme({
     direction: "rtl",
     palette: {
+        mode: "light",
         primary: {
             main: "#126AED"
         },
@@ -83,9 +84,41 @@ export const lightTheme = createTheme({
         MuiDrawer: {
             styleOverrides: {
                 root: {
-                    direction: "rtl", 
+                    direction: "ltr",
                 },
+                paper: {
+                    position: 'absolute',
+                    left: 0,
+                    transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+                    '&.MuiDrawer-open': {
+                        transform: 'translateX(0)'
+                    },
+                    '&:not(.MuiDrawer-open)': {
+                        transform: 'translateX(-100%)'
+                    }
+                }
             },
-        },
+        }
     },
+});
+
+export const darkTheme = createTheme({
+    ...lightTheme,
+    palette: {
+        ...lightTheme.palette,
+        mode: "dark",
+        primary: {
+            main: "#315A9E"
+        },
+        secondary: {
+            main: "#B0680F"
+        },
+        background: {
+            default: "linear-gradient(195deg, #222 24.09%, #111 100%)",
+        },
+        text: {
+            primary: "#FFF",
+            secondary: "#BBB"
+        },
+    }
 });
