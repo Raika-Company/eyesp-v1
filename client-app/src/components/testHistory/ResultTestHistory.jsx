@@ -16,7 +16,7 @@ function ResultTestHistory() {
         key={index}
         sx={{
           display: "flex",
-          width: isSmScreen ? "60%" : "100%",
+          width: isSmScreen ? "58%" : "97%",
           marginLeft: isSmScreen ? "7em" : "0",
           flexDirection: "row-reverse",
           justifyContent: "space-around",
@@ -194,7 +194,12 @@ function ResultTestHistory() {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-                transform: isSmScreen ? "translateX(0px)" : "translateX(-35px)",
+                transform: isSmScreen
+                  ? "translateX(0px)"
+                  : isMdScreen
+                  ? "transLateX(-17px)"
+                  : "translateX(-35px)",
+                marginRight: isSmScreen ? "0" : "41px",
               }}
             >
               اپراتور-سرور
@@ -210,6 +215,9 @@ function ResultTestHistory() {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                transform: isSmScreen
+                  ? "transLateX(-12px)"
+                  : "transLateX(-30px)",
               }}
             >
               تاریخ
