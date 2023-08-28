@@ -9,9 +9,11 @@ import {
   ListItem,
   ListItemText,
   Box,
+  Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useLocation } from "react-router-dom";
+import ThemeSwitcher from "../../app/common/ThemeSwitcher";
 import Logo from "../../app/assets/image/logo.svg";
 
 const pages = [
@@ -20,7 +22,7 @@ const pages = [
   ["صفحه اصلی", "/"],
 ];
 
-export default function Navbar() {
+export default function Navbar({ themeMode, toggleTheme }) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const history = useNavigate();
 
@@ -81,7 +83,9 @@ export default function Navbar() {
         >
           <img src={Logo} alt="speedtest.com site" height="30px" />
         </Box>
-
+        <Box sx={{ display: { xs: "none", md: "inline-block" } }}>
+          <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
+        </Box>
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
           {pages.map(([text, path]) => (
             <Typography
@@ -100,13 +104,23 @@ export default function Navbar() {
         </Box>
 
         <Drawer anchor="left" open={drawerOpen} onClose={handleCloseDrawer}>
-          <List>
-            {pages.map(([text, path]) => (
-              <ListItem key={text} onClick={() => navigateTo(path)}>
-                <ListItemText primary={text} />
-              </ListItem>
+          <List sx={{ width: "60vw" }}>
+            {[...pages].reverse().map(([text, path]) => (
+              <>
+                <ListItem
+                  sx={{ textAlign: "center" }}
+                  key={text}
+                  onClick={() => navigateTo(path)}
+                >
+                  <ListItemText primary={text} />
+                </ListItem>
+                <Divider />
+              </>
             ))}
           </List>
+          <Box position="fixed" bottom={0} left={0}>
+            <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
+          </Box>
         </Drawer>
       </Toolbar>
     </AppBar>
