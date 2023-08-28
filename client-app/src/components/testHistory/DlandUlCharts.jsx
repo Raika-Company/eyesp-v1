@@ -6,6 +6,7 @@ import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { InputLabel } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
 const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -19,8 +20,8 @@ const xLabels = [
   "Page G",
 ];
 
-const CustomBox = styled(Box)(() => ({
-  width: "60em",
+const CustomBox = styled(Box)(({ theme }) => ({
+  width: "60em", // Default width for lg screens
   height: "20em",
   border: "2px solid #E0E0E0",
   borderRadius: "2em",
@@ -28,6 +29,12 @@ const CustomBox = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
   padding: "1em 2em",
+  [theme.breakpoints.down("md")]: {
+    width: "40em",
+  },
+  [theme.breakpoints.down("xs")]: {
+    width: "20em",
+  },
 }));
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
@@ -54,6 +61,8 @@ function DlandUlCharts() {
         : ["#FF5733", "#EFEFEF"]
     );
   };
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   return (
     <>
@@ -84,11 +93,12 @@ function DlandUlCharts() {
               position: "absolute",
               display: "flex",
               flexDirection: "row",
-              transform: "translateY(-99px)",
+
+              transform: "translateY(-107px)",
             }}
           >
             <LineChart
-              width={1000}
+              width={isXsScreen ? 300 : isMdScreen ? 600 : 1000}
               height={400}
               series={[
                 { data: pData, color: chartColors[0] },
