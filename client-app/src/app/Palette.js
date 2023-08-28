@@ -12,7 +12,6 @@ export const lightTheme = createTheme({
         },
         background: {
             default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
-            paper: "white",
         },
     },
     typography: {

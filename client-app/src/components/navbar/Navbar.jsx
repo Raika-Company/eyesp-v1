@@ -106,16 +106,15 @@ export default function Navbar({ themeMode, toggleTheme }) {
         <Drawer anchor="left" open={drawerOpen} onClose={handleCloseDrawer}>
           <List sx={{ width: "60vw" }}>
             {[...pages].reverse().map(([text, path]) => (
-              <>
+              <Box key={text}>
                 <ListItem
                   sx={{ textAlign: "center" }}
-                  key={text}
                   onClick={() => navigateTo(path)}
                 >
                   <ListItemText primary={text} />
                 </ListItem>
                 <Divider />
-              </>
+              </Box>
             ))}
           </List>
           <Box position="fixed" bottom={0} left={0}>
