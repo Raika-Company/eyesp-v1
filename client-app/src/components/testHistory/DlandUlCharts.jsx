@@ -34,7 +34,7 @@ const CustomBox = styled(Box)(({ theme }) => ({
     width: "90vw", // Width for md screens
   },
   [theme.breakpoints.down("sm")]: {
-    height: "40vh",
+    height: "29vh",
     width: "90vw", // Width for xs screens
   },
 }));
