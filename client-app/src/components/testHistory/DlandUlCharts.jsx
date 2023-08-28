@@ -29,11 +29,12 @@ const CustomBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   padding: "1em 2em",
+
   [theme.breakpoints.down("md")]: {
-    width: "40em",
+    width: "40em", // Width for md screens
   },
-  [theme.breakpoints.down("xs")]: {
-    width: "20em",
+  [theme.breakpoints.down("sm")]: {
+    width: "20em", // Width for xs screens
   },
 }));
 
@@ -62,7 +63,8 @@ function DlandUlCharts() {
     );
   };
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   return (
     <>
@@ -93,12 +95,16 @@ function DlandUlCharts() {
               position: "absolute",
               display: "flex",
               flexDirection: "row",
+              transform: isMdScreen ? "translateY(-99px)" : "translateY(0)",
 
               transform: "translateY(-107px)",
+              transform: isSmScreen
+                ? " translate(-30px,-90px);"
+                : "translateY(-107px)",
             }}
           >
             <LineChart
-              width={isXsScreen ? 300 : isMdScreen ? 600 : 1000}
+              width={isSmScreen ? 350 : isMdScreen ? 600 : 1000}
               height={400}
               series={[
                 { data: pData, color: chartColors[0] },
