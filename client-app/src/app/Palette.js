@@ -112,7 +112,7 @@ export const darkTheme = createTheme({
       main: "#B0680F",
     },
     background: {
-      default: "#000", // Set the background color to black
+      default: "#181D23", // Set the background color to black
     },
     text: {
       primary: "#FFF",

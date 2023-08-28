@@ -18,7 +18,7 @@ import { styled } from "@mui/material/styles";
 // Local components
 // Importing custom drawn meter component and accordion for modular structure
 import DrawMeter from "./DrawMeter";
-import CustomAccordion from './CustomAccordion';
+import CustomAccordion from "./CustomAccordion";
 
 // Assets
 // Importing images used in the speed test component
@@ -109,16 +109,16 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
 // SpeedTest is the main component that orchestrates the layout and functionality of the speed test application
 /**
  * SpeedTest Component
- * 
+ *
  * This is the primary component responsible for executing and displaying the internet speed test.
- * 
+ *
  * Structure:
  * - Contains state for handling visibility of the GO button, accordion expansion status, and speed data results.
  * - Provides handlers for starting the speed test and toggling the accordion expansion.
  * - Renders the various UI components for the speed test: meters, buttons, and information boxes.
  * - Relies on a series of child components for specific UI elements: DrawMeter, CustomAccordion, SpeedBox, etc.
  * - Adapts its display based on the viewport size (responsive design).
- * 
+ *
  * @returns {React.Element} Rendered component
  */
 const SpeedTest = () => {
@@ -192,8 +192,9 @@ const SpeedTest = () => {
                 borderColor: "transparent",
                 borderWidth: "6px",
                 borderStyle: "solid",
-                backgroundImage:
-                  "linear-gradient(white, white), linear-gradient(to left, #70A8FC, #3681F1)",
+                // backgroundImage:
+                //   "linear-gradient(white, white), linear-gradient(to left, #70A8FC, #3681F1)",
+                border: "3px solid rgba(54, 129, 241, 0.8)",
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
                 boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
@@ -248,7 +249,12 @@ const SpeedTest = () => {
           />
         </Box>
       </Container>
-      <CustomAccordion expanded={expanded} setExpanded={setExpanded} Person={Person} Globe={Globe} />
+      <CustomAccordion
+        expanded={expanded}
+        setExpanded={setExpanded}
+        Person={Person}
+        Globe={Globe}
+      />
     </Box>
   );
 };
