@@ -82,7 +82,7 @@ function ResultTestHistory() {
     <>
       <Box
         sx={{
-          width: isSmScreen ? "90vw" : isMdScreen ? "90vw" : "110vw",
+          width: isSmScreen ? "90vw" : isMdScreen ? "90vw" : "70vw",
           height: "60vdh",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
