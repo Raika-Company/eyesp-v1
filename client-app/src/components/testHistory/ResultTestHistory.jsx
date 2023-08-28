@@ -7,6 +7,7 @@ import ping from "../../app/assets/image/ping.svg";
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   const elements = Array(20)
     .fill()
@@ -27,7 +28,7 @@ function ResultTestHistory() {
           sx={{
             transform: isMdScreen ? "translateX(18px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-11px)" : "none",
+            transform: isSmScreen ? "translateX(-26px)" : "none",
           }}
         >
           1403/12/27
@@ -81,7 +82,7 @@ function ResultTestHistory() {
     <>
       <Box
         sx={{
-          width: isSmScreen ? "45vh" : isMdScreen ? "70vh" : "110vh",
+          width: isSmScreen ? "90vw" : isMdScreen ? "90vw" : "110vw",
           height: "60vdh",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",

@@ -21,7 +21,7 @@ const xLabels = [
 ];
 
 const CustomBox = styled(Box)(({ theme }) => ({
-  width: "110vh", // Default width for lg screens
+  width: "70vw", // Default width for lg screens
   height: "20em",
   border: "2px solid #E0E0E0",
   borderRadius: "2em",
@@ -31,11 +31,11 @@ const CustomBox = styled(Box)(({ theme }) => ({
   padding: "1em 2em",
 
   [theme.breakpoints.down("md")]: {
-    width: "70vh", // Width for md screens
+    width: "90vw", // Width for md screens
   },
   [theme.breakpoints.down("sm")]: {
-    height: "15em",
-    width: "45vh", // Width for xs screens
+    height: "40vh",
+    width: "90vw", // Width for xs screens
   },
 }));
 
