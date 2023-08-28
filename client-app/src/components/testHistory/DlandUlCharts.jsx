@@ -7,15 +7,6 @@ import Switch from "@mui/material/Switch";
 import { InputLabel } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
 
-const data = [
-  { label: "100Mbps" },
-  { label: "75Mbps" },
-  { label: "50Mbps" },
-  { label: "25Mbps" },
-  { label: "15Mbps" },
-  { label: "5Mbps" }, // Add the item here
-];
-
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
 const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
 const xLabels = [
