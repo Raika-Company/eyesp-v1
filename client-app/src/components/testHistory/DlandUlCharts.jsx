@@ -21,7 +21,7 @@ const xLabels = [
 ];
 
 const CustomBox = styled(Box)(({ theme }) => ({
-  width: "60em", // Default width for lg screens
+  width: "110vh", // Default width for lg screens
   height: "20em",
   border: "2px solid #E0E0E0",
   borderRadius: "2em",
@@ -31,10 +31,11 @@ const CustomBox = styled(Box)(({ theme }) => ({
   padding: "1em 2em",
 
   [theme.breakpoints.down("md")]: {
-    width: "40em", // Width for md screens
+    width: "70vh", // Width for md screens
   },
   [theme.breakpoints.down("sm")]: {
-    width: "20em", // Width for xs screens
+    height: "15em",
+    width: "45vh", // Width for xs screens
   },
 }));
 
@@ -64,7 +65,6 @@ function DlandUlCharts() {
   };
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   return (
     <>
@@ -104,8 +104,8 @@ function DlandUlCharts() {
             }}
           >
             <LineChart
-              width={isSmScreen ? 350 : isMdScreen ? 600 : 1000}
-              height={400}
+              width={isSmScreen ? 350 : isMdScreen ? 600 : 900}
+              height={isSmScreen ? 300 : 400}
               series={[
                 { data: pData, color: chartColors[0] },
                 { data: uData, color: chartColors[1] },
