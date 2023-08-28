@@ -107,7 +107,7 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
 
         frameCounter++;
 
-        if (frameCounter % 10 == 0) {
+        if (frameCounter % 5 == 0) {
           let angle =
             startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
           let distanceFromEdge = 15 * sizScale;
