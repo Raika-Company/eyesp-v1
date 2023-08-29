@@ -1,5 +1,5 @@
 // React core and hooks
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
@@ -11,6 +11,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
@@ -22,9 +23,6 @@ import CustomAccordion from "./CustomAccordion";
 
 // Assets
 // Importing images used in the speed test component
-import DownloadHide from "../../app/assets/image/download-hide.svg";
-import UploadHide from "../../app/assets/image/upload-hide.svg";
-import PingHide from "../../app/assets/image/ping-hide.svg";
 import Download from "../../app/assets/image/download.svg";
 import Upload from "../../app/assets/image/upload.svg";
 import Ping from "../../app/assets/image/ping.svg";
@@ -51,15 +49,15 @@ const Divider = () => (
 );
 
 // SpeedBox displays speed statistics such as ping, upload, and download speeds
-const SpeedBox = ({ title, iconSrc, altText, value }) => (
+const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
-    <Typography>{title}</Typography>
-    <Box display="flex" alignItems="center" gap={1}>
-      <img src={iconSrc} alt={altText} />
+    <Typography variant="subtitle2">{title}</Typography>
+    <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
+      <img src={iconSrc} alt={altText} height="32px" />
       <Typography component="span" marginX="0.5rem">
         {value !== null ? value : "--"}
       </Typography>
-      <Typography component="span">Mbps</Typography>
+      <Typography component="span">{measure}</Typography>
     </Box>
   </Box>
 );
@@ -98,8 +96,12 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
 const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" flexDirection="row" gap={3}>
     <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="span">{title}</Typography>
-      <Typography component="span">{value}</Typography>
+      <Typography component="h6" variant="h6">
+        {title}
+      </Typography>
+      <Typography component="span" variant="subtitle1">
+        {value}
+      </Typography>
       {buttonLabel ? <Button>{buttonLabel}</Button> : null}
     </Box>
     <img src={iconSrc} alt={altText} />
@@ -121,20 +123,38 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
  *
  * @returns {React.Element} Rendered component
  */
-const SpeedTest = () => {
+const SpeedTest = ({ themeMode }) => {
+  const theme = useTheme();
+
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const [speedData, setSpeedData] = useState({
     ping: null,
     downloadSpeed: null,
   });
+  const [mbps, setMbps] = useState(0);
 
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
-    setSpeedData({
-      ping: 80,
-      downloadSpeed: 40.2,
-    });
+
+    let startTime = Date.now();
+    let totalDuration = 1000; // 1 seconds
+    let halfwayPoint = totalDuration / 2; // 0.5 second
+
+    const animateMbps = () => {
+      let timePassed = Date.now() - startTime;
+
+      if (timePassed <= halfwayPoint) {
+        setMbps((timePassed / halfwayPoint) * 100); // from 0 to 100 in 1 second
+      } else if (timePassed <= totalDuration) {
+        setMbps(100 - ((timePassed - halfwayPoint) / halfwayPoint) * 80); // from 100 to 20 in 1 second
+      }
+
+      if (timePassed < totalDuration) {
+        requestAnimationFrame(animateMbps);
+      }
+    };
+    requestAnimationFrame(animateMbps);
   };
 
   return (
@@ -155,24 +175,30 @@ const SpeedTest = () => {
           marginTop="10vh"
         >
           <SpeedBox
-            title="پینگ"
-            iconSrc={PingHide}
-            altText="ping icon"
-            value={isGoButtonVisible ? null : speedData.ping}
+            title="سرعت دانلود"
+            iconSrc={Download}
+            altText="before download icon"
+            value={isGoButtonVisible ? null : speedData.downloadSpeed}
+            measure="Mbps"
+            opacity={isGoButtonVisible ? "0.5" : "1"}
           />
           <Divider />
           <SpeedBox
             title="سرعت آپلود"
-            iconSrc={UploadHide}
+            iconSrc={Upload}
             altText="before upload icon"
             value={null}
+            measure="Mbps"
+            opacity={isGoButtonVisible ? "0.5" : "0.5"}
           />
           <Divider />
           <SpeedBox
-            title="سرعت دانلود"
-            iconSrc={DownloadHide}
-            altText="before download icon"
-            value={isGoButtonVisible ? null : speedData.downloadSpeed}
+            title="پینگ"
+            iconSrc={Ping}
+            altText="ping icon"
+            value={isGoButtonVisible ? null : speedData.ping}
+            measure="ms"
+            opacity={isGoButtonVisible ? "0.5" : "1"}
           />
         </Box>
         <Box
@@ -192,8 +218,6 @@ const SpeedTest = () => {
                 borderColor: "transparent",
                 borderWidth: "6px",
                 borderStyle: "solid",
-                // backgroundImage:
-                //   "linear-gradient(white, white), linear-gradient(to left, #70A8FC, #3681F1)",
                 border: "3px solid rgba(54, 129, 241, 0.8)",
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
@@ -202,25 +226,38 @@ const SpeedTest = () => {
                 fontWeight: "400",
                 lineHeight: "normal",
                 fontStyle: "normal",
+                paddingTop: "2rem",
               }}
               variant="outlined"
             >
               GO
             </AnimatedButton>
           ) : (
-            <Box marginTop="10dvh" width="100%">
+            <Box
+              sx={{
+                [theme.breakpoints.between("xs", "sm")]: {
+                  marginTop: "25dvh",
+                  width: "100%",
+                },
+                [theme.breakpoints.up("md")]: {
+                  marginTop: "12dvh",
+                  width: "80%",
+                },
+              }}
+            >
               <DrawMeter
                 amount={0.2}
                 bk={
                   /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                    ? "#1B70EE1C"
+                    ? "#45628A"
                     : "#1B70EE1C"
                 }
                 fg={"#1B70EE1C"}
                 progress={0.3}
                 prog={0.3}
-                mbps={20}
+                mbps={mbps}
                 isDl={true}
+                theme={themeMode}
               />
             </Box>
           )}
@@ -230,8 +267,8 @@ const SpeedTest = () => {
           alignItems="center"
           justifyContent="center"
           gap={10}
-          marginY="10dvh"
           sx={{ display: { xs: "none", md: "flex" } }}
+          marginTop="10dvh"
         >
           <InformationBox
             title="همراه اول"
