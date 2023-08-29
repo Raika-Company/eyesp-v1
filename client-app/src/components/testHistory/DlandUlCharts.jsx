@@ -5,20 +5,19 @@ import { alpha } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { InputLabel } from "@mui/material";
-import { LineChart } from "@mui/x-charts/LineChart";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const xLabels = [
-  "Page A",
-  "Page B",
-  "Page C",
-  "Page D",
-  "Page E",
-  "Page F",
-  "Page G",
-];
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import faker from "faker";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   width: "70vw", // Default width for lg screens
@@ -53,18 +52,64 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 function DlandUlCharts() {
-  const [chartColors, setChartColors] = useState(["#FF5733", "#EFEFEF"]); // Define the initial colors
+  const [chartColors, setChartColors] = useState(["#FF5733", "#EFEFEF"]);
+  const [isUploadVisible, setIsUploadVisible] = useState(false); // Initially hide "آپلود" dataset
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+    width: "100%",
+    height: "100%",
+  };
+
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "دانلود",
+        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "آپلود",
+        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        hidden: !isUploadVisible, // Conditionally hide "آپلود" dataset
+      },
+    ],
+  };
 
   const handleSwitchChange = () => {
-    // Toggle the colors when the switch is changed
-    setChartColors((prevColors) =>
-      prevColors[0] === "#FF5733"
-        ? ["#EFEFEF", "#FF5733"]
-        : ["#FF5733", "#EFEFEF"]
-    );
+    // Toggle the visibility of the "آپلود" dataset
+    setIsUploadVisible((prevValue) => !prevValue);
   };
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -83,37 +128,16 @@ function DlandUlCharts() {
             دانلود
           </InputLabel>
         </Box>
+
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            position: "relative",
+            flexDirection: "row",
+            justifyContent: "center",
+            height: "90%",
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              display: "flex",
-              flexDirection: "row",
-              transform: isMdScreen ? "translateY(-99px)" : "translateY(0)",
-
-              transform: "translateY(-107px)",
-              transform: isSmScreen
-                ? " translate(-30px,-90px);"
-                : "translateY(-107px)",
-            }}
-          >
-            <LineChart
-              width={isSmScreen ? 350 : isMdScreen ? 600 : 1000}
-              height={isSmScreen ? 300 : 400}
-              series={[
-                { data: pData, color: chartColors[0] },
-                { data: uData, color: chartColors[1] },
-              ]}
-              xAxis={[{ scaleType: "point", data: xLabels }]}
-              yAxis={[]}
-            />
-          </Box>
+          <Line responsive="true" options={options} data={data} />
         </Box>
       </CustomBox>
     </>
