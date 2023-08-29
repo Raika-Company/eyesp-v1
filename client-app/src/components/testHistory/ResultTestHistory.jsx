@@ -3,6 +3,7 @@ import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
+import "./TestHistory.css";
 
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -16,17 +17,17 @@ function ResultTestHistory() {
         key={index}
         sx={{
           display: "flex",
-          width: isSmScreen ? "60%" : "100%",
+          width: isSmScreen ? "58%" : isMdScreen ? "96%" : "97%",
           marginLeft: isSmScreen ? "7em" : "0",
-          flexDirection: "row-reverse",
+          flexDirection: "row",
           justifyContent: "space-around",
           paddingBottom: "2em",
           transform: "translateX(24px)",
+          marginRight: "30px",
         }}
       >
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(18px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-26px)" : "none",
           }}
@@ -35,7 +36,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(18px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-33px)" : "none",
           }}
@@ -44,7 +44,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-9px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-62px)" : "none",
 
@@ -55,7 +54,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-63px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-93px)" : "none",
 
@@ -66,9 +64,7 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-132px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-
             transform: isSmScreen ? "translateX(-125px)" : "none",
             color: "#DB7F12",
           }}
@@ -109,6 +105,7 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              gap: isSmScreen ? "0px" : "10px",
             }}
           >
             <Typography
@@ -135,7 +132,8 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
-              transform: isSmScreen ? "translateX(0px)" : "translateX(-24px)",
+              transform: isSmScreen ? "translateX(0px)" : "translateX(-40px)",
+              gap: isSmScreen ? "0px" : "10px",
             }}
           >
             <Typography
@@ -160,11 +158,12 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              gap: isSmScreen ? "0px" : "10px",
               transform: isSmScreen
                 ? ""
                 : isMdScreen
-                ? "translateX(-32px)"
-                : "translateX(-45px)",
+                ? "translateX(-41px)"
+                : "translateX(-60px)",
             }}
           >
             <Typography
@@ -194,7 +193,12 @@ function ResultTestHistory() {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-                transform: isSmScreen ? "translateX(0px)" : "translateX(-35px)",
+                transform: isSmScreen
+                  ? "translateX(0px)"
+                  : isMdScreen
+                  ? "transLateX(-17px)"
+                  : "translateX(-35px)",
+                marginRight: isSmScreen ? "0" : "41px",
               }}
             >
               اپراتور-سرور
@@ -210,6 +214,9 @@ function ResultTestHistory() {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                transform: isSmScreen
+                  ? "transLateX(-12px)"
+                  : "transLateX(-30px)",
               }}
             >
               تاریخ
@@ -225,6 +232,8 @@ function ResultTestHistory() {
             flexDirection: "column",
             justifyContent: "start",
             overflowY: "scroll", // Enable the vertical scrollbar
+            marginBottom: "2em",
+            direction: "rtl",
           }}
         >
           {elements}
