@@ -3,6 +3,7 @@ import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
+import "./TestHistory.css";
 
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -16,12 +17,13 @@ function ResultTestHistory() {
         key={index}
         sx={{
           display: "flex",
-          width: isSmScreen ? "58%" : "97%",
+          width: isSmScreen ? "58%" : isMdScreen ? "96%" : "97%",
           marginLeft: isSmScreen ? "7em" : "0",
-          flexDirection: "row-reverse",
+          flexDirection: "row",
           justifyContent: "space-around",
           paddingBottom: "2em",
           transform: "translateX(24px)",
+          marginRight: "30px",
         }}
       >
         <Typography
@@ -160,7 +162,7 @@ function ResultTestHistory() {
               transform: isSmScreen
                 ? ""
                 : isMdScreen
-                ? "translateX(-32px)"
+                ? "translateX(-41px)"
                 : "translateX(-60px)",
             }}
           >
@@ -230,6 +232,8 @@ function ResultTestHistory() {
             flexDirection: "column",
             justifyContent: "start",
             overflowY: "scroll", // Enable the vertical scrollbar
+            marginBottom: "2em",
+            direction: "rtl",
           }}
         >
           {elements}
