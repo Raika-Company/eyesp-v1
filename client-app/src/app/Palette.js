@@ -56,7 +56,15 @@ export const lightTheme = createTheme({
     },
     subtitle1: {
       fontFamily: "PeydaMedium, sans-serif",
-      fontSize: 16,
+      fontSize: "1.35rem",
+      fontWeight: 500,
+      opacity: 0.5,
+      color: "#5E5E5E",
+    },
+    subtitle2: {
+      fontFamily: "PeydaMedium, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
       opacity: 0.3,
       color: "#000",
     },
