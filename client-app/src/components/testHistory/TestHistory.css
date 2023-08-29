@@ -1,0 +1,29 @@
+/* Custom scroll bar styles */
+::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar track */
+    transform: rotate(90deg); /* Rotate the scrollbar to vertical position */
+    transform-origin: bottom left; /* Set the origin point for rotation */
+    max-height: 10%; 
+    height: 10%;
+    direction: rtl;
+    
+    background-color: #F5F5F5;
+  }
+  
+  /* Define the scrollbar thumb styles */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+                       left bottom,
+                       left top,
+                       color-stop(0.44, rgb(122,153,217)),
+                       color-stop(0.72, rgb(73,125,189)),
+                       color-stop(0.86, rgb(28,58,148)));
+  }
+
+  
+  /* Define the scrollbar thumb on hover styles */
+  * {
+    scrollbar-width: thin;
+  }
+  
