@@ -55,7 +55,7 @@ function App() {
         <Routes>
           {/* Main route with Navbar */}
           <Route
-            path="/"
+            path="*"
             element={
               <>
                 <Navbar
