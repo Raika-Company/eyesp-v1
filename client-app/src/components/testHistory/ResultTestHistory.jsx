@@ -26,7 +26,6 @@ function ResultTestHistory() {
       >
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(18px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-26px)" : "none",
           }}
@@ -35,7 +34,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(18px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-33px)" : "none",
           }}
@@ -44,7 +42,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-9px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-62px)" : "none",
 
@@ -55,7 +52,6 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-63px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
             transform: isSmScreen ? "translateX(-93px)" : "none",
 
@@ -66,9 +62,7 @@ function ResultTestHistory() {
         </Typography>
         <Typography
           sx={{
-            transform: isMdScreen ? "translateX(-132px)" : "none",
             fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-
             transform: isSmScreen ? "translateX(-125px)" : "none",
             color: "#DB7F12",
           }}
@@ -109,6 +103,7 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              gap: isSmScreen ? "0px" : "10px",
             }}
           >
             <Typography
@@ -135,7 +130,8 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
-              transform: isSmScreen ? "translateX(0px)" : "translateX(-24px)",
+              transform: isSmScreen ? "translateX(0px)" : "translateX(-40px)",
+              gap: isSmScreen ? "0px" : "10px",
             }}
           >
             <Typography
@@ -160,11 +156,12 @@ function ResultTestHistory() {
               display: "flex",
               flexDirection: isSmScreen ? "column" : "row-reverse",
               justifyContent: "center",
+              gap: isSmScreen ? "0px" : "10px",
               transform: isSmScreen
                 ? ""
                 : isMdScreen
                 ? "translateX(-32px)"
-                : "translateX(-45px)",
+                : "translateX(-60px)",
             }}
           >
             <Typography

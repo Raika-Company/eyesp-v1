@@ -18,6 +18,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import faker from "faker";
+import "./DlandUlCharts.css";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   width: "70vw", // Default width for lg screens
