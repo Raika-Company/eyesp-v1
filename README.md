@@ -1,17 +1,23 @@
 # rayka-speedtest
 
+Version: `0.1.0`
+
 Rayka-speedtest is a user-friendly application designed to empower users with the ability to assess their internet connectivity performance. Not only can users test their speed, but they can also revisit their test history to track any improvements or degradations in their service over time.
 
 ## Table of Contents
 
 1. [Features](#features)
 2. [Technologies Used](#technologies-used)
-3. [Getting Started](#getting-started)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#license)
-7. [Support](#support)
-8. [Roadmap](#roadmap)
+3. [Directory Structure](#directory-structure)
+4. [Getting Started](#getting-started)
+5. [Documentation](#documentation)
+6. [Development Guidelines](#development-guidelines)
+7. [Deployment](#deployment)
+8. [Usage](#usage)
+9. [Contributing](#contributing)
+10. [License](#license)
+11. [Support](#support)
+12. [Roadmap](#roadmap)
 
 ## Features
 
@@ -23,7 +29,14 @@ Rayka-speedtest is a user-friendly application designed to empower users with th
 
 - **React**: A robust front-end library that ensures an interactive and seamless user interface.
 - **React Router**: Enables fluid in-app navigation and routing, making sure the user gets where they want, when they want.
+- **Vite**: A build tool and development server.
 - **@mui/material**: A well-established UI framework that infuses the application with stylish, responsive, and intuitive components.
+
+## Directory Structure
+
+- **navbar**: Navigation components.
+- **speedtest**: Components related to speed testing.
+- **testHistory**: Components for managing and displaying test histories.
 
 ## Getting Started
 
@@ -60,6 +73,67 @@ Before diving into the app setup, ensure your environment meets the following pr
 
 This will get your application up and running on [http://localhost:5173](http://localhost:5173). Enjoy the experience!
 
+## Documentation
+
+### Project Architecture
+
+Provide a high-level overview of the project architecture, including how components interact, data flow, and any state management solutions in place.
+
+### Component Documentation
+
+Each component in the `components` directory should have its documentation, explaining its props, state, and any side effects (such as API calls).
+
+For example:
+
+- **Navbar.jsx**: This component handles the navigation bar. It accepts a `user` prop to display user-specific options and interacts with the `auth` context for login/logout functionality.
+
+### API Endpoints
+
+If the project interacts with APIs (either internal or third-party), list the main endpoints, their methods, expected payloads, and responses.
+
+For example:
+
+- **POST /api/user/login**: Authenticates a user.
+  - Payload: `{ "username": "string", "password": "string" }`
+  - Response: `{ "token": "string", "user": { ... } }`
+
+### Common Patterns and Best Practices
+
+Describe any coding patterns, utilities, or best practices your team should be aware of when developing for the project. This could include guidelines for error handling, logging, or specific coding paradigms you're following.
+
+### Troubleshooting
+
+Detailed steps or checks to resolve common issues that arise during development or deployment.
+
+## Development Guidelines
+
+### Code Standards
+
+- Follow the established coding standards and conventions.
+- Ensure code is commented for clarity.
+- Always pull the latest changes from the main branch before starting new work.
+
+### Component Development
+
+- When creating a new component, ensure it's placed in the appropriate directory within `src/components`.
+- Update the component's documentation as necessary.
+
+### Testing
+
+- Write unit tests for new components and functionalities.
+- Ensure all tests pass before merging changes.
+
+## Deployment
+
+[Instructions for deploying or updating the application in various environments.]
+
+## Contact
+
+For any questions or issues, please contact:
+
+- [Team Lead Name] - [Email]
+- [Developer Name] - [Email]
+
 ## Usage
 
 After setting up, you can easily:
@@ -87,7 +161,3 @@ Encountered a bug? Or have a suggestion? Please open a new [issue](https://githu
 - [ ] Mobile application support.
 - [ ] Real-time global speed test comparisons.
 - [ ] Enhanced user profiles with more in-depth metrics.
-
----
-
-Remember to replace the placeholders like `your-username` with the appropriate values. This expanded README provides a comprehensive look into your application, making it more engaging for readers and potential contributors.
