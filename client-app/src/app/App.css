@@ -11,7 +11,8 @@ body {
   background-attachment: fixed;
   background-position: left bottom; 
   background-size: contain;
-} */
+  overflow: hidden;
+}
 
 
 @font-face {

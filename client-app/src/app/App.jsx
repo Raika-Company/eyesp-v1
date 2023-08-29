@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Navbar themeMode={currentThemeMode} toggleTheme={toggleTheme} />
         <Routes>
-          <Route path="/" element={<SpeedTest />} />
+          <Route path="/" element={<SpeedTest themeMode={currentThemeMode}/>} />
           <Route path="/test-history" element={<TestHistory />} />
         </Routes>
       </Router>
