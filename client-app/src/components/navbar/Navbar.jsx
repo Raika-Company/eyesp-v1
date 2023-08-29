@@ -57,32 +57,18 @@ export default function Navbar({ themeMode, toggleTheme }) {
       }}
     >
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="primary"
-          onClick={handleOpenDrawer}
-          sx={{ display: { xs: "block", md: "none" } }}
-        >
-          <MenuIcon />
-        </IconButton>
-
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           <img src={Logo} alt="TIC Radar site" height="30px" />
-          <Typography variant="h4" color="primary" sx={{ marginLeft: 2 }}>
+          <Typography
+            variant="h4"
+            component="h1"
+            color="primary"
+            sx={{ marginLeft: 2 }}
+          >
             TIC Radar
           </Typography>
         </Box>
 
-        <Box
-          sx={{
-            flexGrow: 1,
-            flexDirection: "row-reverse",
-            gap: 2,
-            display: { xs: "flex", md: "none" },
-          }}
-        >
-          <img src={Logo} alt="TIC Radar site" height="30px" />
-        </Box>
         <Box sx={{ display: { xs: "none", md: "inline-block" } }}>
           <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
         </Box>
@@ -103,6 +89,28 @@ export default function Navbar({ themeMode, toggleTheme }) {
           ))}
         </Box>
 
+        <Box
+          sx={{
+            display: { xs: "flex", md: "none" },
+            flexGrow: 1,
+            marginTop: "0.5em",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <IconButton
+            edge="start"
+            color="primary"
+            onClick={handleOpenDrawer}
+            sx={{ display: { xs: "block", md: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h4" component="h1" color="primary">
+            TIC Radar
+          </Typography>
+          <img src={Logo} alt="TIC Radar site" height="30px" />
+        </Box>
         <Drawer anchor="left" open={drawerOpen} onClose={handleCloseDrawer}>
           <List sx={{ width: "60vw" }}>
             {[...pages].reverse().map(([text, path]) => (
