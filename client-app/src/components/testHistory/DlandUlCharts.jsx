@@ -71,6 +71,12 @@ function DlandUlCharts() {
     plugins: {
       legend: {
         position: "top",
+        align: "start",
+        // labels: {
+        //   padding: {
+        //     bottom: 10, // Add paddingBottom to legend labels
+        //   },
+        // },
       },
     },
     width: "100%",
@@ -133,8 +139,8 @@ function DlandUlCharts() {
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center",
             height: "90%",
+            justifyContent: "flex-start", // Align to the left
           }}
         >
           <Line responsive="true" options={options} data={data} />
