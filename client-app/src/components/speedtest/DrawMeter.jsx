@@ -1,6 +1,6 @@
 /**
  * @file DrawMeter.js
- * This file contains the `DrawMeter` component which renders a meter gauge 
+ * This file contains the `DrawMeter` component which renders a meter gauge
  * on a canvas to visualize download/upload speed.
  */
 
@@ -10,11 +10,11 @@ import React, { useRef, useEffect } from "react";
 /**
  * DrawMeter Component
  *
- * This component renders a canvas that visually represents a meter gauge 
- * to depict the speed in Mbps. The dial on the gauge indicates the speed 
- * dynamically. The meter is styled with a gradient and the dial rotates 
- * based on the mbps prop. 
- * 
+ * This component renders a canvas that visually represents a meter gauge
+ * to depict the speed in Mbps. The dial on the gauge indicates the speed
+ * dynamically. The meter is styled with a gradient and the dial rotates
+ * based on the mbps prop.
+ *
  * Props:
  * @param {number} amount - Not directly used within the component. Potential for enhancement.
  * @param {string} bk - Background color for the meter gauge.
@@ -23,10 +23,19 @@ import React, { useRef, useEffect } from "react";
  * @param {number} prog - Not directly used within the component. Potential for enhancement.
  * @param {number} [mbps=0.0001] - Mbps speed value to be depicted on the gauge.
  * @param {boolean} [isDl=false] - Indicates if the speed is download (true) or upload (false).
- * 
+ *
  * @returns {React.Element} Rendered DrawMeter component.
  */
-function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
+function DrawMeter({
+  amount,
+  bk,
+  fg,
+  progress,
+  prog,
+  mbps = 0.0001,
+  isDl,
+  theme,
+}) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +51,13 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
     } else {
       canvas.width = cw;
       canvas.height = ch;
+    }
+    let numberColor;
+
+    if (theme == "dark") {
+      numberColor = "#45628A";
+    } else {
+      numberColor = "black";
     }
 
     const startAngle = -Math.PI * 1.2;
@@ -65,6 +81,7 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
       canvas.width / 2 + (canvas.height / 1.5 - ctx.lineWidth),
       canvas.height - 78 * sizScale
     );
+
     gradient.addColorStop(0, "#84B3FA");
     gradient.addColorStop(0.5, "#5A9CFF");
     gradient.addColorStop(1, "#126AED");
@@ -93,7 +110,8 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
     var startHalfCircleEnd = tangentStartAngle + Math.PI;
 
     ctx.arc(
-      canvas.width / 2 + Math.cos(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
+      canvas.width / 2 +
+        Math.cos(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
       canvas.height -
         78 * sizScale +
         Math.sin(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
@@ -109,7 +127,8 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
     var endHalfCircleEnd = tangentEndAngle;
 
     ctx.arc(
-      canvas.width / 2 + Math.cos(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
+      canvas.width / 2 +
+        Math.cos(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
       canvas.height -
         78 * sizScale +
         Math.sin(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
@@ -122,7 +141,46 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = 12 * sizScale + "px Peyda-Bold";
+    ctx.font = 12 * sizScale + "px PeydaBold";
+
+    const calculatePosition = (angle, distance, height, lineWidth) => {
+      return {
+        x: (canvas.width / 2) + Math.cos(angle) * (height / 1.6 - lineWidth - distance),
+        y: canvas.height - 78 * sizScale + Math.sin(angle) * (height / 1.6 - lineWidth - distance)
+      };
+    };
+
+    function getInterpolatedColor(fraction) {
+      const startColor = [18, 106, 237]; // "#126AED" in RGB
+      const endColor = [255, 255, 255]; // white in RGB
+    
+      const resultColor = startColor.map((color, index) => {
+        return Math.round(color + fraction * (endColor[index] - color));
+      });
+    
+      return `rgba(${resultColor[0]}, ${resultColor[1]}, ${resultColor[2]}, ${fraction})`;
+    }
+    
+
+    let flashIntensity = 0;
+
+    function drawNumberWithFlashEffect(currentNumberIndex) {
+      let angle =
+        startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
+      let distanceFromEdge = 15 * sizScale;
+      let position = calculatePosition(
+        angle,
+        distanceFromEdge,
+        canvas.height,
+        ctx.lineWidth
+      );
+      if (currentNumberIndex * 10 <= mbps) {
+        ctx.fillStyle = "#126AED";
+      } else {
+        ctx.fillStyle = getInterpolatedColor(flashIntensity);
+      }      
+      ctx.fillText(currentNumberIndex * 10, position.x, position.y);
+    }
 
     if (isDl) {
       let currentNumberIndex = 0;
@@ -130,44 +188,21 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
 
       function drawNumber() {
         if (currentNumberIndex > 10) return;
-
         frameCounter++;
 
-        if (frameCounter % 5 == 0) {
-          let angle =
-            startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
-          let distanceFromEdge = 15 * sizScale;
-          let x =
-            canvas.width / 2 +
-            Math.cos(angle) *
-              (canvas.height / 1.6 - ctx.lineWidth - distanceFromEdge);
-          let y =
-            canvas.height -
-            78 * sizScale +
-            Math.sin(angle) *
-              (canvas.height / 1.6 - ctx.lineWidth - distanceFromEdge);
-          ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#126AED" : "black";
-          ctx.fillText(currentNumberIndex * 10, x, y);
-
+        if (frameCounter % 5 === 0) {
+          drawNumberWithFlashEffect(currentNumberIndex);
           currentNumberIndex++;
+          flashIntensity = 1; // start flashing
+        } else if (flashIntensity > 0) {
+          flashIntensity -= 0.1; // decrease intensity to fade out the flash
         }
         requestAnimationFrame(drawNumber);
       }
-
       drawNumber();
     } else {
       for (let i = 0; i <= 10; i++) {
-        let angle = startAngle + (endAngle - startAngle) * (i / 10);
-        let distanceFromEdge = 15 * sizScale;
-        let x =
-          canvas.width / 2 +
-          Math.cos(angle) * (canvas.height / 1.6 - ctx.lineWidth - distanceFromEdge);
-        let y =
-          canvas.height -
-          78 * sizScale +
-          Math.sin(angle) * (canvas.height / 1.6 - ctx.lineWidth - distanceFromEdge);
-        ctx.fillStyle = i * 10 <= mbps ? "#126AED" : "black";
-        ctx.fillText(i * 10, x, y);
+        drawNumberWithFlashEffect(i);
       }
     }
 
@@ -202,7 +237,7 @@ function DrawMeter({ amount, bk, fg, progress, prog, mbps = 0.0001, isDl }) {
     var pointerAngle =
       -startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3;
     drawPointer(pointerAngle);
-  }, [amount, bk, fg, mbps, isDl]);
+  }, [amount, bk, fg, mbps, isDl, theme]);
 
   return (
     <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>

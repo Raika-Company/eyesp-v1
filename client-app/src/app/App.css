@@ -10,6 +10,7 @@ body {
   background-attachment: fixed;
   background-position: left bottom; /* Change the background image position */
   background-size: contain;
+  overflow: hidden;
 }
 
 

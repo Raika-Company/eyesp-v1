@@ -67,9 +67,9 @@ export default function Navbar({ themeMode, toggleTheme }) {
         </IconButton>
 
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-          <img src={Logo} alt="speedtest.com site" height="30px" />
+          <img src={Logo} alt="TIC Radar site" height="30px" />
           <Typography variant="h4" color="primary" sx={{ marginLeft: 2 }}>
-            SPEEDTEST.COM
+            TIC Radar
           </Typography>
         </Box>
 
@@ -81,7 +81,7 @@ export default function Navbar({ themeMode, toggleTheme }) {
             display: { xs: "flex", md: "none" },
           }}
         >
-          <img src={Logo} alt="speedtest.com site" height="30px" />
+          <img src={Logo} alt="TIC Radar site" height="30px" />
         </Box>
         <Box sx={{ display: { xs: "none", md: "inline-block" } }}>
           <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
