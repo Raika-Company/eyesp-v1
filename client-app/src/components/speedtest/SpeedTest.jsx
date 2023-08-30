@@ -1,6 +1,7 @@
 // React core and hooks
 import React, { useState, useEffect } from "react";
 import backgroundImage from "../../app/assets/image/back.svg";
+import { useMediaQuery } from "@mui/material";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
@@ -126,6 +127,8 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
 const SpeedTest = ({ themeMode }) => {
   const theme = useTheme();
 
+  const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
+
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const [speedData, setSpeedData] = useState({
@@ -166,7 +169,7 @@ const SpeedTest = ({ themeMode }) => {
       const navbarHeight = navbarElement.offsetHeight;
       setBoxHeight(`calc(100dvh - ${navbarHeight}px)`);
     } else {
-      setBoxHeight("90dvh");
+      setBoxHeight("100dvh");
     }
   }, []);
 
@@ -195,8 +198,8 @@ const SpeedTest = ({ themeMode }) => {
         display="flex"
         flexDirection="row"
         justifyContent="space-evenly"
-        height="8dvh"
-        width="80%"
+        height="clamp(5rem,5rem + 3vmin, 3rem)"
+        width="65%"
         marginX="auto"
         alignItems="center"
         textAlign="center"
@@ -244,8 +247,8 @@ const SpeedTest = ({ themeMode }) => {
           <AnimatedButton
             onClick={handleButtonClick}
             sx={{
-              height: "16rem",
-              width: "16rem",
+              height: "clamp(10rem,10rem + 10vmin,16rem)",
+              width: "clamp(10rem,10rem + 10vmin,16rem)",
               borderRadius: "50%",
               borderColor: "transparent",
               borderWidth: "6px",
@@ -273,8 +276,8 @@ const SpeedTest = ({ themeMode }) => {
               [theme.breakpoints.up("md")]: {
                 width: "80%",
               },
-              height: "16rem",
-              width: "16rem",
+              height: "clamp(10rem,10rem + 10vmin,16rem)",
+              width: "clamp(10rem,10rem + 10vmin,16rem)",
             }}
           >
             <DrawMeter

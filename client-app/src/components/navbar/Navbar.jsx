@@ -119,7 +119,7 @@ export default function Navbar({ themeMode, toggleTheme }) {
   return (
     <AppBar component="nav" position="static" sx={NAVBAR_STYLES} className="nav-height">
       <Toolbar>
-        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, marginTop:1.5 }}>
           <img src={Logo} alt="TIC Radar logo" height="30px" />
           <Typography variant="h4" component="h1" color="primary" sx={{ marginLeft: 2 }}>
             TIC Radar
