@@ -1,5 +1,5 @@
 // React core and hooks
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import backgroundImage from "../../app/assets/image/back.svg";
 
 // Third-party libraries or components
@@ -67,7 +67,6 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
 const AnimatedButton = styled(Button)(({ theme }) => ({
   position: "relative",
   overflow: "visible",
-  marginTop: "15dvh",
   "&::after": {
     content: '""',
     position: "absolute",
@@ -135,6 +134,8 @@ const SpeedTest = ({ themeMode }) => {
   });
   const [mbps, setMbps] = useState(0);
 
+  const [boxHeight, setBoxHeight] = useState("90dvh");
+
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
 
@@ -158,145 +159,163 @@ const SpeedTest = ({ themeMode }) => {
     requestAnimationFrame(animateMbps);
   };
 
+  useEffect(() => {
+    const navbarElement = document.querySelector(".nav-height");
+
+    if (navbarElement) {
+      const navbarHeight = navbarElement.offsetHeight;
+      setBoxHeight(`calc(100dvh - ${navbarHeight}px)`);
+    } else {
+      setBoxHeight("90dvh");
+    }
+  }, []);
+
   return (
     <Box
       component="main"
-      height="100dvh"
+      height={boxHeight}
       sx={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
         backgroundPosition: "left bottom",
-        backgroundSize: "contain",
+        [theme.breakpoints.between("xs", "sm")]: {
+          backgroundSize: "contain",
+        },
+        [theme.breakpoints.up("md")]: {
+          backgroundSize: "40%",
+        },
       }}
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-around"
+      alignItems="stretch"
     >
-      <Container maxWidth="lg">
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-evenly"
-          height="8vh"
-          alignItems="center"
-          textAlign="center"
-          sx={{
-            borderRadius: "1.2rem",
-            border: "1.468px solid rgba(0, 0, 0, 0.10)",
-            display: { xs: "none", md: "flex" },
-          }}
-          marginTop="10vh"
-        >
-          <SpeedBox
-            title="سرعت دانلود"
-            iconSrc={Download}
-            altText="before download icon"
-            value={isGoButtonVisible ? null : speedData.downloadSpeed}
-            measure="Mbps"
-            opacity={isGoButtonVisible ? "0.5" : "1"}
-          />
-          <Divider />
-          <SpeedBox
-            title="سرعت آپلود"
-            iconSrc={Upload}
-            altText="before upload icon"
-            value={null}
-            measure="Mbps"
-            opacity={isGoButtonVisible ? "0.5" : "0.5"}
-          />
-          <Divider />
-          <SpeedBox
-            title="پینگ"
-            iconSrc={Ping}
-            altText="ping icon"
-            value={isGoButtonVisible ? null : speedData.ping}
-            measure="ms"
-            opacity={isGoButtonVisible ? "0.5" : "1"}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {isGoButtonVisible ? (
-            <AnimatedButton
-              onClick={handleButtonClick}
-              sx={{
-                height: "16rem",
-                width: "16rem",
-                borderRadius: "50%",
-                borderColor: "transparent",
-                borderWidth: "6px",
-                borderStyle: "solid",
-                border: "3px solid rgba(54, 129, 241, 0.8)",
-                backgroundOrigin: "border-box",
-                backgroundClip: "padding-box, border-box",
-                boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
-                fontSize: "4rem",
-                fontWeight: "400",
-                lineHeight: "normal",
-                fontStyle: "normal",
-                paddingTop: "2rem",
-              }}
-              variant="outlined"
-            >
-              GO
-            </AnimatedButton>
-          ) : (
-            <Box
-              sx={{
-                [theme.breakpoints.between("xs", "sm")]: {
-                  marginTop: "25dvh",
-                  width: "100%",
-                },
-                [theme.breakpoints.up("md")]: {
-                  marginTop: "12dvh",
-                  width: "80%",
-                },
-              }}
-            >
-              <DrawMeter
-                amount={0.2}
-                bk={
-                  /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                    ? "#45628A"
-                    : "#1B70EE1C"
-                }
-                fg={"#1B70EE1C"}
-                progress={0.3}
-                prog={0.3}
-                mbps={mbps}
-                isDl={true}
-                theme={themeMode}
-              />
-            </Box>
-          )}
-        </Box>
-        <Box
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          gap={10}
-          sx={{ display: { xs: "none", md: "flex" } }}
-          marginTop="10dvh"
-        >
-          <InformationBox
-            title="همراه اول"
-            value="51.15.57.153"
-            iconSrc={Person}
-            altText="Person Icon"
-          />
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-evenly"
+        height="8dvh"
+        width="80%"
+        marginX="auto"
+        alignItems="center"
+        textAlign="center"
+        sx={{
+          borderRadius: "1.2rem",
+          border: "1.468px solid rgba(0, 0, 0, 0.10)",
+          display: { xs: "none", md: "flex" },
+        }}
+      >
+        <SpeedBox
+          title="سرعت دانلود"
+          iconSrc={Download}
+          altText="before download icon"
+          value={isGoButtonVisible ? null : speedData.downloadSpeed}
+          measure="Mbps"
+          opacity={isGoButtonVisible ? "0.5" : "1"}
+        />
+        <Divider />
+        <SpeedBox
+          title="سرعت آپلود"
+          iconSrc={Upload}
+          altText="before upload icon"
+          value={null}
+          measure="Mbps"
+          opacity={isGoButtonVisible ? "0.5" : "0.5"}
+        />
+        <Divider />
+        <SpeedBox
+          title="پینگ"
+          iconSrc={Ping}
+          altText="ping icon"
+          value={isGoButtonVisible ? null : speedData.ping}
+          measure="ms"
+          opacity={isGoButtonVisible ? "0.5" : "1"}
+        />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {isGoButtonVisible ? (
+          <AnimatedButton
+            onClick={handleButtonClick}
+            sx={{
+              height: "16rem",
+              width: "16rem",
+              borderRadius: "50%",
+              borderColor: "transparent",
+              borderWidth: "6px",
+              borderStyle: "solid",
+              border: "3px solid rgba(54, 129, 241, 0.8)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
+              fontSize: "4rem",
+              fontWeight: "400",
+              lineHeight: "normal",
+              fontStyle: "normal",
+              paddingTop: "2rem",
+            }}
+            variant="outlined"
+          >
+            GO
+          </AnimatedButton>
+        ) : (
+          <Box
+            sx={{
+              [theme.breakpoints.between("xs", "sm")]: {
+                width: "100%",
+              },
+              [theme.breakpoints.up("md")]: {
+                width: "80%",
+              },
+              height: "16rem",
+              width: "16rem",
+            }}
+          >
+            <DrawMeter
+              amount={0.2}
+              bk={
+                /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                  ? "#45628A"
+                  : "#1B70EE1C"
+              }
+              fg={"#1B70EE1C"}
+              progress={0.3}
+              prog={0.3}
+              mbps={mbps}
+              isDl={true}
+              theme={themeMode}
+            />
+          </Box>
+        )}
+      </Box>
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        gap={10}
+        sx={{ display: { xs: "none", md: "flex" } }}
+      >
+        <InformationBox
+          title="همراه اول"
+          value="51.15.57.153"
+          iconSrc={Person}
+          altText="Person Icon"
+        />
 
-          <InformationBox
-            title="سرور مقصد"
-            value="تهران - امام"
-            iconSrc={Globe}
-            altText="Globe Icon"
-            buttonLabel="تغییر سرور"
-          />
-        </Box>
-      </Container>
+        <InformationBox
+          title="سرور مقصد"
+          value="تهران - امام"
+          iconSrc={Globe}
+          altText="Globe Icon"
+          buttonLabel="تغییر سرور"
+        />
+      </Box>
       <CustomAccordion
         expanded={expanded}
         setExpanded={setExpanded}
