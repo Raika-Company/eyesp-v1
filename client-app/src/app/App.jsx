@@ -17,6 +17,7 @@ import SpeedTest from "../components/speedtest/SpeedTest";
 import TestHistory from "../components/testHistory/TestHistory";
 
 import "./App.css";
+import Pc from "../components/pc/pc";
 
 /**
  * Main Application Component.
@@ -76,7 +77,7 @@ function App() {
           {/* PC route without Navbar */}
           <Route
             path="/pc"
-            element={<SpeedTest themeMode={currentThemeMode} />}
+            element={<Pc themeMode={currentThemeMode} />}
           />
         </Routes>
       </Router>
