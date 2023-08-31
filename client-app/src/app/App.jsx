@@ -35,7 +35,7 @@ function App() {
           {/* Routes without Navbar */}
           <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard/*" element={<DashboardRoutes themeMode={currentThemeMode} />} />
+          <Route path="/admin/*" element={<DashboardRoutes themeMode={currentThemeMode} />} />
 
           {/* Main route with Navbar */}
           <Route

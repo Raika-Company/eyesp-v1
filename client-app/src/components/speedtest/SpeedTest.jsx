@@ -167,9 +167,9 @@ const SpeedTest = ({ themeMode }) => {
 
     if (navbarElement) {
       const navbarHeight = navbarElement.offsetHeight;
-      setBoxHeight(`calc(100dvh - ${navbarHeight}px)`);
+      setBoxHeight(`calc(98dvh - ${navbarHeight}px)`);
     } else {
-      setBoxHeight("100dvh");
+      setBoxHeight("98dvh");
     }
   }, []);
 

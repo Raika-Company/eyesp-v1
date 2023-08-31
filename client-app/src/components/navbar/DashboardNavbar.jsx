@@ -18,7 +18,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import CompanyLogo from "../../app/assets/image/logo.svg";
 
-const routes = ["/dashboard", "/dashboard/speed-test"];
+const routes = ["/admin", "/admin/speed-test"];
 const texts = ["صفحه اصلی", "تست سرعت"];
 const ACTIVE_COLOR = "#126AED";
 const INACTIVE_COLOR = "#9B9B9B";
