@@ -30,13 +30,6 @@ const styles = {
     height: ICON_SIZE.height,
     cursor: "pointer",
   },
-  drawerStyle: {
-    "& .MuiDrawer-paper": {
-      width: (isOpen) => (isOpen ? "max(240px, 10vw)" : 60),
-      overflowX: "hidden",
-      transition: "width 0.3s",
-    },
-  },
 };
 
 /**
@@ -124,7 +117,13 @@ const DashboardNavbar = () => {
           variant="permanent"
           anchor="right"
           open={isOpen}
-          sx={styles.drawerStyle}
+          sx={{
+            "& .MuiDrawer-paper": {
+              width: isOpen ? "max(240px, 10vw)" : 60,
+              overflowX: "hidden",
+              transition: "width 0.3s",
+            },
+          }}
         >
           <List>
             <ListItem sx={{ justifyContent: "flex-start", marginY: "1rem" }}>
