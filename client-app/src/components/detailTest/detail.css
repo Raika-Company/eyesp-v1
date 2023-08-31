@@ -1,0 +1,11 @@
+.css-1aag3uw-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+    color: #ffff !important;
+}
+
+.css-1aag3uw-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+    background-color: #126AED !important;
+}
+    .css-1aag3uw-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        opacity: 1.5 
+        !important;
+    }

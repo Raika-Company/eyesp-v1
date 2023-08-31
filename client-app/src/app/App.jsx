@@ -17,6 +17,7 @@ import SpeedTest from "../components/speedtest/SpeedTest";
 import TestHistory from "../components/testHistory/TestHistory";
 
 import "./App.css";
+import DetailTest from "../components/detailTest/DetailTest";
 
 /**
  * Main Application Component.
@@ -58,16 +59,16 @@ function App() {
             path="*"
             element={
               <>
-                <Navbar
+                {/* <Navbar
                   themeMode={currentThemeMode}
                   toggleTheme={toggleTheme}
-                />
+                /> */}
                 <Routes>
                   <Route
                     index
                     element={<SpeedTest themeMode={currentThemeMode} />}
                   />
-                  <Route path="test-history" element={<TestHistory />} />
+                  <Route path="test-history" element={<DetailTest />} />
                 </Routes>
               </>
             }

@@ -1,5 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography, FormControlLabel } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+import React, { useState } from "react";
 import arrowBack from "./../../app/assets/image/arrowBack.svg";
 import Switch from "@mui/material/Switch";
 import {
@@ -14,9 +16,36 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import faker from "faker";
+import "./detail.css";
 
 const DetailTest = () => {
-  const label = { inputProps: { "aria-label": "Switch demo" } };
+  const [isDownloadVisible, setDownloadVisible] = useState(true); // Default checked
+  const [isUploadVisible, setUploadVisible] = useState(true);
+  const Android12Switch = styled(Switch)(({ theme }) => ({
+    padding: 8,
+    "& .MuiSwitch-track": {
+      borderRadius: 22 / 2,
+
+      "&:before, &:after": {
+        content: '""',
+        position: "absolute",
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: 16,
+        height: 16,
+      },
+    },
+
+    "& .MuiSwitch-thumb": {
+      boxShadow: "none",
+      width: 16,
+      height: 16,
+      margin: 2,
+    },
+    "&.Mui-checked .MuiSwitch-track": {
+      backgroundColor: "white",
+    },
+  }));
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -63,15 +92,20 @@ const DetailTest = () => {
         data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        hidden: !isDownloadVisible, // Use the state to control visibility
       },
       {
         label: "آپلود",
         data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
+        hidden: !isUploadVisible, // Use the state to control visibility
       },
     ],
   };
+  const getSwitchStyle = (isChecked, color) => ({
+    backgroundColor: isChecked ? color : "transparent",
+  });
   return (
     <>
       <Box
@@ -156,7 +190,7 @@ const DetailTest = () => {
                 }}
               >
                 <Typography>میانگین عملکرد</Typography>
-                <Switch {...label} />
+                <FormControlLabel control={<Android12Switch />} />
               </Box>
               <Box
                 sx={{
@@ -166,7 +200,7 @@ const DetailTest = () => {
                 }}
               >
                 <Typography>میانگین عملکرد</Typography>
-                <Switch {...label} />
+                <FormControlLabel control={<Android12Switch />} />
               </Box>
               <Box
                 sx={{
@@ -176,7 +210,7 @@ const DetailTest = () => {
                 }}
               >
                 <Typography>میانگین عملکرد</Typography>
-                <Switch {...label} />
+                <FormControlLabel control={<Android12Switch />} />
               </Box>
               <Box
                 sx={{
@@ -186,7 +220,7 @@ const DetailTest = () => {
                 }}
               >
                 <Typography>میانگین عملکرد</Typography>
-                <Switch {...label} />
+                <FormControlLabel control={<Android12Switch />} />
               </Box>
             </Box>
             <Box sx={{ width: "20%" }}></Box>
@@ -258,7 +292,12 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel
+                control={<Android12Switch />}
+                checked={isDownloadVisible}
+                onChange={() => setDownloadVisible(!isDownloadVisible)}
+                className="downloadSwitch"
+              />
             </Box>
             <Box
               sx={{
@@ -268,7 +307,12 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel
+                control={<Android12Switch />}
+                checked={isUploadVisible}
+                onChange={() => setUploadVisible(!isUploadVisible)}
+                className="uploadSwitch"
+              />
             </Box>
             <Box
               sx={{
@@ -278,7 +322,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -288,7 +332,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -298,7 +342,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
           </Box>
           <Box
@@ -319,7 +363,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -329,7 +373,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -339,7 +383,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -349,7 +393,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
             <Box
               sx={{
@@ -359,7 +403,7 @@ const DetailTest = () => {
               }}
             >
               <Typography>میانگین عملکرد</Typography>
-              <Switch {...label} />
+              <FormControlLabel control={<Android12Switch />} />
             </Box>
           </Box>
         </Box>
