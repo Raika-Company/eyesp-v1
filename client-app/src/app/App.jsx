@@ -7,9 +7,9 @@ import Navbar from "../components/navbar/Navbar";
 import { lightTheme, darkTheme } from "./Palette";
 import SpeedTest from "../components/speedtest/SpeedTest";
 import TestHistory from "../components/testHistory/TestHistory";
-import Pc from "../components/pc/pc";
 import Login from "../components/login/Login";
-import DashboardNavbar from "../components/navbar/DashboardNavbar"
+import Pc from "../components/pc/pc";
+import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import Dashboard from "../components/dashboard/Dashboard";
 
 import "./App.css";
