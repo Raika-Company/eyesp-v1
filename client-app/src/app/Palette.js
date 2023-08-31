@@ -75,7 +75,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           left: "inherit",
-          right: "1rem",
+          right: "1.7rem",
           transformOrigin: "right",
         },
       },
@@ -87,24 +87,24 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiDrawer: {
-      styleOverrides: {
-        root: {
-          direction: "ltr",
-        },
-        paper: {
-          position: "absolute",
-          left: 0,
-          transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-          "&.MuiDrawer-open": {
-            transform: "translateX(0)",
-          },
-          "&:not(.MuiDrawer-open)": {
-            transform: "translateX(-100%)",
-          },
-        },
-      },
-    },
+    // MuiDrawer: {
+    //   styleOverrides: {
+    //     root: {
+    //       direction: "ltr",
+    //     },
+    //     paper: {
+    //       position: "absolute",
+    //       left: 0,
+    //       transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+    //       "&.MuiDrawer-open": {
+    //         transform: "translateX(0)",
+    //       },
+    //       "&:not(.MuiDrawer-open)": {
+    //         transform: "translateX(-100%)",
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 

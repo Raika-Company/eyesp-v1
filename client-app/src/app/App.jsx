@@ -1,11 +1,3 @@
-/**
- * Main Application Component.
- *
- * The root component for the application, responsible for theme management and routing.
- * Provides a navigation bar for main routes, while some specific routes (like `/pc`) are rendered without the navigation bar.
- *
- * @module App
- */
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
@@ -15,29 +7,16 @@ import Navbar from "../components/navbar/Navbar";
 import { lightTheme, darkTheme } from "./Palette";
 import SpeedTest from "../components/speedtest/SpeedTest";
 import TestHistory from "../components/testHistory/TestHistory";
+import Pc from "../components/pc/pc";
+import Login from "../components/login/Login";
+import DashboardNavbar from "../components/navbar/DashboardNavbar"
+import Dashboard from "../components/dashboard/Dashboard";
 
 import "./App.css";
-import Pc from "../components/pc/pc";
 
-/**
- * Main Application Component.
- *
- * The root component for the application, responsible for theme management and routing.
- * Provides a navigation bar for main routes, while some specific routes (like `/pc`) are rendered without the navigation bar.
- *
- * @module App
- */
 function App() {
   const [theme, setTheme] = useState(lightTheme);
 
-  /**
-   * Main Application Component.
-   *
-   * The root component for the application, responsible for theme management and routing.
-   * Provides a navigation bar for main routes, while some specific routes (like `/pc`) are rendered without the navigation bar.
-   *
-   * @module App
-   */
   const toggleTheme = () => {
     if (theme === lightTheme) {
       setTheme(darkTheme);
@@ -46,7 +25,6 @@ function App() {
     }
   };
 
-  // Determine current theme mode (either "light" or "dark")
   const currentThemeMode = theme === lightTheme ? "light" : "dark";
 
   return (
@@ -54,9 +32,14 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
+          {/* Routes without Navbar */}
+          <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard/*" element={<DashboardRoutes themeMode={currentThemeMode} />} />
+
           {/* Main route with Navbar */}
           <Route
-            path="*"
+            path="/*"
             element={
               <>
                 <Navbar
@@ -73,15 +56,21 @@ function App() {
               </>
             }
           />
-
-          {/* PC route without Navbar */}
-          <Route
-            path="/pc"
-            element={<Pc themeMode={currentThemeMode} />}
-          />
         </Routes>
       </Router>
     </ThemeProvider>
+  );
+}
+
+const DashboardRoutes = () => {
+  return (
+    <>
+      <DashboardNavbar />
+      <Routes>
+        <Route index element={<Dashboard/>} />
+        <Route path="speed-test" element={<TestHistory />} />
+      </Routes>
+    </>
   );
 }
 
