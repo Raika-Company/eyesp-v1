@@ -56,6 +56,7 @@ const NAVBAR_STYLES = {
 
 const pages = [
   ["درباره ما", "/about-us"],
+  ["پنل ادمین", "/admin"],
   ["تاریخچه تست", "/test-history"],
   ["صفحه اصلی", "/"],
 ];

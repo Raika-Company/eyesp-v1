@@ -128,6 +128,7 @@ const SpeedTest = ({ themeMode }) => {
   const theme = useTheme();
 
   const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
+  const [animationInterval, setAnimationInterval] = useState(null);
 
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
@@ -145,6 +146,7 @@ const SpeedTest = ({ themeMode }) => {
     let startTime = Date.now();
     let totalDuration = 1000; // 1 seconds
     let halfwayPoint = totalDuration / 2; // 0.5 second
+    let increasing = true; // flag to determine if mbps is increasing or decreasing
 
     const animateMbps = () => {
       let timePassed = Date.now() - startTime;
@@ -153,6 +155,19 @@ const SpeedTest = ({ themeMode }) => {
         setMbps((timePassed / halfwayPoint) * 100); // from 0 to 100 in 1 second
       } else if (timePassed <= totalDuration) {
         setMbps(100 - ((timePassed - halfwayPoint) / halfwayPoint) * 80); // from 100 to 20 in 1 second
+      } else {
+        // after the main animation, start the continuous change between 15 and 25
+        if (!animationInterval) {
+          const interval = setInterval(() => {
+            setMbps((prev) => {
+              if (prev >= 25) increasing = false;
+              if (prev <= 15) increasing = true;
+
+              return increasing ? prev + 1 : prev - 1;
+            });
+          }, 40); // adjust the time interval as needed
+          setAnimationInterval(interval);
+        }
       }
 
       if (timePassed < totalDuration) {
@@ -161,6 +176,14 @@ const SpeedTest = ({ themeMode }) => {
     };
     requestAnimationFrame(animateMbps);
   };
+
+  useEffect(() => {
+    return () => {
+      if (animationInterval) {
+        clearInterval(animationInterval);
+      }
+    };
+  }, [animationInterval]);
 
   useEffect(() => {
     const navbarElement = document.querySelector(".nav-height");

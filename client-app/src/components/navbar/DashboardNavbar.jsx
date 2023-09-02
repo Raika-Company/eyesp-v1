@@ -75,7 +75,8 @@ const NavLink = memo(({ index, navigateTo, location, isOpen }) => {
  *
  * @returns {JSX.Element}
  */
-const DashboardNavbar = () => {
+export default function DashboardNavbar() {
+  console.log("Hi")
   const [isOpen, setIsOpen] = useState(true);
   const [key, setKey] = useState(0);
   const navigate = useNavigate();
@@ -150,5 +151,3 @@ const DashboardNavbar = () => {
     </Box>
   );
 };
-
-export default DashboardNavbar;
