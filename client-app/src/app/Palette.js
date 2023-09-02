@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material";
 
 export const lightTheme = createTheme({
-  direction: "rtl",
   palette: {
     mode: "light",
     primary: {
@@ -75,7 +74,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           left: "inherit",
-          right: "1rem",
+          right: "1.7rem",
           transformOrigin: "right",
         },
       },
@@ -102,6 +101,15 @@ export const lightTheme = createTheme({
           "&:not(.MuiDrawer-open)": {
             transform: "translateX(-100%)",
           },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
+          borderRadius: 20,
+          background: "#E8E8E8"
         },
       },
     },

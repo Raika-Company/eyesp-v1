@@ -1,26 +1,3 @@
-// Test History Result Component:
-
-// The "ResultTestHistory" component is responsible for rendering a test history results section.
-// It displays a list of test results with information about ping, download, upload speeds,
-// operator-server pairing, and date. The component adjusts its layout based on different screen sizes.
-
-// Rendering Test Result Elements:
-// The component creates an array of test result elements using the Array.fill() method
-// and the map function. Each element represents a single test result and includes Typography components
-//  displaying various information.
-
-// Typography and Images:
-// The component renders Typography components to display text information.
-// Images for icons (ping, download, upload) are displayed alongside corresponding text.
-
-// Scrollable List
-// The test history results are contained within a scrollable list. The overflowY: "scroll"
-//  style is applied to enable vertical scrolling for the list of test results.
-
-//  Responsiveness
-// The component adjusts its styling and layout based on different screen sizes.
-// This is achieved through conditionally applying styles using the useMediaQuery hook
-
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import download from "../../app/assets/image/download.svg";

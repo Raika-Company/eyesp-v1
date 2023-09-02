@@ -145,26 +145,17 @@ function DrawMeter({
 
     const calculatePosition = (angle, distance, height, lineWidth) => {
       return {
-        x: (canvas.width / 2) + Math.cos(angle) * (height / 1.6 - lineWidth - distance),
-        y: canvas.height - 78 * sizScale + Math.sin(angle) * (height / 1.6 - lineWidth - distance)
+        x:
+          canvas.width / 2 +
+          Math.cos(angle) * (height / 1.6 - lineWidth - distance),
+        y:
+          canvas.height -
+          78 * sizScale +
+          Math.sin(angle) * (height / 1.6 - lineWidth - distance),
       };
     };
 
-    function getInterpolatedColor(fraction) {
-      const startColor = [18, 106, 237]; // "#126AED" in RGB
-      const endColor = [255, 255, 255]; // white in RGB
-    
-      const resultColor = startColor.map((color, index) => {
-        return Math.round(color + fraction * (endColor[index] - color));
-      });
-    
-      return `rgba(${resultColor[0]}, ${resultColor[1]}, ${resultColor[2]}, ${fraction})`;
-    }
-    
-
-    let flashIntensity = 0;
-
-    function drawNumberWithFlashEffect(currentNumberIndex) {
+    function drawNumber(currentNumberIndex) {
       let angle =
         startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
       let distanceFromEdge = 15 * sizScale;
@@ -174,35 +165,13 @@ function DrawMeter({
         canvas.height,
         ctx.lineWidth
       );
-      if (currentNumberIndex * 10 <= mbps) {
-        ctx.fillStyle = "#126AED";
-      } else {
-        ctx.fillStyle = getInterpolatedColor(flashIntensity);
-      }      
+      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#126AED" : numberColor;
       ctx.fillText(currentNumberIndex * 10, position.x, position.y);
     }
 
     if (isDl) {
-      let currentNumberIndex = 0;
-      let frameCounter = 0;
-
-      function drawNumber() {
-        if (currentNumberIndex > 10) return;
-        frameCounter++;
-
-        if (frameCounter % 5 === 0) {
-          drawNumberWithFlashEffect(currentNumberIndex);
-          currentNumberIndex++;
-          flashIntensity = 1; // start flashing
-        } else if (flashIntensity > 0) {
-          flashIntensity -= 0.1; // decrease intensity to fade out the flash
-        }
-        requestAnimationFrame(drawNumber);
-      }
-      drawNumber();
-    } else {
       for (let i = 0; i <= 10; i++) {
-        drawNumberWithFlashEffect(i);
+        drawNumber(i);
       }
     }
 

@@ -1,6 +1,7 @@
 // React core and hooks
 import React, { useState, useEffect } from "react";
 import backgroundImage from "../../app/assets/image/back.svg";
+import { useMediaQuery } from "@mui/material";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
@@ -126,6 +127,9 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
 const SpeedTest = ({ themeMode }) => {
   const theme = useTheme();
 
+  const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
+  const [animationInterval, setAnimationInterval] = useState(null);
+
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const [speedData, setSpeedData] = useState({
@@ -142,6 +146,7 @@ const SpeedTest = ({ themeMode }) => {
     let startTime = Date.now();
     let totalDuration = 1000; // 1 seconds
     let halfwayPoint = totalDuration / 2; // 0.5 second
+    let increasing = true; // flag to determine if mbps is increasing or decreasing
 
     const animateMbps = () => {
       let timePassed = Date.now() - startTime;
@@ -150,6 +155,19 @@ const SpeedTest = ({ themeMode }) => {
         setMbps((timePassed / halfwayPoint) * 100); // from 0 to 100 in 1 second
       } else if (timePassed <= totalDuration) {
         setMbps(100 - ((timePassed - halfwayPoint) / halfwayPoint) * 80); // from 100 to 20 in 1 second
+      } else {
+        // after the main animation, start the continuous change between 15 and 25
+        if (!animationInterval) {
+          const interval = setInterval(() => {
+            setMbps((prev) => {
+              if (prev >= 25) increasing = false;
+              if (prev <= 15) increasing = true;
+
+              return increasing ? prev + 1 : prev - 1;
+            });
+          }, 40); // adjust the time interval as needed
+          setAnimationInterval(interval);
+        }
       }
 
       if (timePassed < totalDuration) {
@@ -160,13 +178,21 @@ const SpeedTest = ({ themeMode }) => {
   };
 
   useEffect(() => {
+    return () => {
+      if (animationInterval) {
+        clearInterval(animationInterval);
+      }
+    };
+  }, [animationInterval]);
+
+  useEffect(() => {
     const navbarElement = document.querySelector(".nav-height");
 
     if (navbarElement) {
       const navbarHeight = navbarElement.offsetHeight;
-      setBoxHeight(`calc(100dvh - ${navbarHeight}px)`);
+      setBoxHeight(`calc(98dvh - ${navbarHeight}px)`);
     } else {
-      setBoxHeight("90dvh");
+      setBoxHeight("98dvh");
     }
   }, []);
 
@@ -195,8 +221,8 @@ const SpeedTest = ({ themeMode }) => {
         display="flex"
         flexDirection="row"
         justifyContent="space-evenly"
-        height="8dvh"
-        width="80%"
+        height="clamp(5rem,5rem + 3vmin, 3rem)"
+        width="65%"
         marginX="auto"
         alignItems="center"
         textAlign="center"
@@ -244,8 +270,8 @@ const SpeedTest = ({ themeMode }) => {
           <AnimatedButton
             onClick={handleButtonClick}
             sx={{
-              height: "16rem",
-              width: "16rem",
+              height: "clamp(10rem,10rem + 10vmin,16rem)",
+              width: "clamp(10rem,10rem + 10vmin,16rem)",
               borderRadius: "50%",
               borderColor: "transparent",
               borderWidth: "6px",
@@ -273,8 +299,8 @@ const SpeedTest = ({ themeMode }) => {
               [theme.breakpoints.up("md")]: {
                 width: "80%",
               },
-              height: "16rem",
-              width: "16rem",
+              height: "clamp(10rem,10rem + 10vmin,16rem)",
+              width: "clamp(10rem,10rem + 10vmin,16rem)",
             }}
           >
             <DrawMeter

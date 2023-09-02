@@ -1,28 +1,3 @@
-/*
-DlandUlCharts Component:
-The "DlandUlCharts" component renders a custom line chart using the Chart.js library,
- displaying data related to download and upload activities. The component offers an interactive switch 
- to toggle the visibility of the upload dataset on the chart.
-
-Chart Configuration:
-The Chart.js components and plugins are registered using ChartJS.register().
-The options object defines responsive behavior, plugin configuration, and chart dimensions.
-The labels array represents X-axis labels for the chart.
-The data object contains two datasets (download and upload) with corresponding labels, data, and styling.
-
-Dataset Toggle Switch
-A toggle switch (PinkSwitch) is rendered to control the visibility of the upload dataset on the chart.
-The switch utilizes Material-UI's InputLabel and Switch components.
-The handleSwitchChange function is used to toggle the visibility of the upload dataset when the switch is toggled.
-
-Rendering the Chart
-The Line component from "react-chartjs-2" is used to render the line chart.
-The options and data objects are passed to the Line component.
-
-Additional Note:
-The faker library is used to generate random mock data for the chart. You can replace it with actual data.
-*/
-
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import React, { useState } from "react";
