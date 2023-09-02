@@ -1,9 +1,6 @@
-import { Box, Typography, FormControlLabel } from "@mui/material";
+import React from "react";
+import { Box, Typography, Switch, alpha, colors } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
-import React, { useState } from "react";
-import arrowBack from "./../../app/assets/image/arrowBack.svg";
-import Switch from "@mui/material/Switch";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,64 +13,67 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import faker from "faker";
-import "./detail.css";
+import arrowBack from "./../../app/assets/image/arrowBack.svg";
+
+// Register chart components outside of the component render method
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top",
+      align: "start",
+    },
+  },
+  width: "100%",
+  height: "100%",
+};
+
+const label = { inputProps: { "aria-label": "Color switch demo" } };
+
+const PinkSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: colors.pink[600],
+    "&:hover": {
+      backgroundColor: alpha(
+        colors.pink[600],
+        theme.palette.action.hoverOpacity
+      ),
+    },
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: colors.pink[600],
+  },
+}));
+
+const ISPProviderSwitch = ({ name, color }) => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row-reverse",
+      alignItems: "center",
+    }}
+  >
+    <Typography>{name}</Typography>
+    {color === "pink" ? (
+      <PinkSwitch {...label} defaultChecked />
+    ) : (
+      <Switch {...label} defaultChecked color={color} />
+    )}
+  </Box>
+);
 
 const DetailTest = () => {
-  const [isDownloadVisible, setDownloadVisible] = useState(true); // Default checked
-  const [isUploadVisible, setUploadVisible] = useState(true);
-  const Android12Switch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    "& .MuiSwitch-track": {
-      borderRadius: 22 / 2,
-
-      "&:before, &:after": {
-        content: '""',
-        position: "absolute",
-        top: "50%",
-        transform: "translateY(-50%)",
-        width: 16,
-        height: 16,
-      },
-    },
-
-    "& .MuiSwitch-thumb": {
-      boxShadow: "none",
-      width: 16,
-      height: 16,
-      margin: 2,
-    },
-    "&.Mui-checked .MuiSwitch-track": {
-      backgroundColor: "white",
-    },
-  }));
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top",
-        align: "start",
-        // labels: {
-        //   padding: {
-        //     bottom: 10, // Add paddingBottom to legend labels
-        //   },
-        // },
-      },
-    },
-    width: "100%",
-    height: "100%",
-  };
-
   const labels = [
     "January",
     "February",
@@ -92,20 +92,16 @@ const DetailTest = () => {
         data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        hidden: !isDownloadVisible, // Use the state to control visibility
       },
       {
         label: "آپلود",
         data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
-        hidden: !isUploadVisible, // Use the state to control visibility
       },
     ],
   };
-  const getSwitchStyle = (isChecked, color) => ({
-    backgroundColor: isChecked ? color : "transparent",
-  });
+
   return (
     <>
       <Box
@@ -172,7 +168,6 @@ const DetailTest = () => {
             <Box
               sx={{
                 marginRight: "5rem",
-
                 width: "80%",
                 height: "100%",
                 display: "flex",
@@ -190,7 +185,7 @@ const DetailTest = () => {
                 }}
               >
                 <Typography>میانگین عملکرد</Typography>
-                <FormControlLabel control={<Android12Switch />} />
+                <Switch {...label} defaultChecked />
               </Box>
               <Box
                 sx={{
@@ -199,8 +194,8 @@ const DetailTest = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>میانگین عملکرد</Typography>
-                <FormControlLabel control={<Android12Switch />} />
+                <Typography>میانگین پینگ</Typography>
+                <Switch {...label} defaultChecked />
               </Box>
               <Box
                 sx={{
@@ -209,8 +204,8 @@ const DetailTest = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>میانگین عملکرد</Typography>
-                <FormControlLabel control={<Android12Switch />} />
+                <Typography>میانگین سرعت</Typography>
+                <Switch {...label} defaultChecked />
               </Box>
               <Box
                 sx={{
@@ -219,8 +214,8 @@ const DetailTest = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>میانگین عملکرد</Typography>
-                <FormControlLabel control={<Android12Switch />} />
+                <Typography>میانگین پکت لاس</Typography>
+                <Switch {...label} defaultChecked />
               </Box>
             </Box>
             <Box sx={{ width: "20%" }}></Box>
@@ -269,7 +264,7 @@ const DetailTest = () => {
               marginTop: "2rem",
               display: "flex",
               flexDirection: "row",
-              justifyContent: "end",
+              justifyContent: "center",
             }}
           >
             {" "}
@@ -291,13 +286,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel
-                control={<Android12Switch />}
-                checked={isDownloadVisible}
-                onChange={() => setDownloadVisible(!isDownloadVisible)}
-                className="downloadSwitch"
-              />
+              <ISPProviderSwitch name="ایرانسل" />
             </Box>
             <Box
               sx={{
@@ -306,13 +295,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel
-                control={<Android12Switch />}
-                checked={isUploadVisible}
-                onChange={() => setUploadVisible(!isUploadVisible)}
-                className="uploadSwitch"
-              />
+              <ISPProviderSwitch name="همراه اول" color="secondary" />
             </Box>
             <Box
               sx={{
@@ -321,8 +304,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="رایتل" color="warning" />
             </Box>
             <Box
               sx={{
@@ -331,8 +313,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="مخابرات" color="success" />
             </Box>
             <Box
               sx={{
@@ -341,8 +322,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="شاتل" color="pink" />
             </Box>
           </Box>
           <Box
@@ -362,8 +342,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="ایرانسل" />
             </Box>
             <Box
               sx={{
@@ -372,8 +351,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="همراه اول" color="secondary" />
             </Box>
             <Box
               sx={{
@@ -382,8 +360,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="رایتل" color="warning" />
             </Box>
             <Box
               sx={{
@@ -392,8 +369,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="مخابرات" color="success" />
             </Box>
             <Box
               sx={{
@@ -402,8 +378,7 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography>میانگین عملکرد</Typography>
-              <FormControlLabel control={<Android12Switch />} />
+              <ISPProviderSwitch name="شاتل" color="pink" />
             </Box>
           </Box>
         </Box>
