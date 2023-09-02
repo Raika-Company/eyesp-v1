@@ -5,9 +5,9 @@
   overflow-wrap: break-word;
 }
 
-/* body {
-  overflow: hidden;
-} */
+body {
+  direction: rtl;
+}
 
 
 @font-face {

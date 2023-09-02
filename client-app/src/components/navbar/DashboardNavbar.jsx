@@ -55,7 +55,6 @@ const NavLink = memo(({ index, navigateTo, location, isOpen }) => {
       <ListItemText
         primary={texts[index]}
         sx={{
-          maxWidth: isOpen ? "200px" : "0",
           overflow: "hidden",
           transition: "max-width 0.3s",
           whiteSpace: "nowrap",
@@ -76,7 +75,6 @@ const NavLink = memo(({ index, navigateTo, location, isOpen }) => {
  * @returns {JSX.Element}
  */
 export default function DashboardNavbar() {
-  console.log("Hi")
   const [isOpen, setIsOpen] = useState(true);
   const [key, setKey] = useState(0);
   const navigate = useNavigate();
@@ -97,7 +95,7 @@ export default function DashboardNavbar() {
     setKey((prevKey) => prevKey + 1);
   };
   return (
-    <Box key={key}>
+    <Box>
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <AppBar position="fixed">
           <Toolbar>
@@ -113,14 +111,17 @@ export default function DashboardNavbar() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Box sx={{ display: { xs: "none", sm: "block" } }}>
+      <Box
+        sx={{
+          display: { xs: "none", sm: "block" },
+        }}
+      >
         <Drawer
           variant="permanent"
           anchor="right"
-          open={isOpen}
           sx={{
             "& .MuiDrawer-paper": {
-              width: isOpen ? "max(240px, 10vw)" : 60,
+              width: isOpen ? "max(240px, 10vw)" : "40px",
               overflowX: "hidden",
               transition: "width 0.3s",
             },
@@ -150,4 +151,4 @@ export default function DashboardNavbar() {
       </Box>
     </Box>
   );
-};
+}
