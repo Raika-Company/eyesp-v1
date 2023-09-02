@@ -107,278 +107,617 @@ const DetailTest = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "start",
-          alignItems: "center",
-          width: "87vw",
-          height: "100dvh",
-          paddingTop: "4rem",
-          gap: "2rem",
+          flexDirection: "row-reverse",
         }}
       >
-        {" "}
         <Box
           sx={{
-            width: "93%",
-            height: "7%",
-            display: "flex",
-            flexDirection: "row-reverse",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box
-            sx={{
-              width: "30%",
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "star",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h6"> هایISP میانگین عملکرد </Typography>
-
-            <Typography sx={{ color: "#126AED" }} variant="h3">
-              استان فارس
-            </Typography>
-          </Box>
-          <img style={{ width: "2vw" }} src={arrowBack} alt="arrowBack" />
-        </Box>
-        <Box
-          sx={{
-            width: "93%",
-            height: "40%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-            border: "2px solid #E0E0E0",
-            borderRadius: "2em",
-            backgroundColor: "#E8E8E8",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              height: "10%",
-              marginTop: "2rem",
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "end",
-            }}
-          >
-            <Box
-              sx={{
-                marginRight: "5rem",
-                width: "80%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-                justifyContent: "end",
-                gap: "60px",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>میانگین عملکرد</Typography>
-                <Switch {...label} defaultChecked />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>میانگین پینگ</Typography>
-                <Switch {...label} defaultChecked />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>میانگین سرعت</Typography>
-                <Switch {...label} defaultChecked />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>میانگین پکت لاس</Typography>
-                <Switch {...label} defaultChecked />
-              </Box>
-            </Box>
-            <Box sx={{ width: "20%" }}></Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              height: "10%",
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <Typography sx={{ marginRight: "5rem" }}>98%</Typography>
-          </Box>
-          <Box
-            sx={{
-              marginLeft: "3rem",
-              width: "95%",
-              height: "80%",
-              alignItems: "center",
-            }}
-          >
-            {" "}
-            <Line responsive="true" options={options} data={data} />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            width: "93%",
-            height: "35%",
+            width: "10vw",
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "center",
-            border: "2px solid #E0E0E0",
-            borderRadius: "2em",
             backgroundColor: "#E8E8E8",
+            gap: "5px",
           }}
         >
           <Box
             sx={{
-              width: "10%",
-              height: "20%",
-              marginTop: "2rem",
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
             }}
           >
-            {" "}
-            <Typography>ارایه دهنده های اینترنت</Typography>
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
           </Box>
           <Box
             sx={{
               display: "flex",
               flexDirection: "row-reverse",
-              justifyContent: "space-evenly",
-              width: "100%",
-              height: "20%",
+              justifyContent: "start",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="ایرانسل" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="همراه اول" color="secondary" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="رایتل" color="warning" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="مخابرات" color="success" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="شاتل" color="pink" />
-            </Box>
+            <Typography sx={{ marginTop: "3px" }}>شیراز</Typography>
+            <Switch {...label} defaultChecked />
           </Box>
           <Box
             sx={{
               display: "flex",
               flexDirection: "row-reverse",
-              justifyContent: "space-evenly",
-              width: "100%",
-              height: "20%",
+              justifyContent: "start",
             }}
           >
-            {" "}
+            <Typography sx={{ marginTop: "3px" }}>اصفهان</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>یزد</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>خراسان جنوبی</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>خراسان شمالی</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>مازندران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>سمنان</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>خوزستان</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>گیلان</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تبریز</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>کهکیلویه</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>کرج</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "start",
+            }}
+          >
+            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
+            <Switch {...label} defaultChecked />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+            alignItems: "center",
+            width: "90vw",
+            height: "100dvh",
+            paddingTop: "4rem",
+            gap: "2rem",
+          }}
+        >
+          {" "}
+          <Box
+            sx={{
+              width: "93%",
+              height: "7%",
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "space-between",
+            }}
+          >
             <Box
               sx={{
+                width: "30%",
                 display: "flex",
                 flexDirection: "row-reverse",
+                justifyContent: "star",
                 alignItems: "center",
               }}
             >
-              <ISPProviderSwitch name="ایرانسل" />
+              <Typography variant="h6"> هایISP میانگین عملکرد </Typography>
+
+              <Typography sx={{ color: "#126AED" }} variant="h3">
+                استان فارس
+              </Typography>
+            </Box>
+            <img style={{ width: "2vw" }} src={arrowBack} alt="arrowBack" />
+          </Box>
+          <Box
+            sx={{
+              width: "93%",
+              height: "40%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              border: "2px solid #E0E0E0",
+              borderRadius: "2em",
+              backgroundColor: "#E8E8E8",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: "10%",
+                marginTop: "2rem",
+                display: "flex",
+                flexDirection: "row-reverse",
+                justifyContent: "end",
+              }}
+            >
+              <Box
+                sx={{
+                  marginRight: "5rem",
+                  width: "80%",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  justifyContent: "end",
+                  gap: "60px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>میانگین عملکرد</Typography>
+                  <Switch {...label} defaultChecked />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>میانگین پینگ</Typography>
+                  <Switch {...label} defaultChecked />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>میانگین سرعت</Typography>
+                  <Switch {...label} defaultChecked />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>میانگین پکت لاس</Typography>
+                  <Switch {...label} defaultChecked />
+                </Box>
+              </Box>
+              <Box sx={{ width: "20%" }}></Box>
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                height: "10%",
+                display: "flex",
+                flexDirection: "row-reverse",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ marginRight: "5rem" }}>98%</Typography>
+            </Box>
+            <Box
+              sx={{
+                marginLeft: "3rem",
+                width: "95%",
+                height: "80%",
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              <Line responsive="true" options={options} data={data} />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "93%",
+              height: "35%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+              border: "2px solid #E0E0E0",
+              borderRadius: "2em",
+              backgroundColor: "#E8E8E8",
+            }}
+          >
+            <Box
+              sx={{
+                width: "30%",
+                height: "20%",
+                marginTop: "2rem",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              {" "}
+              <Typography>ارایه دهنده های اینترنت</Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row-reverse",
-                alignItems: "center",
+                justifyContent: "space-evenly",
+                width: "100%",
+                height: "20%",
               }}
             >
-              <ISPProviderSwitch name="همراه اول" color="secondary" />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="ایرانسل" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="همراه اول" color="secondary" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="رایتل" color="warning" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="مخابرات" color="success" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="شاتل" color="pink" />
+              </Box>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row-reverse",
-                alignItems: "center",
+                justifyContent: "space-evenly",
+                width: "100%",
+                height: "20%",
               }}
             >
-              <ISPProviderSwitch name="رایتل" color="warning" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="مخابرات" color="success" />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-              }}
-            >
-              <ISPProviderSwitch name="شاتل" color="pink" />
+              {" "}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="ایرانسل" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="همراه اول" color="secondary" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="رایتل" color="warning" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="مخابرات" color="success" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="شاتل" color="pink" />
+              </Box>
             </Box>
           </Box>
         </Box>
