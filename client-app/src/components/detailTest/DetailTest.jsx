@@ -92,6 +92,11 @@ const DetailTest = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [irancellLineVisible, setIrancellLineVisible] = useState(true);
+  const [pingLineVisible, setPingLineVisible] = useState(true);
+
+  const handlePingToggle = () => {
+    setPingLineVisible((prevVisible) => !prevVisible);
+  };
 
   const handleIspToggle = (isp) => {
     if (isp === "ایرانسل") {
@@ -454,7 +459,11 @@ const DetailTest = () => {
                     >
                       میانگین پینگ
                     </Typography>
-                    <Switch {...label} />{" "}
+                    <Switch
+                      {...label}
+                      checked={pingLineVisible}
+                      onChange={handlePingToggle}
+                    />
                   </Box>
                   <Box
                     sx={{
@@ -570,12 +579,14 @@ const DetailTest = () => {
                   <Tooltip />
                   <Legend />
                   {/* Conditionally render the ping line */}
-                  <Line
-                    type="monotone"
-                    dataKey="ping"
-                    stroke="#126AED"
-                    activeDot={{ r: 8 }}
-                  />
+                  {pingLineVisible && (
+                    <Line
+                      type="monotone"
+                      dataKey="ping"
+                      stroke="#126AED"
+                      activeDot={{ r: 8 }}
+                    />
+                  )}
                   {irancellLineVisible && (
                     <Line
                       type="monotone"
