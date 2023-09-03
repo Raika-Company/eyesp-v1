@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  useMediaQuery
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -17,6 +18,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import CompanyLogo from "../../app/assets/image/logo.svg";
+
 
 const routes = ["/admin", "/admin/speed-test"];
 const texts = ["صفحه اصلی", "تست سرعت"];
@@ -47,6 +49,8 @@ const NavLink = memo(({ index, navigateTo, location, isOpen }) => {
   const isActive = location.pathname === routes[index];
   const iconColor = isActive ? ACTIVE_COLOR : INACTIVE_COLOR;
 
+
+  
   return (
     <ListItem
       onClick={() => navigateTo(index)}
@@ -80,6 +84,10 @@ export default function DashboardNavbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  
+
   /**
    * Toggles the state of the drawer (open/close).
    */
@@ -94,6 +102,7 @@ export default function DashboardNavbar() {
     navigate(routes[index]);
     setKey((prevKey) => prevKey + 1);
   };
+
   return (
     <Box>
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
@@ -111,44 +120,48 @@ export default function DashboardNavbar() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Box
+
+      <Drawer
+        variant="permanent"
+        anchor="top"
         sx={{
-          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            width: isOpen ? "max(240px, 10vh)" : "40px",
+            overflowX: "hidden",
+            transition: "width 0.3s",
+            // position: "absolute",
+            // right: "0px",
+            margin: "0 auto",
+          },
         }}
       >
-        <Drawer
-          variant="permanent"
-          anchor="right"
+        <List
           sx={{
-            "& .MuiDrawer-paper": {
-              width: isOpen ? "max(240px, 10vw)" : "40px",
-              overflowX: "hidden",
-              transition: "width 0.3s",
-            },
+            background: "#c3c3c3",
+            display: isSmScreen ?"none":"flex",
+            borderRadius: "25px",
           }}
         >
-          <List>
-            <ListItem sx={{ justifyContent: "flex-start", marginY: "1rem" }}>
-              <ListItemIcon onClick={toggleDrawer}>
-                <img
-                  src={CompanyLogo}
-                  alt="Company Logo"
-                  style={styles.logoStyle}
-                />
-              </ListItemIcon>
-            </ListItem>
-            {texts.map((_, index) => (
-              <NavLink
-                key={index}
-                index={index}
-                navigateTo={navigateTo}
-                location={location}
-                isOpen={isOpen}
+          <ListItem sx={{ justifyContent: "flex-start", marginY: "1rem" }}>
+            <ListItemIcon onClick={toggleDrawer}>
+              <img
+                src={CompanyLogo}
+                alt="Company Logo"
+                style={styles.logoStyle}
               />
-            ))}
-          </List>
-        </Drawer>
-      </Box>
+            </ListItemIcon>
+          </ListItem>
+          {texts.map((_, index) => (
+            <NavLink
+              key={index}
+              index={index}
+              navigateTo={navigateTo}
+              location={location}
+              isOpen={isOpen}
+            />
+          ))}
+        </List>
+      </Drawer>
     </Box>
   );
 }
