@@ -43,43 +43,43 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
 
 const data = [
   {
-    name: "Page A",
+    name: "تاریخ A",
     irancell: 4000,
     ping: 2400,
     amt: 2400,
   },
   {
-    name: "Page B",
+    name: "تاریخ B",
     irancell: 3000,
     ping: 1398,
     amt: 2210,
   },
   {
-    name: "Page C",
+    name: "تاریخ C",
     irancell: 2000,
     ping: 9800,
     amt: 2290,
   },
   {
-    name: "Page D",
+    name: "تاریخ D",
     irancell: 2780,
     ping: 3908,
     amt: 2000,
   },
   {
-    name: "Page E",
+    name: "تاریخ E",
     irancell: 1890,
     ping: 4800,
     amt: 2181,
   },
   {
-    name: "Page F",
+    name: "تاریخ F",
     irancell: 2390,
     ping: 3800,
     amt: 2500,
   },
   {
-    name: "Page G",
+    name: "تاریخ G",
     irancell: 3490,
     ping: 4300,
     amt: 2100,
@@ -157,7 +157,7 @@ const DetailTest = () => {
 
   const [citySwitches, setCitySwitches] = useState(
     cities.reduce((acc, city) => {
-      acc[city] = city === "تهران"; // Default "تهران" to true, others to false
+      acc[city] = city === "فارس";
       return acc;
     }, {})
   );
@@ -312,7 +312,7 @@ const DetailTest = () => {
               </Typography>
               <Switch
                 {...label}
-                checked={citySwitches[city] || false} // Use the state to determine if it's checked
+                checked={citySwitches[city] || false}
                 onChange={() => handleToggle(city)}
               />
             </Box>
@@ -508,7 +508,13 @@ const DetailTest = () => {
                 </Box>
               )}
 
-              <Box sx={{ width: "20%", textAlign: "center" }}>
+              <Box
+                sx={{
+                  width: "20%",
+                  textAlign: "center",
+                  paddingLeft: isSmScreen ? "1rem" : "2rem",
+                }}
+              >
                 <Select
                   value="test"
                   size="small"
@@ -545,7 +551,7 @@ const DetailTest = () => {
                   marginRight: isSmScreen ? "3rem" : "5rem",
                   marginTop: "2rem",
                   color: "#126AED",
-                  fontSize: isSmScreen ? "16px" : "20px",
+                  fontSize: isSmScreen ? "16px" : "40px",
                 }}
               >
                 98%
