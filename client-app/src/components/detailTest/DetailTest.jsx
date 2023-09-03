@@ -413,7 +413,7 @@ const DetailTest = () => {
             >
               <Typography
                 sx={{
-                  fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "",
+                  fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "30px",
                 }}
               >
                 {" "}
@@ -424,6 +424,7 @@ const DetailTest = () => {
                 sx={{
                   fontSize: isSmScreen ? "18px" : isMdScreen ? "20px" : "h3",
                   color: "#126AED",
+                  marginRight: "1rem",
                 }}
                 variant="h3"
               >
