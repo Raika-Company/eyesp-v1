@@ -1,4 +1,11 @@
-import { Box, Typography, Switch, alpha, colors } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Switch,
+  alpha,
+  colors,
+  useMediaQuery,
+} from "@mui/material";
 import {
   LineChart,
   Line,
@@ -78,8 +85,19 @@ const data = [
 ];
 
 const DetailTest = () => {
-  const [showPingLine, setShowPingLine] = useState(true);
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
+  const [showPingLine, setShowPingLine] = useState(true);
+  const [irancellLineVisible, setIrancellLineVisible] = useState(true);
+
+  const handleIspToggle = (isp) => {
+    if (isp === "ایرانسل") {
+      setIrancellLineVisible((prevVisible) => !prevVisible);
+    }
+    setIspSwitches((prev) => ({ ...prev, [isp]: !prev[isp] }));
+  };
   const [ispSwitches, setIspSwitches] = useState({
     ایرانسل: true, // Default "ایرانسل" to true
     "همراه اول": false,
@@ -89,9 +107,6 @@ const DetailTest = () => {
   });
 
   // Event handler to toggle the switch state for ISP providers
-  const handleIspToggle = (isp) => {
-    setIspSwitches((prev) => ({ ...prev, [isp]: !prev[isp] }));
-  };
 
   const ISPProviderSwitch = ({ name, color, checked }) => (
     <Box
@@ -101,7 +116,9 @@ const DetailTest = () => {
         alignItems: "center",
       }}
     >
-      <Typography>{name}</Typography>
+      <Typography sx={{ fontSize: isSmScreen ? "13px" : "18px" }}>
+        {name}
+      </Typography>
       {color === "pink" ? (
         <PinkSwitch
           {...label}
@@ -143,6 +160,161 @@ const DetailTest = () => {
   const handleToggle = (city) => {
     setCitySwitches((prev) => ({ ...prev, [city]: !prev[city] }));
   };
+
+  function MobileToggleSwitch() {
+    return (
+      <Box
+        sx={{
+          marginRight: "1rem",
+          width: "80%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "end",
+        }}
+      >
+        <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+              }}
+            >
+              میانگین عملکرد
+            </Typography>
+            <Switch {...label} />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+              }}
+            >
+              میانگین عملکرد
+            </Typography>
+            <Switch {...label} />
+          </Box>
+        </Box>
+        <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
+          {" "}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+              }}
+            >
+              میانگین عملکرد
+            </Typography>
+            <Switch {...label} />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+              }}
+            >
+              میانگین عملکرد
+            </Typography>
+            <Switch {...label} />
+          </Box>
+        </Box>
+        {/* <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
+            }}
+          >
+            میانگین عملکرد
+          </Typography>
+          <Switch {...label} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
+            }}
+          >
+            میانگین پینگ
+          </Typography>
+          <Switch
+            {...label}
+            checked={showPingLine}
+            onChange={() => setShowPingLine((prev) => !prev)}
+          />{" "}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
+            }}
+          >
+            میانگین سرعت
+          </Typography>
+          <Switch {...label} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
+            }}
+          >
+            میانگین پکت لاس
+          </Typography>
+          <Switch {...label} />
+        </Box> */}
+      </Box>
+    );
+  }
+
   return (
     <>
       <Box
@@ -154,7 +326,7 @@ const DetailTest = () => {
         <Box
           sx={{
             width: "10vw",
-            display: "flex",
+            display: isSmScreen ? "none" : "flex",
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "center",
@@ -163,7 +335,13 @@ const DetailTest = () => {
           }}
         >
           <Box sx={{ marginTop: "2rem" }}>
-            <Typography variant="h7" sx={{ borderBottom: "1px solid gray" }}>
+            <Typography
+              variant="h7"
+              sx={{
+                borderBottom: "1px solid gray",
+                fontSize: isMdScreen ? "10px" : isSmScreen ? "4px" : "",
+              }}
+            >
               لیست استان ها
             </Typography>
           </Box>
@@ -172,12 +350,28 @@ const DetailTest = () => {
               key={city}
               sx={{
                 display: "flex",
-                flexDirection: "row-reverse",
+                flexDirection: isMdScreen
+                  ? "column"
+                  : isXsScreen
+                  ? "column"
+                  : "row-reverse",
                 justifyContent: "space-between",
                 width: "60%",
+                alignItems: isXsScreen
+                  ? "center"
+                  : isMdScreen
+                  ? "center"
+                  : "normal",
               }}
             >
-              <Typography sx={{ marginTop: "3px" }}>{city}</Typography>
+              <Typography
+                sx={{
+                  marginTop: "3px",
+                  fontSize: isMdScreen ? "10px" : isXsScreen ? "8px" : "",
+                }}
+              >
+                {city}
+              </Typography>
               <Switch
                 {...label}
                 checked={citySwitches[city] || false} // Use the state to determine if it's checked
@@ -192,9 +386,9 @@ const DetailTest = () => {
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "center",
-            width: "90vw",
+            width: isSmScreen ? "100vw" : "90vw",
             height: "100dvh",
-            paddingTop: "4rem",
+            paddingTop: "2rem",
             gap: "2rem",
           }}
         >
@@ -210,20 +404,37 @@ const DetailTest = () => {
           >
             <Box
               sx={{
-                width: "30%",
+                width: isSmScreen ? "80%" : "70%",
                 display: "flex",
                 flexDirection: "row-reverse",
                 justifyContent: "star",
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6"> هایISP میانگین عملکرد </Typography>
+              <Typography
+                sx={{
+                  fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "",
+                }}
+              >
+                {" "}
+                هایISP میانگین عملکرد{" "}
+              </Typography>
 
-              <Typography sx={{ color: "#126AED" }} variant="h3">
+              <Typography
+                sx={{
+                  fontSize: isSmScreen ? "18px" : isMdScreen ? "20px" : "h3",
+                  color: "#126AED",
+                }}
+                variant="h3"
+              >
                 استان فارس
               </Typography>
             </Box>
-            <img style={{ width: "2vw" }} src={arrowBack} alt="arrowBack" />
+            <img
+              style={{ width: isSmScreen ? "5vw" : "2vw" }}
+              src={arrowBack}
+              alt="arrowBack"
+            />
           </Box>
           <Box
             sx={{
@@ -247,63 +458,117 @@ const DetailTest = () => {
                 justifyContent: "end",
               }}
             >
-              <Box
-                sx={{
-                  marginRight: "5rem",
-                  width: "80%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                  justifyContent: "end",
-                  gap: "60px",
-                }}
-              >
+              {isSmScreen ? (
+                <MobileToggleSwitch />
+              ) : (
                 <Box
                   sx={{
+                    marginRight: isMdScreen
+                      ? "11rem"
+                      : isXsScreen
+                      ? "1rem"
+                      : "5rem",
+                    width: "80%",
+                    height: "100%",
                     display: "flex",
                     flexDirection: "row-reverse",
                     alignItems: "center",
+                    justifyContent: "end",
+                    gap: isMdScreen ? "1px" : isXsScreen ? "1px" : "60px",
+                    flexWrap: isMdScreen
+                      ? "wrap"
+                      : isXsScreen
+                      ? "none"
+                      : "none",
                   }}
                 >
-                  <Typography>میانگین عملکرد</Typography>
-                  <Switch {...label} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isMdScreen
+                          ? "13px"
+                          : isXsScreen
+                          ? "10px"
+                          : "",
+                      }}
+                    >
+                      میانگین عملکرد
+                    </Typography>
+                    <Switch {...label} />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isMdScreen
+                          ? "13px"
+                          : isXsScreen
+                          ? "10px"
+                          : "",
+                      }}
+                    >
+                      میانگین پینگ
+                    </Typography>
+                    <Switch
+                      {...label}
+                      checked={showPingLine}
+                      onChange={() => setShowPingLine((prev) => !prev)}
+                    />{" "}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isMdScreen
+                          ? "13px"
+                          : isXsScreen
+                          ? "10px"
+                          : "",
+                      }}
+                    >
+                      میانگین سرعت
+                    </Typography>
+                    <Switch {...label} />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isMdScreen
+                          ? "13px"
+                          : isXsScreen
+                          ? "10px"
+                          : "",
+                      }}
+                    >
+                      میانگین پکت لاس
+                    </Typography>
+                    <Switch {...label} />
+                  </Box>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row-reverse",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography>میانگین پینگ</Typography>
-                  <Switch
-                    {...label}
-                    checked={showPingLine}
-                    onChange={() => setShowPingLine((prev) => !prev)}
-                  />{" "}
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row-reverse",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography>میانگین سرعت</Typography>
-                  <Switch {...label} />
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row-reverse",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography>میانگین پکت لاس</Typography>
-                  <Switch {...label} />
-                </Box>
-              </Box>
+              )}
+
               <Box sx={{ width: "20%" }}></Box>
             </Box>
             <Box
@@ -319,9 +584,10 @@ const DetailTest = () => {
               <Typography
                 variant="h3"
                 sx={{
-                  marginRight: "5rem",
+                  marginRight: isSmScreen ? "3rem" : "5rem",
                   marginTop: "2rem",
                   color: "#126AED",
+                  fontSize: isSmScreen ? "16px" : "20px",
                 }}
               >
                 98%
@@ -363,7 +629,14 @@ const DetailTest = () => {
                       activeDot={{ r: 8 }}
                     />
                   )}
-                  <Line type="monotone" dataKey="irancell" stroke="#82ca9d" />
+                  {irancellLineVisible && (
+                    <Line
+                      type="monotone"
+                      dataKey="irancell"
+                      stroke="#82ca9d"
+                      activeDot={{ r: 8 }}
+                    />
+                  )}{" "}
                 </LineChart>
               </ResponsiveContainer>
             </Box>
@@ -383,9 +656,9 @@ const DetailTest = () => {
           >
             <Box
               sx={{
-                width: "30%",
+                width: isSmScreen ? "52%" : "30%",
                 height: "20%",
-                marginTop: "2rem",
+                marginTop: isSmScreen ? "1rem" : "2rem",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
@@ -398,9 +671,10 @@ const DetailTest = () => {
               sx={{
                 display: "flex",
                 flexDirection: "row-reverse",
-                justifyContent: "space-evenly",
+                justifyContent: isSmScreen ? "center" : "space-evenly",
                 width: "100%",
-                height: "20%",
+                height: isSmScreen ? "34%" : "20%",
+                flexWrap: isSmScreen ? "wrap" : "none",
               }}
             >
               <Box
@@ -457,9 +731,10 @@ const DetailTest = () => {
               sx={{
                 display: "flex",
                 flexDirection: "row-reverse",
-                justifyContent: "space-evenly",
+                justifyContent: isSmScreen ? "center" : "space-evenly",
                 width: "100%",
-                height: "20%",
+                height: isSmScreen ? "34%" : "20%",
+                flexWrap: isSmScreen ? "wrap" : "none",
               }}
             >
               {" "}
@@ -470,7 +745,11 @@ const DetailTest = () => {
                   alignItems: "center",
                 }}
               >
-                <ISPProviderSwitch name="ایرانسل" />
+                <ISPProviderSwitch
+                  name="ایرانسل"
+                  color="success"
+                  checked={ispSwitches["ایرانسل"]}
+                />{" "}
               </Box>
               <Box
                 sx={{
