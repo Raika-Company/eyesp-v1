@@ -11,8 +11,20 @@ import {
 const InfoLineChart = ({ color }) => {
   return (
     <Card sx={{ backgroundColor: "$E8E8E8", padding: "1em" }}>
-      <Box display="flex" justifyContent="space-between" alignItems="flex-start">
-        <Typography fontSize="1.476rem" color="#5E5E5E" fontFamily="PeydaMedium" fontWeight="700" sx={{opacity: "0.6"}}>نمودار عملکرد ارائه دهنده های اینترنت</Typography>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="flex-start"
+      >
+        <Typography
+          fontSize="1.476rem"
+          color="#5E5E5E"
+          fontFamily="PeydaMedium"
+          fontWeight="700"
+          sx={{ opacity: "0.6" }}
+        >
+          نمودار عملکرد ارائه دهنده های اینترنت
+        </Typography>
         <Select
           value="test"
           size="small"
@@ -31,8 +43,15 @@ const InfoLineChart = ({ color }) => {
           <MenuItem value="test">همه</MenuItem>
         </Select>
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="flex-start" marginY="1rem">
-        <Typography fontSize="4.5rem" color={color}>77%</Typography>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        marginY="1rem"
+      >
+        <Typography fontSize="4.5rem" color={color}>
+          77%
+        </Typography>
         <Select
           value="test"
           size="small"

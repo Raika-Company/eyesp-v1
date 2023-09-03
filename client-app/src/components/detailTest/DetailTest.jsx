@@ -5,6 +5,8 @@ import {
   alpha,
   colors,
   useMediaQuery,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import {
   LineChart,
@@ -89,7 +91,6 @@ const DetailTest = () => {
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const [showPingLine, setShowPingLine] = useState(true);
   const [irancellLineVisible, setIrancellLineVisible] = useState(true);
 
   const handleIspToggle = (isp) => {
@@ -184,7 +185,7 @@ const DetailTest = () => {
           >
             <Typography
               sx={{
-                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
               }}
             >
               میانگین عملکرد
@@ -200,10 +201,10 @@ const DetailTest = () => {
           >
             <Typography
               sx={{
-                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
               }}
             >
-              میانگین عملکرد
+              میانگین پینگ
             </Typography>
             <Switch {...label} />
           </Box>
@@ -219,10 +220,10 @@ const DetailTest = () => {
           >
             <Typography
               sx={{
-                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
               }}
             >
-              میانگین عملکرد
+              میانگین سرعت
             </Typography>
             <Switch {...label} />
           </Box>
@@ -235,82 +236,14 @@ const DetailTest = () => {
           >
             <Typography
               sx={{
-                fontSize: isSmScreen ? "11px" : isMdScreen ? "13px" : "",
+                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
               }}
             >
-              میانگین عملکرد
+              میانگین پکت پلاس
             </Typography>
             <Switch {...label} />
           </Box>
         </Box>
-        {/* <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-            }}
-          >
-            میانگین عملکرد
-          </Typography>
-          <Switch {...label} />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-            }}
-          >
-            میانگین پینگ
-          </Typography>
-          <Switch
-            {...label}
-            checked={showPingLine}
-            onChange={() => setShowPingLine((prev) => !prev)}
-          />{" "}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-            }}
-          >
-            میانگین سرعت
-          </Typography>
-          <Switch {...label} />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-            }}
-          >
-            میانگین پکت لاس
-          </Typography>
-          <Switch {...label} />
-        </Box> */}
       </Box>
     );
   }
@@ -521,11 +454,7 @@ const DetailTest = () => {
                     >
                       میانگین پینگ
                     </Typography>
-                    <Switch
-                      {...label}
-                      checked={showPingLine}
-                      onChange={() => setShowPingLine((prev) => !prev)}
-                    />{" "}
+                    <Switch {...label} />{" "}
                   </Box>
                   <Box
                     sx={{
@@ -570,7 +499,26 @@ const DetailTest = () => {
                 </Box>
               )}
 
-              <Box sx={{ width: "20%" }}></Box>
+              <Box sx={{ width: "20%", textAlign: "center" }}>
+                <Select
+                  value="test"
+                  size="small"
+                  sx={{
+                    bgcolor: "#126AED",
+                    color: "white",
+                    borderRadius: "1.8rem",
+                    border: "none",
+                    fontSize: isSmScreen ? "10px" : "18px",
+                    py: 0,
+
+                    "& fieldset": {
+                      border: "none",
+                    },
+                  }}
+                >
+                  <MenuItem value="test">سالیانه</MenuItem>
+                </Select>
+              </Box>
             </Box>
             <Box
               sx={{
@@ -622,14 +570,12 @@ const DetailTest = () => {
                   <Tooltip />
                   <Legend />
                   {/* Conditionally render the ping line */}
-                  {showPingLine && (
-                    <Line
-                      type="monotone"
-                      dataKey="ping"
-                      stroke="#126AED"
-                      activeDot={{ r: 8 }}
-                    />
-                  )}
+                  <Line
+                    type="monotone"
+                    dataKey="ping"
+                    stroke="#126AED"
+                    activeDot={{ r: 8 }}
+                  />
                   {irancellLineVisible && (
                     <Line
                       type="monotone"
