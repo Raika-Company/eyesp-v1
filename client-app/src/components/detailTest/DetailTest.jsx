@@ -78,6 +78,8 @@ const data = [
 ];
 
 const DetailTest = () => {
+  const [showPingLine, setShowPingLine] = useState(true);
+
   const [ispSwitches, setIspSwitches] = useState({
     ایرانسل: true, // Default "ایرانسل" to true
     "همراه اول": false,
@@ -275,7 +277,11 @@ const DetailTest = () => {
                   }}
                 >
                   <Typography>میانگین پینگ</Typography>
-                  <Switch {...label} defaultChecked />
+                  <Switch
+                    {...label}
+                    checked={showPingLine}
+                    onChange={() => setShowPingLine((prev) => !prev)}
+                  />{" "}
                 </Box>
                 <Box
                   sx={{
@@ -348,12 +354,15 @@ const DetailTest = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="ping"
-                    stroke="#126AED"
-                    activeDot={{ r: 8 }}
-                  />
+                  {/* Conditionally render the ping line */}
+                  {showPingLine && (
+                    <Line
+                      type="monotone"
+                      dataKey="ping"
+                      stroke="#126AED"
+                      activeDot={{ r: 8 }}
+                    />
+                  )}
                   <Line type="monotone" dataKey="irancell" stroke="#82ca9d" />
                 </LineChart>
               </ResponsiveContainer>
