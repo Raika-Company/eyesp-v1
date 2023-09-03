@@ -1,43 +1,19 @@
-import React from "react";
 import { Box, Typography, Switch, alpha, colors } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
   Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import faker from "faker";
+  ResponsiveContainer,
+} from "recharts";
+import { useState } from "react";
+
+import { styled } from "@mui/material/styles";
+
 import arrowBack from "./../../app/assets/image/arrowBack.svg";
-
-// Register chart components outside of the component render method
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: "top",
-      align: "start",
-    },
-  },
-  width: "100%",
-  height: "100%",
-};
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
@@ -56,52 +32,115 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const ISPProviderSwitch = ({ name, color }) => (
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "row-reverse",
-      alignItems: "center",
-    }}
-  >
-    <Typography>{name}</Typography>
-    {color === "pink" ? (
-      <PinkSwitch {...label} defaultChecked />
-    ) : (
-      <Switch {...label} defaultChecked color={color} />
-    )}
-  </Box>
-);
+const data = [
+  {
+    name: "Page A",
+    irancell: 4000,
+    ping: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    irancell: 3000,
+    ping: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    irancell: 2000,
+    ping: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    irancell: 2780,
+    ping: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    irancell: 1890,
+    ping: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    irancell: 2390,
+    ping: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    irancell: 3490,
+    ping: 4300,
+    amt: 2100,
+  },
+];
 
 const DetailTest = () => {
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  const [ispSwitches, setIspSwitches] = useState({
+    ایرانسل: true, // Default "ایرانسل" to true
+    "همراه اول": false,
+    رایتل: false,
+    مخابرات: false,
+    شاتل: false,
+  });
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "دانلود",
-        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "آپلود",
-        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
+  // Event handler to toggle the switch state for ISP providers
+  const handleIspToggle = (isp) => {
+    setIspSwitches((prev) => ({ ...prev, [isp]: !prev[isp] }));
   };
 
+  const ISPProviderSwitch = ({ name, color, checked }) => (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row-reverse",
+        alignItems: "center",
+      }}
+    >
+      <Typography>{name}</Typography>
+      {color === "pink" ? (
+        <PinkSwitch
+          {...label}
+          checked={checked}
+          onChange={() => handleIspToggle(name)}
+        />
+      ) : (
+        <Switch
+          {...label}
+          color={color}
+          checked={checked}
+          onChange={() => handleIspToggle(name)}
+        />
+      )}
+    </Box>
+  );
+
+  const cities = [
+    "فارس",
+    "تهران",
+    "اصفهان",
+    "مشهد",
+    "اهواز",
+    "تبریز",
+    "مازندران",
+    "سمنان",
+    "خوزستان",
+    "گیلان",
+  ];
+
+  const [citySwitches, setCitySwitches] = useState(
+    cities.reduce((acc, city) => {
+      acc[city] = city === "تهران"; // Default "تهران" to true, others to false
+      return acc;
+    }, {})
+  );
+
+  // Event handler to toggle the switch state
+  const handleToggle = (city) => {
+    setCitySwitches((prev) => ({ ...prev, [city]: !prev[city] }));
+  };
   return (
     <>
       <Box
@@ -118,329 +157,32 @@ const DetailTest = () => {
             justifyContent: "start",
             alignItems: "center",
             backgroundColor: "#E8E8E8",
-            gap: "5px",
+            gap: "15px",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
+          <Box sx={{ marginTop: "2rem" }}>
+            <Typography variant="h7" sx={{ borderBottom: "1px solid gray" }}>
+              لیست استان ها
+            </Typography>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>شیراز</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>اصفهان</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>یزد</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>خراسان جنوبی</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>خراسان شمالی</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>مازندران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>سمنان</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>خوزستان</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>گیلان</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تبریز</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>کهکیلویه</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>کرج</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "start",
-            }}
-          >
-            <Typography sx={{ marginTop: "3px" }}>تهران</Typography>
-            <Switch {...label} defaultChecked />
-          </Box>
+          {cities.map((city) => (
+            <Box
+              key={city}
+              sx={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                justifyContent: "space-between",
+                width: "60%",
+              }}
+            >
+              <Typography sx={{ marginTop: "3px" }}>{city}</Typography>
+              <Switch
+                {...label}
+                checked={citySwitches[city] || false} // Use the state to determine if it's checked
+                onChange={() => handleToggle(city)}
+              />
+            </Box>
+          ))}
         </Box>
         <Box
           sx={{
@@ -484,7 +226,7 @@ const DetailTest = () => {
           <Box
             sx={{
               width: "93%",
-              height: "40%",
+              height: "48%",
               display: "flex",
               flexDirection: "column",
               justifyContent: "start",
@@ -495,7 +237,7 @@ const DetailTest = () => {
           >
             <Box
               sx={{
-                width: "100%",
+                width: "102%",
                 height: "10%",
                 marginTop: "2rem",
                 display: "flex",
@@ -523,7 +265,7 @@ const DetailTest = () => {
                   }}
                 >
                   <Typography>میانگین عملکرد</Typography>
-                  <Switch {...label} defaultChecked />
+                  <Switch {...label} />
                 </Box>
                 <Box
                   sx={{
@@ -543,7 +285,7 @@ const DetailTest = () => {
                   }}
                 >
                   <Typography>میانگین سرعت</Typography>
-                  <Switch {...label} defaultChecked />
+                  <Switch {...label} />
                 </Box>
                 <Box
                   sx={{
@@ -553,14 +295,14 @@ const DetailTest = () => {
                   }}
                 >
                   <Typography>میانگین پکت لاس</Typography>
-                  <Switch {...label} defaultChecked />
+                  <Switch {...label} />
                 </Box>
               </Box>
               <Box sx={{ width: "20%" }}></Box>
             </Box>
             <Box
               sx={{
-                width: "100%",
+                width: "102%",
                 height: "10%",
                 display: "flex",
                 flexDirection: "row-reverse",
@@ -568,18 +310,53 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography sx={{ marginRight: "5rem" }}>98%</Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  marginRight: "5rem",
+                  marginTop: "2rem",
+                  color: "#126AED",
+                }}
+              >
+                98%
+              </Typography>
             </Box>
             <Box
               sx={{
-                marginLeft: "3rem",
-                width: "95%",
+                width: "99%",
                 height: "80%",
                 alignItems: "center",
+                marginTop: "1rem",
               }}
             >
               {" "}
-              <Line responsive="true" options={options} data={data} />
+              {/* <Line responsive="true" options={options} data={data} /> */}
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={data}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="ping"
+                    stroke="#126AED"
+                    activeDot={{ r: 8 }}
+                  />
+                  <Line type="monotone" dataKey="irancell" stroke="#82ca9d" />
+                </LineChart>
+              </ResponsiveContainer>
             </Box>
           </Box>
           <Box
@@ -624,7 +401,11 @@ const DetailTest = () => {
                   alignItems: "center",
                 }}
               >
-                <ISPProviderSwitch name="ایرانسل" />
+                <ISPProviderSwitch
+                  name="ایرانسل"
+                  color="success"
+                  checked={ispSwitches["ایرانسل"]}
+                />
               </Box>
               <Box
                 sx={{

@@ -13,6 +13,7 @@ import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import Dashboard from "../components/dashboard/Dashboard";
 
 import "./App.css";
+import DetailTest from "../components/detailTest/DetailTest";
 
 function App() {
   const [theme, setTheme] = useState(lightTheme);
@@ -35,7 +36,8 @@ function App() {
           {/* Routes without Navbar */}
           <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<DashboardRoutes/>} />
+          <Route path="/admin/*" element={<DashboardRoutes />} />
+          <Route path="/admin/tehran" element={<DetailTest />} />
 
           {/* Main route with Navbar */}
           <Route
@@ -67,11 +69,11 @@ const DashboardRoutes = () => {
     <>
       <DashboardNavbar />
       <Routes>
-        <Route index element={<Dashboard/>} />
+        <Route index element={<Dashboard />} />
         <Route path="speed-test" element={<TestHistory />} />
       </Routes>
     </>
   );
-}
+};
 
 export default App;
