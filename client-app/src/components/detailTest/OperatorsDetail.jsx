@@ -8,7 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import "./detail.css";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const OperatorsDetail = ({ visibility, setVisibility }) => {
@@ -46,6 +46,36 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
     },
   }));
 
+  const GreenSwitch = styled(Switch)(({ theme }) => ({
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: colors.green[600],
+      "&:hover": {
+        backgroundColor: alpha(
+          colors.green[600],
+          theme.palette.action.hoverOpacity
+        ),
+      },
+    },
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+      backgroundColor: colors.green[600],
+    },
+  }));
+
+  const OrangeSwitch = styled(Switch)(({ theme }) => ({
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: colors.orange[600],
+      "&:hover": {
+        backgroundColor: alpha(
+          colors.orange[600],
+          theme.palette.action.hoverOpacity
+        ),
+      },
+    },
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+      backgroundColor: colors.orange[600],
+    },
+  }));
+
   const ISPProviderSwitch = ({ name, color, checked }) => (
     <Box
       sx={{
@@ -65,6 +95,18 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
         />
       ) : color === "purple" ? (
         <PurpleSwitch
+          {...label}
+          checked={checked}
+          onChange={() => handleIspToggle(name)}
+        />
+      ) : color === "success" ? (
+        <GreenSwitch
+          {...label}
+          checked={checked}
+          onChange={() => handleIspToggle(name)}
+        />
+      ) : color === "warning" ? (
+        <OrangeSwitch
           {...label}
           checked={checked}
           onChange={() => handleIspToggle(name)}
@@ -168,7 +210,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           >
             <ISPProviderSwitch
               name="همراه_اول"
-              color="secondary"
+              color="warning"
               checked={visibility.همراه_اول}
               onChange={() => handleIspToggle("همراه_اول")}
             />
@@ -222,7 +264,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           >
             <ISPProviderSwitch
               name=" همراه_اول"
-              color="secondary"
+              color="warning"
               checked={visibility.همراه_اول}
               onChange={() => handleIspToggle("همراه_اول")}
             />
@@ -310,7 +352,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               >
                 <ISPProviderSwitch
                   name="همراه_اول"
-                  color="secondary"
+                  color="warning"
                   checked={visibility.همراه_اول}
                   onChange={() => handleIspToggle("همراه_اول")}
                 />
@@ -391,7 +433,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               >
                 <ISPProviderSwitch
                   name="همراه_اول"
-                  color="secondary"
+                  color="warning"
                   checked={visibility.همراه_اول}
                   onChange={() => handleIspToggle("همراه_اول")}
                 />

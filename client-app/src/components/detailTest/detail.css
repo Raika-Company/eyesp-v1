@@ -9,3 +9,24 @@
         opacity: 1.5 
         !important;
     } */
+
+    .css-1aag3uw-MuiButtonBase-root-MuiSwitch-switchBase {
+
+        margin: 3px !important;
+        margin-left: 4px !important;
+        margin-top: 4px !important;
+    }
+
+    .css-jsexje-MuiSwitch-thumb{
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .css-julti5-MuiSwitch-root{
+        width: 66px ;
+        height: 43px ;
+    }
+
+    .css-1yjjitx-MuiSwitch-track {
+        border-radius: 13px ;
+    }

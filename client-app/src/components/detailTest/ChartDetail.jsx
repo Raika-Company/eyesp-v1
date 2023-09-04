@@ -17,6 +17,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import "./detail.css";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
