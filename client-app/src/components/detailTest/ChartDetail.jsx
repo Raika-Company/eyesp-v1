@@ -69,10 +69,6 @@ const ChartDetail = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const [pingLineVisible, setPingLineVisible] = useState(true);
-  const handlePingToggle = () => {
-    setPingLineVisible((prevVisible) => !prevVisible);
-  };
 
   function MobileToggleSwitch() {
     return (
@@ -118,11 +114,7 @@ const ChartDetail = () => {
             >
               میانگین پینگ
             </Typography>
-            <Switch
-              {...label}
-              checked={pingLineVisible}
-              onChange={handlePingToggle}
-            />{" "}
+            <Switch {...label} />{" "}
           </Box>
         </Box>
         <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
@@ -163,6 +155,65 @@ const ChartDetail = () => {
       </Box>
     );
   }
+
+  function DesktopToggleSwitch() {
+    return (
+      <Box
+        sx={{
+          marginRight: isMdScreen ? "11rem" : isXsScreen ? "1rem" : "5rem",
+          width: "80%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "end",
+          gap: isMdScreen ? "1px" : isXsScreen ? "1px" : "60px",
+          flexWrap: isMdScreen ? "wrap" : isXsScreen ? "none" : "none",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h7">میانگین عملکرد</Typography>
+          <Switch {...label} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h7">میانگین پینگ</Typography>
+          <Switch {...label} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h7">میانگین سرعت</Typography>
+          <Switch {...label} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h7">میانگین پکت لاس</Typography>
+          <Switch {...label} />
+        </Box>
+      </Box>
+    );
+  }
   return (
     <>
       <Box
@@ -187,102 +238,14 @@ const ChartDetail = () => {
             justifyContent: "end",
           }}
         >
-          {isSmScreen ? (
-            <MobileToggleSwitch />
-          ) : (
-            <Box
-              sx={{
-                marginRight: isMdScreen
-                  ? "11rem"
-                  : isXsScreen
-                  ? "1rem"
-                  : "5rem",
-                width: "80%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "center",
-                justifyContent: "end",
-                gap: isMdScreen ? "1px" : isXsScreen ? "1px" : "60px",
-                flexWrap: isMdScreen ? "wrap" : isXsScreen ? "none" : "none",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-                  }}
-                >
-                  میانگین عملکرد
-                </Typography>
-                <Switch {...label} />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-                  }}
-                >
-                  میانگین پینگ
-                </Typography>
-                <Switch
-                  {...label}
-                  checked={pingLineVisible}
-                  onChange={handlePingToggle}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-                  }}
-                >
-                  میانگین سرعت
-                </Typography>
-                <Switch {...label} />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: isMdScreen ? "13px" : isXsScreen ? "10px" : "",
-                  }}
-                >
-                  میانگین پکت لاس
-                </Typography>
-                <Switch {...label} />
-              </Box>
-            </Box>
-          )}
+          {isSmScreen ? <MobileToggleSwitch /> : <DesktopToggleSwitch />}
 
           <Box
             sx={{
               width: "20%",
               textAlign: "center",
-              paddingLeft: isSmScreen ? "1rem" : "2rem",
+              paddingLeft: isSmScreen ? "8px" : "2rem",
+              marginBottom: isSmScreen ? "2rem" : "",
             }}
           >
             <Select
@@ -355,14 +318,12 @@ const ChartDetail = () => {
               <Tooltip />
               <Legend />
               {/* Conditionally render the ping line */}
-              {pingLineVisible && (
-                <Line
-                  type="monotone"
-                  dataKey="ping"
-                  stroke="#126AED"
-                  activeDot={{ r: 8 }}
-                />
-              )}
+              <Line
+                type="monotone"
+                dataKey="ping"
+                stroke="#126AED"
+                activeDot={{ r: 8 }}
+              />
               {/* {irancellLineVisible && (
                 
               )}{" "} */}

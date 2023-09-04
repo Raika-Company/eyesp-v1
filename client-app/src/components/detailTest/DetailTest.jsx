@@ -3,7 +3,6 @@ import { useState } from "react";
 import ChartDetail from "./ChartDetail";
 import OperatorsDetail from "./OperatorsDetail";
 import ArrowBack from "../../app/common/ArrowBack";
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const DetailTest = () => {
@@ -56,6 +55,7 @@ const DetailTest = () => {
     <>
       <Box
         sx={{
+          direction: "ltr",
           display: "flex",
           flexDirection: "row-reverse",
         }}
@@ -133,10 +133,11 @@ const DetailTest = () => {
           <Box
             sx={{
               width: "93%",
-              height: "7%",
+              height: isSmScreen ? "2%" : "7%",
               display: "flex",
               flexDirection: "row-reverse",
               justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <Box
@@ -146,6 +147,7 @@ const DetailTest = () => {
                 flexDirection: "row-reverse",
                 justifyContent: "star",
                 alignItems: "center",
+                gap: "8px",
               }}
             >
               <Typography
@@ -161,14 +163,16 @@ const DetailTest = () => {
                 sx={{
                   fontSize: isSmScreen ? "18px" : isMdScreen ? "20px" : "h3",
                   color: "#126AED",
-                  marginRight: "1rem",
                 }}
                 variant="h3"
               >
                 استان فارس
               </Typography>
             </Box>
-            <ArrowBack />
+            <Box>
+              {" "}
+              <ArrowBack />
+            </Box>
           </Box>
           <ChartDetail />
           <OperatorsDetail />

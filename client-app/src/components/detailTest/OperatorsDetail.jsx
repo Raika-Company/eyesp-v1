@@ -14,6 +14,20 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 const OperatorsDetail = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
+  const PurpleSwitch = styled(Switch)(({ theme }) => ({
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: colors.purple[600],
+      "&:hover": {
+        backgroundColor: alpha(
+          colors.purple[600],
+          theme.palette.action.hoverOpacity
+        ),
+      },
+    },
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+      backgroundColor: colors.purple[600],
+    },
+  }));
   const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
       color: colors.pink[600],
@@ -46,6 +60,12 @@ const OperatorsDetail = () => {
           checked={checked}
           onChange={() => handleIspToggle(name)}
         />
+      ) : color === "purple" ? (
+        <PurpleSwitch
+          {...label}
+          checked={checked}
+          onChange={() => handleIspToggle(name)}
+        />
       ) : (
         <Switch
           {...label}
@@ -57,33 +77,50 @@ const OperatorsDetail = () => {
     </Box>
   );
 
-  return (
-    <>
-      <Box
-        sx={{
-          width: "93%",
-          height: "35%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "start",
-          alignItems: "center",
-          border: "2px solid #E0E0E0",
-          borderRadius: "2em",
-          backgroundColor: "#E8E8E8",
-        }}
-      >
+  function MobileOperatorsDetail() {
+    return (
+      <>
         <Box
           sx={{
-            width: isSmScreen ? "52%" : "30%",
-            height: "20%",
-            marginTop: isSmScreen ? "1rem" : "2rem",
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
+            flexDirection: "row-reverse",
+            justifyContent: isSmScreen ? "center" : "space-evenly",
+            width: "100%",
+            height: isSmScreen ? "34%" : "20%",
           }}
         >
           {" "}
-          <Typography>ارایه دهنده های اینترنت</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <ISPProviderSwitch
+              name="ایرانسل"
+              color="success"
+              //   checked={ispSwitches["ایرانسل"]}
+            />{" "}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <ISPProviderSwitch name=" مخابرات" />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <ISPProviderSwitch name="شاتل" color="pink" />
+          </Box>
         </Box>
         <Box
           sx={{
@@ -92,7 +129,6 @@ const OperatorsDetail = () => {
             justifyContent: isSmScreen ? "center" : "space-evenly",
             width: "100%",
             height: isSmScreen ? "34%" : "20%",
-            flexWrap: isSmScreen ? "wrap" : "none",
           }}
         >
           <Box
@@ -124,25 +160,7 @@ const OperatorsDetail = () => {
               alignItems: "center",
             }}
           >
-            <ISPProviderSwitch name="رایتل" color="warning" />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch name="مخابرات" color="success" />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch name="شاتل" color="pink" />
+            <ISPProviderSwitch name="رایتل" color="purple" />
           </Box>
         </Box>
         <Box
@@ -152,7 +170,6 @@ const OperatorsDetail = () => {
             justifyContent: isSmScreen ? "center" : "space-evenly",
             width: "100%",
             height: isSmScreen ? "34%" : "20%",
-            flexWrap: isSmScreen ? "wrap" : "none",
           }}
         >
           {" "}
@@ -185,7 +202,32 @@ const OperatorsDetail = () => {
               alignItems: "center",
             }}
           >
-            <ISPProviderSwitch name="رایتل" color="warning" />
+            <ISPProviderSwitch name="رایتل" color="purple" />
+          </Box>
+        </Box>
+
+        {/* <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            justifyContent: isSmScreen ? "center" : "space-evenly",
+            width: "100%",
+            height: isSmScreen ? "34%" : "20%",
+          }}
+        >
+          {" "}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+            }}
+          >
+            <ISPProviderSwitch
+              name="ایرانسل"
+              color="success"
+              //   checked={ispSwitches["ایرانسل"]}
+            />{" "}
           </Box>
           <Box
             sx={{
@@ -194,7 +236,7 @@ const OperatorsDetail = () => {
               alignItems: "center",
             }}
           >
-            <ISPProviderSwitch name="مخابرات" color="success" />
+            <ISPProviderSwitch name=" مخابرات" color="success" />
           </Box>
           <Box
             sx={{
@@ -205,7 +247,163 @@ const OperatorsDetail = () => {
           >
             <ISPProviderSwitch name="شاتل" color="pink" />
           </Box>
+        </Box> */}
+      </>
+    );
+  }
+  return (
+    <>
+      <Box
+        sx={{
+          width: "93%",
+          height: "35%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          alignItems: "center",
+          border: "2px solid #E0E0E0",
+          borderRadius: "2em",
+          backgroundColor: "#E8E8E8",
+        }}
+      >
+        <Box
+          sx={{
+            width: isSmScreen ? "52%" : "30%",
+            height: "20%",
+            marginTop: isSmScreen ? "1rem" : "2rem",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {" "}
+          <Typography>ارایه دهنده های اینترنت</Typography>
         </Box>
+        {isSmScreen ? (
+          <MobileOperatorsDetail />
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                justifyContent: "space-evenly",
+                width: "100%",
+                height: "20%",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch
+                  name="ایرانسل"
+                  color="success"
+                  //   checked={ispSwitches["ایرانسل"]}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="همراه اول" color="secondary" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="رایتل" color="purple" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="مخابرات" color="success" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="شاتل" color="pink" />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                justifyContent: "space-evenly",
+                width: "100%",
+                height: "20%",
+              }}
+            >
+              {" "}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch
+                  name="ایرانسل"
+                  color="success"
+                  //   checked={ispSwitches["ایرانسل"]}
+                />{" "}
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="همراه اول" color="secondary" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="رایتل" color="purple" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="مخابرات" color="success" />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <ISPProviderSwitch name="شاتل" color="pink" />
+              </Box>
+            </Box>
+          </>
+        )}
       </Box>
     </>
   );
