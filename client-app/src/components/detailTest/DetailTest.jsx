@@ -10,21 +10,13 @@ const DetailTest = () => {
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  // const [irancellLineVisible, setIrancellLineVisible] = useState(true);
-
-  // const handleIspToggle = (isp) => {
-  //   if (isp === "ایرانسل") {
-  //     setIrancellLineVisible((prevVisible) => !prevVisible);
-  //   }
-  //   setIspSwitches((prev) => ({ ...prev, [isp]: !prev[isp] }));
-  // };
-  // const [ispSwitches, setIspSwitches] = useState({
-  //   ایرانسل: true, // Default "ایرانسل" to true
-  //   "همراه اول": false,
-  //   رایتل: false,
-  //   مخابرات: false,
-  //   شاتل: false,
-  // });
+  const [ispVisibility, setIspVisibility] = useState({
+    ایرانسل: false,
+    همراه_اول: false,
+    رایتل: false,
+    شاتل: false,
+    مخابرات: false,
+  });
 
   const cities = [
     "فارس",
@@ -174,8 +166,11 @@ const DetailTest = () => {
               <ArrowBack />
             </Box>
           </Box>
-          <ChartDetail />
-          <OperatorsDetail />
+          <ChartDetail visibility={ispVisibility} />
+          <OperatorsDetail
+            visibility={ispVisibility}
+            setVisibility={setIspVisibility}
+          />
         </Box>
       </Box>
     </>

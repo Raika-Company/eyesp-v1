@@ -17,55 +17,68 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useState } from "react";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const data = [
   {
     name: "تاریخ A",
-    irancell: 4000,
-    ping: 2400,
-    amt: 2400,
+    ایرانسل: 4000,
+    مخابرات: 2400,
+    شاتل: 5900,
+    رایتل: 7700,
+    همراه_اول: 1900,
   },
   {
     name: "تاریخ B",
-    irancell: 3000,
-    ping: 1398,
-    amt: 2210,
+    ایرانسل: 3000,
+    مخابرات: 1398,
+    شاتل: 7000,
+    رایتل: 8500,
+    همراه_اول: 9000,
   },
   {
     name: "تاریخ C",
-    irancell: 2000,
-    ping: 9800,
-    amt: 2290,
+    ایرانسل: 2500,
+    مخابرات: 9800,
+    شاتل: 4900,
+    رایتل: 4200,
+    همراه_اول: 6500,
   },
   {
     name: "تاریخ D",
-    irancell: 2780,
-    ping: 3908,
-    amt: 2000,
+    ایرانسل: 1780,
+    مخابرات: 4908,
+    شاتل: 6800,
+    رایتل: 7800,
+    همراه_اول: 4600,
   },
   {
     name: "تاریخ E",
-    irancell: 1890,
-    ping: 4800,
-    amt: 2181,
+    ایرانسل: 7890,
+    مخابرات: 4800,
+    شاتل: 9700,
+    رایتل: 4900,
+    همراه_اول: 3200,
   },
   {
     name: "تاریخ F",
-    irancell: 2390,
-    ping: 3800,
-    amt: 2500,
+    ایرانسل: 3390,
+    مخابرات: 6800,
+    شاتل: 4600,
+    رایتل: 1800,
+    همراه_اول: 5400,
   },
   {
     name: "تاریخ G",
-    irancell: 3490,
-    ping: 4300,
-    amt: 2100,
+    ایرانسل: 3490,
+    مخابرات: 4300,
+    شاتل: 2400,
+    رایتل: 2100,
+    همراه_اول: 2000,
   },
 ];
-const ChartDetail = () => {
+const ChartDetail = ({ visibility }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -317,22 +330,49 @@ const ChartDetail = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              {/* Conditionally render the ping line */}
-              <Line
-                type="monotone"
-                dataKey="ping"
-                stroke="#126AED"
-                activeDot={{ r: 8 }}
-              />
-              {/* {irancellLineVisible && (
-                
-              )}{" "} */}
-              <Line
-                type="monotone"
-                dataKey="irancell"
-                stroke="#82ca9d"
-                activeDot={{ r: 8 }}
-              />
+              {visibility.مخابرات && (
+                <Line
+                  type="monotone"
+                  dataKey="مخابرات"
+                  stroke="#126AED"
+                  activeDot={{ r: 8 }}
+                />
+              )}
+              {visibility.ایرانسل && (
+                <Line
+                  type="monotone"
+                  dataKey="ایرانسل"
+                  stroke="#82ca9d"
+                  activeDot={{ r: 8 }}
+                />
+              )}
+
+              {/* The new lines */}
+              {visibility.شاتل && (
+                <Line
+                  type="monotone"
+                  dataKey="شاتل"
+                  stroke="pink"
+                  activeDot={{ r: 8 }}
+                />
+              )}
+              {visibility.رایتل && (
+                <Line
+                  type="monotone"
+                  dataKey="رایتل"
+                  stroke="purple"
+                  activeDot={{ r: 8 }}
+                />
+              )}
+
+              {visibility.همراه_اول && (
+                <Line
+                  type="monotone"
+                  dataKey="همراه_اول"
+                  stroke="orange"
+                  activeDot={{ r: 8 }}
+                />
+              )}
             </LineChart>
           </ResponsiveContainer>
         </Box>
