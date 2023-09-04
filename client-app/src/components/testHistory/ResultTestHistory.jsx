@@ -8,7 +8,6 @@ import "./TestHistory.css";
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   const elements = Array(20)
     .fill()

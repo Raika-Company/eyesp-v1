@@ -5,7 +5,6 @@ import { alpha } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { InputLabel } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -53,7 +52,6 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 function DlandUlCharts() {
-  const [chartColors, setChartColors] = useState(["#FF5733", "#EFEFEF"]);
   const [isUploadVisible, setIsUploadVisible] = useState(false); // Initially hide "آپلود" dataset
 
   ChartJS.register(
