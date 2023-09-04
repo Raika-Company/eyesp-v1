@@ -89,7 +89,7 @@ const Dashboard = () => {
           height: isSmScreen ? "" : "53vh",
           background: "#E8E8E8",
           marginInline: "auto",
-          marginTop: "5rem",
+          marginTop: isSmScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
