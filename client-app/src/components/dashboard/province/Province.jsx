@@ -13,6 +13,8 @@ import {
   TableCell,
   Paper,
   TableBody,
+  tableCellClasses,
+  Divider,
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
@@ -31,9 +33,13 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(({  }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: "#E8E8E8",
+  },
+  "&:nth-of-type(even)": {
+    backgroundColor: "#999999",
+    borderRadius: "1rem"
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -210,28 +216,29 @@ const Province = () => {
         </Box>
       </Card>
 
-      <Typography>تاریخچه اطلاعات</Typography>
-      <Card sx={{ backgroundColor: "#E8E8E8", width: "100%" }}>
-        <TableContainer component={Paper}>
+      <Typography marginTop="3em" gutterBottom color="#9B9B9B" fontSize="1.789rem">تاریخچه اطلاعات</Typography>
+      <Card sx={{ backgroundColor: "#E8E8E8", width: "100%", padding: "5%" }}>
+        <TableContainer>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
-              <TableRow>
-                <StyledTableCell>تاریخ</StyledTableCell>
-                <StyledTableCell align="right">نام ISP</StyledTableCell>
-                <StyledTableCell align="right">نوع اختلال</StyledTableCell>
-                <StyledTableCell align="right">دلیل اختلال</StyledTableCell>
-              </TableRow>
+              <StyledTableRow>
+                <StyledTableCell align="center">تاریخ</StyledTableCell>
+                <StyledTableCell align="center">نام ISP</StyledTableCell>
+                <StyledTableCell align="center">نوع اختلال</StyledTableCell>
+                <StyledTableCell align="center">دلیل اختلال</StyledTableCell>
+              </StyledTableRow>
             </TableHead>
+            <Divider width="200%"/>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center">
                     {row.date}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{row.ISPName}</StyledTableCell>
-                  <StyledTableCell align="right">{row.TypeOfDisorder}</StyledTableCell>
-                  <StyledTableCell align="right">{row.Reason}</StyledTableCell>
-                </TableRow>
+                  <StyledTableCell align="center">{row.ISPName}</StyledTableCell>
+                  <StyledTableCell align="center">{row.TypeOfDisorder}</StyledTableCell>
+                  <StyledTableCell align="center">{row.Reason}</StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>
