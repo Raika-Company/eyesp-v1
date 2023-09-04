@@ -11,6 +11,7 @@ import Login from "../components/login/Login";
 import Pc from "../components/pc/pc";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import Dashboard from "../components/dashboard/Dashboard";
+import Province from "../components/dashboard/province/Province"
 
 import "./App.css";
 
@@ -65,9 +66,10 @@ function App() {
 const DashboardRoutes = () => {
   return (
     <>
-      <DashboardNavbar />
+      {/* <DashboardNavbar /> */}
       <Routes>
         <Route index element={<Dashboard/>} />
+        <Route path="/:provinceName" element={<Province/>} />
         <Route path="speed-test" element={<TestHistory />} />
       </Routes>
     </>

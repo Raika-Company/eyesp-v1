@@ -6,6 +6,8 @@ import iranBorder, {
 } from "../../../app/data/IranMapData";
 import styles from "./IranMap.module.css";
 
+import { useNavigate } from "react-router-dom";
+
 const useMouse = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -18,13 +20,14 @@ const useMouse = () => {
     }
     const mapEffect = document.querySelector("svg");
     mapEffect.addEventListener("mousemove", handle);
-    return () => document.removeEventListener("mousemove", handle);
+    return () => mapEffect.removeEventListener("mousemove", handle);
   }, [setMousePosition]);
 
   return mousePosition;
 };
 
 const IranMap = () => {
+  const navigate = useNavigate();
   const { x, y } = useMouse();
   const [provinces] = useState(() => iranProvinces);
   const [provinceName, setProvinceName] = useState("");
@@ -105,9 +108,13 @@ const IranMap = () => {
                   onMouseOver={() => setProvinceName(province.name)}
                   onMouseLeave={() => setProvinceName("")}
                   onClick={() => {
-                    setCities(province.cities);
-                    setProvinceSelected(true);
-                    setProvinceNameOnClick(province.name);
+                    navigate(`/admin/${province.name}`, {
+                      state: {
+                        provinceName: province.name,
+                        pathD: province.d,
+                        color: province.color,
+                      },
+                    });
                   }}
                 />
               ))}
