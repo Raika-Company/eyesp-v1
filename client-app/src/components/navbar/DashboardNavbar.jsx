@@ -6,13 +6,21 @@ import CompanyLogo from "../../app/assets/image/logo.svg";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import FolderIcon from "@mui/icons-material/Folder";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const pages = [
+  ["داشبورد", "/admin"],
+  ["تست سرعت", "/"],
+];
 
 const DashboardNavbar = () => {
   const [value, setValue] = React.useState("recents");
+  const history = useNavigate();
+  const location = useLocation();
+
+  const navigateTo = (path) => {
+    history(path);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -24,10 +32,14 @@ const DashboardNavbar = () => {
 
   const toggleAutoMosaic = () => {
     setIsAutoMosaicOpen(!isAutoMosaicOpen);
+    setIsSpeedIconOpen(false);
+    navigateTo("/admin");
   };
 
   const toggleSpeedIcon = () => {
     setIsSpeedIconOpen(!isSpeedIconOpen);
+    setIsAutoMosaicOpen(false);
+    navigateTo("/admin/speed-test");
   };
 
   return (
@@ -53,7 +65,7 @@ const DashboardNavbar = () => {
         >
           <Box
             sx={{
-              color: "#3d3d3d",
+              color: isAutoMosaicOpen ? "#126AED" : "#3d3d3d",
               width: isAutoMosaicOpen ? "140px" : "50px",
               textAlign: isAutoMosaicOpen ? "left" : "center",
             }}
@@ -63,7 +75,11 @@ const DashboardNavbar = () => {
               aria-label="add to shopping cart"
               onClick={toggleAutoMosaic}
             >
-              <AutoAwesomeMosaicIcon />
+              <AutoAwesomeMosaicIcon
+                sx={{
+                  color: location.pathname === "/admin" ? "#126AED" : "#3d3d3d",
+                }}
+              />
             </IconButton>
           </Box>
           <img
@@ -73,7 +89,7 @@ const DashboardNavbar = () => {
           />
           <Box
             sx={{
-              color: "#a7a7a7",
+              color: isSpeedIconOpen ? "#126AED" : "#a7a7a7",
               width: isSpeedIconOpen ? "140px" : "50px",
               textAlign: isSpeedIconOpen ? "right" : "center",
             }}
@@ -82,7 +98,14 @@ const DashboardNavbar = () => {
               onClick={toggleSpeedIcon}
               aria-label="add to shopping cart"
             >
-              <SpeedIcon />
+              <SpeedIcon
+                sx={{
+                  color:
+                    location.pathname === "/admin/speed-test"
+                      ? "#126AED"
+                      : "#3d3d3d",
+                }}
+              />
             </IconButton>
             {isSpeedIconOpen && <span>تست سرعت</span>}
           </Box>

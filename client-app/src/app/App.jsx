@@ -13,6 +13,7 @@ import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import Dashboard from "../components/dashboard/Dashboard";
 
 import "./App.css";
+import AdminSpeedTest from "../components/dashboard/AdminSpeedTest";
 
 function App() {
   const [theme, setTheme] = useState(lightTheme);
@@ -68,7 +69,7 @@ const DashboardRoutes = () => {
       <DashboardNavbar />
       <Routes>
         <Route index element={<Dashboard/>} />
-        <Route path="speed-test" element={<TestHistory />} />
+        <Route path="/speed-test" element={<AdminSpeedTest />} />
       </Routes>
     </>
   );
