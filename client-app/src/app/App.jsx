@@ -66,7 +66,7 @@ function App() {
 const DashboardRoutes = () => {
   return (
     <>
-      {/* <DashboardNavbar /> */}
+      <DashboardNavbar />
       <Routes>
         <Route index element={<Dashboard/>} />
         <Route path="/:provinceName" element={<Province/>} />

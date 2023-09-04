@@ -85,10 +85,9 @@ const Dashboard = () => {
     <Container maxWidth="xl" sx={{ direction: "rtl" }}>
       <div
         style={{
-          width: "95%",
+          width: "100%",
           height: isSmScreen ? "" : "53vh",
           background: "#E8E8E8",
-          marginInline: "auto",
           marginTop: isSmScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
