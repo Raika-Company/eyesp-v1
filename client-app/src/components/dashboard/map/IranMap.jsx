@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import iranProvinces from "../../../app/data/IranProvinces";
-import iranBorder, { caspianD, persianGulfD } from "../../../app/data/IranMapData";
+import iranBorder, {
+  caspianD,
+  persianGulfD,
+} from "../../../app/data/IranMapData";
 import styles from "./IranMap.module.css";
 
 const useMouse = () => {
@@ -80,20 +83,8 @@ const IranMap = () => {
       )}
       <div className={styles.container}>
         <div className={styles.map}>
-          <button
-            className={
-              mapZoom
-                ? styles.zoom_btn + " " + styles.zoom_out
-                : styles.zoom_btn + " " + styles.zoom_in
-            }
-            onClick={() => {
-              setMapZoom(!mapZoom);
-            }}
-          />
           <svg
-            className={
-              mapZoom ? styles.svg + " " + styles.map_zoom : styles.svg
-            }
+            className={styles.svg}
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -110,6 +101,7 @@ const IranMap = () => {
                   key={province.id}
                   className={province.className}
                   d={province.d}
+                  fill={province.color}
                   onMouseOver={() => setProvinceName(province.name)}
                   onMouseLeave={() => setProvinceName("")}
                   onClick={() => {

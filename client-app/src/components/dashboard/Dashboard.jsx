@@ -20,6 +20,7 @@ import WifiOffIcon from "@mui/icons-material/WifiOff";
 import WifiIcon from "@mui/icons-material/Wifi";
 import AirplayIcon from "@mui/icons-material/Airplay";
 import SpeedIcon from "@mui/icons-material/Speed";
+import IranMap from "./map/IranMap";
 
 const Dashboard = () => {
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
@@ -94,23 +95,22 @@ const Dashboard = () => {
           overflow: "visible",
         }}
       >
-        <img
-          src={iranMap}
-          alt="iran map"
-          style={{
+        <Box
+          sx={{
             float: "left",
-            maxWidth: isSmScreen ? "100%" : "45%",
-            marginTop: isSmScreen ? "0" : "18vh",
+            width: isSmScreen ? "100%" : "45%",
+            marginTop: isSmScreen ? "0" : "12vh",
             padding: isSmScreen ? "1em" : "0",
             marginInline: "2.5%",
           }}
-        />
+        >
+          <IranMap/>
+        </Box>
         <div
           style={{
-            width: isSmScreen ? "100%" : "50%",
+            width: isSmScreen ? "100%" : "45%",
             // width: "50%",
             float: "left",
-            padding: "2em",
             // marginTop: "2em",
             fontSize: "10px",
           }}
