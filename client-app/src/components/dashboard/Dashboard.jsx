@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Box, useMediaQuery } from "@mui/material";
+import { Container, Typography, Box, useMediaQuery, Card } from "@mui/material";
 import iranMap from "./iran.png";
 import Grid from "@mui/material/Grid";
 import InfoBox from "./InfoBox";
@@ -91,7 +91,7 @@ const Dashboard = () => {
       <div
         style={{
           width: "100%",
-          height: isMdScreen ? "" : "61.3vh",
+          height: isMdScreen ? "" : "53vh",
           background: "#E8E8E8",
           marginTop: isMdScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
@@ -188,18 +188,10 @@ const Dashboard = () => {
       </div>
 
       {/* --- strat-table-ISP --- */}
-      <Box
+      <Card
         sx={{
           width: "100%",
           marginInline: "auto",
-          marginTop: isSmScreen
-            ? "0"
-            : isMdScreen
-            ? "0"
-            : isXlScreen
-            ? "21rem"
-            : "18rem",
-          borderRadius: "1.875rem",
           background: "#E8E8E8",
           padding: "0 2.5rem",
           paddingTop: "2rem",
@@ -370,17 +362,17 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Box> */}
-      </Box>
+      </Card>
       {/* --- End-table-ISP --- */}
 
       {/* --- start-buttonGroups --- */}
-      <Box
+      <Card
         sx={{
           width: "100%",
           marginInline: "auto",
           marginTop: "1.3rem",
           marginBottom: isSmScreen ? "5.1rem" : "1.3rem",
-          borderRadius: "1.875rem",
+          
           background: "#E8E8E8",
           padding: "1rem 2.5rem",
         }}
@@ -417,7 +409,7 @@ const Dashboard = () => {
             </Button>
           ))}
         </Box>
-      </Box>
+      </Card>
       {/* --- finish-buttonGroups --- */}
     </Container>
   );
