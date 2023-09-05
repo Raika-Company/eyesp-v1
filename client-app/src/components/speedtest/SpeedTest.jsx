@@ -233,11 +233,11 @@ const SpeedTest = ({ themeMode }) => {
         }}
       >
         <SpeedBox
-          title="سرعت دانلود"
-          iconSrc={Download}
-          altText="before download icon"
-          value={isGoButtonVisible ? null : speedData.downloadSpeed}
-          measure="Mbps"
+          title="پینگ"
+          iconSrc={Ping}
+          altText="ping icon"
+          value={isGoButtonVisible ? null : speedData.ping}
+          measure="ms"
           opacity={isGoButtonVisible ? "0.5" : "1"}
         />
         <Divider />
@@ -251,11 +251,11 @@ const SpeedTest = ({ themeMode }) => {
         />
         <Divider />
         <SpeedBox
-          title="پینگ"
-          iconSrc={Ping}
-          altText="ping icon"
-          value={isGoButtonVisible ? null : speedData.ping}
-          measure="ms"
+          title="سرعت دانلود"
+          iconSrc={Download}
+          altText="before download icon"
+          value={isGoButtonVisible ? null : speedData.downloadSpeed}
+          measure="Mbps"
           opacity={isGoButtonVisible ? "0.5" : "1"}
         />
       </Box>
@@ -328,18 +328,17 @@ const SpeedTest = ({ themeMode }) => {
         sx={{ display: { xs: "none", md: "flex" } }}
       >
         <InformationBox
-          title="همراه اول"
-          value="51.15.57.153"
-          iconSrc={Person}
-          altText="Person Icon"
-        />
-
-        <InformationBox
           title="سرور مقصد"
           value="تهران - امام"
           iconSrc={Globe}
           altText="Globe Icon"
           buttonLabel="تغییر سرور"
+        />
+        <InformationBox
+          title="همراه اول"
+          value="51.15.57.153"
+          iconSrc={Person}
+          altText="Person Icon"
         />
       </Box>
       <CustomAccordion
