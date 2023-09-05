@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import SpeedTest from "../components/speedtest/SpeedTest";
 import Navbar from "../components/navbar/Navbar";
 import { lightTheme, darkTheme } from "./Palette";
-import SpeedTest from "../components/speedtest/SpeedTest";
-import TestHistory from "../components/testHistory/TestHistory";
-import Login from "../components/login/Login";
-import Pc from "../components/pc/pc";
-import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import Dashboard from "../components/dashboard/Dashboard";
-import Province from "../components/dashboard/province/Province";
-import AdminSpeedTest from "../components/dashboard/AdminSpeedTest";
-import DetailTest from "../components/detailTest/DetailTest"
 import "./App.css";
+
+const TestHistory = lazy(() => import("../components/testHistory/TestHistory"));
+const Login = lazy(() => import("../components/login/Login"));
+const Pc = lazy(() => import("../components/pc/pc"));
+const DashboardNavbar = lazy(() => import("../components/navbar/DashboardNavbar"));
+const Dashboard = lazy(() => import("../components/dashboard/Dashboard"));
+const Province = lazy(() => import("../components/dashboard/province/Province"));
+const AdminSpeedTest = lazy(() => import("../components/dashboard/AdminSpeedTest"));
+const DetailTest = lazy(() => import("../components/detailTest/DetailTest"));
 
 function App() {
   const [theme, setTheme] = useState(lightTheme);
@@ -33,31 +34,31 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          {/* Routes without Navbar */}
-          <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<DashboardRoutes />} />
-          {/* Main route with Navbar */}
-          <Route
-            path="/*"
-            element={
-              <>
-                <Navbar
-                  themeMode={currentThemeMode}
-                  toggleTheme={toggleTheme}
-                />
-                <Routes>
-                  <Route
-                    index
-                    element={<SpeedTest themeMode={currentThemeMode} />}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin/*" element={<DashboardRoutes />} />
+            <Route
+              path="/*"
+              element={
+                <>
+                  <Navbar
+                    themeMode={currentThemeMode}
+                    toggleTheme={toggleTheme}
                   />
-                  <Route path="test-history" element={<TestHistory />} />
-                </Routes>
-              </>
-            }
-          />
-        </Routes>
+                  <Routes>
+                    <Route
+                      index
+                      element={<SpeedTest themeMode={currentThemeMode} />}
+                    />
+                    <Route path="test-history" element={<TestHistory />} />
+                  </Routes>
+                </>
+              }
+            />
+          </Routes>
+        </Suspense>
       </Router>
     </ThemeProvider>
   );
