@@ -1,25 +1,25 @@
 /**
  * Navbar Component.
- * 
+ *
  * A responsive navigation bar component built with Material-UI. It displays the site's logo, title, and navigation links.
  * On desktops, it shows navigation links inline, while on mobile it provides a hamburger menu to access the links.
  * It also includes a theme switcher.
- * 
+ *
  * @component
- * 
+ *
  * @param {Object} props
  * @param {"light" | "dark"} props.themeMode - The current theme mode. Either 'light' or 'dark'.
  * @param {Function} props.toggleTheme - Callback function to toggle the current theme.
- * 
+ *
  * @example
- * 
+ *
  * ```jsx
  * import Navbar from './Navbar';
- * 
+ *
  * function App() {
  *   const [themeMode, setThemeMode] = useState("light");
  *   const toggleTheme = () => setThemeMode(prevMode => prevMode === "light" ? "dark" : "light");
- *   
+ *
  *   return <Navbar themeMode={themeMode} toggleTheme={toggleTheme} />;
  * }
  * ```
@@ -55,29 +55,51 @@ const NAVBAR_STYLES = {
 };
 
 const pages = [
-  ["درباره ما", "/about-us"],
-  ["پنل ادمین", "/admin"],
-  ["تاریخچه تست", "/test-history"],
   ["صفحه اصلی", "/"],
+  ["تاریخچه تست", "/test-history"],
+  ["پنل ادمین", "/admin"],
+  ["درباره ما", "/about-us"],
 ];
 
-function DesktopNav({ pages, navigateTo, location }) {
+function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
   return (
-    <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-      {pages.map(([text, path]) => (
+    <Box
+      sx={{ display: { xs: "none", md: "flex" } }}
+      width="100%"
+      flexDirection="row"
+      justifyContent="space-between"
+    >
+      <Box display="flex" gap={3}>
+        {pages.map(([text, path]) => (
+          <Typography
+            key={text}
+            variant="h5"
+            onClick={() => navigateTo(path)}
+            sx={{
+              cursor: "pointer",
+              marginLeft: "20px",
+              color: location.pathname === path ? "#126AED" : "#A4A4A4",
+              marginTop: "0.2em",
+            }}
+          >
+            {text}
+          </Typography>
+        ))}
+        <Box sx={{ display: { xs: "none", md: "inline-block" } }}>
+          <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
+        </Box>
+      </Box>
+      <Box display="flex" marginTop="0.5em">
+        <img src={Logo} alt="TIC Radar logo" height="32px" />
         <Typography
-          key={text}
-          variant="h5"
-          onClick={() => navigateTo(path)}
-          sx={{
-            cursor: "pointer",
-            marginLeft: "20px",
-            color: location.pathname === path ? "#126AED" : "#A4A4A4",
-          }}
+          variant="h4"
+          component="h1"
+          color="primary"
+          sx={{ marginLeft: 2 }}
         >
-          {text}
+          TIC Radar
         </Typography>
-      ))}
+      </Box>
     </Box>
   );
 }
@@ -111,34 +133,36 @@ export default function Navbar({ themeMode, toggleTheme }) {
 
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-  
+
   const navigateTo = (path) => {
     history(path);
     handleCloseDrawer();
   };
 
   return (
-    <AppBar component="nav" position="static" sx={NAVBAR_STYLES} className="nav-height">
+    <AppBar
+      component="nav"
+      position="static"
+      sx={NAVBAR_STYLES}
+      className="nav-height"
+    >
       <Toolbar>
-        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, marginTop:1.5 }}>
-          <img src={Logo} alt="TIC Radar logo" height="30px" />
-          <Typography variant="h4" component="h1" color="primary" sx={{ marginLeft: 2 }}>
-            TIC Radar
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: { xs: "none", md: "inline-block" } }}>
-          <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
-        </Box>
-
-        <DesktopNav pages={pages} navigateTo={navigateTo} location={location} />
-        <MobileNav handleOpenDrawer={handleOpenDrawer} />
+        <DesktopNav
+          pages={pages}
+          navigateTo={navigateTo}
+          location={location}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+        />
 
         <Drawer anchor="left" open={drawerOpen} onClose={handleCloseDrawer}>
           <List sx={{ width: "60vw" }}>
-            {[...pages].reverse().map(([text, path]) => (
+            {pages.map(([text, path]) => (
               <Box key={text}>
-                <ListItem sx={{ textAlign: "center" }} onClick={() => navigateTo(path)}>
+                <ListItem
+                  sx={{ textAlign: "center" }}
+                  onClick={() => navigateTo(path)}
+                >
                   <ListItemText primary={text} />
                 </ListItem>
                 <Divider />
@@ -149,6 +173,7 @@ export default function Navbar({ themeMode, toggleTheme }) {
             <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
           </Box>
         </Drawer>
+        <MobileNav handleOpenDrawer={handleOpenDrawer} />
       </Toolbar>
     </AppBar>
   );
