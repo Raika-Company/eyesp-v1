@@ -1,8 +1,18 @@
+import React, { lazy } from 'react';
+import SpeedTest from "../../components/speedtest/SpeedTest";
+const TestHistory = lazy(() => import("../../components/testHistory/TestHistory"));
+const Login = lazy(() => import("../../components/login/Login"));
+const Pc = lazy(() => import("../../components/pc/pc"));
+const Dashboard = lazy(() => import("../../components/dashboard/Dashboard"));
+const Province = lazy(() => import("../../components/dashboard/province/Province"));
+const AdminSpeedTest = lazy(() => import("../../components/dashboard/AdminSpeedTest"));
+const DetailTest = lazy(() => import("../../components/detailTest/DetailTest"));
+
 export const mainRoutes = [
     {
       path: "/",
       element: <SpeedTest />,
-      title: "Speed Test | My App",
+      title: "Speed Test | Rayka ICT",
       description: "Test your internet speed with our reliable and fast speed testing tool.",
       keywords: "speed test, internet speed, broadband speed, download speed, upload speed",
       robots: "index, follow"
@@ -10,7 +20,7 @@ export const mainRoutes = [
     {
       path: "/test-history",
       element: <TestHistory />,
-      title: "Test History | My App",
+      title: "Test History | Rayka ICT",
       description: "Review all your past internet speed tests in one place.",
       keywords: "test history, speed results, past tests",
       robots: "index, follow"
@@ -56,7 +66,7 @@ export const mainRoutes = [
     {
       path: "/pc",
       element: <Pc />,
-      title: "PC Info | My App",
+      title: "PC Info | Rayka ICT",
       description: "Get insights into your PC's configurations and details.",
       keywords: "PC info, system details, configurations",
       robots: "index, follow"
@@ -64,7 +74,7 @@ export const mainRoutes = [
     {
       path: "/login",
       element: <Login />,
-      title: "Login | My App",
+      title: "Login | Rayka ICT",
       description: "Securely login to access your personalized features and data.",
       keywords: "login, user access, secure login",
       robots: "noindex, nofollow" // You typically don't want your login page to be indexed.

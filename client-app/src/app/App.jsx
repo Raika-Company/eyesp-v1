@@ -7,6 +7,7 @@ import Navbar from "../components/navbar/Navbar";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import { lightTheme, darkTheme } from "./Palette";
 import { mainRoutes, dashboardRoutes, otherRoutes } from "./routes/Routes";
+import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner/>}>
           <Routes>
             {otherRoutes.map(route => (
               <Route key={route.path} path={route.path} element={route.element} />
