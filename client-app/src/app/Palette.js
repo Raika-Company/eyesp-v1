@@ -113,6 +113,14 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          borderRadius: "12px",
+          paddingTop: "6px",
+        },
+      }
+    }
   },
 });
 
