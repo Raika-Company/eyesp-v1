@@ -1,23 +1,18 @@
 import styled from "@emotion/styled";
-import { Box } from "@mui/material";
-import React, { useState } from "react";
-import { alpha } from "@mui/material/styles";
+import { Box, InputLabel, Switch, alpha } from "@mui/material";
 import { pink } from "@mui/material/colors";
-import Switch from "@mui/material/Switch";
-import { InputLabel } from "@mui/material";
+import React, { useState } from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
+  CartesianGrid,
   Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import faker from "faker";
-import "./DlandUlCharts.css";
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
 
 const CustomBox = styled(Box)(({ theme }) => ({
   width: "70vw", // Default width for lg screens
@@ -49,104 +44,66 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: pink[600],
   },
 }));
+
+const data = [
+  { name: "January", دانلود: 100, آپلود: 150 },
+  { name: "February", دانلود: 200, آپلود: 230 },
+  { name: "March", دانلود: 250, آپلود: 210 },
+  { name: "April", دانلود: 230, آپلود: 220 },
+  { name: "May", دانلود: 300, آپلود: 290 },
+  { name: "June", دانلود: 320, آپلود: 300 },
+  { name: "July", دانلود: 250, آپلود: 240 },
+];
+
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 function DlandUlCharts() {
-  const [isUploadVisible, setIsUploadVisible] = useState(false); // Initially hide "آپلود" dataset
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top",
-        align: "start",
-        // labels: {
-        //   padding: {
-        //     bottom: 10, // Add paddingBottom to legend labels
-        //   },
-        // },
-      },
-    },
-    width: "100%",
-    height: "100%",
-  };
-
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "دانلود",
-        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "آپلود",
-        data: labels.map(() => faker.random.number({ min: -1000, max: 1000 })),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-        hidden: !isUploadVisible, // Conditionally hide "آپلود" dataset
-      },
-    ],
-  };
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
 
   const handleSwitchChange = () => {
-    // Toggle the visibility of the "آپلود" dataset
     setIsUploadVisible((prevValue) => !prevValue);
   };
-
   return (
-    <>
-      <CustomBox>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            zIndex: "3",
-          }}
-        >
-          <InputLabel sx={{ marginTop: "5px" }}>آپلود</InputLabel>
-          <PinkSwitch {...label} defaultChecked onChange={handleSwitchChange} />
-          <InputLabel sx={{ marginTop: "5px", paddingLeft: "30px" }}>
-            دانلود
-          </InputLabel>
-        </Box>
+    <CustomBox>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          zIndex: "3",
+        }}
+      >
+        <InputLabel sx={{ marginTop: "5px" }}>آپلود</InputLabel>
+        <PinkSwitch {...label} defaultChecked onChange={handleSwitchChange} />
+        <InputLabel sx={{ marginTop: "5px", paddingLeft: "30px" }}>
+          دانلود
+        </InputLabel>
+      </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            height: "90%",
-            justifyContent: "flex-start", // Align to the left
-          }}
-        >
-          <Line responsive="true" options={options} data={data} />
-        </Box>
-      </CustomBox>
-    </>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          height: "90%",
+          justifyContent: "flex-start",
+        }}
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="دانلود" stroke="#8884d8" />
+            {!isUploadVisible && (
+              <Line type="monotone" dataKey="آپلود" stroke="#82ca9d" />
+            )}
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+    </CustomBox>
   );
 }
 
-export default DlandUlCharts;
+export default React.memo(DlandUlCharts);
