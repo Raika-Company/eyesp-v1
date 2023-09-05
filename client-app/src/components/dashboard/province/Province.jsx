@@ -33,13 +33,13 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({  }) => ({
+const StyledTableRow = styled(TableRow)(({}) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: "#E8E8E8",
   },
   "&:nth-of-type(even)": {
     backgroundColor: "#999999",
-    borderRadius: "1rem"
+    borderRadius: "1rem",
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -180,43 +180,95 @@ const Province = () => {
         {/* Clear the float */}
         <div style={{ clear: "both" }}></div>
       </div>
-      <Card sx={{ backgroundColor: "#E8E8E8" }}>
-        <Box
-          display="flex"
-          justifyContent="flex-start"
-          gap={2}
-          padding="1em"
-          sx={{ backgroundColor: "#E8E8E8" }}
+
+      <Card
+        sx={{
+          backgroundColor: "E8E8E8",
+          width: isSmScreen ? "100%" : "46%",
+          height: isSmScreen ? "16dvh" : "8.5dvh",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: isSmScreen ? "1.4rem" : "1.9rem",
+          }}
         >
-          <Typography fontSize="1.9rem">دسترسی سریع</Typography>
+          دسترسی سریع:
+        </Typography>
+        <Box
+          sx={{
+            backgroundColor: "E8E8E8",
+            width: isSmScreen ? "70%" : "65%",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Button
             variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+            sx={{
+              color: "#126AED",
+              borderColor: "#126AED",
+              fontWeight: 700,
+              borderRadius: "12px",
+              padding: "7px 27px",
+              marginTop:"5px"
+            }}
           >
             پینگ
           </Button>
           <Button
             variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+            sx={{
+              color: "#126AED",
+              borderColor: "#126AED",
+              fontWeight: 700,
+              borderRadius: "12px",
+              padding: "7px 27px",
+            }}
           >
             اختلال
           </Button>
           <Button
             variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+            sx={{
+              color: "#126AED",
+              borderColor: "#126AED",
+              fontWeight: 700,
+              borderRadius: "12px",
+              padding: "7px 27px",
+            }}
           >
             سرعت
           </Button>
           <Button
             variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+            sx={{
+              color: "#126AED",
+              borderColor: "#126AED",
+              fontWeight: 700,
+              borderRadius: "12px",
+              padding: "7px 27px",
+            }}
           >
-            پینگ
+            پکت لاس
           </Button>
         </Box>
       </Card>
 
-      <Typography marginTop="3em" gutterBottom color="#9B9B9B" fontSize="1.789rem">تاریخچه اطلاعات</Typography>
+      <Typography
+        marginTop="3em"
+        gutterBottom
+        color="#9B9B9B"
+        fontSize="1.789rem"
+      >
+        تاریخچه اطلاعات
+      </Typography>
       <Card sx={{ backgroundColor: "#E8E8E8", width: "100%", padding: "5%" }}>
         <TableContainer>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -228,15 +280,17 @@ const Province = () => {
                 <StyledTableCell align="center">دلیل اختلال</StyledTableCell>
               </StyledTableRow>
             </TableHead>
-            <Divider width="200%"/>
+            <Divider width="200%" />
             <TableBody>
               {rows.map((row) => (
                 <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center">{row.date}</StyledTableCell>
                   <StyledTableCell align="center">
-                    {row.date}
+                    {row.ISPName}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{row.ISPName}</StyledTableCell>
-                  <StyledTableCell align="center">{row.TypeOfDisorder}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.TypeOfDisorder}
+                  </StyledTableCell>
                   <StyledTableCell align="center">{row.Reason}</StyledTableCell>
                 </StyledTableRow>
               ))}
