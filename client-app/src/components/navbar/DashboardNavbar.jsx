@@ -6,7 +6,7 @@ import CompanyLogo from "../../app/assets/image/logo.svg";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const pages = [
   ["داشبورد", "/admin"],
@@ -40,6 +40,10 @@ const DashboardNavbar = () => {
     setIsSpeedIconOpen(!isSpeedIconOpen);
     setIsAutoMosaicOpen(false);
     navigateTo("/admin/speed-test");
+  };
+
+  const toggleCompanyLogo = () => {
+    navigateTo("/");
   };
 
   return (
@@ -82,13 +86,14 @@ const DashboardNavbar = () => {
               />
             </IconButton>
           </Box>
-          <Link to="/">
-            <img
-              src={CompanyLogo}
-              alt="Company-logo"
-              style={{ cursor: "pointer", userSelect: "none" }}
-            />
-          </Link>
+
+          <img
+            onClick={toggleCompanyLogo}
+            src={CompanyLogo}
+            alt="Company-logo"
+            style={{ cursor: "pointer", userSelect: "none" }}
+          />
+
           <Box
             sx={{
               color: isSpeedIconOpen ? "#126AED" : "#a7a7a7",
