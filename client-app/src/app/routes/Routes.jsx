@@ -1,66 +1,73 @@
-import React, { lazy } from 'react';
-import SpeedTest from "../../components/speedtest/SpeedTest";
-const TestHistory = lazy(() => import("../../components/testHistory/TestHistory"));
-const Login = lazy(() => import("../../components/login/Login"));
-const Pc = lazy(() => import("../../components/pc/pc"));
-const Dashboard = lazy(() => import("../../components/dashboard/Dashboard"));
-const Province = lazy(() => import("../../components/dashboard/province/Province"));
-const AdminSpeedTest = lazy(() => import("../../components/dashboard/AdminSpeedTest"));
-const DetailTest = lazy(() => import("../../components/detailTest/DetailTest"));
-
 export const mainRoutes = [
-  {
-    path: "/",
-    element: <SpeedTest />,
-    title: "Speed Test",
-    description: "Test your internet speed."
-  },
-  {
-    path: "/test-history",
-    element: <TestHistory />,
-    title: "Test History",
-    description: "View your past test results."
-  }
-];
-
-export const dashboardRoutes = [
-  {
-    path: "/",
-    element: <Dashboard />,
-    title: "Dashboard",
-    description: "Admin dashboard."
-  },
-  {
-    path: "/:provinceName",
-    element: <Province />,
-    title: "Province",
-    description: "View province details."
-  },
-  {
-    path: "/speed-test",
-    element: <AdminSpeedTest />,
-    title: "Admin Speed Test",
-    description: "Test speeds as an admin."
-  },
-  {
-    path: "/detail-test",
-    element: <DetailTest />,
-    title: "Detailed Test",
-    description: "Detailed speed test results."
-  }
-];
-
-export const otherRoutes = [
-  {
-    path: "/pc",
-    element: <Pc />,
-    title: "PC Info",
-    description: "Information about the PC."
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    title: "Login",
-    description: "Login to the application."
-  }
-];
+    {
+      path: "/",
+      element: <SpeedTest />,
+      title: "Speed Test | My App",
+      description: "Test your internet speed with our reliable and fast speed testing tool.",
+      keywords: "speed test, internet speed, broadband speed, download speed, upload speed",
+      robots: "index, follow"
+    },
+    {
+      path: "/test-history",
+      element: <TestHistory />,
+      title: "Test History | My App",
+      description: "Review all your past internet speed tests in one place.",
+      keywords: "test history, speed results, past tests",
+      robots: "index, follow"
+    }
+  ];
+  
+  export const dashboardRoutes = [
+    {
+      path: "/",
+      element: <Dashboard />,
+      title: "Dashboard | Admin",
+      description: "Admin dashboard to manage and review system metrics.",
+      keywords: "dashboard, admin panel, system metrics",
+      robots: "noindex, nofollow" // Preventing search engines from indexing admin pages.
+    },
+    {
+      path: "/:provinceName",
+      element: <Province />,
+      title: "Province Details | Admin",
+      description: "Detailed insights into specific province metrics and data.",
+      keywords: "province, details, insights, metrics",
+      robots: "noindex, nofollow"
+    },
+    {
+      path: "/speed-test",
+      element: <AdminSpeedTest />,
+      title: "Admin Speed Test | Admin",
+      description: "Admin tool for testing internet speeds.",
+      keywords: "admin, speed test, tools",
+      robots: "noindex, nofollow"
+    },
+    {
+      path: "/detail-test",
+      element: <DetailTest />,
+      title: "Detailed Test | Admin",
+      description: "In-depth analysis of specific speed tests.",
+      keywords: "detailed test, speed analysis, admin tools",
+      robots: "noindex, nofollow"
+    }
+  ];
+  
+  export const otherRoutes = [
+    {
+      path: "/pc",
+      element: <Pc />,
+      title: "PC Info | My App",
+      description: "Get insights into your PC's configurations and details.",
+      keywords: "PC info, system details, configurations",
+      robots: "index, follow"
+    },
+    {
+      path: "/login",
+      element: <Login />,
+      title: "Login | My App",
+      description: "Securely login to access your personalized features and data.",
+      keywords: "login, user access, secure login",
+      robots: "noindex, nofollow" // You typically don't want your login page to be indexed.
+    }
+  ];
+  
