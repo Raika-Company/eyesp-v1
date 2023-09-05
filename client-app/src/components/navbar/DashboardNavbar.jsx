@@ -46,6 +46,11 @@ const DashboardNavbar = () => {
     navigateTo("/");
   };
 
+  function NavigationImage(props) {
+    const { src, alt, style, onClick } = props;
+    return <img onClick={onClick} src={src} alt={alt} style={style} />;
+  }
+
   return (
     <>
       {/* // --Start--dashboardNavbar-DESKTOP-- */}
@@ -144,12 +149,12 @@ const DashboardNavbar = () => {
               onClick={toggleAutoMosaic}
               label="داشبورد"
               value="nearby"
-              icon={<AutoAwesomeMosaicIcon sx={{ fontSize: 40 }} />}
+              icon={<AutoAwesomeMosaicIcon fontSize="large" />}
             />
-            <img
+            <NavigationImage
               onClick={toggleCompanyLogo}
               src={CompanyLogo}
-              alt="Company-logo"
+              alt="TIC Radar Logo"
               style={{
                 cursor: "pointer",
                 userSelect: "none",
@@ -160,7 +165,7 @@ const DashboardNavbar = () => {
               onClick={toggleSpeedIcon}
               label="تست سرعت"
               value="recents"
-              icon={<SpeedIcon sx={{ fontSize: 40 }} />}
+              icon={<SpeedIcon fontSize="large" />}
             />
           </BottomNavigation>
         </Box>

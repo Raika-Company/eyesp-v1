@@ -123,7 +123,7 @@ function ResultTestHistory() {
                 width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
               }}
               src={download}
-              alt="ping"
+              alt="download"
             />
           </Box>
           <Box
@@ -153,7 +153,7 @@ function ResultTestHistory() {
                 width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
               }}
               src={upload}
-              alt="ping"
+              alt="upload"
             />
           </Box>{" "}
           <Box

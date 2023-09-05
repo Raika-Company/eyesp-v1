@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import IranMap from "./map/IranMap";
-import ISPTable from './ISPTable';
+import ISPTable from "./ISPTable";
 
 import {
   Container,
@@ -10,7 +10,7 @@ import {
   useMediaQuery,
   Card,
   Button,
-  styled
+  styled,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -201,8 +201,9 @@ const Dashboard = () => {
             alignItems: "center",
           }}
         >
-          {GpButtons.map((val) => (
+          {GpButtons.map((val, index) => (
             <Button
+              key={index} // <-- Added this key
               variant="contained"
               startIcon={<val.icon style={{ fontSize: "2rem" }} />}
               sx={{

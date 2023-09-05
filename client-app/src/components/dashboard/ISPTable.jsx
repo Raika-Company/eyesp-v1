@@ -14,13 +14,13 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    color: "#9B9B9B",
-    borderColor: "#ececec",
-    "&:nth-child(3)": {
-      color: "#126AED",
-    },
-  },
+    [`&.${tableCellClasses.head}`]: {
+        color: "#9B9B9B",
+        borderColor: "#ececec",
+        "&:nth-of-type(3)": {
+          color: "#126AED",
+        },
+    },    
 
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
