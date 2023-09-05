@@ -29,6 +29,7 @@ const Dashboard = () => {
 
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -90,9 +91,9 @@ const Dashboard = () => {
       <div
         style={{
           width: "100%",
-          height: isSmScreen ? "" : "53vh",
+          height: isMdScreen ? "" : "53vh",
           background: "#E8E8E8",
-          marginTop: isSmScreen ? "1rem" : "3rem",
+          marginTop: isMdScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
@@ -101,21 +102,20 @@ const Dashboard = () => {
         <Box
           sx={{
             float: "left",
-            width: isSmScreen ? "100%" : "45%",
-            marginTop: isSmScreen ? "0" : "12vh",
-            padding: isSmScreen ? "1em" : "0",
-            marginInline: "2.5%",
+            width: isMdScreen ? "100%" : "45%",
+            marginTop: isMdScreen ? "0" : "12vh",
+            padding: isMdScreen ? "1em" : "0",
+            marginInline: "0.8%",
           }}
         >
           <IranMap />
         </Box>
         <div
           style={{
-            width: isSmScreen ? "100%" : "45%",
-            // width: "50%",
+            width: isMdScreen ? "100%" : "45%",
             float: "left",
-            // marginTop: "2em",
             fontSize: "10px",
+            padding:"1.5em 2.2em"
           }}
         >
           <Typography
