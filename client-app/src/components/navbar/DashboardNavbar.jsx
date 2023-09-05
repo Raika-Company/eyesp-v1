@@ -6,7 +6,7 @@ import CompanyLogo from "../../app/assets/image/logo.svg";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const pages = [
   ["داشبورد", "/admin"],
@@ -82,11 +82,13 @@ const DashboardNavbar = () => {
               />
             </IconButton>
           </Box>
-          <img
-            src={CompanyLogo}
-            alt="Company-logo"
-            style={{ cursor: "pointer", userSelect: "none" }}
-          />
+          <Link to="/">
+            <img
+              src={CompanyLogo}
+              alt="Company-logo"
+              style={{ cursor: "pointer", userSelect: "none" }}
+            />
+          </Link>
           <Box
             sx={{
               color: isSpeedIconOpen ? "#126AED" : "#a7a7a7",
@@ -131,12 +133,11 @@ const DashboardNavbar = () => {
             zIndex: "99999999",
             alignItems: "center",
             justifyContent: "space-evenly",
-            // backgroundColor: "#E8E8E8",
             display: isSmScreen ? "flex" : "none",
           }}
         >
           <BottomNavigation
-            sx={{ width: 500, height: 70 }}
+            sx={{ width: 700, height: 70 }}
             value={value}
             onChange={handleChange}
           >

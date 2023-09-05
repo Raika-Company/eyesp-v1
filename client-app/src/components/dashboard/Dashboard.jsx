@@ -379,7 +379,7 @@ const Dashboard = () => {
           width: "100%",
           marginInline: "auto",
           marginTop: "1.3rem",
-          marginBottom: "1.3rem",
+          marginBottom: isSmScreen ? "5.1rem" : "1.3rem",
           borderRadius: "1.875rem",
           background: "#E8E8E8",
           padding: "1rem 2.5rem",
