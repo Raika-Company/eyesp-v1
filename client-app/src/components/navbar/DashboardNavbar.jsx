@@ -42,6 +42,10 @@ const DashboardNavbar = () => {
     navigateTo("/admin/speed-test");
   };
 
+  const toggleCompanyLogo = () => {
+    navigateTo("/");
+  };
+
   return (
     <>
       {/* // --Start--dashboardNavbar-DESKTOP-- */}
@@ -82,11 +86,14 @@ const DashboardNavbar = () => {
               />
             </IconButton>
           </Box>
+
           <img
+            onClick={toggleCompanyLogo}
             src={CompanyLogo}
             alt="Company-logo"
             style={{ cursor: "pointer", userSelect: "none" }}
           />
+
           <Box
             sx={{
               color: isSpeedIconOpen ? "#126AED" : "#a7a7a7",
@@ -131,12 +138,11 @@ const DashboardNavbar = () => {
             zIndex: "99999999",
             alignItems: "center",
             justifyContent: "space-evenly",
-            // backgroundColor: "#E8E8E8",
             display: isSmScreen ? "flex" : "none",
           }}
         >
           <BottomNavigation
-            sx={{ width: 500, height: 70 }}
+            sx={{ width: 700, height: 70 }}
             value={value}
             onChange={handleChange}
           >
