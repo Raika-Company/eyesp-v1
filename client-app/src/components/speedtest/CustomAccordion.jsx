@@ -62,7 +62,7 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
             sx={{
               transform: expanded ? "rotate(0deg)" : "rotate(-180deg)",
               transition: "transform 0.3s",
-              marginRight: "32px",
+              marginLeft: "42px"
             }}
           />
           <img src={Person} alt="Person Icon" width="64px" />

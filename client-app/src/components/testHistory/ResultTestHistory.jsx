@@ -3,75 +3,49 @@ import React from "react";
 import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
-import "./TestHistory.css";
+
 
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const elements = Array(20)
-    .fill()
-    .map((_, index) => (
-      <Box
-        key={index}
-        sx={{
-          display: "flex",
-          width: isSmScreen ? "58%" : isMdScreen ? "96%" : "97%",
-          marginLeft: isSmScreen ? "7em" : "0",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          paddingBottom: "2em",
-          transform: "translateX(24px)",
-          marginRight: "30px",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-26px)" : "none",
-          }}
-        >
-          1403/12/27
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-33px)" : "none",
-          }}
-        >
-          ایرانسل - تهران
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-62px)" : "none",
+  const getTypographyStyles = () => ({
+    fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px"
+  });
 
-            color: "#EF676B",
-          }}
-        >
-          42Mbps
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-93px)" : "none",
+  const getWidthStyles = () => {
+    if (isSmScreen) return "58%";
+    if (isMdScreen) return "96%";
+    return "97%";
+  };
 
-            color: "#126AED",
-          }}
-        >
-          62Mbps
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-            transform: isSmScreen ? "translateX(-125px)" : "none",
-            color: "#DB7F12",
-          }}
-        >
-          35ms
-        </Typography>
-      </Box>
-    ));
+  const getTransformStyles = (small, medium) => {
+    if (isSmScreen) return small;
+    if (isMdScreen) return medium;
+    return "none";
+  };
+
+  const elements = Array(20).fill().map((_, index) => (
+    <Box
+      key={index}
+      sx={{
+        display: "flex",
+        width: getWidthStyles(),
+        marginLeft: isSmScreen ? "7em" : "0",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        paddingBottom: "2em",
+        transform: "translateX(24px)",
+        marginRight: "30px",
+      }}
+    >
+      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-26px)") }}>1403/12/27</Typography>
+      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-33px)") }}>ایرانسل - تهران</Typography>
+      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-62px)", "none"), color: "#EF676B" }}>42Mbps</Typography>
+      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-93px)", "none"), color: "#126AED" }}>62Mbps</Typography>
+      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-125px)", "none"), color: "#DB7F12" }}>35ms</Typography>
+    </Box>
+  ));
 
   return (
     <>
@@ -149,7 +123,7 @@ function ResultTestHistory() {
                 width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
               }}
               src={download}
-              alt="ping"
+              alt="download"
             />
           </Box>
           <Box
@@ -179,7 +153,7 @@ function ResultTestHistory() {
                 width: isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em",
               }}
               src={upload}
-              alt="ping"
+              alt="upload"
             />
           </Box>{" "}
           <Box

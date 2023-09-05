@@ -7,6 +7,14 @@ import iranBorder, {
 import styles from "./IranMap.module.css";
 
 import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+
+const StyledSpan = styled("span")({
+  position: 'absolute',
+  left: props => `${props.x + 5}px`,
+  top: props => `${props.y + 5}px`,
+  zIndex: 999
+});
 
 const useMouse = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -40,13 +48,7 @@ const IranMap = () => {
     <>
       <span className={styles.show_title}>
         {provinceName}
-        <style jsx>{`
-          span {
-            left: ${x + 5 + "px"};
-            top: ${y + 5 + "px"};
-            z-index: 999;
-          }
-        `}</style>
+        <StyledSpan/>
       </span>
       {provinceSelected && (
         <div>

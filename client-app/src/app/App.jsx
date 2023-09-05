@@ -1,19 +1,13 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Navbar from "../components/navbar/Navbar";
-import { lightTheme, darkTheme } from "./Palette";
-import SpeedTest from "../components/speedtest/SpeedTest";
-import TestHistory from "../components/testHistory/TestHistory";
-import Login from "../components/login/Login";
-import Pc from "../components/pc/pc";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import Dashboard from "../components/dashboard/Dashboard";
-import Province from "../components/dashboard/province/Province";
-import AdminSpeedTest from "../components/dashboard/AdminSpeedTest";
-import DetailTest from "../components/detailTest/DetailTest"
+import { lightTheme, darkTheme } from "./Palette";
+import { mainRoutes, dashboardRoutes, otherRoutes } from "./routes/Routes";
+import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
 function App() {
@@ -33,31 +27,30 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          {/* Routes without Navbar */}
-          <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<DashboardRoutes />} />
-          {/* Main route with Navbar */}
-          <Route
-            path="/*"
-            element={
-              <>
-                <Navbar
-                  themeMode={currentThemeMode}
-                  toggleTheme={toggleTheme}
-                />
-                <Routes>
-                  <Route
-                    index
-                    element={<SpeedTest themeMode={currentThemeMode} />}
+        <Suspense fallback={<LoadingSpinner/>}>
+          <Routes>
+            {otherRoutes.map(route => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+            <Route path="/admin/*" element={<DashboardRoutes />} />
+            <Route
+              path="/*"
+              element={
+                <>
+                  <Navbar
+                    themeMode={currentThemeMode}
+                    toggleTheme={toggleTheme}
                   />
-                  <Route path="test-history" element={<TestHistory />} />
-                </Routes>
-              </>
-            }
-          />
-        </Routes>
+                  <Routes>
+                    {mainRoutes.map(route => (
+                      <Route key={route.path} path={route.path} element={route.element} />
+                    ))}
+                  </Routes>
+                </>
+              }
+            />
+          </Routes>
+        </Suspense>
       </Router>
     </ThemeProvider>
   );
@@ -68,10 +61,9 @@ const DashboardRoutes = () => {
     <>
       <DashboardNavbar />
       <Routes>
-        <Route index element={<Dashboard/>} />
-        <Route path="/:provinceName" element={<Province/>} />
-        <Route path="/speed-test" element={<AdminSpeedTest />} />
-        <Route path="/detail-test" element={<DetailTest />} />
+        {dashboardRoutes.map(route => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
       </Routes>
     </>
   );
