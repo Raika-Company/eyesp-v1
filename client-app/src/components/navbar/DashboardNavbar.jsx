@@ -75,10 +75,7 @@ const DashboardNavbar = () => {
             }}
           >
             {isAutoMosaicOpen && <span>داشبورد</span>}
-            <IconButton
-              aria-label="add to shopping cart"
-              onClick={toggleAutoMosaic}
-            >
+            <IconButton onClick={toggleAutoMosaic}>
               <AutoAwesomeMosaicIcon
                 sx={{
                   color: location.pathname === "/admin" ? "#126AED" : "#3d3d3d",
@@ -101,10 +98,7 @@ const DashboardNavbar = () => {
               textAlign: isSpeedIconOpen ? "right" : "center",
             }}
           >
-            <IconButton
-              onClick={toggleSpeedIcon}
-              aria-label="add to shopping cart"
-            >
+            <IconButton onClick={toggleSpeedIcon}>
               <SpeedIcon
                 sx={{
                   color:
@@ -147,11 +141,13 @@ const DashboardNavbar = () => {
             onChange={handleChange}
           >
             <BottomNavigationAction
+              onClick={toggleAutoMosaic}
               label="داشبورد"
               value="nearby"
               icon={<AutoAwesomeMosaicIcon sx={{ fontSize: 40 }} />}
             />
             <img
+              onClick={toggleCompanyLogo}
               src={CompanyLogo}
               alt="Company-logo"
               style={{
@@ -161,6 +157,7 @@ const DashboardNavbar = () => {
               }}
             />
             <BottomNavigationAction
+              onClick={toggleSpeedIcon}
               label="تست سرعت"
               value="recents"
               icon={<SpeedIcon sx={{ fontSize: 40 }} />}
