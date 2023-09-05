@@ -12,9 +12,9 @@ import Pc from "../components/pc/pc";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import Dashboard from "../components/dashboard/Dashboard";
 import Province from "../components/dashboard/province/Province";
-
-import "./App.css";
 import AdminSpeedTest from "../components/dashboard/AdminSpeedTest";
+import DetailTest from "../components/detailTest/DetailTest"
+import "./App.css";
 
 function App() {
   const [theme, setTheme] = useState(lightTheme);
@@ -38,8 +38,6 @@ function App() {
           <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<DashboardRoutes />} />
-          <Route path="/admin/tehran" element={<DetailTest />} />
-
           {/* Main route with Navbar */}
           <Route
             path="/*"
@@ -73,6 +71,7 @@ const DashboardRoutes = () => {
         <Route index element={<Dashboard/>} />
         <Route path="/:provinceName" element={<Province/>} />
         <Route path="/speed-test" element={<AdminSpeedTest />} />
+        <Route path="/detail-test" element={<DetailTest />} />
       </Routes>
     </>
   );

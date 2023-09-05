@@ -22,7 +22,11 @@ import AirplayIcon from "@mui/icons-material/Airplay";
 import SpeedIcon from "@mui/icons-material/Speed";
 import IranMap from "./map/IranMap";
 
+import { useNavigate } from "react-router-dom";
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -103,7 +107,7 @@ const Dashboard = () => {
             marginInline: "2.5%",
           }}
         >
-          <IranMap/>
+          <IranMap />
         </Box>
         <div
           style={{
@@ -399,6 +403,7 @@ const Dashboard = () => {
                 fontSize: "1.3rem",
                 marginTop: "1rem",
               }}
+              onClick={() => navigate("/admin/detail-test")}
             >
               <span style={{ marginLeft: "0.4rem", marginRight: "1rem" }}>
                 {val.name}
