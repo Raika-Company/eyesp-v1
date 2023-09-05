@@ -91,7 +91,7 @@ const Dashboard = () => {
       <div
         style={{
           width: "100%",
-          height: isMdScreen ? "" : "53vh",
+          height: isMdScreen ? "" : "61.3vh",
           background: "#E8E8E8",
           marginTop: isMdScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
@@ -115,7 +115,7 @@ const Dashboard = () => {
             width: isMdScreen ? "100%" : "45%",
             float: "left",
             fontSize: "10px",
-            padding:"1.5em 2.2em"
+            padding: "1.5em 2.2em",
           }}
         >
           <Typography
@@ -190,9 +190,15 @@ const Dashboard = () => {
       {/* --- strat-table-ISP --- */}
       <Box
         sx={{
-          width: "95%",
+          width: "100%",
           marginInline: "auto",
-          marginTop: isSmScreen ? "0" : isXlScreen ? "0" : "18rem",
+          marginTop: isSmScreen
+            ? "0"
+            : isMdScreen
+            ? "0"
+            : isXlScreen
+            ? "21rem"
+            : "18rem",
           borderRadius: "1.875rem",
           background: "#E8E8E8",
           padding: "0 2.5rem",
@@ -370,7 +376,7 @@ const Dashboard = () => {
       {/* --- start-buttonGroups --- */}
       <Box
         sx={{
-          width: "95%",
+          width: "100%",
           marginInline: "auto",
           marginTop: "1.3rem",
           marginBottom: "1.3rem",
