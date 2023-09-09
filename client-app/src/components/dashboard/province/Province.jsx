@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Container,
@@ -24,6 +24,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
+import rows from "../../../app/data/provinceTableRows.json"
 import "./Province.css";
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -47,97 +48,6 @@ const StyledTableRow = styled(TableRow)(({}) => ({
     borderRadius: "1rem",
   },
 }));
-
-function createData(id, date, ISPName, TypeOfDisorder, Reason) {
-  return { id, date, ISPName, TypeOfDisorder, Reason };
-}
-
-const rows = [
-  createData(
-    1,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    2,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    3,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    4,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    5,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    6,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    7,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    8,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    9,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    10,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    11,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-  createData(
-    12,
-    "1403/06/08",
-    "همراه اول",
-    "پکت لاس",
-    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-  ),
-];
 
 const Province = () => {
   const location = useLocation();
