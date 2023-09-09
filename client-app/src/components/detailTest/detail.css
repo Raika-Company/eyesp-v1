@@ -30,3 +30,12 @@
     .css-1yjjitx-MuiSwitch-track {
         border-radius: 13px ;
     } */
+
+    .css-sq3v24-MuiPaper-root-MuiDrawer-paper:not(.MuiDrawer-open){
+
+        width:11rem !important;
+    }
+
+    .css-ep9x8l-MuiModal-root-MuiDrawer-root{
+        direction: rtl !important;
+    }
