@@ -5,6 +5,7 @@ import {
   useMediaQuery,
   Select,
   MenuItem,
+  Menu,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -31,68 +32,79 @@ const dates = Array.from({ length: 7 }).map((_, index) =>
 const data = [
   {
     name: dates[0],
-    ایرانسل: 4000,
-    مخابرات: 2400,
-    شاتل: 5900,
-    رایتل: 7700,
-    همراه_اول: 1900,
+    ایرانسل: 10,
+    مخابرات: 30,
+    شاتل: 20,
+    رایتل: 70,
+    رایتل: 70,
+    همراه_اول: 50,
   },
   {
     name: dates[1],
-    ایرانسل: 3000,
-    مخابرات: 1398,
-    شاتل: 7000,
-    رایتل: 8500,
-    همراه_اول: 9000,
+    ایرانسل: 15,
+    مخابرات: 100,
+    شاتل: 40,
+    رایتل: 30,
+    همراه_اول: 10,
   },
   {
     name: dates[2],
-    ایرانسل: 2500,
-    مخابرات: 9800,
-    شاتل: 4900,
-    رایتل: 4200,
-    همراه_اول: 6500,
+    ایرانسل: 250,
+    مخابرات: 80,
+    شاتل: 10,
+    رایتل: 80,
+    همراه_اول: 50,
   },
   {
     name: dates[3],
-    ایرانسل: 1780,
-    مخابرات: 4908,
-    شاتل: 6800,
-    رایتل: 7800,
-    همراه_اول: 4600,
+    ایرانسل: 50,
+    مخابرات: 50,
+    شاتل: 60,
+    رایتل: 40,
+    همراه_اول: 20,
   },
   {
     name: dates[4],
-    ایرانسل: 7890,
-    مخابرات: 4800,
-    شاتل: 9700,
-    رایتل: 4900,
-    همراه_اول: 3200,
+    ایرانسل: 30,
+    مخابرات: 60,
+    شاتل: 80,
+    رایتل: 90,
+    همراه_اول: 70,
   },
   {
     name: dates[5],
-    ایرانسل: 3390,
-    مخابرات: 6800,
-    شاتل: 4600,
-    رایتل: 1800,
-    همراه_اول: 5400,
+    ایرانسل: 60,
+    مخابرات: 40,
+    شاتل: 90,
+    رایتل: 50,
+    همراه_اول: 40,
   },
   {
     name: dates[6],
-    ایرانسل: 3490,
-    مخابرات: 4300,
-    شاتل: 2400,
-    رایتل: 2100,
-    همراه_اول: 2000,
+    ایرانسل: 90,
+    مخابرات: 20,
+    شاتل: 60,
+    رایتل: 20,
+    همراه_اول: 10,
   },
 ];
 const ChartDetail = ({ visibility }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const [performanceAverageToggle, setPerformanceAverageToggle] =
-    useState(false);
+  const [speedAverage, setSpeedAverage] = useState(false);
+  const [activeSwitch, setActiveSwitch] = useState("pingAverage");
+  const [selectedDate, setSelectedDate] = useState("روزانه");
 
+  const daysOfWeek = [
+    "شنبه",
+    "یکشنبه",
+    "دوشنبه",
+    "سه‌شنبه",
+    "چهارشنبه",
+    "پنج‌شنبه",
+    "جمعه",
+  ];
   function MobileToggleSwitch() {
     return (
       <Box
@@ -121,7 +133,11 @@ const ChartDetail = ({ visibility }) => {
             >
               میانگین عملکرد
             </Typography>
-            <Switch {...label} />
+            <Switch
+              checked={activeSwitch === "performanceAverage"}
+              onClick={() => setActiveSwitch("performanceAverage")}
+              {...label}
+            />
           </Box>
           <Box
             sx={{
@@ -137,7 +153,12 @@ const ChartDetail = ({ visibility }) => {
             >
               میانگین پینگ
             </Typography>
-            <Switch {...label} />{" "}
+            <Switch
+              checked={activeSwitch === "pingAverage"}
+              onClick={() => setActiveSwitch("pingAverage")}
+              {...label}
+              defaultChecked
+            />
           </Box>
         </Box>
         <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
@@ -156,7 +177,12 @@ const ChartDetail = ({ visibility }) => {
             >
               میانگین سرعت
             </Typography>
-            <Switch {...label} />
+            <Switch
+              checked={activeSwitch === "speedAverage"}
+              onChange={(e) => setSpeedAverage(e.target.checked)}
+              onClick={() => setActiveSwitch("speedAverage")}
+              {...label}
+            />
           </Box>
           <Box
             sx={{
@@ -172,7 +198,11 @@ const ChartDetail = ({ visibility }) => {
             >
               میانگین پکت پلاس
             </Typography>
-            <Switch {...label} />
+            <Switch
+              checked={activeSwitch === "packetLossAverage"}
+              onClick={() => setActiveSwitch("packetLossAverage")}
+              {...label}
+            />
           </Box>
         </Box>
       </Box>
@@ -202,7 +232,11 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography variant="h7">میانگین عملکرد</Typography>
-          <Switch {...label} />
+          <Switch
+            checked={activeSwitch === "performanceAverage"}
+            onClick={() => setActiveSwitch("performanceAverage")}
+            {...label}
+          />
         </Box>
         <Box
           sx={{
@@ -212,7 +246,12 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography variant="h7">میانگین پینگ</Typography>
-          <Switch {...label} />
+          <Switch
+            checked={activeSwitch === "pingAverage"}
+            onClick={() => setActiveSwitch("pingAverage")}
+            {...label}
+            defaultChecked
+          />
         </Box>
         <Box
           sx={{
@@ -222,7 +261,12 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography variant="h7">میانگین سرعت</Typography>
-          <Switch {...label} />
+          <Switch
+            checked={activeSwitch === "speedAverage"}
+            onChange={(e) => setSpeedAverage(e.target.checked)}
+            onClick={() => setActiveSwitch("speedAverage")}
+            {...label}
+          />
         </Box>
         <Box
           sx={{
@@ -232,11 +276,16 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography variant="h7">میانگین پکت لاس</Typography>
-          <Switch {...label} />
+          <Switch
+            checked={activeSwitch === "packetLossAverage"}
+            onClick={() => setActiveSwitch("packetLossAverage")}
+            {...label}
+          />
         </Box>
       </Box>
     );
   }
+
   return (
     <>
       <Box
@@ -273,7 +322,8 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Select
-              value="test"
+              onChange={(e) => setSelectedDate(e.target.value)}
+              value={selectedDate} // Use the state variable
               size="small"
               sx={{
                 bgcolor: "#126AED",
@@ -288,7 +338,11 @@ const ChartDetail = ({ visibility }) => {
                 },
               }}
             >
-              <MenuItem value="test">سالیانه</MenuItem>
+              {daysOfWeek.map((day, index) => (
+                <MenuItem key={index} value={day}>
+                  {day}
+                </MenuItem>
+              ))}
             </Select>
           </Box>
         </Box>
@@ -341,7 +395,18 @@ const ChartDetail = ({ visibility }) => {
                 dataKey="name"
                 tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
               />
-              <YAxis tickFormatter={(value) => `${value / 1000}K`} />
+              <YAxis
+                tickFormatter={(value) => {
+                  if (activeSwitch === "speedAverage") return `${value}Mb`;
+                  if (
+                    activeSwitch === "performanceAverage" ||
+                    activeSwitch === "packetLossAverage"
+                  )
+                    return `${value}%`;
+                  return `${value}ms`;
+                }}
+              />
+
               <Tooltip />
               <Legend />
               {visibility.مخابرات && (

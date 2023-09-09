@@ -40,7 +40,15 @@ const DetailTest = () => {
 
   // Event handler to toggle the switch state
   const handleToggle = (city) => {
-    setCitySwitches((prev) => ({ ...prev, [city]: !prev[city] }));
+    const updatedSwitches = Object.keys(citySwitches).reduce(
+      (acc, cityName) => {
+        acc[cityName] = cityName === city; // Only the clicked city will be set to true
+        return acc;
+      },
+      {}
+    );
+
+    setCitySwitches(updatedSwitches);
   };
 
   return (
