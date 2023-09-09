@@ -1,25 +1,16 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
+import { Link, useMediaQuery, Switch, Typography } from "@mui/material";
 
 export default function SwipeableTemporaryDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [isOpen, setIsOpen] = React.useState(false);
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (open) => (event) => {
     if (
       event &&
       event.type === "keydown" &&
@@ -28,59 +19,110 @@ export default function SwipeableTemporaryDrawer() {
       return;
     }
 
-    setState({ ...state, [anchor]: open });
+    setIsOpen(open);
+  };
+  const cities = [
+    "فارس",
+    "تهران",
+    "اصفهان",
+    "مشهد",
+    "اهواز",
+    "تبریز",
+    "مازندران",
+    "سمنان",
+    "خوزستان",
+    "گیلان",
+  ];
+  const [citySwitches, setCitySwitches] = useState(
+    cities.reduce((acc, city) => {
+      acc[city] = city === "فارس";
+      return acc;
+    }, {})
+  );
+
+  const handleToggle = (city) => {
+    // setCitySwitches((prev) => ({ ...prev, [city]: !prev[city] }));
+    // turn off all switches and turn on only the selected one
+    const updatedSwitches = Object.keys(citySwitches).reduce(
+      (acc, currCity) => {
+        acc[currCity] = currCity === city;
+        return acc;
+      },
+      {}
+    );
+    setCitySwitches(updatedSwitches);
+  };
+  const label = { inputProps: { "aria-label": "Color switch demo" } };
+
+  const getCurrentCity = () => {
+    for (const city in citySwitches) {
+      if (citySwitches[city]) return `استان ${city}`;
+    }
+    return "استان فارس";
   };
 
-  const list = (anchor) => (
+  const list = (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: 350 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      {cities.map((city) => (
+        <Box
+          key={city}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            width: "57%",
+            alignItems: isXsScreen
+              ? "center"
+              : isMdScreen
+              ? "center"
+              : "normal",
+          }}
+        >
+          <Typography
+            sx={{
+              marginTop: "3px",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          >
+            {city}
+          </Typography>
+          <Switch
+            {...label}
+            checked={citySwitches[city] || false}
+            onChange={() => handleToggle(city)}
+          />
+        </Box>
+      ))}
     </Box>
   );
 
   return (
     <div>
-      {["left", "right", "top", "bottom"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
-          >
-            {list(anchor)}
-          </SwipeableDrawer>
-        </React.Fragment>
-      ))}
+      <Link
+        onClick={toggleDrawer(true)}
+        sx={{
+          fontSize: isSmScreen ? "18px" : isMdScreen ? "20px" : "h3",
+          marginRight: "10px",
+          color: "#126AED",
+        }}
+        variant="h3"
+      >
+        {getCurrentCity()}
+      </Link>
+      <SwipeableDrawer
+        anchor="right"
+        open={isOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+      >
+        {list}
+      </SwipeableDrawer>
     </div>
   );
 }

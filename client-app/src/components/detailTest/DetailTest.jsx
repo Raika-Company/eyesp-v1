@@ -3,15 +3,15 @@ import { useState } from "react";
 import ChartDetail from "./ChartDetail";
 import OperatorsDetail from "./OperatorsDetail";
 import ArrowBack from "../../app/common/ArrowBack";
+import ChoseCityDrawer from "../../app/common/ChoseCityDrawer";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
-
 const DetailTest = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [ispVisibility, setIspVisibility] = useState({
-    ایرانسل: false,
+    ایرانسل: true,
     همراه_اول: false,
     رایتل: false,
     شاتل: false,
@@ -139,7 +139,6 @@ const DetailTest = () => {
                 flexDirection: "row-reverse",
                 justifyContent: "star",
                 alignItems: "center",
-                gap: "8px",
               }}
             >
               <Typography
@@ -151,15 +150,26 @@ const DetailTest = () => {
                 هایISP میانگین عملکرد{" "}
               </Typography>
 
-              <Typography
-                sx={{
-                  fontSize: isSmScreen ? "18px" : isMdScreen ? "20px" : "h3",
-                  color: "#126AED",
-                }}
-                variant="h3"
-              >
-                استان فارس
-              </Typography>
+              {isSmScreen ? (
+                <ChoseCityDrawer />
+              ) : (
+                <Box>
+                  {" "}
+                  <Typography
+                    sx={{
+                      fontSize: isSmScreen
+                        ? "18px"
+                        : isMdScreen
+                        ? "20px"
+                        : "h3",
+                      color: "#126AED",
+                    }}
+                    variant="h3"
+                  >
+                    استان فارس
+                  </Typography>
+                </Box>
+              )}
             </Box>
             <Box>
               {" "}

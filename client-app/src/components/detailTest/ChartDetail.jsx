@@ -18,7 +18,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./detail.css";
-
+import ChoseCityDrawer from "../../app/common/ChoseCityDrawer";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const data = [
@@ -233,7 +233,7 @@ const ChartDetail = ({ visibility }) => {
       <Box
         sx={{
           width: "93%",
-          height: "48%",
+          height: "45%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
@@ -254,6 +254,7 @@ const ChartDetail = ({ visibility }) => {
         >
           {isSmScreen ? <MobileToggleSwitch /> : <DesktopToggleSwitch />}
 
+          {/* {isSmScreen && <ChoseCityDrawer />} */}
           <Box
             sx={{
               width: "20%",
@@ -307,7 +308,7 @@ const ChartDetail = ({ visibility }) => {
         <Box
           sx={{
             width: "99%",
-            height: "80%",
+            height: "67%",
             alignItems: "center",
             marginTop: "1rem",
           }}
@@ -328,7 +329,7 @@ const ChartDetail = ({ visibility }) => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis tickFormatter={(value) => `${value / 1000}K`} />
               <Tooltip />
               <Legend />
               {visibility.مخابرات && (
