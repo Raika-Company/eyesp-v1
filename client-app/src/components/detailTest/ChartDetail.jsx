@@ -94,7 +94,7 @@ const ChartDetail = ({ visibility }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [speedAverage, setSpeedAverage] = useState(false);
   const [activeSwitch, setActiveSwitch] = useState("pingAverage");
-  const [selectedDate, setSelectedDate] = useState("روزانه");
+  const [selectedDate, setSelectedDate] = useState("شنبه");
 
   const daysOfWeek = [
     "شنبه",
