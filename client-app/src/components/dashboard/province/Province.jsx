@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Container,
@@ -80,12 +81,71 @@ const rows = [
     "پکت لاس",
     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
   ),
+  createData(
+    5,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    6,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    7,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    8,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    9,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    10,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    11,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
+  createData(
+    12,
+    "1403/06/08",
+    "همراه اول",
+    "پکت لاس",
+    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+  ),
 ];
 
 const Province = () => {
   const location = useLocation();
   const { provinceName, pathD, color } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 5;
 
   return (
     <Container maxWidth="xl">
@@ -285,20 +345,22 @@ const Province = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell align="center">{row.date}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.ISPName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.TypeOfDisorder}
-                  </StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width: "290px" }}>
-                    {row.Reason}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {rows
+                .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                .map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell align="center">{row.date}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.ISPName}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.TypeOfDisorder}
+                    </StyledTableCell>
+                    <StyledTableCell align="center" sx={{ width: "290px" }}>
+                      {row.Reason}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
@@ -336,12 +398,16 @@ const Province = () => {
             </span>
           </Typography>
           <Stack spacing={2} sx={{ direction: "ltr" }}>
-            <Pagination count={3} defaultPage={2} color="primary" />
+            <Pagination
+              count={Math.ceil(rows.length / rowsPerPage)}
+              defaultPage={1}
+              page={page}
+              onChange={(event, newPage) => setPage(newPage)}
+              color="primary"
+            />
           </Stack>
         </Box>
       </Card>
-      {/* --- End --- Table --- Information history ---  */}
-      {/* --- End --- Information history --- Table ---  */}{" "}
     </Container>
   );
 };

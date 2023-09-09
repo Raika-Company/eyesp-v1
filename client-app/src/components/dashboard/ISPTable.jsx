@@ -9,18 +9,20 @@ import {
   TableRow,
   Paper,
   Button,
+  IconButton,
+  SvgIcon,
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        color: "#9B9B9B",
-        borderColor: "#ececec",
-        "&:nth-of-type(3)": {
-          color: "#126AED",
-        },
-    },    
+  [`&.${tableCellClasses.head}`]: {
+    color: "#9B9B9B",
+    borderColor: "#ececec",
+    "&:nth-of-type(3)": {
+      color: "#126AED",
+    },
+  },
 
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -97,14 +99,31 @@ const ISPTable = ({ ISPdata }) => {
                 {Items.speed}
               </StyledTableCell>
               <StyledTableCell align="left">
-                <Button
-                  variant="contained"
-                  startIcon={<KeyboardArrowLeftIcon />}
-                  sx={{
-                    borderRadius: "0.5rem",
-                    paddingLeft: "25px",
-                  }}
-                ></Button>
+                <IconButton aria-label="more info">
+                  <SvgIcon>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="41"
+                      height="41"
+                      viewBox="0 0 41 41"
+                      fill="none"
+                    >
+                      <rect
+                        x="1"
+                        y="1"
+                        width="39"
+                        height="39"
+                        rx="14"
+                        stroke="#126AED"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M23.8883 25.6211L19.1642 20.8868L23.8883 16.1525L22.4339 14.6981L16.2452 20.8868L22.4339 27.0755L23.8883 25.6211Z"
+                        fill="#126AED"
+                      />
+                    </svg>
+                  </SvgIcon>
+                </IconButton>
               </StyledTableCell>
             </StyledTableRow>
           ))}

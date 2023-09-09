@@ -25,10 +25,12 @@ const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
 };
 
 const ISPdata = [
-  createData("#1", "همراه اول", "15%", "49ms", "72Mbps"),
-  createData("#2", "ایرانسل", "15%", "49ms", "72Mbps"),
-  createData("#3", "همراه اول", "15%", "49ms", "72Mbps"),
-  createData("#4", "همراه اول", "15%", "49ms", "72Mbps"),
+  createData("#1", "سامانتل", "3%", "49ms", "72Mbps"),
+  createData("#2", "همراه اول", "8%", "51ms", "73Mbps"),
+  createData("#3", "ایرانسل", "9%", "52ms", "68Mbps"),
+  createData("#4", "رایتل", "12%", "59ms", "65Mbps"),
+  createData("#5", "شاتل", "16%", "61ms", "66Mbps"),
+  createData("#6", "مخابرات", "18%", "61ms", "59Mbps"),
 ];
 
 const GpButtons = [
@@ -163,7 +165,7 @@ const Dashboard = () => {
           >
             براساس:{" "}
             <Button
-              variant="contained"
+              variant="outlined"
               endIcon={<KeyboardArrowDownIcon />}
               sx={{
                 marginRight: "0.5rem",
