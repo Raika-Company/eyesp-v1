@@ -23,7 +23,10 @@ import ProvinceTable from "./ProvinceTable";
 const ROWS_PER_PAGE = 5;
 
 const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
-  const viewBoxValue = `${X} ${Y} ${WIDTH} ${HEIGHT}`;
+  let viewBoxValue = "20 0 970 960";
+  if (X != undefined) {
+    viewBoxValue = `${X} ${Y} ${WIDTH} ${HEIGHT}`;
+  }
   return (
     <Box
       sx={{
@@ -51,22 +54,55 @@ const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
   );
 };
 
-const DisruptionList = ({ items, isSmScreen, color }) => (
-  <Box sx={{ marginTop: isSmScreen ? "" : "11em", marginInline: isSmScreen ? "10em" : "" }}>
-    {items.map((item) => (
-      <Typography
-        sx={{
-          fontSize: isSmScreen ? "1rem" : "1.5rem",
-          flexWrap: "600",
-          color: { color },
-        }}
-        key={item}
-      >
-        ● {item}
-      </Typography>
-    ))}
-  </Box>
-);
+const DisruptionList = ({ isSmScreen, color, provinceName }) => {
+  let items = []
+  if (color == "#EE0B0B") {
+    items = [
+      `اختلال در ${provinceName}`,
+      "کندی سرعت",
+      "افزایش ping",
+      "افزایش jitter",
+      "کاهش پهنای باند",
+      "اختلال در شبکه",
+    ];
+  } else if (color == "#14A784") {
+    items = [
+      `شرایط پایدار در ${provinceName}`,
+      "پینگ حالت نرمال است",
+      "سرعت حالت نرمال است",
+      "میانگین استاندارد رعایت شده است.",
+    ];
+  } else {
+    items = [
+      `اختلال جزئی در ${provinceName}`,
+      "کندی سرعت",
+      "افزایش jitter",
+      "کاهش پهنای باند",
+    ];
+  }
+  
+  return (
+    <Box
+      sx={{
+        marginTop: isSmScreen ? "" : "11em",
+        marginInline: isSmScreen ? "10em" : "",
+      }}
+    >
+      {items.map((item) => (
+        <Typography
+          sx={{
+            fontSize: isSmScreen ? "1rem" : "1.5rem",
+            flexWrap: "600",
+            color: { color },
+          }}
+          key={item}
+        >
+          ● {item}
+        </Typography>
+      ))}
+    </Box>
+  );
+};
 
 const FastAccessButton = ({ label }) => (
   <Button
@@ -82,15 +118,6 @@ const Province = () => {
   const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [page, setPage] = useState(1);
-
-  const disruptions = [
-    "اختلال در مازندران",
-    "کندی سرعت",
-    "اختلال در خراسان رضوی",
-    "افزایش jitter",
-    "اختلال در فارس",
-    "کند شدن سرعت",
-  ];
 
   const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
 
@@ -132,8 +159,8 @@ const Province = () => {
           }}
         >
           <DisruptionList
-            items={disruptions}
             isSmScreen={isSmScreen}
+            provinceName={provinceName}
             color={color}
           />
         </div>
