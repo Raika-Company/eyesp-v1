@@ -24,8 +24,9 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import rows from "../../../app/data/provinceTableRows.json"
+import rows from "../../../app/data/provinceTableRows.json";
 import "./Province.css";
+import ArrowBack from "../../../app/common/ArrowBack";
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,12 +60,15 @@ const Province = () => {
 
   return (
     <Container maxWidth="xl">
-      <Typography fontSize="2rem" color="#9B9B9B" gutterBottom sx={{}}>
-        میانگین عملکرد ISPهای{" "}
-        <span style={{ fontSize: "2.6rem", color: "#126AED" }}>
-          استان {provinceName}
-        </span>
-      </Typography>
+      <Box display="flex" justifyContent="space-between">
+        <Typography fontSize="2rem" color="#9B9B9B" gutterBottom sx={{}}>
+          میانگین عملکرد ISPهای{" "}
+          <span style={{ fontSize: "2.6rem", color: "#126AED" }}>
+            استان {provinceName}
+          </span>
+        </Typography>
+        <ArrowBack />
+      </Box>
       <div
         style={{
           width: "100%",
