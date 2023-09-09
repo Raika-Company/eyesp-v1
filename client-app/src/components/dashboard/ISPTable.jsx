@@ -37,7 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: "1rem",
     fontWeight: 600,
-    color: "#555",
+    color: theme.palette.mode === 'light' ? "#555" : "#AAAAAA",
     "&:nth-of-type(2)": {
       color: "#126AED",
     },

@@ -12,6 +12,7 @@ import {
   Button,
   Select,
   MenuItem,
+  useTheme 
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -26,14 +27,14 @@ const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
 };
 
 const RawISPData = [
-  createData("#1", "زیتل", "3%", "49ms", "28Mbps"),
-  createData("#2", "همراه اول", "8%", "51ms", "23Mbps"),
-  createData("#3", "ایرانسل", "9%", "52ms", "21Mbps"),
-  createData("#4", "رایتل", "12%", "59ms", "19Mbps"),
-  createData("#5", "شاتل", "16%", "61ms", "18Mbps"),
-  createData("#6", "مخابرات", "18%", "61ms", "16Mbps"),
-  createData("#7", "آسیاتک", "19%", "64ms", "14Mbps"),
-  createData("#8", "های وب", "21%", "53ms", "19Mbps"),
+  createData("#1", "زیتل", "1%", "49ms", "28Mbps"),
+  createData("#2", "همراه اول", "3%", "51ms", "23Mbps"),
+  createData("#3", "ایرانسل", "3%", "52ms", "21Mbps"),
+  createData("#4", "رایتل", "4%", "59ms", "19Mbps"),
+  createData("#5", "شاتل", "6%", "61ms", "18Mbps"),
+  createData("#6", "مخابرات", "8%", "61ms", "16Mbps"),
+  createData("#7", "آسیاتک", "9%", "64ms", "14Mbps"),
+  createData("#8", "های وب", "11%", "53ms", "19Mbps"),
 ];
 
 const GpButtons = [
@@ -65,6 +66,7 @@ const disturbances = [
 ];
 
 const Dashboard = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
@@ -135,17 +137,18 @@ const Dashboard = () => {
     </Typography>
   );
 
+  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
   return (
     <Container maxWidth="xl" sx={{ direction: "rtl" }}>
       <div
         style={{
           width: "100%",
           height: isMdScreen ? "" : "53vh",
-          background: "#E8E8E8",
           marginTop: isMdScreen ? "1rem" : "3rem",
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
+          backgroundColor: backgroundColor
         }}
       >
         <Box
@@ -188,7 +191,6 @@ const Dashboard = () => {
         sx={{
           width: "100%",
           marginInline: "auto",
-          background: "#E8E8E8",
           padding: "0 2.5rem",
           paddingTop: "2rem",
         }}
@@ -267,8 +269,6 @@ const Dashboard = () => {
           marginInline: "auto",
           marginTop: "1.3rem",
           marginBottom: isSmScreen ? "5.1rem" : "1.3rem",
-
-          background: "#E8E8E8",
           padding: "1rem 2.5rem",
         }}
       >

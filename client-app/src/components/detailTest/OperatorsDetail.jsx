@@ -6,6 +6,7 @@ import {
   alpha,
   colors,
   useMediaQuery,
+  Card,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./detail.css";
@@ -289,7 +290,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
   }
   return (
     <>
-      <Box
+      <Card
         sx={{
           width: "93%",
           height: "30%",
@@ -299,7 +300,6 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           alignItems: "center",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
-          backgroundColor: "#E8E8E8",
         }}
       >
         <Box
@@ -483,7 +483,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
             </Box>
           </>
         )}
-      </Box>
+      </Card>
     </>
   );
 };

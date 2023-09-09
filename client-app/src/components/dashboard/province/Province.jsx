@@ -8,6 +8,8 @@ import {
   Button,
   Card,
   IconButton,
+  ThemeProvider,
+  useTheme
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
@@ -114,6 +116,7 @@ const FastAccessButton = ({ label }) => (
 );
 
 const Province = () => {
+  const theme = useTheme();
   const location = useLocation();
   const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -121,6 +124,7 @@ const Province = () => {
 
   const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
 
+  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
@@ -136,10 +140,10 @@ const Province = () => {
         style={{
           width: "100%",
           height: isSmScreen ? "" : "53vh",
-          background: "#E8E8E8",
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
+          backgroundColor: backgroundColor
         }}
       >
         <ProvinceMap
@@ -166,13 +170,12 @@ const Province = () => {
         </div>
         <div style={{ clear: "both" }}></div>
       </div>
-      <Card sx={{ backgroundColor: "#E8E8E8" }}>
+      <Card>
         <Box
           display="flex"
           justifyContent="flex-start"
           gap={2}
           padding="1em"
-          sx={{ backgroundColor: "#E8E8E8" }}
         >
           <Typography fontSize="1.9rem">دسترسی سریع</Typography>
           {fastAccessButtons.map((label) => (
@@ -205,7 +208,6 @@ const Province = () => {
       </Box>
       <Card
         sx={{
-          backgroundColor: "#E8E8E8",
           width: "100%",
           padding: "3%",
           marginBottom: isSmScreen ? "6rem" : "1.5rem",

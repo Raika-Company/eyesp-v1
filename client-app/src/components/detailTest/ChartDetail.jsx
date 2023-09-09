@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   Menu,
+  Card,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -288,7 +289,7 @@ const ChartDetail = ({ visibility }) => {
 
   return (
     <>
-      <Box
+      <Card
         sx={{
           width: "93%",
           height: "45%",
@@ -297,7 +298,6 @@ const ChartDetail = ({ visibility }) => {
           justifyContent: "start",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
-          backgroundColor: "#E8E8E8",
         }}
       >
         <Box
@@ -467,7 +467,7 @@ const ChartDetail = ({ visibility }) => {
             </LineChart>
           </ResponsiveContainer>
         </Box>
-      </Box>
+      </Card>
     </>
   );
 };

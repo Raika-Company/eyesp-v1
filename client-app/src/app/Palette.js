@@ -143,4 +143,22 @@ export const darkTheme = createTheme({
       secondary: "#BBB",
     },
   },
+  typography :{
+    subtitle2: {
+      fontFamily: "PeydaMedium, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
+      opacity: 0.3,
+      color: "#fff",
+    },
+  },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "#171717"
+        },
+      },
+    },
+  },
 });

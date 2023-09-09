@@ -11,27 +11,28 @@ import {
   styled,
 } from "@mui/material";
 
-const StyledTableCell = styled(TableCell)(() => ({
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#E8E8E8",
+    backgroundColor: theme.palette.mode === 'light' ? "#E8E8E8" : "#171717",
     color: "#999999",
   },
   [`&.${tableCellClasses.body}`]: {
     fontWeight: 600,
-    color: "#5E5E5E",
+    color: theme.palette.mode === 'light' ? "#5E5E5E" : "#A1A1A1",
     fontStyle: "normal",
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({}) => ({
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: "#E8E8E8",
+    backgroundColor: theme.palette.mode === 'light' ? "#E8E8E8" : "#171717",
   },
   "&:nth-of-type(even)": {
-    backgroundColor: "#DCDCDC",
+    backgroundColor: theme.palette.mode === 'light' ? "#DCDCDC" : "#232323",
     borderRadius: "1rem",
   },
 }));
+
 
 const ProvinceTable = ({ rows, page, ROWS_PER_PAGE }) => {
   return (

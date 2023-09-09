@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Card, useMediaQuery } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SpeedIcon from "@mui/icons-material/Speed";
 import CompanyLogo from "../../app/assets/image/logo.svg";
@@ -61,11 +61,10 @@ const DashboardNavbar = () => {
           alignItems: "center",
         }}
       >
-        <Box
+        <Card
           sx={{
             width: isAutoMosaicOpen || isSpeedIconOpen ? "300px" : "200px",
             height: "70px",
-            backgroundColor: "#E8E8E8",
             borderRadius: "0px 0px 20px 20px",
             display: "flex",
             justifyContent: "space-evenly",
@@ -115,7 +114,7 @@ const DashboardNavbar = () => {
             </IconButton>
             {isSpeedIconOpen && <span>تست سرعت</span>}
           </Box>
-        </Box>
+        </Card>
       </Box>
       {/* // --End--dashboardNavbar-DESKTOP--  */}
       {/* // --Start--dashboardNavbar-MOBILE-- */}

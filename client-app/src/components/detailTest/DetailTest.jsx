@@ -1,4 +1,4 @@
-import { Box, Typography, Switch, useMediaQuery } from "@mui/material";
+import { Box, Typography, Switch, useMediaQuery, Card } from "@mui/material";
 import { useState } from "react";
 import ChartDetail from "./ChartDetail";
 import OperatorsDetail from "./OperatorsDetail";
@@ -63,14 +63,13 @@ const DetailTest = () => {
           flexDirection: "row-reverse",
         }}
       >
-        <Box
+        <Card
           sx={{
             width: "10vw",
             display: isSmScreen ? "none" : "flex",
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "center",
-            backgroundColor: "#E8E8E8",
             gap: "15px",
           }}
         >
@@ -119,7 +118,7 @@ const DetailTest = () => {
               />
             </Box>
           ))}
-        </Box>
+        </Card>
         <Box
           sx={{
             display: "flex",
