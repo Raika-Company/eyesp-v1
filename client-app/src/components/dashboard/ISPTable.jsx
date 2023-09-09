@@ -17,7 +17,8 @@ import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeft
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    color: "#9B9B9B",
+    color: "#999",
+    fontSize: "1rem",
     borderColor: "#ececec",
     "&:nth-of-type(3)": {
       color: "#126AED",
@@ -25,7 +26,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: "1rem",
+    fontWeight: 600,
+    color: "#555",
+    "&:nth-of-type(2)": {
+      color: "#126AED",
+    },
   },
 }));
 
@@ -62,10 +68,10 @@ const ISPTable = ({ ISPdata }) => {
             <StyledTableCell align="center" sx={{ paddingRight: "4rem" }}>
               نام ISP
             </StyledTableCell>
-            <StyledTableCell align="left">درصد اختلال</StyledTableCell>
-            <StyledTableCell align="left">میانگین پینگ</StyledTableCell>
-            <StyledTableCell align="left">میانگین سرعت</StyledTableCell>
-            <StyledTableCell align="left">جزئیات</StyledTableCell>
+            <StyledTableCell align="center">درصد اختلال</StyledTableCell>
+            <StyledTableCell align="center">میانگین پینگ</StyledTableCell>
+            <StyledTableCell align="center">میانگین سرعت</StyledTableCell>
+            <StyledTableCell align="center">جزئیات</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -84,21 +90,20 @@ const ISPTable = ({ ISPdata }) => {
                 {Items.ISPname}
               </StyledTableCell>
               <StyledTableCell
-                align="left"
+                align="center"
                 sx={{
-                  color: "#126AED",
-                  paddingLeft: "42px",
+                  color: "primary",
                 }}
               >
                 {Items.disturbance}
               </StyledTableCell>
-              <StyledTableCell align="left" sx={{ paddingLeft: "42px" }}>
+              <StyledTableCell align="center">
                 {Items.pings}
               </StyledTableCell>
-              <StyledTableCell align="left" sx={{ paddingLeft: "39px" }}>
+              <StyledTableCell align="center">
                 {Items.speed}
               </StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="center">
                 <IconButton aria-label="more info">
                   <SvgIcon>
                     <svg
