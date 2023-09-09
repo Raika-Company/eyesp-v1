@@ -49,7 +49,7 @@ const data = [
   },
   {
     name: dates[2],
-    ایرانسل: 250,
+    ایرانسل: 25,
     مخابرات: 80,
     شاتل: 10,
     رایتل: 80,
@@ -68,21 +68,21 @@ const data = [
     ایرانسل: 30,
     مخابرات: 60,
     شاتل: 80,
-    رایتل: 90,
+    رایتل: 40,
     همراه_اول: 70,
   },
   {
     name: dates[5],
     ایرانسل: 60,
     مخابرات: 40,
-    شاتل: 90,
+    شاتل: 40,
     رایتل: 50,
     همراه_اول: 40,
   },
   {
     name: dates[6],
-    ایرانسل: 90,
-    مخابرات: 20,
+    ایرانسل: 40,
+    مخابرات: 110,
     شاتل: 60,
     رایتل: 20,
     همراه_اول: 10,
@@ -395,7 +395,19 @@ const ChartDetail = ({ visibility }) => {
                 dataKey="name"
                 tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
               />
+
               <YAxis
+                domain={
+                  activeSwitch === "speedAverage"
+                    ? [10, 30]
+                    : activeSwitch === "pingAverage"
+                    ? [50, 110]
+                    : activeSwitch === "performanceAverage"
+                    ? [70, 100]
+                    : activeSwitch === "packetLossAverage"
+                    ? [0, 1]
+                    : [0, 11]
+                }
                 tickFormatter={(value) => {
                   if (activeSwitch === "speedAverage") return `${value}Mb`;
                   if (
