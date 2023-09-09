@@ -9,6 +9,7 @@ const DetailTest = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [selectedCity, setSelectedCity] = useState("فارس");
 
   const [ispVisibility, setIspVisibility] = useState({
     ایرانسل: true,
@@ -40,6 +41,8 @@ const DetailTest = () => {
 
   // Event handler to toggle the switch state
   const handleToggle = (city) => {
+    setSelectedCity(city);
+
     const updatedSwitches = Object.keys(citySwitches).reduce(
       (acc, cityName) => {
         acc[cityName] = cityName === city; // Only the clicked city will be set to true
@@ -174,7 +177,7 @@ const DetailTest = () => {
                     }}
                     variant="h3"
                   >
-                    استان فارس
+                    استان {selectedCity}{" "}
                   </Typography>
                 </Box>
               )}
