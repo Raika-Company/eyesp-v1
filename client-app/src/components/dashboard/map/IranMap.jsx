@@ -40,14 +40,6 @@ const getProvinceColor = (provinceName) => {
   return province ? province.color : "";
 };
 
-const titleError = [
-  {
-    title: "اختلال یافت شد !",
-  },
-  { title: "اختلال یافت نشد!" },
-  { title: "اختلال جزئي یافت نشد!" },
-];
-
 const IranMap = () => {
   const navigate = useNavigate();
   const { x, y } = useMouse();
@@ -63,11 +55,8 @@ const IranMap = () => {
   const [additionalText, setAdditionalText] = useState("");
 
   useEffect(() => {
-    // Step 3: Update the inner text based on the province color
     const color = getProvinceColor(provinceName);
     if (color) {
-      // You can use a switch statement or any other logic
-      // to determine the inner text based on the color.
       switch (color) {
         case "#EE0B0B":
           setAdditionalText("اختلال یافت شد");
@@ -80,7 +69,7 @@ const IranMap = () => {
           break;
       }
     } else {
-      setAdditionalText(""); // Reset the text when there's no matching color.
+      setAdditionalText("");
     }
   }, [provinceName]);
 
