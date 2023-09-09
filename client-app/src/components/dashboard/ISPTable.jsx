@@ -1,6 +1,7 @@
 import React from "react";
 import {
   styled,
+  keyframes,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +14,15 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
-import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,7 +44,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(({ theme, delay }) => ({
   "&:nth-of-type(even)": {
     backgroundColor: theme.palette.action.hover,
     borderRadius: "10px",
@@ -43,6 +52,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "td, th": {
     border: 0,
   },
+  opacity: 0,
+  animation: `${fadeInAnimation} 0.5s forwards ${delay}s`
 }));
 
 const ISPTable = ({ ISPdata }) => {
@@ -75,8 +86,8 @@ const ISPTable = ({ ISPdata }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {ISPdata.map((Items) => (
-            <StyledTableRow key={Items.rank}>
+          {ISPdata.map((Items, index) => (
+            <StyledTableRow key={Items.rank} delay={index * 0.3}>
               <StyledTableCell align="center" component="th" scope="row">
                 {Items.rank}
               </StyledTableCell>
@@ -97,12 +108,8 @@ const ISPTable = ({ ISPdata }) => {
               >
                 {Items.disturbance}
               </StyledTableCell>
-              <StyledTableCell align="center">
-                {Items.pings}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {Items.speed}
-              </StyledTableCell>
+              <StyledTableCell align="center">{Items.pings}</StyledTableCell>
+              <StyledTableCell align="center">{Items.speed}</StyledTableCell>
               <StyledTableCell align="center">
                 <IconButton aria-label="more info">
                   <SvgIcon>
