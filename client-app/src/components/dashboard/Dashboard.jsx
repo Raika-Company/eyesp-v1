@@ -32,6 +32,8 @@ const RawISPData = [
   createData("#4", "رایتل", "12%", "59ms", "19Mbps"),
   createData("#5", "شاتل", "16%", "61ms", "18Mbps"),
   createData("#6", "مخابرات", "18%", "61ms", "16Mbps"),
+  createData("#7", "آسیاتک", "19%", "64ms", "14Mbps"),
+  createData("#8", "های وب", "21%", "53ms", "19Mbps"),
 ];
 
 const GpButtons = [
@@ -72,6 +74,12 @@ const Dashboard = () => {
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
 
   const [ISPData, setISPData] = useState(RawISPData);
+
+  const [visibleRows, setVisibleRows] = useState(6);
+
+  const handleShowMore = () => {
+    setVisibleRows((prev) => prev + 2);
+  };
 
   useEffect(() => {
     let sortedData;
@@ -222,14 +230,36 @@ const Dashboard = () => {
               <MenuItem value="نام ISP">نام ISP</MenuItem>
               <MenuItem value="بیشترین اختلال">بیشترین اختلال</MenuItem>
               <MenuItem value="کمترین اختلال">کمترین اختلال</MenuItem>
-              <MenuItem value="بیشترین میانگین پینگ">بیشترین میانگین پینگ</MenuItem>
-              <MenuItem value="کمترین میانگین پینگ">کمترین میانگین پینگ</MenuItem>
-              <MenuItem value="بیشترین میانگین سرعت">بیشترین میانگین سرعت</MenuItem>
-              <MenuItem value="کمترین میانگین سرعت">کمترین میانگین سرعت</MenuItem>
+              <MenuItem value="بیشترین میانگین پینگ">
+                بیشترین میانگین پینگ
+              </MenuItem>
+              <MenuItem value="کمترین میانگین پینگ">
+                کمترین میانگین پینگ
+              </MenuItem>
+              <MenuItem value="بیشترین میانگین سرعت">
+                بیشترین میانگین سرعت
+              </MenuItem>
+              <MenuItem value="کمترین میانگین سرعت">
+                کمترین میانگین سرعت
+              </MenuItem>
             </Select>
           </Typography>
         </Box>
-        <ISPTable ISPdata={ISPData} />
+        <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
+        {visibleRows < RawISPData.length && (
+          <Box
+            sx={{
+              color: "#9B9B9B",
+              textAlign: "center",
+              marginY: "1rem",
+              cursor: "pointer",
+              width: "100%",
+            }}
+            onClick={handleShowMore}
+          >
+            -- مشاهده بیشتر --
+          </Box>
+        )}
       </Card>
       <Card
         sx={{

@@ -53,26 +53,16 @@ const StyledTableRow = styled(TableRow)(({ theme, delay }) => ({
     border: 0,
   },
   opacity: 0,
-  animation: `${fadeInAnimation} 0.5s forwards ${delay}s`
+  animation: `${fadeInAnimation} 0.4s forwards ${delay}s`
 }));
 
 const ISPTable = ({ ISPdata }) => {
   return (
     <TableContainer
-      sx={{ backgroundColor: "transparent", boxShadow: 0 }}
+      sx={{ backgroundColor: "transparent", boxShadow: 0, marginBottom: "1rem" }}
       component={Paper}
     >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <caption
-          style={{
-            color: "#9B9B9B",
-            textAlign: "center",
-            marginTop: "1rem",
-          }}
-        >
-          -- مشاهده بیشتر --
-        </caption>
-
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">رتبه</StyledTableCell>
@@ -87,7 +77,7 @@ const ISPTable = ({ ISPdata }) => {
         </TableHead>
         <TableBody>
           {ISPdata.map((Items, index) => (
-            <StyledTableRow key={Items.rank} delay={index * 0.3}>
+            <StyledTableRow key={Items.rank} delay={index * 0.2}>
               <StyledTableCell align="center" component="th" scope="row">
                 {Items.rank}
               </StyledTableCell>
