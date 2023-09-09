@@ -138,53 +138,77 @@ const SpeedTest = ({ themeMode }) => {
   });
   const [mbps, setMbps] = useState(0);
 
-  const [boxHeight, setBoxHeight] = useState("90dvh");
+  const [uploadSpeed, setUploadSpeed] = useState(null);
+  const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
 
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
-
-    let startTime = Date.now();
-    let totalDuration = 1000; // 1 seconds
-    let halfwayPoint = totalDuration / 2; // 0.5 second
-    let increasing = true; // flag to determine if mbps is increasing or decreasing
-
-    const animateMbps = () => {
-      let timePassed = Date.now() - startTime;
-
-      if (timePassed <= halfwayPoint) {
-        setMbps((timePassed / halfwayPoint) * 100); // from 0 to 100 in 1 second
-      } else if (timePassed <= totalDuration) {
-        setMbps(100 - ((timePassed - halfwayPoint) / halfwayPoint) * 80); // from 100 to 20 in 1 second
-      } else {
-        // after the main animation, start the continuous change between 15 and 25
-        if (!animationInterval) {
-          const interval = setInterval(() => {
-            setMbps((prev) => {
-              if (prev >= 25) increasing = false;
-              if (prev <= 15) increasing = true;
-
-              return increasing ? prev + 1 : prev - 1;
-            });
-          }, 40); // adjust the time interval as needed
-          setAnimationInterval(interval);
-        }
-      }
-
-      if (timePassed < totalDuration) {
-        requestAnimationFrame(animateMbps);
-      }
-    };
-    requestAnimationFrame(animateMbps);
+    setTimeout(() => {
+      // After 1 second, display ping value
+      setSpeedData((prev) => ({
+        ...prev,
+        ping: Math.floor(Math.random() * 31) + 50,
+      }));
+      setTestStage("download");
+    }, 1000);
   };
 
   useEffect(() => {
-    return () => {
-      if (animationInterval) {
-        clearInterval(animationInterval);
-      }
-    };
-  }, [animationInterval]);
+    if (testStage === "download") {
+      // Simulate download test
+      let timeElapsed = 0;
+      const interval = setInterval(() => {
+        timeElapsed += 100;
+        if (timeElapsed <= 1000) {
+          setSpeedData((prev) => ({
+            ...prev,
+            downloadSpeed: parseFloat((Math.random() * 5 + 18).toFixed(2)),
+          }));
+        } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
+          setSpeedData((prev) => ({
+            ...prev,
+            downloadSpeed: (Math.random() * 5 + 18).toFixed(2),
+          }));
+        } else {
+          clearInterval(interval);
+          setSpeedData((prev) => ({ ...prev, downloadSpeed: 0 }));
+          setTestStage("upload");
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    } else if (testStage === "upload") {
+      // Simulate upload test
+      let timeElapsed = 0;
+      const interval = setInterval(() => {
+        timeElapsed += 100;
+        if (timeElapsed <= 1000) {
+          setUploadSpeed(10 * (timeElapsed / 1000));
+        } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
+          setUploadSpeed(parseFloat((Math.random() * 3 + 8).toFixed(2)));
+        } else {
+          clearInterval(interval);
+          setUploadSpeed(0);
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [testStage]);
 
+  const calculateProgress = () => {
+    // Depending on the testStage, determine which speed to use for progress
+    let currentSpeed = 0;
+    if (testStage === "download" && speedData.downloadSpeed) {
+      currentSpeed = speedData.downloadSpeed;
+    } else if (testStage === "upload" && uploadSpeed) {
+      currentSpeed = uploadSpeed;
+    }
+
+    // Hypothetical max speed of 100 Mbps. You can adjust this value
+    const maxSpeed = 100;
+    return Math.min(currentSpeed / maxSpeed, 1);
+  };
+
+  const [boxHeight, setBoxHeight] = useState("90dvh");
   useEffect(() => {
     const navbarElement = document.querySelector(".nav-height");
 
@@ -244,11 +268,12 @@ const SpeedTest = ({ themeMode }) => {
         <SpeedBox
           title="سرعت آپلود"
           iconSrc={Upload}
-          altText="before upload icon"
-          value={null}
+          altText="upload icon"
+          value={isGoButtonVisible ? null : uploadSpeed}
           measure="Mbps"
-          opacity={isGoButtonVisible ? "0.5" : "0.5"}
+          opacity={isGoButtonVisible ? "0.5" : "1"}
         />
+
         <Divider />
         <SpeedBox
           title="سرعت دانلود"
@@ -304,7 +329,7 @@ const SpeedTest = ({ themeMode }) => {
             }}
           >
             <DrawMeter
-              amount={0.2}
+              amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                   ? "#45628A"
@@ -312,8 +337,10 @@ const SpeedTest = ({ themeMode }) => {
               }
               fg={"#1B70EE1C"}
               progress={0.3}
-              prog={0.3}
-              mbps={mbps}
+              prog={0.3} // Adjust this if it's being used differently than 'progress'
+              mbps={
+                testStage === "download" ? speedData.downloadSpeed : uploadSpeed
+              }
               isDl={true}
               theme={themeMode}
             />

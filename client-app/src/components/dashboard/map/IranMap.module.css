@@ -79,7 +79,6 @@
 }
 
 .map .province path:hover {
-  fill: #5698d1;
   cursor: crosshair;
 }
 
