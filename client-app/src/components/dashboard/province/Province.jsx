@@ -51,21 +51,21 @@ const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
   );
 };
 
-const DisruptionList = ({ items, isSmScreen }) => (
-  <>
+const DisruptionList = ({ items, isSmScreen, color }) => (
+  <Box sx={{ marginTop: isSmScreen ? "" : "11em", marginInline: isSmScreen ? "10em" : "" }}>
     {items.map((item) => (
       <Typography
         sx={{
           fontSize: isSmScreen ? "1rem" : "1.5rem",
           flexWrap: "600",
-          color: "#9B9B9B",
+          color: { color },
         }}
         key={item}
       >
         ● {item}
       </Typography>
     ))}
-  </>
+  </Box>
 );
 
 const FastAccessButton = ({ label }) => (
@@ -115,7 +115,15 @@ const Province = () => {
           overflow: "visible",
         }}
       >
-        <ProvinceMap isSmScreen={isSmScreen} pathD={pathD} color={color} X={x} Y={y} WIDTH={width} HEIGHT={height}/>
+        <ProvinceMap
+          isSmScreen={isSmScreen}
+          pathD={pathD}
+          color={color}
+          X={x}
+          Y={y}
+          WIDTH={width}
+          HEIGHT={height}
+        />
         <div
           style={{
             width: isSmScreen ? "100%" : "45%",
@@ -123,7 +131,11 @@ const Province = () => {
             fontSize: "10px",
           }}
         >
-          <DisruptionList items={disruptions} isSmScreen={isSmScreen} />
+          <DisruptionList
+            items={disruptions}
+            isSmScreen={isSmScreen}
+            color={color}
+          />
         </div>
         <div style={{ clear: "both" }}></div>
       </div>
