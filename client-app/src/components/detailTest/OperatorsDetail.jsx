@@ -292,7 +292,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
       <Box
         sx={{
           width: "93%",
-          height: "35%",
+          height: "30%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
@@ -340,6 +340,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   color="success"
                   checked={visibility.ایرانسل}
                   onChange={() => handleIspToggle("ایرانسل")}
+
                   //   checked={ispSwitches["ایرانسل"]}
                 />
               </Box>
