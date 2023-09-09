@@ -10,10 +10,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 
 const StyledSpan = styled("span")({
-  position: 'absolute',
-  left: props => `${props.x + 5}px`,
-  top: props => `${props.y + 5}px`,
-  zIndex: 999
+  position: "absolute",
+  left: (props) => `${props.x + 5}px`,
+  top: (props) => `${props.y + 5}px`,
+  zIndex: 999,
 });
 
 const useMouse = () => {
@@ -34,6 +34,12 @@ const useMouse = () => {
   return mousePosition;
 };
 
+const getProvinceColor = (provinceName) => {
+  const province = iranProvinces.find((p) => p.name === provinceName);
+
+  return province ? province.color : "";
+};
+
 const IranMap = () => {
   const navigate = useNavigate();
   const { x, y } = useMouse();
@@ -43,13 +49,53 @@ const IranMap = () => {
   const [mapZoom, setMapZoom] = useState(false);
   const [provinceSelected, setProvinceSelected] = useState(false);
   const [cities, setCities] = useState(["تمام ایران"]);
+  const [hoveredProvinceText, setHoveredProvinceText] = useState("");
+  const [hoveredProvinceLine, setHoveredProvinceLine] = useState("");
+
+  const [additionalText, setAdditionalText] = useState("");
+
+  useEffect(() => {
+    const color = getProvinceColor(provinceName);
+    if (color) {
+      switch (color) {
+        case "#EE0B0B":
+          setAdditionalText("اختلال یافت شد");
+          break;
+        case "#14A784":
+          setAdditionalText("اختلالی یافت نشد");
+          break;
+        case "#FF8F3F":
+          setAdditionalText("وجود اختلالات جزيی");
+          break;
+      }
+    } else {
+      setAdditionalText("");
+    }
+  }, [provinceName]);
 
   return (
     <>
       <span className={styles.show_title}>
         {provinceName}
-        <StyledSpan/>
+        {hoveredProvinceText && (
+          <StyledSpan x={x} y={y}>
+            {hoveredProvinceText}
+            <div className={styles.show_title_Line}></div>
+          </StyledSpan>
+        )}
+        <div className={styles.show_title_Line}></div>
       </span>
+      {provinceName && (
+        <div className={styles.additional_text_Wrapper}>
+          <div
+            className={styles.additional_text}
+            style={{ color: getProvinceColor(provinceName) }}
+          >
+            {/* Step 1: Use the additionalText state variable */}
+            {additionalText}
+          </div>
+        </div>
+      )}
       {provinceSelected && (
         <div>
           <div
@@ -88,6 +134,7 @@ const IranMap = () => {
       )}
       <div className={styles.container}>
         <div className={styles.map}>
+          <div className={styles.line}></div>
           <svg
             className={styles.svg}
             version="1.1"
@@ -107,8 +154,16 @@ const IranMap = () => {
                   className={province.className}
                   d={province.d}
                   fill={province.color}
-                  onMouseOver={() => setProvinceName(province.name)}
-                  onMouseLeave={() => setProvinceName("")}
+                  onMouseOver={() => {
+                    setProvinceName(province.name);
+                    setHoveredProvinceText("استان");
+                    setHoveredProvinceLine("");
+                  }}
+                  onMouseLeave={() => {
+                    setProvinceName("");
+                    setHoveredProvinceText("");
+                    setHoveredProvinceLine("");
+                  }}
                   onClick={() => {
                     navigate(`/admin/${province.name}`, {
                       state: {
