@@ -7,19 +7,10 @@ import {
   Typography,
   Button,
   Card,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  Paper,
-  TableBody,
-  tableCellClasses,
   IconButton,
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
-import styled from "@emotion/styled";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -27,36 +18,81 @@ import Stack from "@mui/material/Stack";
 import rows from "../../../app/data/provinceTableRows.json";
 import "./Province.css";
 import ArrowBack from "../../../app/common/ArrowBack";
+import ProvinceTable from "./ProvinceTable";
 
-const StyledTableCell = styled(TableCell)(() => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#E8E8E8",
-    color: "#999999",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontWeight: 600,
-    color: "#5E5E5E",
-    fontStyle: "normal",
-  },
-}));
+const ROWS_PER_PAGE = 5;
 
-const StyledTableRow = styled(TableRow)(({}) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "#E8E8E8",
-  },
-  "&:nth-of-type(even)": {
-    backgroundColor: "#DCDCDC",
-    borderRadius: "1rem",
-  },
-}));
+const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
+  const viewBoxValue = `${X} ${Y} ${WIDTH} ${HEIGHT}`;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        float: "left",
+        width: isSmScreen ? "100%" : "45%",
+        marginTop: isSmScreen ? "0" : "12vh",
+        padding: isSmScreen ? "1em" : "0",
+        marginInline: "2.5%",
+      }}
+    >
+      <svg
+        className={styles.provinceSvg}
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBoxValue}
+      >
+        <g className={styles.province}>
+          <path d={pathD} fill={color} />
+        </g>
+      </svg>
+    </Box>
+  );
+};
+
+const DisruptionList = ({ items, isSmScreen }) => (
+  <>
+    {items.map((item) => (
+      <Typography
+        sx={{
+          fontSize: isSmScreen ? "1rem" : "1.5rem",
+          flexWrap: "600",
+          color: "#9B9B9B",
+        }}
+        key={item}
+      >
+        ● {item}
+      </Typography>
+    ))}
+  </>
+);
+
+const FastAccessButton = ({ label }) => (
+  <Button
+    variant="outlined"
+    sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+  >
+    {label}
+  </Button>
+);
 
 const Province = () => {
   const location = useLocation();
-  const { provinceName, pathD, color } = location.state;
+  const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-
   const [page, setPage] = useState(1);
-  const rowsPerPage = 5;
+
+  const disruptions = [
+    "اختلال در مازندران",
+    "کندی سرعت",
+    "اختلال در خراسان رضوی",
+    "افزایش jitter",
+    "اختلال در فارس",
+    "کند شدن سرعت",
+  ];
+
+  const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
 
   return (
     <Container maxWidth="xl">
@@ -79,27 +115,7 @@ const Province = () => {
           overflow: "visible",
         }}
       >
-        <Box
-          sx={{
-            float: "left",
-            width: isSmScreen ? "100%" : "45%",
-            marginTop: isSmScreen ? "0" : "12vh",
-            padding: isSmScreen ? "1em" : "0",
-            marginInline: "2.5%",
-          }}
-        >
-          <svg
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            viewBox="20 0 970 960"
-            xmlSpace="preserve"
-          >
-            <g className={styles.province}>
-              <path d={pathD} fill={color} />
-            </g>
-          </svg>
-        </Box>
+        <ProvinceMap isSmScreen={isSmScreen} pathD={pathD} color={color} X={x} Y={y} WIDTH={width} HEIGHT={height}/>
         <div
           style={{
             width: isSmScreen ? "100%" : "45%",
@@ -107,72 +123,8 @@ const Province = () => {
             fontSize: "10px",
           }}
         >
-          <Typography
-            sx={{
-              color: "#EE0B0B",
-              fontSize: isSmScreen ? "1.8rem" : "2.5rem",
-              fontWeight: "700",
-            }}
-          >
-            <span style={{ fontSize: "4rem" }}>4</span> اختلال یافت شده:
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● اختلال در مازندران
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● کندی سرعت
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● اختلال در خراسان رضوی
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● افزایش jitter
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● اختلال در فارس
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: isSmScreen ? "1rem" : "1.5rem",
-              flexWrap: "600",
-              color: "#9B9B9B",
-            }}
-          >
-            ● کند شدن سرعت
-          </Typography>
+          <DisruptionList items={disruptions} isSmScreen={isSmScreen} />
         </div>
-
-        {/* Clear the float */}
         <div style={{ clear: "both" }}></div>
       </div>
       <Card sx={{ backgroundColor: "#E8E8E8" }}>
@@ -184,34 +136,11 @@ const Province = () => {
           sx={{ backgroundColor: "#E8E8E8" }}
         >
           <Typography fontSize="1.9rem">دسترسی سریع</Typography>
-          <Button
-            variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
-          >
-            پینگ
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
-          >
-            اختلال
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
-          >
-            سرعت
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
-          >
-            پینگ
-          </Button>
+          {fastAccessButtons.map((label) => (
+            <FastAccessButton label={label} key={label} />
+          ))}
         </Box>
       </Card>
-      {/* --- start --- Information history --- Table ---  */}
-      {/* --- start --- Head --- Information history ---  */}
       <Box
         sx={{
           display: "flex",
@@ -235,8 +164,6 @@ const Province = () => {
           />
         </IconButton>
       </Box>
-      {/* --- End --- Head --- Information history ---  */}
-      {/* --- start --- Table --- Information history ---  */}
       <Card
         sx={{
           backgroundColor: "#E8E8E8",
@@ -245,39 +172,7 @@ const Province = () => {
           marginBottom: isSmScreen ? "6rem" : "1.5rem",
         }}
       >
-        <TableContainer
-          sx={{ backgroundColor: "transparent", boxShadow: 0 }}
-          component={Paper}
-        >
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="center">تاریخ</StyledTableCell>
-                <StyledTableCell align="center">نام ISP</StyledTableCell>
-                <StyledTableCell align="center">نوع اختلال</StyledTableCell>
-                <StyledTableCell align="center">دلیل اختلال</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice((page - 1) * rowsPerPage, page * rowsPerPage)
-                .map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell align="center">{row.date}</StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.ISPName}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.TypeOfDisorder}
-                    </StyledTableCell>
-                    <StyledTableCell align="center" sx={{ width: "290px" }}>
-                      {row.Reason}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ProvinceTable rows={rows} page={page} ROWS_PER_PAGE={ROWS_PER_PAGE} />
         <Box
           sx={{
             marginTop: "2rem",
@@ -313,7 +208,7 @@ const Province = () => {
           </Typography>
           <Stack spacing={2} sx={{ direction: "ltr" }}>
             <Pagination
-              count={Math.ceil(rows.length / rowsPerPage)}
+              count={Math.ceil(rows.length / ROWS_PER_PAGE)}
               defaultPage={1}
               page={page}
               onChange={(event, newPage) => setPage(newPage)}

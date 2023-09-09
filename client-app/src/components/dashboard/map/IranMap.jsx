@@ -115,6 +115,10 @@ const IranMap = () => {
                         provinceName: province.name,
                         pathD: province.d,
                         color: province.color,
+                        x: province.X,
+                        y: province.Y,
+                        width: province.WIDTH,
+                        height: province.HEIGHT
                       },
                     });
                   }}
