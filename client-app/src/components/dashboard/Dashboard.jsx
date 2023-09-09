@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IranMap from "./map/IranMap";
 import ISPTable from "./ISPTable";
@@ -10,7 +10,8 @@ import {
   useMediaQuery,
   Card,
   Button,
-  styled,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -24,11 +25,15 @@ const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
   return { rank, ISPname, disturbance, pings, speed, desc };
 };
 
-const ISPdata = [
-  createData("#1", "همراه اول", "15%", "49ms", "72Mbps"),
-  createData("#2", "ایرانسل", "15%", "49ms", "72Mbps"),
-  createData("#3", "همراه اول", "15%", "49ms", "72Mbps"),
-  createData("#4", "همراه اول", "15%", "49ms", "72Mbps"),
+const RawISPData = [
+  createData("#1", "زیتل", "3%", "49ms", "28Mbps"),
+  createData("#2", "همراه اول", "8%", "51ms", "23Mbps"),
+  createData("#3", "ایرانسل", "9%", "52ms", "21Mbps"),
+  createData("#4", "رایتل", "12%", "59ms", "19Mbps"),
+  createData("#5", "شاتل", "16%", "61ms", "18Mbps"),
+  createData("#6", "مخابرات", "18%", "61ms", "16Mbps"),
+  createData("#7", "آسیاتک", "19%", "64ms", "14Mbps"),
+  createData("#8", "های وب", "21%", "53ms", "19Mbps"),
 ];
 
 const GpButtons = [
@@ -65,6 +70,58 @@ const Dashboard = () => {
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
+
+  const [ISPData, setISPData] = useState(RawISPData);
+
+  const [visibleRows, setVisibleRows] = useState(6);
+
+  const handleShowMore = () => {
+    setVisibleRows((prev) => prev + 2);
+  };
+
+  useEffect(() => {
+    let sortedData;
+    switch (sortCriteria) {
+      case "نام ISP":
+        sortedData = [...ISPData].sort((a, b) =>
+          a.ISPname.localeCompare(b.ISPname)
+        );
+        break;
+      case "بیشترین اختلال":
+        sortedData = [...ISPData].sort(
+          (a, b) => parseFloat(b.disturbance) - parseFloat(a.disturbance)
+        );
+        break;
+      case "کمترین اختلال":
+        sortedData = [...ISPData].sort(
+          (a, b) => parseFloat(a.disturbance) - parseFloat(b.disturbance)
+        );
+        break;
+      case "بیشترین میانگین پینگ":
+        sortedData = [...ISPData].sort((a, b) =>
+          b.pings.localeCompare(a.pings)
+        );
+        break;
+      case "کمترین میانگین پینگ":
+        sortedData = [...ISPData].sort((a, b) =>
+          a.pings.localeCompare(b.pings)
+        );
+        break;
+      case "بیشترین میانگین سرعت":
+        sortedData = [...ISPData].sort((a, b) =>
+          b.speed.localeCompare(a.speed)
+        );
+        break;
+      case "کمترین میانگین سرعت":
+        sortedData = [...ISPData].sort((a, b) =>
+          a.speed.localeCompare(b.speed)
+        );
+        break;
+    }
+    setISPData(sortedData);
+  }, [sortCriteria]);
 
   const DisturbanceText = ({ text }) => (
     <Typography
@@ -154,6 +211,7 @@ const Dashboard = () => {
             رتبه بندی ISPها{" "}
           </Typography>
           <Typography
+            component="div"
             gutterBottom
             sx={{
               color: "#9B9B9B",
@@ -162,20 +220,46 @@ const Dashboard = () => {
             }}
           >
             براساس:{" "}
-            <Button
-              variant="contained"
-              endIcon={<KeyboardArrowDownIcon />}
-              sx={{
-                marginRight: "0.5rem",
-                borderRadius: "0.5rem",
-                padding: "0.6rem 1rem",
-              }}
+            <Select
+              value={sortCriteria}
+              onChange={(e) => setSortCriteria(e.target.value)}
+              variant="outlined"
+              color="primary"
+              sx={{ marginRight: "0.5rem" }}
             >
-              <span style={{ marginLeft: "0.4rem" }}>بیشترین اختلال</span>{" "}
-            </Button>
+              <MenuItem value="نام ISP">نام ISP</MenuItem>
+              <MenuItem value="بیشترین اختلال">بیشترین اختلال</MenuItem>
+              <MenuItem value="کمترین اختلال">کمترین اختلال</MenuItem>
+              <MenuItem value="بیشترین میانگین پینگ">
+                بیشترین میانگین پینگ
+              </MenuItem>
+              <MenuItem value="کمترین میانگین پینگ">
+                کمترین میانگین پینگ
+              </MenuItem>
+              <MenuItem value="بیشترین میانگین سرعت">
+                بیشترین میانگین سرعت
+              </MenuItem>
+              <MenuItem value="کمترین میانگین سرعت">
+                کمترین میانگین سرعت
+              </MenuItem>
+            </Select>
           </Typography>
         </Box>
-        <ISPTable ISPdata={ISPdata} />
+        <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
+        {visibleRows < RawISPData.length && (
+          <Box
+            sx={{
+              color: "#9B9B9B",
+              textAlign: "center",
+              marginY: "1rem",
+              cursor: "pointer",
+              width: "100%",
+            }}
+            onClick={handleShowMore}
+          >
+            -- مشاهده بیشتر --
+          </Box>
+        )}
       </Card>
       <Card
         sx={{
@@ -203,7 +287,7 @@ const Dashboard = () => {
         >
           {GpButtons.map((val, index) => (
             <Button
-              key={index} // <-- Added this key
+              key={index}
               variant="contained"
               startIcon={<val.icon style={{ fontSize: "2rem" }} />}
               sx={{

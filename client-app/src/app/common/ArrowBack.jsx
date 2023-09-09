@@ -1,5 +1,6 @@
-import arrowBack from "./../../app/assets/image/arrowBack.svg";
+import { Link } from "react-router-dom";
 import { Box, useMediaQuery } from "@mui/material";
+import arrowBack from "./../../app/assets/image/arrowBack.svg";
 
 const ArrowBack = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -7,12 +8,16 @@ const ArrowBack = () => {
 
   return (
     <Box>
-      {" "}
-      <img
-        style={{ width: isSmScreen ? "5vw" : isMdScreen ? "5vw" : "2vw" }}
-        src={arrowBack}
-        alt="arrowBack"
-      />
+      <Link to="/admin">
+        <img
+          style={{
+            width: isSmScreen ? "5vw" : isMdScreen ? "5vw" : "2vw",
+            cursor: "pointer",
+          }}
+          src={arrowBack}
+          alt="arrowBack"
+        />
+      </Link>
     </Box>
   );
 };
