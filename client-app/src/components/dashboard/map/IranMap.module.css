@@ -13,16 +13,41 @@
 .show_title {
   display: block;
   position: absolute;
-  background-color: #333;
-  color: #fff;
   margin: 0;
   padding: 0 5px;
   text-align: center;
-  font-size: 0.78em;
   line-height: 26px;
   border-radius: 2px;
   opacity: 0.8;
   z-index: 999;
+  direction: ltr;
+  color: #5e5e5e;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.show_title_Line {
+  width: auto;
+  height: 4px;
+  background-color: #5e5e5e;
+}
+
+.additional_text_Wrapper {
+  position: relative;
+}
+.additional_text {
+  position: absolute;
+  top: 65px;
+  right: -22.2%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  z-index: 9999;
 }
 
 .map {
@@ -47,6 +72,10 @@
 .map .sea path,
 .map .lake path {
   fill: #6caed8;
+}
+
+.map {
+  position: relative;
 }
 
 .map .province path:hover {
@@ -187,7 +216,6 @@
   background-color: rgba(128, 128, 128, 0.9);
   z-index: 99999;
 }
-
 
 .map .map_zoom {
   transform: scale(1.3);
