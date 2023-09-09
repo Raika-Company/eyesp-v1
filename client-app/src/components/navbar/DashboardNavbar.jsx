@@ -39,7 +39,7 @@ const DashboardNavbar = () => {
   const toggleSpeedIcon = () => {
     setIsSpeedIconOpen(!isSpeedIconOpen);
     setIsAutoMosaicOpen(false);
-    navigateTo("/admin/speed-test");
+    navigateTo("/");
   };
 
   const toggleCompanyLogo = () => {
