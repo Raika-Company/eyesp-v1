@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Typography,
@@ -7,6 +6,8 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { useState } from "react";
+
 import {
   LineChart,
   Line,
@@ -18,12 +19,18 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./detail.css";
-import ChoseCityDrawer from "../../app/common/ChoseCityDrawer";
+import jMoment from "moment-jalaali";
+
 const label = { inputProps: { "aria-label": "Color switch demo" } };
+
+const startDay = jMoment().subtract(6, "days");
+const dates = Array.from({ length: 7 }).map((_, index) =>
+  startDay.add(index === 0 ? 0 : 1, "days").format("jYYYY/jMM/jDD")
+);
 
 const data = [
   {
-    name: "تاریخ A",
+    name: dates[0],
     ایرانسل: 4000,
     مخابرات: 2400,
     شاتل: 5900,
@@ -31,7 +38,7 @@ const data = [
     همراه_اول: 1900,
   },
   {
-    name: "تاریخ B",
+    name: dates[1],
     ایرانسل: 3000,
     مخابرات: 1398,
     شاتل: 7000,
@@ -39,7 +46,7 @@ const data = [
     همراه_اول: 9000,
   },
   {
-    name: "تاریخ C",
+    name: dates[2],
     ایرانسل: 2500,
     مخابرات: 9800,
     شاتل: 4900,
@@ -47,7 +54,7 @@ const data = [
     همراه_اول: 6500,
   },
   {
-    name: "تاریخ D",
+    name: dates[3],
     ایرانسل: 1780,
     مخابرات: 4908,
     شاتل: 6800,
@@ -55,7 +62,7 @@ const data = [
     همراه_اول: 4600,
   },
   {
-    name: "تاریخ E",
+    name: dates[4],
     ایرانسل: 7890,
     مخابرات: 4800,
     شاتل: 9700,
@@ -63,7 +70,7 @@ const data = [
     همراه_اول: 3200,
   },
   {
-    name: "تاریخ F",
+    name: dates[5],
     ایرانسل: 3390,
     مخابرات: 6800,
     شاتل: 4600,
@@ -71,7 +78,7 @@ const data = [
     همراه_اول: 5400,
   },
   {
-    name: "تاریخ G",
+    name: dates[6],
     ایرانسل: 3490,
     مخابرات: 4300,
     شاتل: 2400,
@@ -83,6 +90,8 @@ const ChartDetail = ({ visibility }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [performanceAverageToggle, setPerformanceAverageToggle] =
+    useState(false);
 
   function MobileToggleSwitch() {
     return (
@@ -328,7 +337,10 @@ const ChartDetail = ({ visibility }) => {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis
+                dataKey="name"
+                tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
+              />
               <YAxis tickFormatter={(value) => `${value / 1000}K`} />
               <Tooltip />
               <Legend />
