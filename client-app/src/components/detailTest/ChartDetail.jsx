@@ -130,6 +130,7 @@ const ChartDetail = ({ visibility }) => {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
+                color: "textColor.dark",
               }}
             >
               میانگین عملکرد
@@ -150,6 +151,7 @@ const ChartDetail = ({ visibility }) => {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
+                color: "textColor.dark",
               }}
             >
               میانگین پینگ
@@ -174,6 +176,7 @@ const ChartDetail = ({ visibility }) => {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
+                color: "textColor.dark",
               }}
             >
               میانگین سرعت
@@ -195,6 +198,7 @@ const ChartDetail = ({ visibility }) => {
             <Typography
               sx={{
                 fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
+                color: "textColor.dark",
               }}
             >
               میانگین پکت پلاس
@@ -232,7 +236,9 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h7">میانگین عملکرد</Typography>
+          <Typography variant="h3" color="textColor.dark">
+            میانگین عملکرد
+          </Typography>
           <Switch
             checked={activeSwitch === "performanceAverage"}
             onClick={() => setActiveSwitch("performanceAverage")}
@@ -246,7 +252,9 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h7">میانگین پینگ</Typography>
+          <Typography variant="h3" color="textColor.dark">
+            میانگین پینگ
+          </Typography>
           <Switch
             checked={activeSwitch === "pingAverage"}
             onClick={() => setActiveSwitch("pingAverage")}
@@ -261,7 +269,9 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h7">میانگین سرعت</Typography>
+          <Typography variant="h3" color="textColor.dark">
+            میانگین سرعت
+          </Typography>
           <Switch
             checked={activeSwitch === "speedAverage"}
             onChange={(e) => setSpeedAverage(e.target.checked)}
@@ -276,7 +286,9 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h7">میانگین پکت لاس</Typography>
+          <Typography variant="h3" color="textColor.dark">
+            میانگین پکت لاس
+          </Typography>
           <Switch
             checked={activeSwitch === "packetLossAverage"}
             onClick={() => setActiveSwitch("packetLossAverage")}
@@ -326,7 +338,7 @@ const ChartDetail = ({ visibility }) => {
               value={selectedDate} // Use the state variable
               size="small"
               sx={{
-                bgcolor: "#126AED",
+                bgcolor: "info.main",
                 color: "white",
                 borderRadius: "1.8rem",
                 border: "none",
@@ -361,7 +373,7 @@ const ChartDetail = ({ visibility }) => {
             sx={{
               marginRight: isSmScreen ? "3rem" : "5rem",
               marginTop: "2rem",
-              color: "#126AED",
+              color: "info.main",
               fontSize: isSmScreen ? "16px" : "40px",
             }}
           >
@@ -376,7 +388,6 @@ const ChartDetail = ({ visibility }) => {
             marginTop: "1rem",
           }}
         >
-          {" "}
           {/* <Line responsive="true" options={options} data={data} /> */}
           <ResponsiveContainer width="100%" height="100%">
             <LineChart

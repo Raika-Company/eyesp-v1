@@ -12,7 +12,7 @@ import {
   Button,
   Select,
   MenuItem,
-  useTheme 
+  useTheme,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -130,14 +130,15 @@ const Dashboard = () => {
       sx={{
         fontSize: isSmScreen ? "1rem" : "1.5rem",
         flexWrap: "600",
-        color: "#9B9B9B",
+        color: "textColor.dark",
       }}
     >
       ● {text}
     </Typography>
   );
 
-  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
+  const backgroundColor =
+    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
   return (
     <Container maxWidth="xl" sx={{ direction: "rtl" }}>
       <div
@@ -148,7 +149,7 @@ const Dashboard = () => {
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
-          backgroundColor: backgroundColor
+          backgroundColor: backgroundColor,
         }}
       >
         <Box
@@ -172,7 +173,7 @@ const Dashboard = () => {
         >
           <Typography
             sx={{
-              color: "#EE0B0B",
+              color: "error.main",
               fontSize: isSmScreen ? "1.8rem" : "2.5rem",
               fontWeight: "700",
             }}
@@ -205,7 +206,7 @@ const Dashboard = () => {
           <Typography
             gutterBottom
             sx={{
-              color: "#126AED",
+              color: "info.main",
               fontWeight: "700",
               fontSize: isSmScreen ? "1.5rem" : "2rem",
             }}
@@ -216,7 +217,7 @@ const Dashboard = () => {
             component="div"
             gutterBottom
             sx={{
-              color: "#9B9B9B",
+              color: "textColor.main",
               fontWeight: "700",
               fontSize: isSmScreen ? "0.9rem" : "1.28rem",
             }}
@@ -227,21 +228,42 @@ const Dashboard = () => {
               onChange={(e) => setSortCriteria(e.target.value)}
               variant="outlined"
               color="primary"
-              sx={{ marginRight: "0.5rem" }}
+              sx={{ marginRight: "0.5rem", color: "info.main" }}
             >
-              <MenuItem value="نام ISP">نام ISP</MenuItem>
-              <MenuItem value="بیشترین اختلال">بیشترین اختلال</MenuItem>
-              <MenuItem value="کمترین اختلال">کمترین اختلال</MenuItem>
-              <MenuItem value="بیشترین میانگین پینگ">
+              <MenuItem sx={{ color: "textColor.light" }} value="نام ISP">
+                نام ISP
+              </MenuItem>
+              <MenuItem
+                sx={{ color: "textColor.light" }}
+                value="بیشترین اختلال"
+              >
+                بیشترین اختلال
+              </MenuItem>
+              <MenuItem sx={{ color: "textColor.light" }} value="کمترین اختلال">
+                کمترین اختلال
+              </MenuItem>
+              <MenuItem
+                sx={{ color: "textColor.light" }}
+                value="بیشترین میانگین پینگ"
+              >
                 بیشترین میانگین پینگ
               </MenuItem>
-              <MenuItem value="کمترین میانگین پینگ">
+              <MenuItem
+                sx={{ color: "textColor.light" }}
+                value="کمترین میانگین پینگ"
+              >
                 کمترین میانگین پینگ
               </MenuItem>
-              <MenuItem value="بیشترین میانگین سرعت">
+              <MenuItem
+                sx={{ color: "textColor.light" }}
+                value="بیشترین میانگین سرعت"
+              >
                 بیشترین میانگین سرعت
               </MenuItem>
-              <MenuItem value="کمترین میانگین سرعت">
+              <MenuItem
+                sx={{ color: "textColor.light" }}
+                value="کمترین میانگین سرعت"
+              >
                 کمترین میانگین سرعت
               </MenuItem>
             </Select>
@@ -251,7 +273,7 @@ const Dashboard = () => {
         {visibleRows < RawISPData.length && (
           <Box
             sx={{
-              color: "#9B9B9B",
+              color: "textColor.main",
               textAlign: "center",
               marginY: "1rem",
               cursor: "pointer",
@@ -272,7 +294,7 @@ const Dashboard = () => {
           padding: "1rem 2.5rem",
         }}
       >
-        <Typography textAlign="center" color="#9B9B9B" fontWeight="600">
+        <Typography textAlign="center" color="textColor.main" fontWeight="600">
           جزئیات فنی
         </Typography>
 
@@ -289,7 +311,7 @@ const Dashboard = () => {
             <Button
               key={index}
               variant="contained"
-              startIcon={<val.icon style={{ fontSize: "2rem" }} />}
+              startIcon={<val.icon sx={{ fontSize: "2rem", backgroundColor: "primary.main" }} />}
               sx={{
                 width: isSmScreen ? "100%" : "49%",
                 borderRadius: "1rem",

@@ -54,8 +54,8 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography component="h6">همراه اول</Typography>
-            <Typography variant="subtitle1">51.15.57.153</Typography>
+            <Typography component="h6" color="textColor.dark">همراه اول</Typography>
+            <Typography variant="subtitle1" color="textColor.light">51.15.57.153</Typography>
           </Box>
           <ExpandMoreIcon
             fontSize="large"
@@ -77,9 +77,9 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography component="h6">سرور مقصد</Typography>
-            <Typography variant="subtitle1">تهران - امام</Typography>
-            <Button>تغییر سرور</Button>
+            <Typography component="h6" color="textColor.dark">سرور مقصد</Typography>
+            <Typography variant="subtitle1" color="textColor.light">تهران - امام</Typography>
+            <Button sx={{color:"info.main"}}>تغییر سرور</Button>
           </Box>
           <img src={Globe} alt="Globe Icon" width="64px" />
         </Box>

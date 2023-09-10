@@ -1,4 +1,6 @@
-import { createTheme } from "@mui/material";
+import {
+  createTheme
+} from "@mui/material";
 
 /**
  * Common typography settings.
@@ -152,6 +154,12 @@ export const lightTheme = createTheme({
       dark: "#9e9ea1",
       light: "#e8e8eb"
     },
+    textColor: {
+      main: "#A4A4A4",
+      light: "#b6b6b8",
+      dark: "#5E5E5E",
+      subTitle: "#dcdcdc"
+    },
     background: {
       default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
     },
@@ -216,6 +224,13 @@ export const darkTheme = createTheme({
     },
     background: {
       default: "#181D23",
+    },
+    textColor: {
+      main: "#b6b6b8",
+      light: "#b6b6b8",
+      dark: "#5E5E5E",
+      subTitle: "#5E5E5E"
+
     },
     text: {
       primary: "#FFF",

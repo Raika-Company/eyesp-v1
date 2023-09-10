@@ -75,9 +75,11 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="h7"
+              variant="h1"
+              color="textColor.light"
               sx={{
-                borderBottom: "1px solid gray",
+                borderBottom: "1px solid",
+                borderColor: "border.main",
                 fontSize: isMdScreen ? "10px" : isSmScreen ? "4px" : "",
               }}
             >
@@ -88,6 +90,7 @@ const DetailTest = () => {
             <Box
               key={city}
               sx={{
+                color: "textColor.dark",
                 display: "flex",
                 flexDirection: isMdScreen
                   ? "column"
@@ -152,7 +155,9 @@ const DetailTest = () => {
               }}
             >
               <Typography
+                variant="h1"
                 sx={{
+                  color: "textColor.main",
                   fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "30px",
                 }}
               >
@@ -172,7 +177,7 @@ const DetailTest = () => {
                         : isMdScreen
                         ? "20px"
                         : "h3",
-                      color: "#126AED",
+                      color: "info.main",
                     }}
                     variant="h3"
                   >

@@ -78,7 +78,7 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
             sx={{
               cursor: "pointer",
               marginLeft: "20px",
-              color: location.pathname === path ? "#126AED" : "#A4A4A4",
+              color: location.pathname === path ? "info.main" : "textColor.light",
               marginTop: "0.2em",
             }}
           >
@@ -92,10 +92,10 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
       <Box display="flex" marginTop="0.5em">
         <img src={Logo} alt="TIC Radar logo" height="32px" />
         <Typography
-          variant="h4"
+          variant="h2"
           component="h1"
           color="primary"
-          sx={{ marginLeft: 2 }}
+          sx={{ marginRight: 2 }}
         >
           TIC Radar
         </Typography>

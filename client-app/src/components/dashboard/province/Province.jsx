@@ -9,7 +9,7 @@ import {
   Card,
   IconButton,
   ThemeProvider,
-  useTheme
+  useTheme,
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
@@ -57,7 +57,7 @@ const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
 };
 
 const DisruptionList = ({ isSmScreen, color, provinceName }) => {
-  let items = []
+  let items = [];
   if (color == "#EE0B0B") {
     items = [
       `اختلال در ${provinceName}`,
@@ -82,7 +82,7 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
       "کاهش پهنای باند",
     ];
   }
-  
+
   return (
     <Box
       sx={{
@@ -109,7 +109,7 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
 const FastAccessButton = ({ label }) => (
   <Button
     variant="outlined"
-    sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
+    sx={{ color: "info.main", borderColor: "info.main", fontWeight: 700 }}
   >
     {label}
   </Button>
@@ -124,11 +124,17 @@ const Province = () => {
 
   const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
 
-  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
+  const backgroundColor =
+    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
-        <Typography fontSize="2rem" color="#9B9B9B" gutterBottom sx={{}}>
+        <Typography
+          fontSize="2rem"
+          color="textColor.light"
+          gutterBottom
+          sx={{}}
+        >
           میانگین عملکرد ISPهای{" "}
           <span style={{ fontSize: "2.6rem", color: "#126AED" }}>
             استان {provinceName}
@@ -143,7 +149,7 @@ const Province = () => {
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
-          backgroundColor: backgroundColor
+          backgroundColor: backgroundColor,
         }}
       >
         <ProvinceMap
@@ -171,13 +177,10 @@ const Province = () => {
         <div style={{ clear: "both" }}></div>
       </div>
       <Card>
-        <Box
-          display="flex"
-          justifyContent="flex-start"
-          gap={2}
-          padding="1em"
-        >
-          <Typography fontSize="1.9rem">دسترسی سریع</Typography>
+        <Box display="flex" justifyContent="flex-start" gap={2} padding="1em">
+          <Typography color="textColor.dark" fontSize="1.9rem">
+            دسترسی سریع
+          </Typography>
           {fastAccessButtons.map((label) => (
             <FastAccessButton label={label} key={label} />
           ))}
@@ -192,14 +195,15 @@ const Province = () => {
           padding: "1.5rem",
         }}
       >
-        <Typography gutterBottom color="#9B9B9B" fontSize="1.789rem">
+        <Typography gutterBottom color="textColor.light" fontSize="1.789rem">
           تاریخچه اختلالات
         </Typography>
         <IconButton aria-label="filter">
           <FilterAltIcon
             sx={{
-              color: "#126AED",
-              border: "1px solid #126AED",
+              color: "info.main",
+              border: "1px solid",
+              borderColor: "info.main",
               padding: "3px",
               borderRadius: "5px",
             }}
@@ -225,27 +229,26 @@ const Province = () => {
         >
           <Typography
             sx={{
-              color: "#5E5E5E",
+              color: "textColor.dark",
               display: "flex",
               alignItems: "center",
               fontSize: isSmScreen ? "11px" : "",
             }}
           >
             پرش به تاریخ:
-            <span
-              style={{
+            <Typography variant="overline" component="span"
+              sx={{
                 textAlign: "center",
                 userSelect: "none",
-                color: "#000",
+                color:"textColor.main",
+                backgroundColor: "textColor.subTitle",
                 marginRight: isSmScreen ? "2px" : "10px",
-                opacity: "0.15",
                 padding: isSmScreen ? "6px 6px" : "6px 10px",
-                backgroundColor: "#999",
                 borderRadius: "10px",
               }}
             >
               1403/06/08
-            </span>
+            </Typography>
           </Typography>
           <Stack spacing={2} sx={{ direction: "ltr" }}>
             <Pagination
