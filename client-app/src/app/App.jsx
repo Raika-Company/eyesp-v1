@@ -11,13 +11,18 @@ import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
 function App() {
-  const [theme, setTheme] = useState(lightTheme);
+  const storedThemeMode = localStorage.getItem("themeMode");
+  const initialTheme = storedThemeMode === "dark" ? darkTheme : lightTheme;
+
+  const [theme, setTheme] = useState(initialTheme);
 
   const toggleTheme = () => {
     if (theme === lightTheme) {
       setTheme(darkTheme);
+      localStorage.setItem("themeMode", "dark");
     } else {
       setTheme(lightTheme);
+      localStorage.setItem("themeMode", "light");
     }
   };
 
