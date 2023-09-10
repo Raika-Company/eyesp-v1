@@ -1,6 +1,120 @@
 import { createTheme } from "@mui/material";
 
+/**
+ * Common typography settings.
+ * @type {Object}
+ */
+const commonTypography = {
+  fontFamily: "Peyda",
+  fontStyle: "normal",
+  lineHeight: "normal",
+};
+
+/**
+ * Create typography style with given font size and weight.
+ *
+ * @function
+ * @param {string} fontSize - The font size.
+ * @param {number} fontWeight - The font weight.
+ * @returns {Object} A typography style object.
+ */
+const createTypography = (fontSize, fontWeight) => ({
+  ...commonTypography,
+  fontSize,
+  fontWeight,
+});
+
+/**
+ * Base theme configuration.
+ * @type {Object}
+ */
+const baseTheme = {
+  typography: {
+    h1: createTypography("2.45744rem", 700),
+    h2: createTypography("1.90656rem", 600),
+    h3: createTypography("1.5625rem", 700),
+    h4: createTypography("2.58025rem", 700),
+    h5: createTypography("2.3125rem", 700),
+    h6: createTypography("1.67806rem", 800),
+    body1: {
+      ...commonTypography,
+      textAlign: "right",
+      textLeadingTrim: "both",
+      textEdge: "cap",
+      fontSize: "1.51394rem",
+      fontWeight: 600,
+    },
+    body2: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: 16,
+    },
+    subtitle1: createTypography("1.83331rem", 600),
+    subtitle2: createTypography("1.65rem", 600),
+    button: createTypography("2.05794rem", 500),
+    caption: createTypography("1.65rem", 600),
+    overline: createTypography("1.12656rem", 600),
+    fontFamily: "Peyda",
+  },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          left: "inherit",
+          right: "1.7rem",
+          transformOrigin: "right",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          textAlign: "right",
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          direction: "ltr",
+        },
+        paper: {
+          position: "absolute",
+          left: 0,
+          transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+          "&.MuiDrawer-open": {
+            transform: "translateX(0)",
+          },
+          "&:not(.MuiDrawer-open)": {
+            transform: "translateX(-100%)",
+          },
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          borderRadius: "12px",
+          paddingTop: "6px",
+        },
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: createTypography("1.65rem", 600),
+      },
+    },
+  },
+};
+
+
+/**
+ * Light theme configuration.
+ *
+ * @type {Object}
+ * @constant
+ */
 export const lightTheme = createTheme({
+  ...baseTheme,
   palette: {
     mode: "light",
     primary: {
@@ -42,97 +156,7 @@ export const lightTheme = createTheme({
       default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
     },
   },
-  typography: {
-    h1: {
-      fontFamily: "PeidaBold, serif",
-    },
-    h2: {
-      fontFamily: "PeidaBold, serif",
-    },
-    h3: {
-      fontFamily: "PeydaSemiBold, serif",
-      fontSize: "36px",
-    },
-    h4: {
-      fontFamily: "PeydaSemiBold, serif",
-      textEdge: "cap",
-      leadingTrim: "both",
-      fontSize: 30,
-      fontWeight: 600,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h5: {
-      fontFamily: "PeydaMedium, serif",
-      color: "#A4A4A4",
-      fontWeight: 700,
-      fontSize: 25,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h6: {
-      fontFamily: "PeydaMedium, serif",
-      fontSize: 25,
-    },
-    body1: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: 18,
-    },
-    body2: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: 16,
-    },
-    subtitle1: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: "1.35rem",
-      fontWeight: 500,
-      opacity: 0.5,
-      color: "#5E5E5E",
-    },
-    subtitle2: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: "1rem",
-      fontWeight: 500,
-      opacity: 0.3,
-      color: "#000",
-    },
-    fontFamily: "PeydaMedium",
-  },
   components: {
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          left: "inherit",
-          right: "1.7rem",
-          transformOrigin: "right",
-        },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        notchedOutline: {
-          textAlign: "right",
-        },
-      },
-    },
-    MuiDrawer: {
-      styleOverrides: {
-        root: {
-          direction: "ltr",
-        },
-        paper: {
-          position: "absolute",
-          left: 0,
-          transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-          "&.MuiDrawer-open": {
-            transform: "translateX(0)",
-          },
-          "&:not(.MuiDrawer-open)": {
-            transform: "translateX(-100%)",
-          },
-        },
-      },
-    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -142,21 +166,18 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiPaginationItem: {
-      styleOverrides: {
-        root: {
-          borderRadius: "12px",
-          paddingTop: "6px",
-        },
-      }
-    }
   },
 });
 
+/**
+ * Dark theme configuration.
+ *
+ * @type {Object}
+ * @constant
+ */
 export const darkTheme = createTheme({
-  ...lightTheme,
+  ...baseTheme,
   palette: {
-    ...lightTheme.palette,
     mode: "dark",
     primary: {
       main: "#6798f8",
@@ -189,74 +210,17 @@ export const darkTheme = createTheme({
       light: "#3fb391"
     },
     border: {
-      main: "#9e9ea1",   
-      dark: "#6b6b6e",   
+      main: "#9e9ea1",
+      dark: "#6b6b6e",
       light: "#b4b4b8"
     },
-    
     background: {
-      default: "linear-gradient(195deg, #1D1D1F 24.09%, #2B2B2B 100%)",
+      default: "#181D23",
     },
     text: {
       primary: "#FFF",
       secondary: "#BBB",
     },
-  },
-  typography :{
-    h1: {
-      fontFamily: "PeidaBold, serif",
-    },
-    h2: {
-      fontFamily: "PeidaBold, serif",
-    },
-    h3: {
-      fontFamily: "PeydaSemiBold, serif",
-      fontSize: "36px",
-    },
-    h4: {
-      fontFamily: "PeydaSemiBold, serif",
-      textEdge: "cap",
-      leadingTrim: "both",
-      fontSize: 30,
-      fontWeight: 600,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h5: {
-      fontFamily: "PeydaMedium, serif",
-      color: "#A4A4A4",
-      fontWeight: 700,
-      fontSize: 25,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h6: {
-      fontFamily: "PeydaMedium, serif",
-      fontSize: 25,
-    },
-    body1: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: 18,
-    },
-    body2: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: 16,
-    },
-    subtitle1: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: "1.35rem",
-      fontWeight: 500,
-      opacity: 0.5,
-      color: "#5E5E5E",
-    },
-    subtitle2: {
-      fontFamily: "PeydaMedium, sans-serif",
-      fontSize: "1rem",
-      fontWeight: 500,
-      opacity: 0.3,
-      color: "#fff",
-    },
-    fontFamily: "PeydaMedium",
   },
   components: {
     MuiCard: {
