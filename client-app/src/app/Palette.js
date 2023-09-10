@@ -33,6 +33,11 @@ export const lightTheme = createTheme({
       dark: "#0e745c",
       light: "#0e745c"
     },
+    border: {
+      main: "#E3E3E6",
+      dark: "#9e9ea1",
+      light: "#e8e8eb"
+    },
     background: {
       default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
     },
@@ -183,6 +188,12 @@ export const darkTheme = createTheme({
       dark: "#3fb391",
       light: "#3fb391"
     },
+    border: {
+      main: "#9e9ea1",   
+      dark: "#6b6b6e",   
+      light: "#b4b4b8"
+    },
+    
     background: {
       default: "linear-gradient(195deg, #1D1D1F 24.09%, #2B2B2B 100%)",
     },
