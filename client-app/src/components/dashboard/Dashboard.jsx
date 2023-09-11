@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import IranMap from "./map/IranMap";
 import ISPTable from "./ISPTable";
-
+import { Link } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -21,6 +20,7 @@ import WifiOffIcon from "@mui/icons-material/WifiOff";
 import WifiIcon from "@mui/icons-material/Wifi";
 import AirplayIcon from "@mui/icons-material/Airplay";
 import SpeedIcon from "@mui/icons-material/Speed";
+import ChartDetail from "../detailTest/ChartDetail";
 
 const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
   return { rank, ISPname, disturbance, pings, speed, desc };
@@ -41,18 +41,22 @@ const GpButtons = [
   {
     name: "پینگ",
     icon: WifiIcon,
+    stateVar: "pingAverage",
   },
   {
     name: "اختلال",
     icon: WifiOffIcon,
+    stateVar: "performanceAverage",
   },
   {
     name: "سرعت",
     icon: SpeedIcon,
+    stateVar: "speedAverage",
   },
   {
     name: "پکت لاس",
     icon: AirplayIcon,
+    stateVar: "packetLossAverage",
   },
 ];
 
@@ -66,31 +70,8 @@ const disturbances = [
 ];
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
-  const handleButtonClick = (name) => {
-    let switchName;
-    switch (name) {
-      case "پینگ":
-        switchName = "pingAverage";
-        break;
-      case "اختلال":
-        switchName = "performanceAverage";
-        break;
-      case "سرعت":
-        switchName = "speedAverage";
-        break;
-      case "پکت لاس":
-        switchName = "packetLossAverage";
-        break;
-      default:
-        switchName = null;
-    }
-    navigate(`/admin/detail-test?active=${switchName}`);
-  };
   const theme = useTheme();
 
-  const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
@@ -309,6 +290,8 @@ const Dashboard = () => {
         >
           {GpButtons.map((val, index) => (
             <Button
+              component={Link}
+              to={`detail-test/${val.stateVar}`}
               key={index}
               variant="contained"
               startIcon={<val.icon style={{ fontSize: "2rem" }} />}
@@ -319,7 +302,6 @@ const Dashboard = () => {
                 fontSize: "1.3rem",
                 marginTop: "1rem",
               }}
-              onClick={() => handleButtonClick(val.name)}
             >
               <span style={{ marginLeft: "0.4rem", marginRight: "1rem" }}>
                 {val.name}
