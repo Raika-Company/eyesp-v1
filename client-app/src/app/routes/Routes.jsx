@@ -7,6 +7,8 @@ const Dashboard = lazy(() => import("../../components/dashboard/Dashboard"));
 const Province = lazy(() => import("../../components/dashboard/province/Province"));
 const AdminSpeedTest = lazy(() => import("../../components/dashboard/AdminSpeedTest"));
 const DetailTest = lazy(() => import("../../components/detailTest/DetailTest"));
+const ISPPerformance = lazy(() => import("../../components/ispPerformance/ISPPerformance"));
+const Result = lazy(() => import("../../components/speedtest/Result"));
 
 export const mainRoutes = [
     {
@@ -23,6 +25,14 @@ export const mainRoutes = [
       title: "Test History | Rayka ICT",
       description: "Review all your past internet speed tests in one place.",
       keywords: "test history, speed results, past tests",
+      robots: "index, follow"
+    },
+    {
+      path: "/result",
+      element: <Result />,
+      title: "Speed Test Results | Rayka ICT",
+      description: "Detailed results of your internet speed test.",
+      keywords: "speed test results, internet speed, broadband speed, download speed, upload speed",
       robots: "index, follow"
     }
   ];
@@ -58,6 +68,14 @@ export const mainRoutes = [
       title: "Detailed Test | Admin",
       description: "In-depth analysis of specific speed tests.",
       keywords: "detailed test, speed analysis, admin tools",
+      robots: "noindex, nofollow"
+    },
+    {
+      path: "/ISP-performance",
+      element: <ISPPerformance />,
+      title: "ISP Performance | Rayka ICT",
+      description: "Get insights into your ISP's performance.",
+      keywords: "ISP performance, ISP details, ISP configurations",
       robots: "noindex, nofollow"
     }
   ];

@@ -1,58 +1,72 @@
 import { createTheme } from "@mui/material";
 
-/**
- * Common typography settings.
- * @type {Object}
- */
-const commonTypography = {
-  fontFamily: "Peyda",
-  fontStyle: "normal",
-  lineHeight: "normal",
-};
-
-/**
- * Create typography style with given font size and weight.
- *
- * @function
- * @param {string} fontSize - The font size.
- * @param {number} fontWeight - The font weight.
- * @returns {Object} A typography style object.
- */
-const createTypography = (fontSize, fontWeight) => ({
-  ...commonTypography,
-  fontSize,
-  fontWeight,
-});
-
-/**
- * Base theme configuration.
- * @type {Object}
- */
-const baseTheme = {
+export const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#126AED",
+    },
+    secondary: {
+      main: "#DB7F12",
+    },
+    background: {
+      default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
+    },
+  },
   typography: {
-    h1: createTypography("2.45744rem", 700),
-    h2: createTypography("1.90656rem", 600),
-    h3: createTypography("1.5625rem", 700),
-    h4: createTypography("2.58025rem", 700),
-    h5: createTypography("2.3125rem", 700),
-    h6: createTypography("1.67806rem", 800),
-    body1: {
-      ...commonTypography,
-      textAlign: "right",
-      textLeadingTrim: "both",
+    h1: {
+      fontFamily: "PeidaBold, serif",
+    },
+    h2: {
+      fontFamily: "PeidaBold, serif",
+    },
+    h3: {
+      fontFamily: "PeydaSemiBold, serif",
+      fontSize: "36px",
+    },
+    h4: {
+      fontFamily: "PeydaSemiBold, serif",
       textEdge: "cap",
-      fontSize: "1.51394rem",
+      leadingTrim: "both",
+      fontSize: 30,
       fontWeight: 600,
+      lineHeight: "normal",
+      fontStyle: "normal",
+    },
+    h5: {
+      fontFamily: "Peyda, serif",
+      color: "#A4A4A4",
+      fontWeight: 700,
+      fontSize: 25,
+      lineHeight: "normal",
+      fontStyle: "normal",
+    },
+    h6: {
+      fontFamily: "Peyda, serif",
+      fontSize: 25,
+    },
+    body1: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: 18,
     },
     body2: {
       fontFamily: "Peyda, sans-serif",
       fontSize: 16,
     },
-    subtitle1: createTypography("1.83331rem", 600),
-    subtitle2: createTypography("1.65rem", 600),
-    button: createTypography("2.05794rem", 500),
-    caption: createTypography("1.65rem", 600),
-    overline: createTypography("1.12656rem", 600),
+    subtitle1: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: "1.35rem",
+      fontWeight: 500,
+      opacity: 0.5,
+      color: "#5E5E5E",
+    },
+    subtitle2: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
+      opacity: 0.3,
+      color: "#000",
+    },
     fontFamily: "Peyda",
   },
   components: {
@@ -90,73 +104,6 @@ const baseTheme = {
         },
       },
     },
-    MuiPaginationItem: {
-      styleOverrides: {
-        root: {
-          borderRadius: "12px",
-          paddingTop: "6px",
-        },
-      }
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        root: createTypography("1.65rem", 600),
-      },
-    },
-  },
-};
-
-
-/**
- * Light theme configuration.
- *
- * @type {Object}
- * @constant
- */
-export const lightTheme = createTheme({
-  ...baseTheme,
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
-    },
-    secondary: {
-      main: "#DB7F12",
-      dark: "#6c6c6c",
-      light: "#afafaf"
-    },
-    error: {
-      main: "#EE0B0B",
-      dark: "#a60707",
-      light: "#a60707",
-    },
-    warning: {
-      main: "#FF630B",
-      dark: "#FF630B",
-      light: "#ff823b"
-    },
-    info: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
-    },
-    success: {
-      main: "#14A784",
-      dark: "#0e745c",
-      light: "#0e745c"
-    },
-    border: {
-      main: "#E3E3E6",
-      dark: "#9e9ea1",
-      light: "#e8e8eb"
-    },
-    background: {
-      default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
-    },
-  },
-  components: {
     MuiCard: {
       styleOverrides: {
         root: {
@@ -166,60 +113,43 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          borderRadius: "12px",
+          paddingTop: "6px",
+        },
+      }
+    }
   },
 });
 
-/**
- * Dark theme configuration.
- *
- * @type {Object}
- * @constant
- */
 export const darkTheme = createTheme({
-  ...baseTheme,
+  ...lightTheme,
   palette: {
+    ...lightTheme.palette,
     mode: "dark",
     primary: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
+      main: "#315A9E",
     },
     secondary: {
-      main: "#f8a665",
-      dark: "#bfbfbf",
-      light: "#e0e0e0"
-    },
-    error: {
-      main: "#f77676",
-      dark: "#d36565",
-      light: "#d36565"
-    },
-    warning: {
-      main: "#FF8E4D",
-      dark: "#FF8E4D",
-      light: "#ffa56d"
-    },
-    info: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
-    },
-    success: {
-      main: "#4ecdab",
-      dark: "#3fb391",
-      light: "#3fb391"
-    },
-    border: {
-      main: "#9e9ea1",
-      dark: "#6b6b6e",
-      light: "#b4b4b8"
+      main: "#B0680F",
     },
     background: {
-      default: "#181D23",
+      default: "#181D23", // Set the background color to black
     },
     text: {
       primary: "#FFF",
       secondary: "#BBB",
+    },
+  },
+  typography :{
+    subtitle2: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 500,
+      opacity: 0.3,
+      color: "#fff",
     },
   },
   components: {

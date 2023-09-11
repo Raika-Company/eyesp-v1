@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import backgroundImage from "../../app/assets/image/back.svg";
 import { useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
@@ -127,6 +128,7 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
  */
 const SpeedTest = ({ themeMode }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const [animationInterval, setAnimationInterval] = useState(null);
@@ -184,32 +186,29 @@ const SpeedTest = ({ themeMode }) => {
       let timeElapsed = 0;
       const interval = setInterval(() => {
         timeElapsed += 100;
-        if (timeElapsed <= 1000) {
-          setUploadSpeed(10 * (timeElapsed / 1000));
-        } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
+        if (timeElapsed <= 500) {
+          setUploadSpeed(10 * (timeElapsed / 500));
+        } else if (timeElapsed > 500 && timeElapsed <= 5500) {
           setUploadSpeed(parseFloat((Math.random() * 3 + 8).toFixed(2)));
         } else {
           clearInterval(interval);
-          setShowResult(true); // Show the result after the upload test
+          const testResults = {
+            date: new Date().toISOString(),
+            ping: speedData.ping,
+            download: speedData.downloadSpeed,
+            upload: (Math.random() * 3 + 8).toFixed(2),
+            providerLocation: "ایرانسل-تهران",
+          };
+          
+          const existingResults = JSON.parse(localStorage.getItem("testResults") || "[]");
+          existingResults.push(testResults);
+          localStorage.setItem("testResults", JSON.stringify(existingResults));
+          navigate(`/result?ping=${speedData.ping}&download=${speedData.downloadSpeed}&upload=${(Math.random() * 3 + 8).toFixed(2)}`);
         }
       }, 100);
       return () => clearInterval(interval);
     }
   }, [testStage]);
-
-  const calculateProgress = () => {
-    // Depending on the testStage, determine which speed to use for progress
-    let currentSpeed = 0;
-    if (testStage === "download" && speedData.downloadSpeed) {
-      currentSpeed = speedData.downloadSpeed;
-    } else if (testStage === "upload" && uploadSpeed) {
-      currentSpeed = uploadSpeed;
-    }
-
-    // Hypothetical max speed of 100 Mbps. You can adjust this value
-    const maxSpeed = 100;
-    return Math.min(currentSpeed / maxSpeed, 1);
-  };
 
   const [boxHeight, setBoxHeight] = useState("90dvh");
   useEffect(() => {
@@ -225,171 +224,162 @@ const SpeedTest = ({ themeMode }) => {
 
   return (
     <>
-      {showResult ? (
-        <Result
-          ping={speedData.ping}
-          upload={uploadSpeed}
-          download={speedData.downloadSpeed}
-        />
-      ) : (
+      <Box
+        component="main"
+        height={boxHeight}
+        sx={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "left bottom",
+          [theme.breakpoints.between("xs", "sm")]: {
+            backgroundSize: "contain",
+          },
+          [theme.breakpoints.up("md")]: {
+            backgroundSize: "40%",
+          },
+        }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-around"
+        alignItems="stretch"
+      >
         <Box
-          component="main"
-          height={boxHeight}
-          sx={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundRepeat: "no-repeat",
-            backgroundAttachment: "fixed",
-            backgroundPosition: "left bottom",
-            [theme.breakpoints.between("xs", "sm")]: {
-              backgroundSize: "contain",
-            },
-            [theme.breakpoints.up("md")]: {
-              backgroundSize: "40%",
-            },
-          }}
           display="flex"
-          flexDirection="column"
-          justifyContent="space-around"
-          alignItems="stretch"
+          flexDirection="row"
+          justifyContent="space-evenly"
+          height="clamp(5rem,5rem + 3vmin, 3rem)"
+          width="65%"
+          marginX="auto"
+          alignItems="center"
+          textAlign="center"
+          sx={{
+            borderRadius: "1.2rem",
+            border: "1.468px solid rgba(0, 0, 0, 0.10)",
+            display: { xs: "none", md: "flex" },
+          }}
         >
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-evenly"
-            height="clamp(5rem,5rem + 3vmin, 3rem)"
-            width="65%"
-            marginX="auto"
-            alignItems="center"
-            textAlign="center"
-            sx={{
-              borderRadius: "1.2rem",
-              border: "1.468px solid rgba(0, 0, 0, 0.10)",
-              display: { xs: "none", md: "flex" },
-            }}
-          >
-            <SpeedBox
-              title="پینگ"
-              iconSrc={Ping}
-              altText="ping icon"
-              value={isGoButtonVisible ? null : speedData.ping}
-              measure="ms"
-              opacity={isGoButtonVisible ? "0.5" : "1"}
-            />
-            <Divider />
-            <SpeedBox
-              title="سرعت آپلود"
-              iconSrc={Upload}
-              altText="upload icon"
-              value={isGoButtonVisible ? null : uploadSpeed}
-              measure="Mbps"
-              opacity={isGoButtonVisible ? "0.5" : "1"}
-            />
+          <SpeedBox
+            title="پینگ"
+            iconSrc={Ping}
+            altText="ping icon"
+            value={isGoButtonVisible ? null : speedData.ping}
+            measure="ms"
+            opacity={isGoButtonVisible ? "0.5" : "1"}
+          />
+          <Divider />
+          <SpeedBox
+            title="سرعت آپلود"
+            iconSrc={Upload}
+            altText="upload icon"
+            value={isGoButtonVisible ? null : uploadSpeed}
+            measure="Mbps"
+            opacity={isGoButtonVisible ? "0.5" : "1"}
+          />
 
-            <Divider />
-            <SpeedBox
-              title="سرعت دانلود"
-              iconSrc={Download}
-              altText="before download icon"
-              value={isGoButtonVisible ? null : speedData.downloadSpeed}
-              measure="Mbps"
-              opacity={isGoButtonVisible ? "0.5" : "1"}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {isGoButtonVisible ? (
-              <AnimatedButton
-                onClick={handleButtonClick}
-                sx={{
-                  height: "clamp(10rem,10rem + 10vmin,16rem)",
-                  width: "clamp(10rem,10rem + 10vmin,16rem)",
-                  borderRadius: "50%",
-                  borderColor: "transparent",
-                  borderWidth: "6px",
-                  borderStyle: "solid",
-                  border: "3px solid rgba(54, 129, 241, 0.8)",
-                  backgroundOrigin: "border-box",
-                  backgroundClip: "padding-box, border-box",
-                  boxShadow:
-                    "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
-                  fontSize: "4rem",
-                  fontWeight: "400",
-                  lineHeight: "normal",
-                  fontStyle: "normal",
-                  paddingTop: "2rem",
-                }}
-                variant="outlined"
-              >
-                GO
-              </AnimatedButton>
-            ) : (
-              <Box
-                sx={{
-                  [theme.breakpoints.between("xs", "sm")]: {
-                    width: "100%",
-                  },
-                  [theme.breakpoints.up("md")]: {
-                    width: "80%",
-                  },
-                  height: "clamp(10rem,10rem + 10vmin,16rem)",
-                  width: "clamp(10rem,10rem + 10vmin,16rem)",
-                }}
-              >
-                <DrawMeter
-                  amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
-                  bk={
-                    /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                      ? "#45628A"
-                      : "#1B70EE1C"
-                  }
-                  fg={"#1B70EE1C"}
-                  progress={0.3}
-                  prog={0.3} // Adjust this if it's being used differently than 'progress'
-                  mbps={
-                    testStage === "download"
-                      ? speedData.downloadSpeed
-                      : uploadSpeed
-                  }
-                  isDl={true}
-                  theme={themeMode}
-                />
-              </Box>
-            )}
-          </Box>
-          <Box
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={10}
-            sx={{ display: { xs: "none", md: "flex" } }}
-          >
-            <InformationBox
-              title="سرور مقصد"
-              value="تهران - امام"
-              iconSrc={Globe}
-              altText="Globe Icon"
-              buttonLabel="تغییر سرور"
-            />
-            <InformationBox
-              title="همراه اول"
-              value="51.15.57.153"
-              iconSrc={Person}
-              altText="Person Icon"
-            />
-          </Box>
-          <CustomAccordion
-            expanded={expanded}
-            setExpanded={setExpanded}
-            Person={Person}
-            Globe={Globe}
+          <Divider />
+          <SpeedBox
+            title="سرعت دانلود"
+            iconSrc={Download}
+            altText="before download icon"
+            value={isGoButtonVisible ? null : speedData.downloadSpeed}
+            measure="Mbps"
+            opacity={isGoButtonVisible ? "0.5" : "1"}
           />
         </Box>
-      )}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {isGoButtonVisible ? (
+            <AnimatedButton
+              onClick={handleButtonClick}
+              sx={{
+                height: "clamp(10rem,10rem + 10vmin,16rem)",
+                width: "clamp(10rem,10rem + 10vmin,16rem)",
+                borderRadius: "50%",
+                borderColor: "transparent",
+                borderWidth: "6px",
+                borderStyle: "solid",
+                border: "3px solid rgba(54, 129, 241, 0.8)",
+                backgroundOrigin: "border-box",
+                backgroundClip: "padding-box, border-box",
+                boxShadow: "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
+                fontSize: "4rem",
+                fontWeight: "400",
+                lineHeight: "normal",
+                fontStyle: "normal",
+                paddingTop: "2rem",
+              }}
+              variant="outlined"
+            >
+              GO
+            </AnimatedButton>
+          ) : (
+            <Box
+              sx={{
+                [theme.breakpoints.between("xs", "sm")]: {
+                  width: "100%",
+                },
+                [theme.breakpoints.up("md")]: {
+                  width: "80%",
+                },
+                height: "clamp(10rem,10rem + 10vmin,16rem)",
+                width: "clamp(10rem,10rem + 10vmin,16rem)",
+              }}
+            >
+              <DrawMeter
+                amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
+                bk={
+                  /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                    ? "#45628A"
+                    : "#1B70EE1C"
+                }
+                fg={"#1B70EE1C"}
+                progress={0.3}
+                prog={0.3} // Adjust this if it's being used differently than 'progress'
+                mbps={
+                  testStage === "download"
+                    ? speedData.downloadSpeed
+                    : uploadSpeed
+                }
+                isDl={true}
+                theme={themeMode}
+              />
+            </Box>
+          )}
+        </Box>
+        <Box
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          gap={10}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          <InformationBox
+            title="سرور مقصد"
+            value="تهران - امام"
+            iconSrc={Globe}
+            altText="Globe Icon"
+            buttonLabel="تغییر سرور"
+          />
+          <InformationBox
+            title="همراه اول"
+            value="51.15.57.153"
+            iconSrc={Person}
+            altText="Person Icon"
+          />
+        </Box>
+        <CustomAccordion
+          expanded={expanded}
+          setExpanded={setExpanded}
+          Person={Person}
+          Globe={Globe}
+        />
+      </Box>
     </>
   );
 };

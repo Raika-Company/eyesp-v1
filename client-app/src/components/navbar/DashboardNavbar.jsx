@@ -60,6 +60,7 @@ const DashboardNavbar = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
+        className="dashboard-navbar"
       >
         <Card
           sx={{

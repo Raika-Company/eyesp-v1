@@ -4,13 +4,12 @@ import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
 
-
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const getTypographyStyles = () => ({
-    fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px"
+    fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
   });
 
   const getWidthStyles = () => {
@@ -25,7 +24,9 @@ function ResultTestHistory() {
     return "none";
   };
 
-  const elements = Array(20).fill().map((_, index) => (
+  const storedResults = JSON.parse(localStorage.getItem("testResults") || "[]");
+  
+  const elements = storedResults.map((result, index) => (
     <Box
       key={index}
       sx={{
@@ -39,11 +40,49 @@ function ResultTestHistory() {
         marginRight: "30px",
       }}
     >
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-26px)") }}>1403/12/27</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-33px)") }}>ایرانسل - تهران</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-62px)", "none"), color: "#EF676B" }}>42Mbps</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-93px)", "none"), color: "#126AED" }}>62Mbps</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-125px)", "none"), color: "#DB7F12" }}>35ms</Typography>
+      <Typography
+        sx={{
+          ...getTypographyStyles(),
+          transform: getTransformStyles("translateX(-26px)"),
+        }}
+      >
+        {new Date(result.date).toLocaleDateString()}
+      </Typography>
+      <Typography
+        sx={{
+          ...getTypographyStyles(),
+          transform: getTransformStyles("translateX(-26px)"),
+        }}
+      >
+        {result.providerLocation}
+      </Typography>
+      <Typography
+        sx={{
+          ...getTypographyStyles(),
+          transform: getTransformStyles("translateX(-62px)", "none"),
+          color: "#EF676B",
+        }}
+      >
+        {result.download}Mbps
+      </Typography>
+      <Typography
+        sx={{
+          ...getTypographyStyles(),
+          transform: getTransformStyles("translateX(-93px)", "none"),
+          color: "#126AED",
+        }}
+      >
+        {result.upload}Mbps
+      </Typography>
+      <Typography
+        sx={{
+          ...getTypographyStyles(),
+          transform: getTransformStyles("translateX(-125px)", "none"),
+          color: "#DB7F12",
+        }}
+      >
+        {result.ping}ms
+      </Typography>
     </Box>
   ));
 
