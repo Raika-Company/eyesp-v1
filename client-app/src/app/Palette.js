@@ -32,12 +32,12 @@ const createTypography = (fontSize, fontWeight) => ({
  */
 const baseTheme = {
   typography: {
-    h1: createTypography("2.45744rem", 700),
-    h2: createTypography("1.90656rem", 600),
-    h3: createTypography("1.5625rem", 700),
-    h4: createTypography("2.58025rem", 700),
-    h5: createTypography("2.3125rem", 700),
-    h6: createTypography("1.67806rem", 800),
+    h1: createTypography("clamp(1.3rem,1.3rem + 3vw, 2.2rem)", 700),
+    h2: createTypography("clamp(1rem,1rem + 3vw, 1.6rem)", 600),
+    h3: createTypography("clamp(1rem,1rem + 3vw, 1.3rem)", 700),
+    h4: createTypography("clamp(1rem,1rem + 3vw, 1.2rem)", 700),
+    h5: createTypography("clamp(0.5rem,0.5rem + 3vw, 1.1rem)", 700),
+    h6: createTypography("clamp(0.8rem,1rem + 3vw, 1rem)", 800),
     body1: {
       ...commonTypography,
       textAlign: "right",
@@ -50,11 +50,11 @@ const baseTheme = {
       fontFamily: "Peyda, sans-serif",
       fontSize: 16,
     },
-    subtitle1: createTypography("1.83331rem", 600),
-    subtitle2: createTypography("1.65rem", 600),
-    button: createTypography("2.05794rem", 500),
+    subtitle1: createTypography("clamp(0.4rem,0.4rem + 3vw, 1.6rem)", 600),
+    subtitle2: createTypography("clamp(0.01rem,0.01rem + 3vw, 1.3rem)", 600),
+    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)", 500),
     caption: createTypography("1.65rem", 600),
-    overline: createTypography("1.12656rem", 600),
+    overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)", 600),
     fontFamily: "Peyda",
   },
   components: {

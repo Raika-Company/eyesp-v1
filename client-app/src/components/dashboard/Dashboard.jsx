@@ -172,7 +172,7 @@ const Dashboard = () => {
           }}
         >
           <Typography
-            variant="h4"
+            variant="h1"
             sx={{
               color: "error.main",
             }}
@@ -203,7 +203,7 @@ const Dashboard = () => {
           }}
         >
           <Typography
-            variant="h5"
+            variant="h1"
             gutterBottom
             sx={{
               color: "info.main",
@@ -212,7 +212,7 @@ const Dashboard = () => {
             رتبه بندی ISPها{" "}
           </Typography>
           <Typography
-            variant="overline"
+            variant="subtitle2"
             component="div"
             gutterBottom
             sx={{

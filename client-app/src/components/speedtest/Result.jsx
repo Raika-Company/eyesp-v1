@@ -12,20 +12,16 @@ import { useState } from "react";
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
     <Typography
-      variant="subtitle2"
-      sx={{ color: "textColor.dark", opacity: 0.3 }}
+      variant="h4"
+      sx={{ color: "textColor.dark", opacity: 0.3, }}
     >
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography variant="h4" sx={{ color: "textColor.dark" }}>
+      <Typography variant="h2" sx={{ color: "textColor.dark" }}>
         {measure}
       </Typography>
-      <Typography
-        variant="h4"
-        marginX="1rem"
-        sx={{ color: "textColor.dark" }}
-      >
+      <Typography variant="h2" marginX="1rem" sx={{ color: "textColor.dark" }}>
         {value !== null ? value : "--"}
       </Typography>
       <img src={iconSrc} alt={altText} height="32px" />
@@ -36,10 +32,10 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
 const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" flexDirection="row" gap={3}>
     <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="h6" variant="h2" color="textColor.dark">
+      <Typography component="h6" variant="h3" color="textColor.dark">
         {title}
       </Typography>
-      <Typography component="span" variant="caption" color="textColor.light">
+      <Typography component="span" variant="h2" color="textColor.light">
         {value}
       </Typography>
       {buttonLabel ? <Button>{buttonLabel}</Button> : null}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Card, useMediaQuery } from "@mui/material";
+import { Box, Card, Typography, useMediaQuery } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SpeedIcon from "@mui/icons-material/Speed";
 import CompanyLogo from "../../app/assets/image/logo.svg";
@@ -14,7 +14,7 @@ const pages = [
 ];
 
 const DashboardNavbar = () => {
-  const [value, setValue] = React.useState("recents");
+  const [value, setValue] = React.useState("");
   const history = useNavigate();
   const location = useLocation();
 
@@ -78,7 +78,11 @@ const DashboardNavbar = () => {
               textAlign: isAutoMosaicOpen ? "left" : "center",
             }}
           >
-            {isAutoMosaicOpen && <span>داشبورد</span>}
+            {isAutoMosaicOpen && (
+              <Typography component="span" variant="h3">
+                داشبورد
+              </Typography>
+            )}
             <IconButton onClick={toggleAutoMosaic}>
               <AutoAwesomeMosaicIcon
                 sx={{
@@ -115,7 +119,11 @@ const DashboardNavbar = () => {
                 }}
               />
             </IconButton>
-            {isSpeedIconOpen && <span>تست سرعت</span>}
+            {isSpeedIconOpen && (
+              <Typography component="span" variant="h3">
+                تست سرعت
+              </Typography>
+            )}
           </Box>
         </Card>
       </Box>

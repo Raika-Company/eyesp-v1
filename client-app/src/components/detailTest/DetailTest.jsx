@@ -75,7 +75,7 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="overline"
+              variant="subtitle2"
               color="textColor.light"
               sx={{
                 borderBottom: "1px solid",
@@ -155,7 +155,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant="h5"
+                variant="h2"
                 sx={{
                   color: "textColor.main",
                 }}
@@ -169,7 +169,7 @@ const DetailTest = () => {
                 <Box>
                   {" "}
                   <Typography
-                    variant="h3"
+                    variant="h1"
                     sx={{
                       color: "info.main",
                     }}

@@ -128,7 +128,7 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
-              variant="overline"
+              variant="subtitle2"
               sx={{
                 color: "textColor.dark",
               }}
@@ -149,7 +149,7 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
-              variant="overline"
+              variant="subtitle2"
               sx={{
                 color: "textColor.dark",
               }}
@@ -174,7 +174,7 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
-              variant="overline"
+              variant="subtitle2"
               sx={{
                 color: "textColor.dark",
               }}
@@ -196,7 +196,7 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
-              variant="overline"
+              variant="subtitle2"
               sx={{
                 color: "textColor.dark",
               }}
@@ -236,7 +236,7 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.dark">
             میانگین عملکرد
           </Typography>
           <Switch
@@ -252,7 +252,7 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.dark">
             میانگین پینگ
           </Typography>
           <Switch
@@ -269,7 +269,7 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.dark">
             میانگین سرعت
           </Typography>
           <Switch
@@ -286,7 +286,7 @@ const ChartDetail = ({ visibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.dark">
             میانگین پکت لاس
           </Typography>
           <Switch
@@ -369,7 +369,7 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography
-            variant="h4"
+            variant="h1"
             sx={{
               marginRight: isSmScreen ? "3rem" : "5rem",
               marginTop: "2rem",

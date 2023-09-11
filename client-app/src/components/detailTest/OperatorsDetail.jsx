@@ -85,7 +85,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
         alignItems: "center",
       }}
     >
-      <Typography variant="overline">
+      <Typography variant="h6">
         {name}
       </Typography>
       {color === "pink" ? (
@@ -313,7 +313,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           }}
         >
           {" "}
-          <Typography variant="h3" color="textColor.main">
+          <Typography variant="h4" color="textColor.main">
             ارایه دهنده های اینترنت
           </Typography>
         </Box>

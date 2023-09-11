@@ -41,7 +41,7 @@ function ResultTestHistory() {
         }}
       >
         <Typography
-        variant="overline"
+          variant="h6"
           sx={{
             ...getTypographyStyles(),
             transform: getTransformStyles("translateX(-26px)"),
@@ -50,7 +50,7 @@ function ResultTestHistory() {
           1403/12/27
         </Typography>
         <Typography
-        variant="overline"
+          variant="h6"
           sx={{
             ...getTypographyStyles(),
             transform: getTransformStyles("translateX(-33px)"),
@@ -59,7 +59,7 @@ function ResultTestHistory() {
           ایرانسل - تهران
         </Typography>
         <Typography
-        variant="overline"
+          variant="h6"
           sx={{
             ...getTypographyStyles(),
             transform: getTransformStyles("translateX(-62px)", "none"),
@@ -69,7 +69,7 @@ function ResultTestHistory() {
           42Mbps
         </Typography>
         <Typography
-        variant="overline"
+          variant="h6"
           sx={{
             ...getTypographyStyles(),
             transform: getTransformStyles("translateX(-93px)", "none"),
@@ -79,7 +79,7 @@ function ResultTestHistory() {
           62Mbps
         </Typography>
         <Typography
-        variant="overline"
+          variant="h6"
           sx={{
             ...getTypographyStyles(),
             transform: getTransformStyles("translateX(-125px)", "none"),
@@ -126,7 +126,7 @@ function ResultTestHistory() {
             }}
           >
             <Typography
-            variant="subtitle2"
+              variant="subtitle1"
               sx={{
                 marginLeft: isSmScreen ? "0px" : "1em",
                 color: "textColor.light",
@@ -155,7 +155,7 @@ function ResultTestHistory() {
             }}
           >
             <Typography
-            variant="subtitle2"
+              variant="subtitle1"
               sx={{
                 color: "textColor.light",
               }}
@@ -186,7 +186,7 @@ function ResultTestHistory() {
             }}
           >
             <Typography
-            variant="subtitle2"
+              variant="subtitle1"
               sx={{
                 color: "textColor.light",
               }}
@@ -211,7 +211,7 @@ function ResultTestHistory() {
             }}
           >
             <Typography
-            variant="subtitle2"
+              variant="subtitle1"
               sx={{
                 color: "textColor.light",
                 transform: isSmScreen
@@ -233,7 +233,7 @@ function ResultTestHistory() {
             }}
           >
             <Typography
-            variant="subtitle2"
+              variant="subtitle1"
               sx={{
                 color: "textColor.light",
                 transform: isSmScreen

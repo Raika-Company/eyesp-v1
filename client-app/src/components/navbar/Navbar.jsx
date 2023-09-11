@@ -69,7 +69,7 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
       flexDirection="row"
       justifyContent="space-between"
     >
-      <Box display="flex" gap={3}>
+      <Box sx={{marginTop:"5px"}} display="flex" gap={3}>
         {pages.map(([text, path]) => (
           <Typography
             key={text}
@@ -78,8 +78,9 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
             sx={{
               cursor: "pointer",
               marginLeft: "20px",
-              color: location.pathname === path ? "info.main" : "textColor.light",
-              marginTop: "0.4em",
+              color:
+                location.pathname === path ? "info.main" : "textColor.light",
+              marginTop: "0.55em",
             }}
           >
             {text}
@@ -92,7 +93,7 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
       <Box display="flex" marginTop="0.5em">
         <img src={Logo} alt="TIC Radar logo" height="32px" />
         <Typography
-          variant="h2"
+          variant="h1"
           component="h1"
           color="primary"
           sx={{ marginRight: 2 }}
@@ -118,7 +119,7 @@ function MobileNav({ handleOpenDrawer }) {
       <IconButton edge="start" color="primary" onClick={handleOpenDrawer}>
         <MenuIcon />
       </IconButton>
-      <Typography variant="h4" component="h1" color="primary">
+      <Typography variant="h1" component="h1" color="primary">
         TIC Radar
       </Typography>
       <img src={Logo} alt="TIC Radar logo" height="30px" />

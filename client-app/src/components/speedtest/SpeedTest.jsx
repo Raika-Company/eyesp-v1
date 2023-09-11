@@ -54,14 +54,19 @@ const Divider = () => (
 // SpeedBox displays speed statistics such as ping, upload, and download speeds
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
-    <Typography variant="overline" color="textColor.light">
+    <Typography variant="h4" color="textColor.light">
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography variant="h3" component="span" color="textColor.dark">
+      <Typography variant="h2" component="span" color="textColor.dark">
         {measure}
       </Typography>
-      <Typography component="span" marginX="0.5rem" color="textColor.dark">
+      <Typography
+        variant="h2"
+        component="span"
+        marginX="0.5rem"
+        color="textColor.dark"
+      >
         {value !== null ? value : "--"}
       </Typography>
       <img src={iconSrc} alt={altText} height="32px" />
@@ -99,24 +104,34 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
 }));
 
 // InformationBox displays information about a server or user IP
-const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
-  <Box display="flex" flexDirection="row" gap={3}>
-    <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="h6" variant="h2" color="textColor.dark">
-        {title}
-      </Typography>
-      <Typography component="span" variant="caption" color="textColor.light">
-        {value}
-      </Typography>
-      {buttonLabel ? (
-        <Button variant="overline" sx={{ color: "info.main" }}>
-          {buttonLabel}
-        </Button>
-      ) : null}
+const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
+  const theme = useTheme();
+  return (
+    <Box display="flex" flexDirection="row" gap={3}>
+      <Box display="flex" flexDirection="column" textAlign="right">
+        <Typography component="h6" variant="h2" color="textColor.dark">
+          {title}
+        </Typography>
+        <Typography component="span" variant="h3" color="textColor.light">
+          {value}
+        </Typography>
+        {buttonLabel ? (
+          <Button
+            sx={{
+              color: "info.main",
+              fontSize: theme.typography.button,
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
+            {buttonLabel}
+          </Button>
+        ) : null}
+      </Box>
+      <img src={iconSrc} alt={altText} />
     </Box>
-    <img src={iconSrc} alt={altText} />
-  </Box>
-);
+  );
+};
 
 // SpeedTest is the main component that orchestrates the layout and functionality of the speed test application
 /**

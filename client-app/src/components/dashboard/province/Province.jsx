@@ -120,6 +120,8 @@ const Province = () => {
   const location = useLocation();
   const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [page, setPage] = useState(1);
 
   const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
@@ -129,14 +131,9 @@ const Province = () => {
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
-        <Typography
-          variant="h2"
-          color="textColor.light"
-          gutterBottom
-          sx={{}}
-        >
+        <Typography variant="h2" color="textColor.light" gutterBottom sx={{}}>
           میانگین عملکرد ISPهای{" "}
-          <Typography variant="h4" component="span" sx={{ color: "info.main" }}>
+          <Typography variant="h1" component="span" sx={{ color: "info.main" }}>
             استان {provinceName}
           </Typography>
         </Typography>
@@ -176,10 +173,28 @@ const Province = () => {
         </div>
         <div style={{ clear: "both" }}></div>
       </div>
-      <Card>
-        <Box display="flex" justifyContent="flex-start" gap={2} padding="1em">
-          <Typography variant="h2" color="textColor.dark">
-            دسترسی سریع
+      <Card
+        sx={{
+          zIndex: "99",
+          // width: isSmScreen
+          //   ? "100%"
+          //   : isMdScreen
+          //   ? "73%"
+          //   : isXlScreen
+          //   ? "37%"
+          //   : "37%",
+        }}
+      >
+        <Box
+          sx={{ justifyContent: isSmScreen ? "center" : "flex-start" }}
+          display="flex"
+          // justifyContent="flex-start"
+          flexWrap="wrap"
+          gap={2}
+          padding="1em"
+        >
+          <Typography variant="h2" color="textColor.dark" paddingTop="0.3em">
+            دسترسی سریع:
           </Typography>
           {fastAccessButtons.map((label) => (
             <FastAccessButton label={label} key={label} />
@@ -195,7 +210,7 @@ const Province = () => {
           padding: "1.5rem",
         }}
       >
-        <Typography variant="h6" gutterBottom color="textColor.light">
+        <Typography variant="h2" gutterBottom color="textColor.light">
           تاریخچه اختلالات
         </Typography>
         <IconButton aria-label="filter">
@@ -228,11 +243,11 @@ const Province = () => {
           }}
         >
           <Typography
+            variant="overline"
             sx={{
               color: "textColor.dark",
               display: "flex",
               alignItems: "center",
-              fontSize: isSmScreen ? "11px" : "",
             }}
           >
             پرش به تاریخ:
