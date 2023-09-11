@@ -9,6 +9,7 @@ const AdminSpeedTest = lazy(() => import("../../components/dashboard/AdminSpeedT
 const DetailTest = lazy(() => import("../../components/detailTest/DetailTest"));
 const ISPPerformance = lazy(() => import("../../components/ispPerformance/ISPPerformance"));
 const Result = lazy(() => import("../../components/speedtest/Result"));
+const Information = lazy(() => import("../../components/information/Information"));
 
 export const mainRoutes = [
     {
@@ -33,6 +34,14 @@ export const mainRoutes = [
       title: "Speed Test Results | Rayka ICT",
       description: "Detailed results of your internet speed test.",
       keywords: "speed test results, internet speed, broadband speed, download speed, upload speed",
+      robots: "index, follow"
+    },
+    {
+      path: "/information",
+      element: <Information />,
+      title: "Information | Rayka ICT",
+      description: "Get information about your internet connection and device.",
+      keywords: "information, internet connection, device details",
       robots: "index, follow"
     }
   ];

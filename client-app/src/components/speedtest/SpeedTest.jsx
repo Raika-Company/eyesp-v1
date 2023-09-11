@@ -136,8 +136,6 @@ const SpeedTest = ({ themeMode }) => {
   const [uploadSpeed, setUploadSpeed] = useState(null);
   const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
 
-  const [showResult, setShowResult] = useState(false);
-
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
     setTimeout(() => {

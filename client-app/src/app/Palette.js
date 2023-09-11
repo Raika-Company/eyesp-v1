@@ -15,10 +15,10 @@ export const lightTheme = createTheme({
   },
   typography: {
     h1: {
-      fontFamily: "PeidaBold, serif",
+      fontFamily: "Peyda, serif",
     },
     h2: {
-      fontFamily: "PeidaBold, serif",
+      fontFamily: "Peyda, serif",
     },
     h3: {
       fontFamily: "PeydaSemiBold, serif",
@@ -67,7 +67,7 @@ export const lightTheme = createTheme({
       opacity: 0.3,
       color: "#000",
     },
-    fontFamily: "Peyda",
+    fontFamily: 'Peyda',
   },
   components: {
     MuiInputLabel: {
