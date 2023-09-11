@@ -91,7 +91,12 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
         </Box>
       </Box>
       <Box display="flex" marginTop="0.5em">
-        <img src={Logo} alt="Eyesp.live logo" height="32px" />
+        <img
+          src={Logo}
+          alt="Eyesp.live logo"
+          height="32px"
+          style={{ marginInline: "0.5rem" }}
+        />
         <Typography
           variant="h4"
           component="h1"

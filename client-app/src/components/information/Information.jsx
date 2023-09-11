@@ -1,7 +1,11 @@
 import { Box, Container, Typography } from "@mui/material";
 import definitionsData from "../../app/data/definitions.json";
+import { useTheme } from "@mui/material/styles";
 
 const Information = () => {
+  const theme = useTheme();
+  const bgColor = theme.palette.mode === "dark" ? "#f7f9fc" : "#2a2c2f";
+
   return (
     <Container maxWidth="lg">
       <Box
@@ -12,7 +16,7 @@ const Information = () => {
           padding: "1rem",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
           width: "100%",
-          backgroundColor: "#f7f9fc",
+          backgroundColor: { bgColor },
           "&:hover": {
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
           },
@@ -41,19 +45,28 @@ const Information = () => {
   );
 };
 
-const DefinitionTerm = ({ title, children }) => (
+const DefinitionTerm = ({ title, children }) => {
+  const theme = useTheme();
+
+  return (
     <Typography
       component="p"
       gutterBottom
       sx={{
         marginY: "0.75rem",
         fontSize: "1.1rem",
-        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        backgroundColor:
+          theme.palette.mode === "dark"
+            ? "rgba(0, 0, 0, 0.8)"
+            : "rgba(255, 255, 255, 0.8)",
         borderRadius: "0.5rem",
         padding: "0.5em",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
-          backgroundColor: "rgba(255, 255, 255, 1)",
+          backgroundColor:
+            theme.palette.mode === "dark"
+              ? "rgba(0, 0, 0, 1)"
+              : "rgba(255, 255, 255, 1)",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
           transform: "scale(1.04)",
         },
@@ -72,6 +85,6 @@ const DefinitionTerm = ({ title, children }) => (
       </Typography>
       {children}
     </Typography>
-);
-
+  );
+};
 export default Information;

@@ -67,7 +67,7 @@ export const lightTheme = createTheme({
       opacity: 0.3,
       color: "#000",
     },
-    fontFamily: 'Peyda',
+    fontFamily: "Peyda",
   },
   components: {
     MuiInputLabel: {
@@ -109,7 +109,7 @@ export const lightTheme = createTheme({
         root: {
           boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
           borderRadius: 20,
-          background: "#E8E8E8"
+          background: "#E8E8E8",
         },
       },
     },
@@ -119,8 +119,8 @@ export const lightTheme = createTheme({
           borderRadius: "12px",
           paddingTop: "6px",
         },
-      }
-    }
+      },
+    },
   },
 });
 
@@ -194,7 +194,7 @@ export const darkTheme = createTheme({
       fontWeight: 500,
       opacity: 0.3,
     },
-    fontFamily: 'Peyda',
+    fontFamily: "Peyda",
   },
   components: {
     MuiCard: {

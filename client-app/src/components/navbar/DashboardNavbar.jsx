@@ -93,7 +93,12 @@ const DashboardNavbar = () => {
             onClick={toggleCompanyLogo}
             src={CompanyLogo}
             alt="Company-logo"
-            style={{ cursor: "pointer", userSelect: "none" }}
+            style={{
+              cursor: "pointer",
+              userSelect: "none",
+              width: "42px",
+              height: "auto",
+            }}
           />
 
           <Box

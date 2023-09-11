@@ -49,6 +49,15 @@ export const mainRoutes = [
       "speed test results, internet speed, broadband speed, download speed, upload speed",
     robots: "index, follow",
   },
+  {
+    path: "/information",
+    element: <Information />,
+    title: "Information | Rayka ICT",
+    description: "Detailed results of your internet speed test.",
+    keywords:
+      "speed test results, internet speed, broadband speed, download speed, upload speed",
+    robots: "index, follow",
+  },
 ];
 
 export const dashboardRoutes = [
@@ -77,7 +86,7 @@ export const dashboardRoutes = [
     robots: "noindex, nofollow",
   },
   {
-    path: "/detail-test",
+    path: "/detail-test/:id",
     element: <DetailTest />,
     title: "Detailed Test | Admin",
     description: "In-depth analysis of specific speed tests.",
