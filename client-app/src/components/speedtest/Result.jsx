@@ -1,4 +1,16 @@
-import { Box, Button, Typography } from "@mui/material";
+import { forwardRef, useState, useRef } from "react";
+import { useLocation, Link } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+  Typography,
+} from "@mui/material";
 
 import Download from "../../app/assets/image/download.svg";
 import Upload from "../../app/assets/image/upload.svg";
@@ -7,7 +19,10 @@ import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
 
 import CustomAccordion from "./CustomAccordion";
-import { useState } from "react";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
@@ -44,8 +59,33 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   </Box>
 );
 
-const Result = ({ ping, download, upload }) => {
+const Result = () => {
+  const location = useLocation();
+  const textRef = useRef(null);
+  const queryParams = new URLSearchParams(location.search);
+
+  const ping = queryParams.get("ping");
+  const download = queryParams.get("download");
+  const upload = queryParams.get("upload");
+
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCopyLink = () => {
+    if (textRef.current) {
+      navigator.clipboard.writeText(textRef.current.innerText).then(() => {
+        handleClose(); 
+      });
+    }
+  };
 
   return (
     <>
@@ -120,23 +160,26 @@ const Result = ({ ping, download, upload }) => {
         </Box>
 
         <Box display="flex" gap={4}>
+            <Button
+              component={Link}
+              to="/"
+              variant="outlined"
+              sx={{
+                backgroundColor: "#126AED",
+                color: "white",
+                fontSize: "1.8rem",
+                borderRadius: "1.625rem",
+                border: 0,
+                width: "20rem",
+              }}
+            >
+              تست مجدد
+            </Button>
           <Button
+            onClick={handleClickOpen}
             variant="outlined"
             sx={{
-              backgroundColor: "info.main",
-              color: "white",
-              fontSize: "1.8rem",
-              borderRadius: "1.625rem",
-              border: 0,
-              width: "20rem",
-            }}
-          >
-            تست مجدد
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{
-              backgroundColor: "secondary.main",
+              backgroundColor: "#DB7F12",
               color: "white",
               fontSize: "1.8rem",
               borderRadius: "1.625rem",
@@ -191,22 +234,25 @@ const Result = ({ ping, download, upload }) => {
           opacity={1}
         />
         <Box display="flex" flexDirection="column" gap={4} marginTop="1rem">
+            <Button
+              component={Link}
+              to="/"
+              variant="outlined"
+              sx={{
+                backgroundColor: "#126AED",
+                color: "white",
+                fontSize: "1.8rem",
+                borderRadius: "1.625rem",
+                border: 0,
+              }}
+            >
+              تست مجدد
+            </Button>
           <Button
+            onClick={handleClickOpen}
             variant="outlined"
             sx={{
-              backgroundColor: "info.main",
-              color: "white",
-              fontSize: "1.8rem",
-              borderRadius: "1.625rem",
-              border: 0,
-            }}
-          >
-            تست مجدد
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{
-              backgroundColor: "secondary.main",
+              backgroundColor: "#DB7F12",
               color: "white",
               fontSize: "1.8rem",
               borderRadius: "1.625rem",
@@ -223,6 +269,23 @@ const Result = ({ ping, download, upload }) => {
         Person={Person}
         Globe={Globe}
       />
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"اشتراک گذاری تست سرعت شما"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" ref={textRef}>
+            {`http://185.11.89.101:6530/result?ping=${ping}&download=${download}&upload=${upload}`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCopyLink}>کپی کردن لینک</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

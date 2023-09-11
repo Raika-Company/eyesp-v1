@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Container,
   useMediaQuery,
@@ -105,8 +105,10 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
   );
 };
 
-const FastAccessButton = ({ label }) => (
+const FastAccessButton = ({ label, switchName }) => (
   <Button
+    component={Link}
+    to={`/admin/detail-test/${switchName}`}
     variant="outlined"
     sx={{ color: "info.main", borderColor: "info.main", fontWeight: 700 }}
   >
@@ -123,7 +125,24 @@ const Province = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [page, setPage] = useState(1);
 
-  const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
+  const fastAccessButtons = [
+    {
+      label: "پینگ",
+      switchName: "pingAverage",
+    },
+    {
+      label: "اختلال",
+      switchName: "performanceAverage",
+    },
+    {
+      label: "سرعت",
+      switchName: "speedAverage",
+    },
+    {
+      label: "پکت لاس",
+      switchName: "packetLossAverage",
+    },
+  ];
 
   const backgroundColor =
     theme.palette.mode === "light" ? "#E8E8E8" : "#171717";

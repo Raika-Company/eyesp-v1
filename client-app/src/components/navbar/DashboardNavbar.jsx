@@ -60,6 +60,7 @@ const DashboardNavbar = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
+        className="dashboard-navbar"
       >
         <Card
           sx={{
@@ -99,7 +100,12 @@ const DashboardNavbar = () => {
             onClick={toggleCompanyLogo}
             src={CompanyLogo}
             alt="Company-logo"
-            style={{ cursor: "pointer", userSelect: "none" }}
+            style={{
+              cursor: "pointer",
+              userSelect: "none",
+              width: "42px",
+              height: "auto",
+            }}
           />
 
           <Box
@@ -164,7 +170,7 @@ const DashboardNavbar = () => {
             <NavigationImage
               onClick={toggleCompanyLogo}
               src={CompanyLogo}
-              alt="TIC Radar Logo"
+              alt="Eyesp.live Logo"
               style={{
                 cursor: "pointer",
                 userSelect: "none",

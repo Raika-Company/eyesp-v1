@@ -293,7 +293,6 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
       <Card
         sx={{
           width: "93%",
-          height: "30%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
@@ -327,8 +326,6 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                 flexDirection: "row-reverse",
                 justifyContent: "space-evenly",
                 width: "100%",
-                height: "20%",
-                color: "textColor.dark",
               }}
             >
               <Box
@@ -336,6 +333,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   display: "flex",
                   flexDirection: "row-reverse",
                   alignItems: "center",
+                  marginY: "2rem"
                 }}
               >
                 <ISPProviderSwitch
@@ -401,88 +399,6 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   checked={visibility.شاتل}
                   onChange={() => handleIspToggle("شاتل")}
                 />{" "}
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                justifyContent: "space-evenly",
-                width: "100%",
-                height: "20%",
-                color: "textColor.dark",
-              }}
-            >
-              {" "}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <ISPProviderSwitch
-                  name="ایرانسل"
-                  color="success"
-                  checked={visibility.ایرانسل}
-                  onChange={() => handleIspToggle("ایرانسل")}
-                  //   checked={ispSwitches["ایرانسل"]}
-                />{" "}
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <ISPProviderSwitch
-                  name="همراه_اول"
-                  color="warning"
-                  checked={visibility.همراه_اول}
-                  onChange={() => handleIspToggle("همراه_اول")}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <ISPProviderSwitch
-                  name="رایتل"
-                  color="purple"
-                  checked={visibility.رایتل}
-                  onChange={() => handleIspToggle("رایتل")}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <ISPProviderSwitch
-                  name="مخابرات"
-                  checked={visibility.مخابرات}
-                  onChange={() => handleIspToggle("مخابرات")}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                }}
-              >
-                <ISPProviderSwitch
-                  name="شاتل"
-                  color="pink"
-                  checked={visibility.شاتل}
-                  onChange={() => handleIspToggle("شاتل")}
-                />
               </Box>
             </Box>
           </>

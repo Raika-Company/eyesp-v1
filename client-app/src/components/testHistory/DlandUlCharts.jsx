@@ -14,7 +14,7 @@ import {
 } from "recharts";
 
 const CustomBox = styled(Box)(({ theme }) => ({
-  width: "70vw", // Default width for lg screens
+  width: "90vw", // Default width for lg screens
   height: "20em",
   border: "2px solid #E0E0E0",
   borderRadius: "2em",
@@ -23,12 +23,8 @@ const CustomBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   padding: "1em 2em",
 
-  [theme.breakpoints.down("md")]: {
-    width: "90vw", // Width for md screens
-  },
   [theme.breakpoints.down("sm")]: {
     height: "29vh",
-    width: "90vw", // Width for xs screens
   },
 }));
 
@@ -44,24 +40,31 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const data = [
-  { name: "January", دانلود: 100, آپلود: 150 },
-  { name: "February", دانلود: 200, آپلود: 230 },
-  { name: "March", دانلود: 250, آپلود: 210 },
-  { name: "April", دانلود: 230, آپلود: 220 },
-  { name: "May", دانلود: 300, آپلود: 290 },
-  { name: "June", دانلود: 320, آپلود: 300 },
-  { name: "July", دانلود: 250, آپلود: 240 },
-];
+const resultsFromLocalStorage = JSON.parse(localStorage.getItem("testResults") || "[]");
+
+const transformedData = resultsFromLocalStorage.map((result, index) => ({
+  name: result.date, // This will generate names like "Test 1", "Test 2", etc.
+  دانلود: result.download,
+  آپلود: result.upload,
+}));
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 function DlandUlCharts() {
   const [isUploadVisible, setIsUploadVisible] = useState(false);
 
+  // Fetching and transforming data from localStorage
+  const resultsFromLocalStorage = JSON.parse(localStorage.getItem("testResults") || "[]");
+  const transformedData = resultsFromLocalStorage.map((result) => ({
+    name: result.date,  // Using date from testResult as the name
+    دانلود: result.download,
+    آپلود: result.upload,
+  }));
+
   const handleSwitchChange = () => {
     setIsUploadVisible((prevValue) => !prevValue);
   };
+
   return (
     <CustomBox>
       <Box
@@ -88,10 +91,10 @@ function DlandUlCharts() {
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <LineChart data={transformedData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis label={{ value: 'Mbps', angle: -90, position: 'insideLeft' }} />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="دانلود" stroke="#8884d8" />

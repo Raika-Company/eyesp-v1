@@ -8,8 +8,9 @@ import {
   Menu,
   Card,
 } from "@mui/material";
-import { useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
+import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -22,80 +23,279 @@ import {
 } from "recharts";
 import "./detail.css";
 import jMoment from "moment-jalaali";
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
-
 const startDay = jMoment().subtract(6, "days");
 const dates = Array.from({ length: 7 }).map((_, index) =>
   startDay.add(index === 0 ? 0 : 1, "days").format("jYYYY/jMM/jDD")
 );
 
-const data = [
+const pingData = [
   {
     name: dates[0],
-    ایرانسل: 10,
-    مخابرات: 30,
-    شاتل: 20,
-    رایتل: 70,
-    رایتل: 70,
+    ایرانسل: 50,
+    مخابرات: 60,
+    شاتل: 60,
+    رایتل: 20,
     همراه_اول: 50,
   },
   {
     name: dates[1],
-    ایرانسل: 15,
-    مخابرات: 100,
-    شاتل: 40,
+    ایرانسل: 55,
+    مخابرات: 20,
+    شاتل: 50,
     رایتل: 30,
-    همراه_اول: 10,
+    همراه_اول: 20,
   },
   {
     name: dates[2],
-    ایرانسل: 25,
-    مخابرات: 80,
-    شاتل: 10,
-    رایتل: 80,
-    همراه_اول: 50,
+    ایرانسل: 60,
+    مخابرات: 20,
+    شاتل: 60,
+    رایتل: 30,
+    همراه_اول: 40,
   },
   {
     name: dates[3],
-    ایرانسل: 50,
-    مخابرات: 50,
+    ایرانسل: 20,
+    مخابرات: 40,
     شاتل: 60,
-    رایتل: 40,
+    رایتل: 20,
     همراه_اول: 20,
   },
   {
     name: dates[4],
-    ایرانسل: 30,
+    ایرانسل: 60,
     مخابرات: 60,
-    شاتل: 80,
-    رایتل: 40,
-    همراه_اول: 70,
+    شاتل: 40,
+    رایتل: 50,
+    همراه_اول: 30,
   },
   {
     name: dates[5],
     ایرانسل: 60,
-    مخابرات: 40,
-    شاتل: 40,
+    مخابرات: 50,
+    شاتل: 20,
     رایتل: 50,
-    همراه_اول: 40,
+    همراه_اول: 60,
   },
   {
     name: dates[6],
-    ایرانسل: 40,
-    مخابرات: 110,
-    شاتل: 60,
+    ایرانسل: 20,
+    مخابرات: 60,
+    شاتل: 30,
     رایتل: 20,
-    همراه_اول: 10,
+    همراه_اول: 50,
   },
 ];
-const ChartDetail = ({ visibility }) => {
+
+const speedData = [
+  {
+    name: dates[0],
+    ایرانسل: 10,
+    مخابرات: 13,
+    شاتل: 12,
+    رایتل: 17,
+    همراه_اول: 15,
+  },
+  {
+    name: dates[1],
+    ایرانسل: 11,
+    مخابرات: 10,
+    شاتل: 14,
+    رایتل: 13,
+    همراه_اول: 11,
+  },
+  {
+    name: dates[2],
+    ایرانسل: 12,
+    مخابرات: 18,
+    شاتل: 11,
+    رایتل: 18,
+    همراه_اول: 15,
+  },
+  {
+    name: dates[3],
+    ایرانسل: 15,
+    مخابرات: 15,
+    شاتل: 16,
+    رایتل: 14,
+    همراه_اول: 12,
+  },
+  {
+    name: dates[4],
+    ایرانسل: 23,
+    مخابرات: 26,
+    شاتل: 18,
+    رایتل: 24,
+    همراه_اول: 27,
+  },
+  {
+    name: dates[5],
+    ایرانسل: 26,
+    مخابرات: 14,
+    شاتل: 14,
+    رایتل: 25,
+    همراه_اول: 24,
+  },
+  {
+    name: dates[6],
+    ایرانسل: 24,
+    مخابرات: 11,
+    شاتل: 16,
+    رایتل: 22,
+    همراه_اول: 30,
+  }, //...
+];
+
+const AveragePerformance = [
+  {
+    name: dates[0],
+    ایرانسل: 70,
+    مخابرات: 80,
+    شاتل: 90,
+    رایتل: 72,
+    همراه_اول: 83,
+  },
+  {
+    name: dates[1],
+    ایرانسل: 89,
+    مخابرات: 78,
+    شاتل: 80,
+    رایتل: 90,
+    همراه_اول: 74,
+  },
+  {
+    name: dates[2],
+    ایرانسل: 93,
+    مخابرات: 86,
+    شاتل: 79,
+    رایتل: 80,
+    همراه_اول: 91,
+  },
+  {
+    name: dates[3],
+    ایرانسل: 87,
+    مخابرات: 71,
+    شاتل: 91,
+    رایتل: 74,
+    همراه_اول: 84,
+  },
+  {
+    name: dates[4],
+    ایرانسل: 89,
+    مخابرات: 78,
+    شاتل: 89,
+    رایتل: 90,
+    همراه_اول: 100,
+  },
+  {
+    name: dates[5],
+    ایرانسل: 100,
+    مخابرات: 99,
+    شاتل: 78,
+    رایتل: 89,
+    همراه_اول: 90,
+  },
+  {
+    name: dates[6],
+    ایرانسل: 78,
+    مخابرات: 89,
+    شاتل: 100,
+    رایتل: 80,
+    همراه_اول: 76,
+  }, //...
+];
+const packetLossData = [
+  {
+    name: dates[0],
+    ایرانسل: 1,
+    مخابرات: 3,
+    شاتل: 2,
+    رایتل: 11,
+    همراه_اول: 5,
+  },
+  {
+    name: dates[1],
+    ایرانسل: 1,
+    مخابرات: 10,
+    شاتل: 4,
+    رایتل: 3,
+    همراه_اول: 1,
+  },
+  {
+    name: dates[2],
+    ایرانسل: 2,
+    مخابرات: 8,
+    شاتل: 1,
+    رایتل: 8,
+    همراه_اول: 5,
+  },
+  {
+    name: dates[3],
+    ایرانسل: 5,
+    مخابرات: 5,
+    شاتل: 6,
+    رایتل: 4,
+    همراه_اول: 2,
+  },
+  {
+    name: dates[4],
+    ایرانسل: 3,
+    مخابرات: 6,
+    شاتل: 8,
+    رایتل: 4,
+    همراه_اول: 7,
+  },
+  {
+    name: dates[5],
+    ایرانسل: 6,
+    مخابرات: 4,
+    شاتل: 4,
+    رایتل: 5,
+    همراه_اول: 4,
+  },
+  {
+    name: dates[6],
+    ایرانسل: 4,
+    مخابرات: 11,
+    شاتل: 6,
+    رایتل: 2,
+    همراه_اول: 1,
+  }, //...
+];
+const ChartDetail = ({ visibility, cityVisibility }) => {
+  const { id } = useParams();
+  const [chartData, setChartData] = useState([]); // default data (current dataset you've provided)
+
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [speedAverage, setSpeedAverage] = useState(false);
   const [activeSwitch, setActiveSwitch] = useState("pingAverage");
   const [selectedDate, setSelectedDate] = useState("شنبه");
+
+  useEffect(() => {
+    setActiveSwitch(id);
+  }, [id]);
+
+  useEffect(() => {
+    switch (activeSwitch) {
+      case "pingAverage":
+        setChartData(pingData);
+        break;
+      case "speedAverage":
+        setChartData(speedData);
+        break;
+      case "performanceAverage":
+        setChartData(AveragePerformance);
+        break;
+      case "packetLossAverage":
+        setChartData(packetLossData);
+        break;
+      default:
+        break;
+    }
+  }, [activeSwitch]);
 
   const daysOfWeek = [
     "شنبه",
@@ -137,6 +337,9 @@ const ChartDetail = ({ visibility }) => {
             </Typography>
             <Switch
               checked={activeSwitch === "performanceAverage"}
+              onChange={(e) => {
+                setChartData(AveragePerformance); // change data to ping data
+              }}
               onClick={() => setActiveSwitch("performanceAverage")}
               {...label}
             />
@@ -158,6 +361,9 @@ const ChartDetail = ({ visibility }) => {
             </Typography>
             <Switch
               checked={activeSwitch === "pingAverage"}
+              onChange={(e) => {
+                setChartData(pingData); // change data to ping data
+              }}
               onClick={() => setActiveSwitch("pingAverage")}
               {...label}
               defaultChecked
@@ -183,7 +389,10 @@ const ChartDetail = ({ visibility }) => {
             </Typography>
             <Switch
               checked={activeSwitch === "speedAverage"}
-              onChange={(e) => setSpeedAverage(e.target.checked)}
+              onChange={(e) => {
+                setSpeedAverage(e.target.checked);
+                setChartData(speedData); // change data to speed data
+              }}
               onClick={() => setActiveSwitch("speedAverage")}
               {...label}
             />
@@ -205,6 +414,9 @@ const ChartDetail = ({ visibility }) => {
             </Typography>
             <Switch
               checked={activeSwitch === "packetLossAverage"}
+              onChange={(e) => {
+                setChartData(packetLossData); // change data to ping data
+              }}
               onClick={() => setActiveSwitch("packetLossAverage")}
               {...label}
             />
@@ -213,7 +425,6 @@ const ChartDetail = ({ visibility }) => {
       </Box>
     );
   }
-
   function DesktopToggleSwitch() {
     return (
       <Box
@@ -298,7 +509,6 @@ const ChartDetail = ({ visibility }) => {
       </Box>
     );
   }
-
   return (
     <>
       <Card
@@ -392,7 +602,7 @@ const ChartDetail = ({ visibility }) => {
             <LineChart
               width={500}
               height={300}
-              data={data}
+              data={chartData}
               margin={{
                 top: 5,
                 right: 30,
@@ -411,11 +621,11 @@ const ChartDetail = ({ visibility }) => {
                   activeSwitch === "speedAverage"
                     ? [10, 30]
                     : activeSwitch === "pingAverage"
-                    ? [50, 110]
+                    ? [20, 60]
                     : activeSwitch === "performanceAverage"
-                    ? [70, 100]
+                    ? [20, 32]
                     : activeSwitch === "packetLossAverage"
-                    ? [0, 1]
+                    ? [0, 11]
                     : [0, 11]
                 }
                 tickFormatter={(value) => {
