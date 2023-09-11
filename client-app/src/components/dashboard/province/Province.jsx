@@ -8,7 +8,6 @@ import {
   Button,
   Card,
   IconButton,
-  ThemeProvider,
   useTheme
 } from "@mui/material";
 
