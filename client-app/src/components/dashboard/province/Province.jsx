@@ -9,7 +9,7 @@ import {
   Card,
   IconButton,
   ThemeProvider,
-  useTheme
+  useTheme,
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
@@ -57,7 +57,7 @@ const ProvinceMap = ({ isSmScreen, pathD, color, X, Y, WIDTH, HEIGHT }) => {
 };
 
 const DisruptionList = ({ isSmScreen, color, provinceName }) => {
-  let items = []
+  let items = [];
   if (color == "#EE0B0B") {
     items = [
       `اختلال در ${provinceName}`,
@@ -82,7 +82,7 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
       "کاهش پهنای باند",
     ];
   }
-  
+
   return (
     <Box
       sx={{
@@ -106,10 +106,10 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
   );
 };
 
-const FastAccessButton = ({ label }) => (
+const FastAccessButton = ({ label, switchName }) => (
   <Button
     component={Link}
-    to="/admin/detail-test"
+    to={`/admin/detail-test/${switchName}`}
     variant="outlined"
     sx={{ color: "#126AED", borderColor: "#126AED", fontWeight: 700 }}
   >
@@ -124,9 +124,27 @@ const Province = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [page, setPage] = useState(1);
 
-  const fastAccessButtons = ["پینگ", "اختلال", "سرعت", "پکت لاس"];
+  const fastAccessButtons = [
+    {
+      label: "پینگ",
+      switchName: "pingAverage",
+    },
+    {
+      label: "اختلال",
+      switchName: "performanceAverage",
+    },
+    {
+      label: "سرعت",
+      switchName: "speedAverage",
+    },
+    {
+      label: "پکت لاس",
+      switchName: "packetLossAverage",
+    },
+  ];
 
-  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
+  const backgroundColor =
+    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
@@ -145,7 +163,7 @@ const Province = () => {
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
-          backgroundColor: backgroundColor
+          backgroundColor: backgroundColor,
         }}
       >
         <ProvinceMap
@@ -173,15 +191,14 @@ const Province = () => {
         <div style={{ clear: "both" }}></div>
       </div>
       <Card>
-        <Box
-          display="flex"
-          justifyContent="flex-start"
-          gap={2}
-          padding="1em"
-        >
+        <Box display="flex" justifyContent="flex-start" gap={2} padding="1em">
           <Typography fontSize="1.9rem">دسترسی سریع</Typography>
-          {fastAccessButtons.map((label) => (
-            <FastAccessButton label={label} key={label} />
+          {fastAccessButtons.map((accessButton) => (
+            <FastAccessButton
+              label={accessButton.label}
+              switchName={accessButton.switchName}
+              key={accessButton.label}
+            />
           ))}
         </Box>
       </Card>
