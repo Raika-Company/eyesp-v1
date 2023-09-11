@@ -75,10 +75,11 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="h7"
+              variant="subtitle2"
+              color="textColor.light"
               sx={{
-                borderBottom: "1px solid gray",
-                fontSize: isMdScreen ? "10px" : isSmScreen ? "4px" : "",
+                borderBottom: "1px solid",
+                borderColor: "border.main",
               }}
             >
               لیست استان ها
@@ -88,6 +89,7 @@ const DetailTest = () => {
             <Box
               key={city}
               sx={{
+                color: "textColor.dark",
                 display: "flex",
                 flexDirection: isMdScreen
                   ? "column"
@@ -104,6 +106,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
+                // variant="overline"
                 sx={{
                   marginTop: "3px",
                   fontSize: isMdScreen ? "10px" : isXsScreen ? "8px" : "",
@@ -152,11 +155,11 @@ const DetailTest = () => {
               }}
             >
               <Typography
+                variant="h2"
                 sx={{
-                  fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "30px",
+                  color: "textColor.main",
                 }}
               >
-                {" "}
                 هایISP میانگین عملکرد{" "}
               </Typography>
 
@@ -166,15 +169,10 @@ const DetailTest = () => {
                 <Box>
                   {" "}
                   <Typography
+                    variant="h1"
                     sx={{
-                      fontSize: isSmScreen
-                        ? "18px"
-                        : isMdScreen
-                        ? "20px"
-                        : "h3",
-                      color: "#126AED",
+                      color: "info.main",
                     }}
-                    variant="h3"
                   >
                     استان {selectedCity}{" "}
                   </Typography>

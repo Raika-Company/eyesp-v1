@@ -11,14 +11,17 @@ import { useState } from "react";
 
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
-    <Typography fontSize="1.4rem" sx={{ color: "#000000", opacity: 0.3 }}>
+    <Typography
+      variant="h4"
+      sx={{ color: "textColor.dark", opacity: 0.3, }}
+    >
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography fontSize="2.5rem" sx={{ color: "#5E5E5E" }}>
+      <Typography variant="h2" sx={{ color: "textColor.dark" }}>
         {measure}
       </Typography>
-      <Typography fontSize="2.5rem" marginX="1rem" sx={{ color: "#5E5E5E" }}>
+      <Typography variant="h2" marginX="1rem" sx={{ color: "textColor.dark" }}>
         {value !== null ? value : "--"}
       </Typography>
       <img src={iconSrc} alt={altText} height="32px" />
@@ -29,10 +32,10 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
 const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" flexDirection="row" gap={3}>
     <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="h6" variant="h6">
+      <Typography component="h6" variant="h3" color="textColor.dark">
         {title}
       </Typography>
-      <Typography component="span" variant="subtitle1">
+      <Typography component="span" variant="h2" color="textColor.light">
         {value}
       </Typography>
       {buttonLabel ? <Button>{buttonLabel}</Button> : null}
@@ -117,8 +120,32 @@ const Result = ({ ping, download, upload }) => {
         </Box>
 
         <Box display="flex" gap={4}>
-            <Button variant="outlined" sx={{backgroundColor: "#126AED", color: "white", fontSize: "1.8rem", borderRadius: "1.625rem", border: 0, width: "20rem"}}>تست مجدد</Button>
-            <Button variant="outlined" sx={{backgroundColor: "#DB7F12", color: "white", fontSize: "1.8rem", borderRadius: "1.625rem", border: 0, width: "16rem"}}>اشتراک گذاری</Button>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: "info.main",
+              color: "white",
+              fontSize: "1.8rem",
+              borderRadius: "1.625rem",
+              border: 0,
+              width: "20rem",
+            }}
+          >
+            تست مجدد
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: "secondary.main",
+              color: "white",
+              fontSize: "1.8rem",
+              borderRadius: "1.625rem",
+              border: 0,
+              width: "16rem",
+            }}
+          >
+            اشتراک گذاری
+          </Button>
         </Box>
       </Box>
       <Box
@@ -164,8 +191,30 @@ const Result = ({ ping, download, upload }) => {
           opacity={1}
         />
         <Box display="flex" flexDirection="column" gap={4} marginTop="1rem">
-            <Button variant="outlined" sx={{backgroundColor: "#126AED", color: "white", fontSize: "1.8rem", borderRadius: "1.625rem", border: 0}}>تست مجدد</Button>
-            <Button variant="outlined" sx={{backgroundColor: "#DB7F12", color: "white", fontSize: "1.8rem", borderRadius: "1.625rem", border: 0}}>اشتراک گذاری</Button>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: "info.main",
+              color: "white",
+              fontSize: "1.8rem",
+              borderRadius: "1.625rem",
+              border: 0,
+            }}
+          >
+            تست مجدد
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: "secondary.main",
+              color: "white",
+              fontSize: "1.8rem",
+              borderRadius: "1.625rem",
+              border: 0,
+            }}
+          >
+            اشتراک گذاری
+          </Button>
         </Box>
       </Box>
       <CustomAccordion

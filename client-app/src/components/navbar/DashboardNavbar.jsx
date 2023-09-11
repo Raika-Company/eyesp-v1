@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Card, useMediaQuery } from "@mui/material";
+import { Box, Card, Typography, useMediaQuery } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SpeedIcon from "@mui/icons-material/Speed";
 import CompanyLogo from "../../app/assets/image/logo.svg";
@@ -14,7 +14,7 @@ const pages = [
 ];
 
 const DashboardNavbar = () => {
-  const [value, setValue] = React.useState("recents");
+  const [value, setValue] = React.useState("");
   const history = useNavigate();
   const location = useLocation();
 
@@ -73,16 +73,23 @@ const DashboardNavbar = () => {
         >
           <Box
             sx={{
-              color: isAutoMosaicOpen ? "#126AED" : "#3d3d3d",
+              color: isAutoMosaicOpen ? "info.main" : "textColor.main",
               width: isAutoMosaicOpen ? "140px" : "50px",
               textAlign: isAutoMosaicOpen ? "left" : "center",
             }}
           >
-            {isAutoMosaicOpen && <span>داشبورد</span>}
+            {isAutoMosaicOpen && (
+              <Typography component="span" variant="h3">
+                داشبورد
+              </Typography>
+            )}
             <IconButton onClick={toggleAutoMosaic}>
               <AutoAwesomeMosaicIcon
                 sx={{
-                  color: location.pathname === "/admin" ? "#126AED" : "#3d3d3d",
+                  color:
+                    location.pathname === "/admin"
+                      ? "info.main"
+                      : "textColor.dark",
                 }}
               />
             </IconButton>
@@ -97,7 +104,7 @@ const DashboardNavbar = () => {
 
           <Box
             sx={{
-              color: isSpeedIconOpen ? "#126AED" : "#a7a7a7",
+              color: isSpeedIconOpen ? "info.main" : "textColor.main",
               width: isSpeedIconOpen ? "140px" : "50px",
               textAlign: isSpeedIconOpen ? "right" : "center",
             }}
@@ -107,12 +114,16 @@ const DashboardNavbar = () => {
                 sx={{
                   color:
                     location.pathname === "/admin/speed-test"
-                      ? "#126AED"
-                      : "#3d3d3d",
+                      ? "info.main"
+                      : "textColor.dark",
                 }}
               />
             </IconButton>
-            {isSpeedIconOpen && <span>تست سرعت</span>}
+            {isSpeedIconOpen && (
+              <Typography component="span" variant="h3">
+                تست سرعت
+              </Typography>
+            )}
           </Box>
         </Card>
       </Box>
@@ -124,7 +135,7 @@ const DashboardNavbar = () => {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          backgroundColor: "blue",
+          backgroundColor: "info.main",
         }}
       >
         <Box

@@ -57,7 +57,7 @@ function DrawMeter({
     if (theme == "dark") {
       numberColor = "#45628A";
     } else {
-      numberColor = "black";
+      numberColor = "#5E5E5E";
     }
 
     const startAngle = -Math.PI * 1.2;

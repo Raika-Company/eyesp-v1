@@ -4,13 +4,12 @@ import download from "../../app/assets/image/download.svg";
 import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
 
-
 function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const getTypographyStyles = () => ({
-    fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px"
+    // fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
   });
 
   const getWidthStyles = () => {
@@ -25,27 +24,72 @@ function ResultTestHistory() {
     return "none";
   };
 
-  const elements = Array(20).fill().map((_, index) => (
-    <Box
-      key={index}
-      sx={{
-        display: "flex",
-        width: getWidthStyles(),
-        marginLeft: isSmScreen ? "7em" : "0",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingBottom: "2em",
-        transform: "translateX(24px)",
-        marginRight: "30px",
-      }}
-    >
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-26px)") }}>1403/12/27</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-33px)") }}>ایرانسل - تهران</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-62px)", "none"), color: "#EF676B" }}>42Mbps</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-93px)", "none"), color: "#126AED" }}>62Mbps</Typography>
-      <Typography sx={{ ...getTypographyStyles(), transform: getTransformStyles("translateX(-125px)", "none"), color: "#DB7F12" }}>35ms</Typography>
-    </Box>
-  ));
+  const elements = Array(20)
+    .fill()
+    .map((_, index) => (
+      <Box
+        key={index}
+        sx={{
+          display: "flex",
+          width: getWidthStyles(),
+          marginLeft: isSmScreen ? "7em" : "0",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          paddingBottom: "2em",
+          transform: "translateX(24px)",
+          marginRight: "30px",
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            ...getTypographyStyles(),
+            transform: getTransformStyles("translateX(-26px)"),
+          }}
+        >
+          1403/12/27
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            ...getTypographyStyles(),
+            transform: getTransformStyles("translateX(-33px)"),
+          }}
+        >
+          ایرانسل - تهران
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            ...getTypographyStyles(),
+            transform: getTransformStyles("translateX(-62px)", "none"),
+            color: "#EF676B",
+          }}
+        >
+          42Mbps
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            ...getTypographyStyles(),
+            transform: getTransformStyles("translateX(-93px)", "none"),
+            color: "#126AED",
+          }}
+        >
+          62Mbps
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            ...getTypographyStyles(),
+            transform: getTransformStyles("translateX(-125px)", "none"),
+            color: "#DB7F12",
+          }}
+        >
+          35ms
+        </Typography>
+      </Box>
+    ));
 
   return (
     <>
@@ -82,9 +126,10 @@ function ResultTestHistory() {
             }}
           >
             <Typography
+              variant="subtitle1"
               sx={{
                 marginLeft: isSmScreen ? "0px" : "1em",
-                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                color: "textColor.light",
               }}
             >
               پینگ
@@ -110,8 +155,9 @@ function ResultTestHistory() {
             }}
           >
             <Typography
+              variant="subtitle1"
               sx={{
-                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                color: "textColor.light",
               }}
             >
               دانلود
@@ -140,8 +186,9 @@ function ResultTestHistory() {
             }}
           >
             <Typography
+              variant="subtitle1"
               sx={{
-                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                color: "textColor.light",
               }}
             >
               آپلود
@@ -164,8 +211,9 @@ function ResultTestHistory() {
             }}
           >
             <Typography
+              variant="subtitle1"
               sx={{
-                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                color: "textColor.light",
                 transform: isSmScreen
                   ? "translateX(0px)"
                   : isMdScreen
@@ -185,8 +233,9 @@ function ResultTestHistory() {
             }}
           >
             <Typography
+              variant="subtitle1"
               sx={{
-                fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
+                color: "textColor.light",
                 transform: isSmScreen
                   ? "transLateX(-12px)"
                   : "transLateX(-30px)",

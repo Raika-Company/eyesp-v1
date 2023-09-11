@@ -1,4 +1,6 @@
-import { createTheme } from "@mui/material";
+import {
+  createTheme
+} from "@mui/material";
 
 /**
  * Common typography settings.
@@ -18,10 +20,9 @@ const commonTypography = {
  * @param {number} fontWeight - The font weight.
  * @returns {Object} A typography style object.
  */
-const createTypography = (fontSize, fontWeight) => ({
+const createTypography = (fontSize) => ({
   ...commonTypography,
   fontSize,
-  fontWeight,
 });
 
 /**
@@ -30,29 +31,28 @@ const createTypography = (fontSize, fontWeight) => ({
  */
 const baseTheme = {
   typography: {
-    h1: createTypography("2.45744rem", 700),
-    h2: createTypography("1.90656rem", 600),
-    h3: createTypography("1.5625rem", 700),
-    h4: createTypography("2.58025rem", 700),
-    h5: createTypography("2.3125rem", 700),
-    h6: createTypography("1.67806rem", 800),
+    h1: createTypography("clamp(1.3rem,1.3rem + 3vw, 2.2rem)"),
+    h2: createTypography("clamp(1rem,1rem + 3vw, 1.6rem)"),
+    h3: createTypography("clamp(1rem,1rem + 3vw, 1.3rem)"),
+    h4: createTypography("clamp(1rem,1rem + 3vw, 1.2rem)"),
+    h5: createTypography("clamp(0.5rem,0.5rem + 3vw, 1.1rem)"),
+    h6: createTypography("clamp(0.8rem,1rem + 3vw, 1rem)"),
     body1: {
       ...commonTypography,
       textAlign: "right",
       textLeadingTrim: "both",
       textEdge: "cap",
       fontSize: "1.51394rem",
-      fontWeight: 600,
     },
     body2: {
       fontFamily: "Peyda, sans-serif",
       fontSize: 16,
     },
-    subtitle1: createTypography("1.83331rem", 600),
-    subtitle2: createTypography("1.65rem", 600),
-    button: createTypography("2.05794rem", 500),
-    caption: createTypography("1.65rem", 600),
-    overline: createTypography("1.12656rem", 600),
+    subtitle1: createTypography("clamp(0.4rem,0.4rem + 3vw, 1.6rem)"),
+    subtitle2: createTypography("clamp(0.01rem,0.01rem + 3vw, 1.3rem)"),
+    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)"),
+    caption: createTypography("1.65rem"),
+    overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)"),
     fontFamily: "Peyda",
   },
   components: {
@@ -152,6 +152,12 @@ export const lightTheme = createTheme({
       dark: "#9e9ea1",
       light: "#e8e8eb"
     },
+    textColor: {
+      main: "#A4A4A4",
+      light: "#b6b6b8",
+      dark: "#5E5E5E",
+      subTitle: "#dcdcdc"
+    },
     background: {
       default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
     },
@@ -216,6 +222,13 @@ export const darkTheme = createTheme({
     },
     background: {
       default: "#181D23",
+    },
+    textColor: {
+      main: "#b6b6b8",
+      light: "#b6b6b8",
+      dark: "#5E5E5E",
+      subTitle: "#5E5E5E"
+
     },
     text: {
       primary: "#FFF",

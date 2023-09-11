@@ -37,7 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: "1rem",
     fontWeight: 600,
-    color: theme.palette.mode === 'light' ? "#555" : "#AAAAAA",
+    color: theme.palette.mode === "light" ? "#555" : "#AAAAAA",
     "&:nth-of-type(2)": {
       color: "#126AED",
     },
@@ -53,13 +53,17 @@ const StyledTableRow = styled(TableRow)(({ theme, delay }) => ({
     border: 0,
   },
   opacity: 0,
-  animation: `${fadeInAnimation} 0.4s forwards ${delay}s`
+  animation: `${fadeInAnimation} 0.4s forwards ${delay}s`,
 }));
 
 const ISPTable = ({ ISPdata }) => {
   return (
     <TableContainer
-      sx={{ backgroundColor: "transparent", boxShadow: 0, marginBottom: "1rem" }}
+      sx={{
+        backgroundColor: "transparent",
+        boxShadow: 0,
+        marginBottom: "1rem",
+      }}
       component={Paper}
     >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
