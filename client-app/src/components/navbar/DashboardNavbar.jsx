@@ -154,7 +154,7 @@ const DashboardNavbar = () => {
             <NavigationImage
               onClick={toggleCompanyLogo}
               src={CompanyLogo}
-              alt="TIC Radar Logo"
+              alt="Eyesp.live Logo"
               style={{
                 cursor: "pointer",
                 userSelect: "none",

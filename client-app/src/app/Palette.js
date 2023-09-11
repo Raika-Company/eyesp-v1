@@ -136,7 +136,7 @@ export const darkTheme = createTheme({
       main: "#B0680F",
     },
     background: {
-      default: "#181D23", // Set the background color to black
+      default: "#181D23",
     },
     text: {
       primary: "#FFF",
@@ -156,7 +156,9 @@ export const darkTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          background: "#171717"
+          background: "#171717",
+          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
+          borderRadius: 20,
         },
       },
     },
