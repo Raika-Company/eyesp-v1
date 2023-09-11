@@ -95,7 +95,7 @@ function DlandUlCharts() {
           <LineChart data={transformedData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis label={{ value: 'Mbps', angle: -90, position: 'insideLeft' }} />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="دانلود" stroke="#8884d8" />

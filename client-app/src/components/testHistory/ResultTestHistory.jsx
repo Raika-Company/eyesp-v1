@@ -12,7 +12,23 @@ function ResultTestHistory() {
     fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
   });
 
-  const getImageWidth = () => (isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em");
+  const getImageWidth = () =>
+    isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em";
+
+  const getFlexStyles = (idx) => {
+    const basisValues = [
+      "20%", // For "تاریخ"
+      "20%", // For "اپراتور-سرور"
+      "20%", // For "دانلود"
+      "20%", // For "آپلود"
+      "20%", // For "پینگ"
+    ];
+    return {
+      flexGrow: 0,
+      flexShrink: 0,
+      flexBasis: basisValues[idx],
+    };
+  };
 
   const storedResults = JSON.parse(localStorage.getItem("testResults") || "[]");
 
@@ -20,8 +36,9 @@ function ResultTestHistory() {
     <Box
       key={index}
       display="flex"
+      flexDirection="row-reverse"
+      justifyContent="center"
       paddingBottom="2em"
-      flexGrow={1}
       width="100%"
     >
       {[
@@ -35,9 +52,16 @@ function ResultTestHistory() {
           key={idx}
           sx={{
             ...getTypographyStyles(),
-            color: idx === 2 ? "#EF676B" : idx === 3 ? "#126AED" : idx === 4 ? "#DB7F12" : undefined,
+            ...getFlexStyles(idx),
+            color:
+              idx === 2
+                ? "#EF676B"
+                : idx === 3
+                ? "#126AED"
+                : idx === 4
+                ? "#DB7F12"
+                : undefined,
             textAlign: "center",
-            flexGrow: 1,
           }}
         >
           {text}
@@ -47,51 +71,59 @@ function ResultTestHistory() {
   ));
 
   const headers = [
-    { label: "پینگ", image: ping, isImageFirst: false },
-    { label: "آپلود", image: upload },
-    { label: "دانلود", image: download },
-    { label: "اپراتور-سرور" },
     { label: "تاریخ" },
+    { label: "اپراتور-سرور" },
+    { label: "دانلود", image: download },
+    { label: "آپلود", image: upload },
+    { label: "پینگ", image: ping },
   ];
 
   return (
-    <Box sx={{
-      width: "90vw",
-      border: "2px solid #E0E0E0",
-      borderRadius: "2em",
-      marginX: "auto",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      gap: "24px",
-    }}>
-      <Box sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "stretch",
-        paddingY: "1em",
-        borderBottom: "2px solid #E0E0E0",
-      }}>
-        {headers.map(({ label, image, isImageFirst = true }) => (
-          <Box key={label} display= "flex" justifyContent= "center" flexGrow={1} gap="0.5em">
-            {!isImageFirst && <Typography sx={getTypographyStyles()}>{label}</Typography>}
-            {image && <img style={{ width: getImageWidth() }} src={image} alt={label} />}
-            {isImageFirst && <Typography sx={getTypographyStyles()}>{label}</Typography>}
+    <Box
+      width="90vw"
+      border="2px solid #E0E0E0"
+      borderRadius="2em"
+      marginX="auto"
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      gap="24px"
+      overflow="hidden"
+    >
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection="row-reverse"
+        justifyContent="center"
+        alignItems="stretch"
+        paddingY="1em"
+        borderBottom="2px solid #E0E0E0"
+      >
+        {headers.map(({ label, image }, idx) => (
+          <Box
+            key={label}
+            display="flex"
+            justifyContent="center"
+            {...getFlexStyles(idx)}
+            gap="0.5em"
+          >
+            {image && (
+              <img style={{ width: getImageWidth() }} src={image} alt={label} />
+            )}
+            <Typography sx={getTypographyStyles()}>{label}</Typography>
           </Box>
         ))}
       </Box>
-      <Box sx={{
-        height: "30vh",
-        borderBottomLeftRadius: "2em",
-        borderBottomRightRadius: "2em",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        overflowY: "auto",
-        marginBottom: "2em",
-        direction: "rtl",
-      }}>
+      <Box
+        maxHeight="30vh"
+        borderbottomleftradius="2em"
+        borderbottomrightradius="2em"
+        display="flex"
+        flexDirection="column"
+        overflow="auto"
+        marginBottom="2em"
+        width="100%"
+      >
         {elements}
       </Box>
     </Box>
