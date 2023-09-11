@@ -43,13 +43,13 @@ const data = [
     مخابرات: 100,
     شاتل: 40,
     رایتل: 30,
-    همراه_اول: 10,
+    همراه_اول: 20,
   },
   {
     name: dates[2],
     ایرانسل: 25,
     مخابرات: 80,
-    شاتل: 10,
+    شاتل: 20,
     رایتل: 80,
     همراه_اول: 50,
   },
@@ -83,7 +83,7 @@ const data = [
     مخابرات: 110,
     شاتل: 60,
     رایتل: 20,
-    همراه_اول: 10,
+    همراه_اول: 20,
   },
 ];
 const pingData = [
@@ -91,56 +91,56 @@ const pingData = [
     name: dates[0],
     ایرانسل: 50,
     مخابرات: 60,
-    شاتل: 70,
-    رایتل: 100,
+    شاتل: 60,
+    رایتل: 20,
     همراه_اول: 50,
   },
   {
     name: dates[1],
     ایرانسل: 55,
-    مخابرات: 100,
-    شاتل: 69,
-    رایتل: 70,
-    همراه_اول: 90,
+    مخابرات: 20,
+    شاتل: 50,
+    رایتل: 30,
+    همراه_اول: 20,
   },
   {
     name: dates[2],
-    ایرانسل: 85,
-    مخابرات: 80,
-    شاتل: 67,
-    رایتل: 80,
-    همراه_اول: 50,
+    ایرانسل: 60,
+    مخابرات: 20,
+    شاتل: 60,
+    رایتل: 30,
+    همراه_اول: 40,
   },
   {
     name: dates[3],
-    ایرانسل: 50,
-    مخابرات: 50,
+    ایرانسل: 20,
+    مخابرات: 40,
     شاتل: 60,
-    رایتل: 90,
-    همراه_اول: 110,
+    رایتل: 20,
+    همراه_اول: 20,
   },
   {
     name: dates[4],
-    ایرانسل: 70,
+    ایرانسل: 60,
     مخابرات: 60,
-    شاتل: 80,
-    رایتل: 80,
-    همراه_اول: 70,
+    شاتل: 40,
+    رایتل: 50,
+    همراه_اول: 30,
   },
   {
     name: dates[5],
     ایرانسل: 60,
-    مخابرات: 90,
-    شاتل: 100,
+    مخابرات: 50,
+    شاتل: 20,
     رایتل: 50,
-    همراه_اول: 70,
+    همراه_اول: 60,
   },
   {
     name: dates[6],
-    ایرانسل: 90,
-    مخابرات: 110,
-    شاتل: 90,
-    رایتل: 60,
+    ایرانسل: 20,
+    مخابرات: 60,
+    شاتل: 30,
+    رایتل: 20,
     همراه_اول: 50,
   },
 ];
@@ -322,7 +322,7 @@ const packetLossData = [
 ];
 const ChartDetail = ({ visibility }) => {
   const { id } = useParams();
-  const [chartData, setChartData] = useState(data); // default data (current dataset you've provided)
+  const [chartData, setChartData] = useState([]); // default data (current dataset you've provided)
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
@@ -334,6 +334,25 @@ const ChartDetail = ({ visibility }) => {
   useEffect(() => {
     setActiveSwitch(id);
   }, [id]);
+
+  useEffect(() => {
+    switch (activeSwitch) {
+      case "pingAverage":
+        setChartData(pingData);
+        break;
+      case "speedAverage":
+        setChartData(speedData);
+        break;
+      case "performanceAverage":
+        setChartData(AveragePerformance);
+        break;
+      case "packetLossAverage":
+        setChartData(packetLossData);
+        break;
+      default:
+        break;
+    }
+  }, [activeSwitch]);
 
   const daysOfWeek = [
     "شنبه",
@@ -649,9 +668,9 @@ const ChartDetail = ({ visibility }) => {
                   activeSwitch === "speedAverage"
                     ? [10, 30]
                     : activeSwitch === "pingAverage"
-                    ? [50, 110]
+                    ? [20, 60]
                     : activeSwitch === "performanceAverage"
-                    ? [70, 100]
+                    ? [20, 32]
                     : activeSwitch === "packetLossAverage"
                     ? [0, 11]
                     : [0, 11]
