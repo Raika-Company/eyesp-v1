@@ -18,7 +18,18 @@ const DetailTest = () => {
     شاتل: false,
     مخابرات: false,
   });
-
+  const [cityVisibility, setCityVisibility] = useState({
+    فارس: true,
+    تهران: false,
+    اصفهان: false,
+    مشهد: false,
+    اهواز: false,
+    تبریز: false,
+    مازندران: false,
+    سمنان: false,
+    خوزستان: false,
+    گیلان: false,
+  });
   const cities = [
     "فارس",
     "تهران",
@@ -41,17 +52,12 @@ const DetailTest = () => {
 
   // Event handler to toggle the switch state
   const handleToggle = (city) => {
-    setSelectedCity(city);
-
-    const updatedSwitches = Object.keys(citySwitches).reduce(
-      (acc, cityName) => {
-        acc[cityName] = cityName === city; // Only the clicked city will be set to true
-        return acc;
-      },
-      {}
-    );
-
-    setCitySwitches(updatedSwitches);
+    setCitySwitches((prevSwitches) => {
+      return {
+        ...prevSwitches,
+        [city]: !prevSwitches[city],
+      };
+    });
   };
 
   return (
@@ -186,7 +192,10 @@ const DetailTest = () => {
               <ArrowBack />
             </Box>
           </Box>
-          <ChartDetail visibility={ispVisibility} />
+          <ChartDetail
+            visibility={ispVisibility}
+            cityVisibility={cityVisibility}
+          />
           <OperatorsDetail
             visibility={ispVisibility}
             setVisibility={setIspVisibility}

@@ -28,64 +28,7 @@ const startDay = jMoment().subtract(6, "days");
 const dates = Array.from({ length: 7 }).map((_, index) =>
   startDay.add(index === 0 ? 0 : 1, "days").format("jYYYY/jMM/jDD")
 );
-const data = [
-  {
-    name: dates[0],
-    ایرانسل: 10,
-    مخابرات: 30,
-    شاتل: 20,
-    رایتل: 70,
-    همراه_اول: 50,
-  },
-  {
-    name: dates[1],
-    ایرانسل: 15,
-    مخابرات: 100,
-    شاتل: 40,
-    رایتل: 30,
-    همراه_اول: 20,
-  },
-  {
-    name: dates[2],
-    ایرانسل: 25,
-    مخابرات: 80,
-    شاتل: 20,
-    رایتل: 80,
-    همراه_اول: 50,
-  },
-  {
-    name: dates[3],
-    ایرانسل: 50,
-    مخابرات: 50,
-    شاتل: 60,
-    رایتل: 40,
-    همراه_اول: 20,
-  },
-  {
-    name: dates[4],
-    ایرانسل: 30,
-    مخابرات: 60,
-    شاتل: 80,
-    رایتل: 40,
-    همراه_اول: 70,
-  },
-  {
-    name: dates[5],
-    ایرانسل: 60,
-    مخابرات: 40,
-    شاتل: 40,
-    رایتل: 50,
-    همراه_اول: 40,
-  },
-  {
-    name: dates[6],
-    ایرانسل: 40,
-    مخابرات: 110,
-    شاتل: 60,
-    رایتل: 20,
-    همراه_اول: 20,
-  },
-];
+
 const pingData = [
   {
     name: dates[0],
@@ -320,7 +263,7 @@ const packetLossData = [
     همراه_اول: 1,
   }, //...
 ];
-const ChartDetail = ({ visibility }) => {
+const ChartDetail = ({ visibility, cityVisibility }) => {
   const { id } = useParams();
   const [chartData, setChartData] = useState([]); // default data (current dataset you've provided)
 
