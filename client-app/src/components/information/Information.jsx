@@ -3,9 +3,9 @@ import definitionsData from "../../app/data/definitions.json";
 
 const Information = () => {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <Box
-        marginY={"max(2rem, 5vh)"}
+        marginY="max(2rem, 5vh)"
         sx={{
           borderRadius: "1.2rem",
           border: "1.468px solid rgba(0, 0, 0, 0.10)",
@@ -48,29 +48,30 @@ const DefinitionTerm = ({ title, children }) => (
       sx={{
         marginY: "0.75rem",
         fontSize: "1.1rem",
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        borderRadius: '0.5rem',
-        padding: '0.5em',
-        transition: 'all 0.3s ease-in-out',
-        '&:hover': {
-          backgroundColor: 'rgba(255, 255, 255, 1)',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-        }
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        borderRadius: "0.5rem",
+        padding: "0.5em",
+        transition: "all 0.3s ease-in-out",
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          transform: "scale(1.04)",
+        },
       }}
     >
       <Typography
         component="span"
         fontWeight="bold"
         sx={{
-          color: '#0077b6',
-          marginRight: '0.5em',
-          marginLeft: '0.4em',
+          color: "#0077b6",
+          marginRight: "0.5em",
+          marginLeft: "0.4em",
         }}
       >
         {title}
       </Typography>
       {children}
     </Typography>
-  );  
+);
 
 export default Information;
