@@ -8,8 +8,9 @@ import {
   Menu,
   Card,
 } from "@mui/material";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
+import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -22,14 +23,11 @@ import {
 } from "recharts";
 import "./detail.css";
 import jMoment from "moment-jalaali";
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
-
 const startDay = jMoment().subtract(6, "days");
 const dates = Array.from({ length: 7 }).map((_, index) =>
   startDay.add(index === 0 ? 0 : 1, "days").format("jYYYY/jMM/jDD")
 );
-
 const data = [
   {
     name: dates[0],
@@ -89,6 +87,7 @@ const data = [
     همراه_اول: 10,
   },
 ];
+
 const ChartDetail = ({ visibility }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
@@ -209,8 +208,10 @@ const ChartDetail = ({ visibility }) => {
       </Box>
     );
   }
-
   function DesktopToggleSwitch() {
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const activeSwitch = params.get("active");
     return (
       <Box
         sx={{
@@ -286,7 +287,6 @@ const ChartDetail = ({ visibility }) => {
       </Box>
     );
   }
-
   return (
     <>
       <Card

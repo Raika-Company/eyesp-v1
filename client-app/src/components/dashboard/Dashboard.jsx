@@ -12,7 +12,7 @@ import {
   Button,
   Select,
   MenuItem,
-  useTheme 
+  useTheme,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -66,8 +66,29 @@ const disturbances = [
 ];
 
 const Dashboard = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
+
+  const handleButtonClick = (name) => {
+    let switchName;
+    switch (name) {
+      case "پینگ":
+        switchName = "pingAverage";
+        break;
+      case "اختلال":
+        switchName = "performanceAverage";
+        break;
+      case "سرعت":
+        switchName = "speedAverage";
+        break;
+      case "پکت لاس":
+        switchName = "packetLossAverage";
+        break;
+      default:
+        switchName = null;
+    }
+    navigate(`/admin/detail-test?active=${switchName}`);
+  };
+  const theme = useTheme();
 
   const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -137,7 +158,8 @@ const Dashboard = () => {
     </Typography>
   );
 
-  const backgroundColor = theme.palette.mode === 'light' ? '#E8E8E8' : '#171717';
+  const backgroundColor =
+    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
   return (
     <Container maxWidth="xl" sx={{ direction: "rtl" }}>
       <div
@@ -148,7 +170,7 @@ const Dashboard = () => {
           marginBottom: "1.3rem",
           borderRadius: "1.875rem",
           overflow: "visible",
-          backgroundColor: backgroundColor
+          backgroundColor: backgroundColor,
         }}
       >
         <Box
@@ -297,7 +319,7 @@ const Dashboard = () => {
                 fontSize: "1.3rem",
                 marginTop: "1rem",
               }}
-              onClick={() => navigate("/admin/detail-test")}
+              onClick={() => handleButtonClick(val.name)}
             >
               <span style={{ marginLeft: "0.4rem", marginRight: "1rem" }}>
                 {val.name}
