@@ -131,7 +131,7 @@ const Province = () => {
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="h2" color="textColor.light" gutterBottom sx={{}}>
+        <Typography variant="h2" color="textColor.light" gutterBottom>
           میانگین عملکرد ISPهای{" "}
           <Typography variant="h1" component="span" sx={{ color: "info.main" }}>
             استان {provinceName}
@@ -176,19 +176,11 @@ const Province = () => {
       <Card
         sx={{
           zIndex: "99",
-          // width: isSmScreen
-          //   ? "100%"
-          //   : isMdScreen
-          //   ? "73%"
-          //   : isXlScreen
-          //   ? "37%"
-          //   : "37%",
         }}
       >
         <Box
           sx={{ justifyContent: isSmScreen ? "center" : "flex-start" }}
           display="flex"
-          // justifyContent="flex-start"
           flexWrap="wrap"
           gap={2}
           padding="1em"
