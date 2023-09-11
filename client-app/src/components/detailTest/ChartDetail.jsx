@@ -128,8 +128,8 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
+              variant="overline"
               sx={{
-                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
                 color: "textColor.dark",
               }}
             >
@@ -149,8 +149,8 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
+              variant="overline"
               sx={{
-                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
                 color: "textColor.dark",
               }}
             >
@@ -174,8 +174,8 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
+              variant="overline"
               sx={{
-                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
                 color: "textColor.dark",
               }}
             >
@@ -196,8 +196,8 @@ const ChartDetail = ({ visibility }) => {
             }}
           >
             <Typography
+              variant="overline"
               sx={{
-                fontSize: isSmScreen ? "9px" : isMdScreen ? "13px" : "",
                 color: "textColor.dark",
               }}
             >
@@ -369,12 +369,11 @@ const ChartDetail = ({ visibility }) => {
           }}
         >
           <Typography
-            variant="h3"
+            variant="h4"
             sx={{
               marginRight: isSmScreen ? "3rem" : "5rem",
               marginTop: "2rem",
               color: "info.main",
-              fontSize: isSmScreen ? "16px" : "40px",
             }}
           >
             98%

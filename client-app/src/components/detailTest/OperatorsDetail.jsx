@@ -85,7 +85,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
         alignItems: "center",
       }}
     >
-      <Typography sx={{ fontSize: isSmScreen ? "13px" : "18px" }}>
+      <Typography variant="overline">
         {name}
       </Typography>
       {color === "pink" ? (
@@ -313,7 +313,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           }}
         >
           {" "}
-          <Typography color="textColor.main">
+          <Typography variant="h3" color="textColor.main">
             ارایه دهنده های اینترنت
           </Typography>
         </Box>
@@ -410,7 +410,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                 justifyContent: "space-evenly",
                 width: "100%",
                 height: "20%",
-                color:"textColor.dark"
+                color: "textColor.dark",
               }}
             >
               {" "}

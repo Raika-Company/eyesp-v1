@@ -13,7 +13,6 @@ import {
   YAxis,
 } from "recharts";
 
-
 const CustomBox = styled(Box)(({ theme }) => ({
   width: "70vw", // Default width for lg screens
   height: "20em",

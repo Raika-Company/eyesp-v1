@@ -92,8 +92,8 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
     >
       {items.map((item) => (
         <Typography
+          variant="h3"
           sx={{
-            fontSize: isSmScreen ? "1rem" : "1.5rem",
             flexWrap: "600",
             color: { color },
           }}
@@ -130,15 +130,15 @@ const Province = () => {
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
         <Typography
-          fontSize="2rem"
+          variant="h2"
           color="textColor.light"
           gutterBottom
           sx={{}}
         >
           میانگین عملکرد ISPهای{" "}
-          <span style={{ fontSize: "2.6rem", color: "#126AED" }}>
+          <Typography variant="h4" component="span" sx={{ color: "info.main" }}>
             استان {provinceName}
-          </span>
+          </Typography>
         </Typography>
         <ArrowBack />
       </Box>
@@ -178,7 +178,7 @@ const Province = () => {
       </div>
       <Card>
         <Box display="flex" justifyContent="flex-start" gap={2} padding="1em">
-          <Typography color="textColor.dark" fontSize="1.9rem">
+          <Typography variant="h2" color="textColor.dark">
             دسترسی سریع
           </Typography>
           {fastAccessButtons.map((label) => (
@@ -195,7 +195,7 @@ const Province = () => {
           padding: "1.5rem",
         }}
       >
-        <Typography gutterBottom color="textColor.light" fontSize="1.789rem">
+        <Typography variant="h6" gutterBottom color="textColor.light">
           تاریخچه اختلالات
         </Typography>
         <IconButton aria-label="filter">
@@ -236,11 +236,13 @@ const Province = () => {
             }}
           >
             پرش به تاریخ:
-            <Typography variant="overline" component="span"
+            <Typography
+              variant="overline"
+              component="span"
               sx={{
                 textAlign: "center",
                 userSelect: "none",
-                color:"textColor.main",
+                color: "textColor.main",
                 backgroundColor: "textColor.subTitle",
                 marginRight: isSmScreen ? "2px" : "10px",
                 padding: isSmScreen ? "6px 6px" : "6px 10px",

@@ -75,12 +75,11 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="h1"
+              variant="overline"
               color="textColor.light"
               sx={{
                 borderBottom: "1px solid",
                 borderColor: "border.main",
-                fontSize: isMdScreen ? "10px" : isSmScreen ? "4px" : "",
               }}
             >
               لیست استان ها
@@ -107,6 +106,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
+                // variant="overline"
                 sx={{
                   marginTop: "3px",
                   fontSize: isMdScreen ? "10px" : isXsScreen ? "8px" : "",
@@ -155,13 +155,11 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant="h1"
+                variant="h5"
                 sx={{
                   color: "textColor.main",
-                  fontSize: isSmScreen ? "16px" : isMdScreen ? "20px" : "30px",
                 }}
               >
-                {" "}
                 هایISP میانگین عملکرد{" "}
               </Typography>
 
@@ -171,15 +169,10 @@ const DetailTest = () => {
                 <Box>
                   {" "}
                   <Typography
+                    variant="h3"
                     sx={{
-                      fontSize: isSmScreen
-                        ? "18px"
-                        : isMdScreen
-                        ? "20px"
-                        : "h3",
                       color: "info.main",
                     }}
-                    variant="h3"
                   >
                     استان {selectedCity}{" "}
                   </Typography>

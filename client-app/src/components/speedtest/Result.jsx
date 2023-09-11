@@ -18,11 +18,11 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography fontSize="2.5rem" sx={{ color: "textColor.dark" }}>
+      <Typography variant="h4" sx={{ color: "textColor.dark" }}>
         {measure}
       </Typography>
       <Typography
-        fontSize="2.5rem"
+        variant="h4"
         marginX="1rem"
         sx={{ color: "textColor.dark" }}
       >
@@ -36,10 +36,10 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
 const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" flexDirection="row" gap={3}>
     <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="h6" variant="h6" color="textColor.dark">
+      <Typography component="h6" variant="h2" color="textColor.dark">
         {title}
       </Typography>
-      <Typography component="span" variant="subtitle1" color="textColor.light">
+      <Typography component="span" variant="caption" color="textColor.light">
         {value}
       </Typography>
       {buttonLabel ? <Button>{buttonLabel}</Button> : null}

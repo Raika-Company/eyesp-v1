@@ -127,10 +127,10 @@ const Dashboard = () => {
 
   const DisturbanceText = ({ text }) => (
     <Typography
+      variant="h3"
       sx={{
-        fontSize: isSmScreen ? "1rem" : "1.5rem",
         flexWrap: "600",
-        color: "textColor.dark",
+        color: "textColor.main",
       }}
     >
       ● {text}
@@ -172,10 +172,9 @@ const Dashboard = () => {
           }}
         >
           <Typography
+            variant="h4"
             sx={{
               color: "error.main",
-              fontSize: isSmScreen ? "1.8rem" : "2.5rem",
-              fontWeight: "700",
             }}
           >
             <span style={{ fontSize: "4rem" }}>4</span> اختلال یافت شده:
@@ -204,22 +203,22 @@ const Dashboard = () => {
           }}
         >
           <Typography
+            variant="h5"
             gutterBottom
             sx={{
               color: "info.main",
-              fontWeight: "700",
-              fontSize: isSmScreen ? "1.5rem" : "2rem",
             }}
           >
             رتبه بندی ISPها{" "}
           </Typography>
           <Typography
+            variant="overline"
             component="div"
             gutterBottom
             sx={{
               color: "textColor.main",
               fontWeight: "700",
-              fontSize: isSmScreen ? "0.9rem" : "1.28rem",
+              fontSize: isSmScreen ? "0.9rem" : "overline",
             }}
           >
             براساس:{" "}
@@ -271,7 +270,8 @@ const Dashboard = () => {
         </Box>
         <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
         {visibleRows < RawISPData.length && (
-          <Box
+          <Typography
+            variant="h3"
             sx={{
               color: "textColor.main",
               textAlign: "center",
@@ -282,7 +282,7 @@ const Dashboard = () => {
             onClick={handleShowMore}
           >
             -- مشاهده بیشتر --
-          </Box>
+          </Typography>
         )}
       </Card>
       <Card
@@ -294,7 +294,7 @@ const Dashboard = () => {
           padding: "1rem 2.5rem",
         }}
       >
-        <Typography textAlign="center" color="textColor.main" fontWeight="600">
+        <Typography textAlign="center" color="textColor.main" variant="h3">
           جزئیات فنی
         </Typography>
 
@@ -311,7 +311,11 @@ const Dashboard = () => {
             <Button
               key={index}
               variant="contained"
-              startIcon={<val.icon sx={{ fontSize: "2rem", backgroundColor: "primary.main" }} />}
+              startIcon={
+                <val.icon
+                  sx={{ fontSize: "2rem", backgroundColor: "primary.main" }}
+                />
+              }
               sx={{
                 width: isSmScreen ? "100%" : "49%",
                 borderRadius: "1rem",
