@@ -87,7 +87,7 @@ function LoadingSpinner() {
           color="primary"
           sx={{ marginLeft: 2 }}
         >
-          TIC Radar
+          Eyesp.live
         </Typography>
         <StyledSpinner />
       </StyledPaper>

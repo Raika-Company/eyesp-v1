@@ -17,6 +17,9 @@ const ISPPerformance = lazy(() =>
   import("../../components/ispPerformance/ISPPerformance")
 );
 const Result = lazy(() => import("../../components/speedtest/Result"));
+const Information = lazy(() =>
+  import("../../components/information/Information")
+);
 
 export const mainRoutes = [
   {
@@ -74,7 +77,7 @@ export const dashboardRoutes = [
     robots: "noindex, nofollow",
   },
   {
-    path: "/detail-test/:id",
+    path: "/detail-test",
     element: <DetailTest />,
     title: "Detailed Test | Admin",
     description: "In-depth analysis of specific speed tests.",

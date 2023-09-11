@@ -58,6 +58,7 @@ const pages = [
   ["صفحه اصلی", "/"],
   ["تاریخچه تست", "/test-history"],
   ["پنل ادمین", "/admin"],
+  ["تعاریف", "/information"],
   ["درباره ما", "/about-us"],
 ];
 
@@ -90,14 +91,14 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
         </Box>
       </Box>
       <Box display="flex" marginTop="0.5em">
-        <img src={Logo} alt="TIC Radar logo" height="32px" />
+        <img src={Logo} alt="Eyesp.live logo" height="32px" />
         <Typography
           variant="h4"
           component="h1"
           color="primary"
           sx={{ marginLeft: 2 }}
         >
-          TIC Radar
+          Eyesp.live
         </Typography>
       </Box>
     </Box>
@@ -119,9 +120,9 @@ function MobileNav({ handleOpenDrawer }) {
         <MenuIcon />
       </IconButton>
       <Typography variant="h4" component="h1" color="primary">
-        TIC Radar
+        Eyesp.live
       </Typography>
-      <img src={Logo} alt="TIC Radar logo" height="30px" />
+      <img src={Logo} alt="Eyesp.live logo" height="30px" />
     </Box>
   );
 }

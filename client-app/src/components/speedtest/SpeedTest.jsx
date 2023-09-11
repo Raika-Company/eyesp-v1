@@ -6,18 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
-import {
-  Button,
-  Container,
-  Box,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  useTheme,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Button, Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import moment from "moment-jalaali";
 
 // Local components
 // Importing custom drawn meter component and accordion for modular structure
@@ -32,6 +23,9 @@ import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
 import Result from "./Result";
+
+// utils
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Constants
 // Defining some constants for color coding
@@ -142,8 +136,6 @@ const SpeedTest = ({ themeMode }) => {
   const [uploadSpeed, setUploadSpeed] = useState(null);
   const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
 
-  const [showResult, setShowResult] = useState(false);
-
   const handleButtonClick = () => {
     setIsGoButtonVisible(false);
     setTimeout(() => {
@@ -160,17 +152,24 @@ const SpeedTest = ({ themeMode }) => {
     if (testStage === "download") {
       // Simulate download test
       let timeElapsed = 0;
+      // Generate initial random number for download
+      let initialDownload = parseFloat((Math.random() * 20 + 10).toFixed(2)); // random number between 10 and 30
+
       const interval = setInterval(() => {
         timeElapsed += 100;
         if (timeElapsed <= 1000) {
           setSpeedData((prev) => ({
             ...prev,
-            downloadSpeed: parseFloat((Math.random() * 5 + 18).toFixed(2)),
+            downloadSpeed: initialDownload,
           }));
         } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
+          // Ensure subsequent values are within ±2 of the initial value
+          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
           setSpeedData((prev) => ({
             ...prev,
-            downloadSpeed: (Math.random() * 5 + 18).toFixed(2),
+            downloadSpeed: parseFloat(
+              (initialDownload + parseFloat(randomDifference)).toFixed(2)
+            ),
           }));
         } else {
           clearInterval(interval);
@@ -184,26 +183,48 @@ const SpeedTest = ({ themeMode }) => {
     } else if (testStage === "upload") {
       // Simulate upload test
       let timeElapsed = 0;
+      // Generate initial random number for upload
+      let initialUpload = parseFloat((Math.random() * 10 + 5).toFixed(2)); // random number between 5 and 15
+
       const interval = setInterval(() => {
         timeElapsed += 100;
         if (timeElapsed <= 500) {
           setUploadSpeed(10 * (timeElapsed / 500));
         } else if (timeElapsed > 500 && timeElapsed <= 5500) {
-          setUploadSpeed(parseFloat((Math.random() * 3 + 8).toFixed(2)));
+          // Ensure subsequent values are within ±2 of the initial value
+          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
+          setUploadSpeed(
+            parseFloat(
+              (initialUpload + parseFloat(randomDifference)).toFixed(2)
+            )
+          );
         } else {
           clearInterval(interval);
+          const currentJalaliDateInEnglish = moment().format("jYYYY/jM/jD");
+          const currentJalaliDateInFarsi = convertToPersianNumbers(
+            currentJalaliDateInEnglish
+          );
+
           const testResults = {
-            date: new Date().toISOString(),
+            date: currentJalaliDateInFarsi, // Store the current Jalali date with Farsi numbers
             ping: speedData.ping,
             download: speedData.downloadSpeed,
-            upload: (Math.random() * 3 + 8).toFixed(2),
+            upload: parseFloat(
+              (
+                initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
+              ).toFixed(2)
+            ),
             providerLocation: "ایرانسل-تهران",
           };
-          
-          const existingResults = JSON.parse(localStorage.getItem("testResults") || "[]");
+
+          const existingResults = JSON.parse(
+            localStorage.getItem("testResults") || "[]"
+          );
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
-          navigate(`/result?ping=${speedData.ping}&download=${speedData.downloadSpeed}&upload=${(Math.random() * 3 + 8).toFixed(2)}`);
+          navigate(
+            `/result?ping=${speedData.ping}&download=${speedData.downloadSpeed}&upload=${testResults.upload}`
+          );
         }
       }, 100);
       return () => clearInterval(interval);

@@ -15,10 +15,10 @@ export const lightTheme = createTheme({
   },
   typography: {
     h1: {
-      fontFamily: "PeidaBold, serif",
+      fontFamily: "Peyda, serif",
     },
     h2: {
-      fontFamily: "PeidaBold, serif",
+      fontFamily: "Peyda, serif",
     },
     h3: {
       fontFamily: "PeydaSemiBold, serif",
@@ -67,7 +67,7 @@ export const lightTheme = createTheme({
       opacity: 0.3,
       color: "#000",
     },
-    fontFamily: "Peyda",
+    fontFamily: 'Peyda',
   },
   components: {
     MuiInputLabel: {
@@ -136,27 +136,73 @@ export const darkTheme = createTheme({
       main: "#B0680F",
     },
     background: {
-      default: "#181D23", // Set the background color to black
+      default: "#181D23",
     },
     text: {
       primary: "#FFF",
       secondary: "#BBB",
     },
   },
-  typography :{
+  typography: {
+    h1: {
+      fontFamily: "Peyda, serif",
+    },
+    h2: {
+      fontFamily: "Peyda, serif",
+    },
+    h3: {
+      fontFamily: "PeydaSemiBold, serif",
+      fontSize: "36px",
+    },
+    h4: {
+      fontFamily: "PeydaSemiBold, serif",
+      textEdge: "cap",
+      leadingTrim: "both",
+      fontSize: 30,
+      fontWeight: 600,
+      lineHeight: "normal",
+      fontStyle: "normal",
+    },
+    h5: {
+      fontFamily: "Peyda, serif",
+      fontWeight: 700,
+      fontSize: 25,
+      lineHeight: "normal",
+      fontStyle: "normal",
+    },
+    h6: {
+      fontFamily: "Peyda, serif",
+      fontSize: 25,
+    },
+    body1: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: 18,
+    },
+    body2: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: 16,
+    },
+    subtitle1: {
+      fontFamily: "Peyda, sans-serif",
+      fontSize: "1.35rem",
+      fontWeight: 500,
+      opacity: 0.5,
+    },
     subtitle2: {
       fontFamily: "Peyda, sans-serif",
       fontSize: "1rem",
       fontWeight: 500,
       opacity: 0.3,
-      color: "#fff",
     },
+    fontFamily: 'Peyda',
   },
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          background: "#171717"
+          background: "#171717",
+          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
+          borderRadius: 20,
         },
       },
     },
