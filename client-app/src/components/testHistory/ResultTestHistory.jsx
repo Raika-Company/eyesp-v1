@@ -5,11 +5,10 @@ import upload from "../../app/assets/image/upload.svg";
 import ping from "../../app/assets/image/ping.svg";
 
 function ResultTestHistory() {
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const getImageWidth = () =>
-    isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em";
+    isSmScreen ? "0.8rem" : "2rem";
 
   const getFlexStyles = (idx) => {
     const basisValues = [
@@ -34,7 +33,7 @@ function ResultTestHistory() {
       display="flex"
       flexDirection="row-reverse"
       justifyContent="center"
-      paddingBottom="2em"
+      paddingBottom={isSmScreen ? "1em" : "1.5em"}
       width="100%"
     >
       {[
@@ -101,7 +100,7 @@ function ResultTestHistory() {
             display="flex"
             justifyContent="center"
             {...getFlexStyles(idx)}
-            gap="0.5em"
+            gap={ isSmScreen ? "0.3rem" : "0.5rem" }
           >
             {image && (
               <img style={{ width: getImageWidth() }} src={image} alt={label} />
