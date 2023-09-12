@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
-  Button,
   Box,
   Typography,
   Card,
@@ -10,6 +9,10 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
+/**
+ * An array of provinces' names.
+ * @type {string[]}
+ */
 const provinces = [
   "اصفهان",
   "البرز",
@@ -25,9 +28,17 @@ const provinces = [
   "یزد",
 ];
 
+/**
+ * The ProvinceNavbar component provides a UI to select a province from a list.
+ *
+ * @param {Object} props
+ * @param {function(string): void} props.onProvinceSelected - A callback function called when a province is selected.
+ *
+ * @returns {JSX.Element} Rendered ProvinceNavbar component.
+ */
 const ProvinceNavbar = ({ onProvinceSelected }) => {
   const [boxHeight, setBoxHeight] = useState("100dvh");
-  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("تهران");
 
   useEffect(() => {
     const DashboardNavbarElement = document.querySelector(".dashboard-navbar");
@@ -39,6 +50,11 @@ const ProvinceNavbar = ({ onProvinceSelected }) => {
     }
   }, []);
 
+  /**
+   * Handles the change event for the province selection.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event from the radio input.
+   */
   const handleProvinceChange = (event) => {
     setSelectedProvince(event.target.value);
     onProvinceSelected(event.target.value);
@@ -73,4 +89,4 @@ const ProvinceNavbar = ({ onProvinceSelected }) => {
   );
 };
 
-export default ProvinceNavbar;
+export default memo(ProvinceNavbar);

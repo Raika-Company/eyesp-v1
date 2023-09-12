@@ -12,7 +12,9 @@ import { styled } from "@mui/material/styles";
 import "./detail.css";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-const OperatorsDetail = ({ visibility, setVisibility }) => {
+const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
+  const activeCityCount = Object.values(cityVisibility).filter(Boolean).length;
+
   const handleIspToggle = (isp) => {
     setVisibility((prev) => ({ ...prev, [isp]: !prev[isp] }));
   };
@@ -77,7 +79,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
     },
   }));
 
-  const ISPProviderSwitch = ({ name, color, checked }) => (
+  const ISPProviderSwitch = ({ name, color, checked, disabled }) => (
     <Box
       sx={{
         display: "flex",
@@ -85,32 +87,34 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
         alignItems: "center",
       }}
     >
-      <Typography variant="h6">
-        {name}
-      </Typography>
+      <Typography variant="h6">{name}</Typography>
       {color === "pink" ? (
         <PinkSwitch
           {...label}
           checked={checked}
           onChange={() => handleIspToggle(name)}
+          disabled={disabled}
         />
       ) : color === "purple" ? (
         <PurpleSwitch
           {...label}
           checked={checked}
           onChange={() => handleIspToggle(name)}
+          disabled={disabled}
         />
       ) : color === "success" ? (
         <GreenSwitch
           {...label}
           checked={checked}
           onChange={() => handleIspToggle(name)}
+          disabled={disabled}
         />
       ) : color === "warning" ? (
         <OrangeSwitch
           {...label}
           checked={checked}
           onChange={() => handleIspToggle(name)}
+          disabled={disabled}
         />
       ) : (
         <Switch
@@ -118,6 +122,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           color={color}
           checked={checked}
           onChange={() => handleIspToggle(name)}
+          disabled={disabled}
         />
       )}
     </Box>
@@ -148,6 +153,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               color="success"
               checked={visibility.ایرانسل}
               onChange={() => handleIspToggle("ایرانسل")}
+              disabled={activeCityCount >= 2}
             />{" "}
           </Box>
           <Box
@@ -161,6 +167,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               name="مخابرات"
               checked={visibility.مخابرات}
               onChange={() => handleIspToggle("مخابرات")}
+              disabled={activeCityCount >= 2}
             />
           </Box>
           <Box
@@ -175,62 +182,11 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               color="pink"
               checked={visibility.شاتل}
               onChange={() => handleIspToggle("شاتل")}
+              disabled={activeCityCount >= 2}
             />
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            justifyContent: isSmScreen ? "center" : "space-evenly",
-            width: "100%",
-            height: isSmScreen ? "34%" : "20%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch
-              name="ایرانسل"
-              color="success"
-              checked={visibility.ایرانسل}
-              onChange={() => handleIspToggle("ایرانسل")}
-              //   checked={ispSwitches["ایرانسل"]}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch
-              name="همراه_اول"
-              color="warning"
-              checked={visibility.همراه_اول}
-              onChange={() => handleIspToggle("همراه_اول")}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch
-              name="رایتل"
-              color="purple"
-              checked={visibility.رایتل}
-              onChange={() => handleIspToggle("رایتل")}
-            />
-          </Box>
-        </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -249,25 +205,11 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
             }}
           >
             <ISPProviderSwitch
-              name="ایرانسل"
-              color="success"
-              checked={visibility.ایرانسل}
-              onChange={() => handleIspToggle("ایرانسل")}
-              //   checked={ispSwitches["ایرانسل"]}
-            />{" "}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <ISPProviderSwitch
-              name=" همراه_اول"
+              name="همراه_اول"
               color="warning"
               checked={visibility.همراه_اول}
               onChange={() => handleIspToggle("همراه_اول")}
+              disabled={activeCityCount >= 2}
             />
           </Box>
           <Box
@@ -282,6 +224,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
               color="purple"
               checked={visibility.رایتل}
               onChange={() => handleIspToggle("رایتل")}
+              disabled={activeCityCount >= 2}
             />
           </Box>
         </Box>
@@ -299,6 +242,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
           alignItems: "center",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
+          gap: "10px",
         }}
       >
         <Box
@@ -333,7 +277,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   display: "flex",
                   flexDirection: "row-reverse",
                   alignItems: "center",
-                  marginY: "2rem"
+                  marginY: "2rem",
                 }}
               >
                 <ISPProviderSwitch
@@ -341,6 +285,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   color="success"
                   checked={visibility.ایرانسل}
                   onChange={() => handleIspToggle("ایرانسل")}
+                  disabled={activeCityCount >= 2}
 
                   //   checked={ispSwitches["ایرانسل"]}
                 />
@@ -357,6 +302,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   color="warning"
                   checked={visibility.همراه_اول}
                   onChange={() => handleIspToggle("همراه_اول")}
+                  disabled={activeCityCount >= 2}
                 />
               </Box>
               <Box
@@ -371,6 +317,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   color="purple"
                   checked={visibility.رایتل}
                   onChange={() => handleIspToggle("رایتل")}
+                  disabled={activeCityCount >= 2}
                 />
               </Box>
               <Box
@@ -384,6 +331,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   name="مخابرات"
                   checked={visibility.مخابرات}
                   onChange={() => handleIspToggle("مخابرات")}
+                  disabled={activeCityCount >= 2}
                 />
               </Box>
               <Box
@@ -398,6 +346,7 @@ const OperatorsDetail = ({ visibility, setVisibility }) => {
                   color="pink"
                   checked={visibility.شاتل}
                   onChange={() => handleIspToggle("شاتل")}
+                  disabled={activeCityCount >= 2}
                 />{" "}
               </Box>
             </Box>

@@ -46,7 +46,7 @@ const GpButtons = [
   {
     name: "اختلال",
     icon: WifiOffIcon,
-    stateVar: "performanceAverage",
+    stateVar: "/admin/province-isp"
   },
   {
     name: "سرعت",
@@ -312,7 +312,9 @@ const Dashboard = () => {
           {GpButtons.map((val, index) => (
             <Button
               component={Link}
-              to={`detail-test/${val.stateVar}`}
+              to={val.stateVar.startsWith("/")
+              ? val.stateVar
+              : `/admin/detail-test/${val.stateVar}`}
               key={index}
               variant="contained"
               startIcon={
