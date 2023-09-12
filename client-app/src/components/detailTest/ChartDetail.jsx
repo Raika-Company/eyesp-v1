@@ -593,6 +593,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       width: "50%",
       display: "flex",
       flexDirection: "column",
+      whiteSpace: "nowrap",
     };
 
     const switchBoxStyle = {
@@ -684,7 +685,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
           alignItems: "center",
           justifyContent: "end",
           gap: isMdScreen ? "1px" : isXsScreen ? "1px" : "60px",
-          flexWrap: isMdScreen ? "wrap" : isXsScreen ? "none" : "none",
+          flexWrap: isMdScreen ? "wrap" : isSmScreen ? "wrap" : "none",
         }}
       >
         <Box
@@ -811,80 +812,72 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       <Card
         sx={{
           width: "93%",
-          height: "45%",
+          height: "51%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
+          alignItems: "center",
+          gap: "2px",
         }}
       >
         <Box
           sx={{
             width: "102%",
-            height: "10%",
-            marginTop: "2rem",
+            height: "20%",
+            marginTop: "1rem",
             display: "flex",
             flexDirection: "row-reverse",
-            justifyContent: "end",
+            justifyContent: "center",
           }}
         >
           {isSmScreen ? <MobileToggleSwitch /> : <DesktopToggleSwitch />}
 
           {/* {isSmScreen && <ChoseCityDrawer />} */}
-          <Box
-            sx={{
-              width: "20%",
-              textAlign: "center",
-              paddingLeft: isSmScreen ? "8px" : "2rem",
-              marginBottom: isSmScreen ? "2rem" : "",
-            }}
-          >
-            <Select
-              onChange={(e) => setSelectedDate(e.target.value)}
-              value={selectedDate} // Use the state variable
-              size="small"
-              sx={{
-                bgcolor: "info.main",
-                color: "white",
-                borderRadius: "1.8rem",
-                border: "none",
-                fontSize: isSmScreen ? "10px" : "18px",
-                py: 0,
-
-                "& fieldset": {
-                  border: "none",
-                },
-              }}
-            >
-              {daysOfWeek.map((day, index) => (
-                <MenuItem key={index} value={day}>
-                  {day}
-                </MenuItem>
-              ))}
-            </Select>
-          </Box>
         </Box>
         <Box
           sx={{
-            width: "102%",
+            width: "80%",
             height: "10%",
             display: "flex",
-            flexDirection: "row-reverse",
-            justifyContent: "end",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <Typography
-            variant={isSmScreen ? "h3" : "h1"}
+          <Select
+            onChange={(e) => setSelectedDate(e.target.value)}
+            value={selectedDate} // Use the state variable
+            size="small"
             sx={{
-              marginRight: isSmScreen ? "3rem" : "5rem",
-              marginTop: "2rem",
-              color: "info.main",
+              bgcolor: "info.main",
+              color: "white",
+              borderRadius: "1.8rem",
+              border: "none",
+              fontSize: isSmScreen ? "10px" : "18px",
+              py: 0,
+
+              "& fieldset": {
+                border: "none",
+              },
             }}
           >
-            98%
-          </Typography>
+            {daysOfWeek.map((day, index) => (
+              <MenuItem key={index} value={day}>
+                {day}
+              </MenuItem>
+            ))}
+          </Select>
+          <Box sx={{ marginTop: "5px" }}>
+            <Typography
+              sx={{
+                color: "info.main",
+              }}
+              variant={isSmScreen ? "h3" : "h1"}
+            >
+              98%
+            </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
