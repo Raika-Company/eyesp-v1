@@ -30,6 +30,7 @@ const DetailTest = () => {
     خوزستان: false,
     گیلان: false,
   });
+
   const cities = [
     "فارس",
     "تهران",
@@ -51,15 +52,29 @@ const DetailTest = () => {
   );
 
   // Event handler to toggle the switch state
-  const handleToggle = (city) => {
-    setCitySwitches((prevSwitches) => {
-      return {
-        ...prevSwitches,
-        [city]: !prevSwitches[city],
-      };
-    });
-  };
 
+  const handleToggleCity = (city) => {
+    setCityVisibility((prevState) => ({
+      ...prevState,
+      [city]: !prevState[city],
+    }));
+
+    const activeCityCount =
+      Object.values(cityVisibility).filter(Boolean).length;
+
+    // If 2 or more cities are active, turn off the ISPs
+    if (activeCityCount >= 1) {
+      setIspVisibility({
+        ایرانسل: false,
+        همراه_اول: false,
+        رایتل: false,
+        شاتل: false,
+        مخابرات: false,
+        // ... other ISPs
+      });
+    }
+  };
+  console.log(cityVisibility);
   return (
     <>
       <Box
@@ -122,8 +137,8 @@ const DetailTest = () => {
               </Typography>
               <Switch
                 {...label}
-                checked={citySwitches[city] || false}
-                onChange={() => handleToggle(city)}
+                checked={cityVisibility[city] || false}
+                onChange={() => handleToggleCity(city)}
               />
             </Box>
           ))}
@@ -197,6 +212,7 @@ const DetailTest = () => {
           <OperatorsDetail
             visibility={ispVisibility}
             setVisibility={setIspVisibility}
+            cityVisibility={cityVisibility}
           />
         </Box>
       </Box>
