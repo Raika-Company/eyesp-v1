@@ -12,6 +12,7 @@ import {
   Select,
   MenuItem,
   useTheme,
+  Divider,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -46,7 +47,7 @@ const GpButtons = [
   {
     name: "اختلال",
     icon: WifiOffIcon,
-    stateVar: "/admin/province-isp"
+    stateVar: "/admin/province-isp",
   },
   {
     name: "سرعت",
@@ -61,13 +62,56 @@ const GpButtons = [
 ];
 
 const disturbances = [
-  "اختلال در مازندران",
+  "اختلال در برقراری با سرور های خارج",
   "کندی سرعت",
-  "اختلال در خراسان رضوی",
+  "افزایش پینگ",
   "افزایش jitter",
-  "اختلال در فارس",
-  "کند شدن سرعت",
 ];
+
+const provinceDisturbances = [
+  "اختلال در CDN استان مازندران",
+  "کندی سرعت در استان خراسان رضوی",
+  "افزایش پینگ در استان همدان",
+  "اختلال در سرعت اینترنت استان فارس",
+];
+
+const selectionItems = [
+  "نام ISP",
+  "بیشترین اختلال",
+  "کمترین اختلال",
+  "بیشترین میانگین پینگ",
+  "کمترین میانگین پینگ",
+  "بیشترین میانگین سرعت",
+  "کمترین میانگین سرعت",
+];
+
+const DisturbanceText = ({ text }) => (
+  <Typography
+    variant="h3"
+    sx={{
+      flexWrap: "600",
+      color: "textColor.main",
+    }}
+  >
+    ● {text}
+  </Typography>
+);
+
+const parseNumber = (str) => {
+  return parseFloat(str.replace(/[^0-9.]/g, ""));
+};
+
+const sortFunctions = {
+  "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
+  "بیشترین اختلال": (a, b) =>
+    parseNumber(b.disturbance) - parseNumber(a.disturbance),
+  "کمترین اختلال": (a, b) =>
+    parseNumber(a.disturbance) - parseNumber(b.disturbance),
+  "بیشترین میانگین پینگ": (a, b) => parseNumber(b.pings) - parseNumber(a.pings),
+  "کمترین میانگین پینگ": (a, b) => parseNumber(a.pings) - parseNumber(b.pings),
+  "بیشترین میانگین سرعت": (a, b) => parseNumber(b.speed) - parseNumber(a.speed),
+  "کمترین میانگین سرعت": (a, b) => parseNumber(a.speed) - parseNumber(b.speed),
+};
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -86,58 +130,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    let sortedData;
-    switch (sortCriteria) {
-      case "نام ISP":
-        sortedData = [...ISPData].sort((a, b) =>
-          a.ISPname.localeCompare(b.ISPname)
-        );
-        break;
-      case "بیشترین اختلال":
-        sortedData = [...ISPData].sort(
-          (a, b) => parseFloat(b.disturbance) - parseFloat(a.disturbance)
-        );
-        break;
-      case "کمترین اختلال":
-        sortedData = [...ISPData].sort(
-          (a, b) => parseFloat(a.disturbance) - parseFloat(b.disturbance)
-        );
-        break;
-      case "بیشترین میانگین پینگ":
-        sortedData = [...ISPData].sort((a, b) =>
-          b.pings.localeCompare(a.pings)
-        );
-        break;
-      case "کمترین میانگین پینگ":
-        sortedData = [...ISPData].sort((a, b) =>
-          a.pings.localeCompare(b.pings)
-        );
-        break;
-      case "بیشترین میانگین سرعت":
-        sortedData = [...ISPData].sort((a, b) =>
-          b.speed.localeCompare(a.speed)
-        );
-        break;
-      case "کمترین میانگین سرعت":
-        sortedData = [...ISPData].sort((a, b) =>
-          a.speed.localeCompare(b.speed)
-        );
-        break;
+    const sortFunction = sortFunctions[sortCriteria];
+    if (sortFunction) {
+      setISPData([...ISPData].sort(sortFunction));
     }
-    setISPData(sortedData);
   }, [sortCriteria]);
-
-  const DisturbanceText = ({ text }) => (
-    <Typography
-      variant="h3"
-      sx={{
-        flexWrap: "600",
-        color: "textColor.main",
-      }}
-    >
-      ● {text}
-    </Typography>
-  );
 
   const backgroundColor =
     theme.palette.mode === "light" ? "#E8E8E8" : "#13171C";
@@ -181,7 +178,12 @@ const Dashboard = () => {
           >
             <span style={{ fontSize: "4rem" }}>4</span> اختلال یافت شده:
           </Typography>
+          <Divider width="80%" sx={{ marginY: "0.75rem" }} />
           {disturbances.map((disturbance) => (
+            <DisturbanceText text={disturbance} key={disturbance} />
+          ))}
+          <Divider width="40%" sx={{ marginY: "0.75rem" }} />
+          {provinceDisturbances.map((disturbance) => (
             <DisturbanceText text={disturbance} key={disturbance} />
           ))}
         </div>
@@ -231,42 +233,15 @@ const Dashboard = () => {
               color="primary"
               sx={{ marginRight: "0.5rem", color: "info.main" }}
             >
-              <MenuItem sx={{ color: "textColor.light" }} value="نام ISP">
-                نام ISP
-              </MenuItem>
-              <MenuItem
-                sx={{ color: "textColor.light" }}
-                value="بیشترین اختلال"
-              >
-                بیشترین اختلال
-              </MenuItem>
-              <MenuItem sx={{ color: "textColor.light" }} value="کمترین اختلال">
-                کمترین اختلال
-              </MenuItem>
-              <MenuItem
-                sx={{ color: "textColor.light" }}
-                value="بیشترین میانگین پینگ"
-              >
-                بیشترین میانگین پینگ
-              </MenuItem>
-              <MenuItem
-                sx={{ color: "textColor.light" }}
-                value="کمترین میانگین پینگ"
-              >
-                کمترین میانگین پینگ
-              </MenuItem>
-              <MenuItem
-                sx={{ color: "textColor.light" }}
-                value="بیشترین میانگین سرعت"
-              >
-                بیشترین میانگین سرعت
-              </MenuItem>
-              <MenuItem
-                sx={{ color: "textColor.light" }}
-                value="کمترین میانگین سرعت"
-              >
-                کمترین میانگین سرعت
-              </MenuItem>
+              {selectionItems.map((item) => (
+                <MenuItem
+                  key={item}
+                  sx={{ color: "textColor.light" }}
+                  value={item}
+                >
+                  {item}
+                </MenuItem>
+              ))}
             </Select>
           </Typography>
         </Box>
@@ -312,9 +287,11 @@ const Dashboard = () => {
           {GpButtons.map((val, index) => (
             <Button
               component={Link}
-              to={val.stateVar.startsWith("/")
-              ? val.stateVar
-              : `/admin/detail-test/${val.stateVar}`}
+              to={
+                val.stateVar.startsWith("/")
+                  ? val.stateVar
+                  : `/admin/detail-test/${val.stateVar}`
+              }
               key={index}
               variant="contained"
               startIcon={

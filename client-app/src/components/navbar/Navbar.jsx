@@ -117,15 +117,15 @@ function MobileNav({ handleOpenDrawer }) {
       sx={{
         display: { xs: "flex", md: "none" },
         flexGrow: 1,
-        marginTop: "0.5em",
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center"
       }}
     >
       <IconButton edge="start" color="primary" onClick={handleOpenDrawer}>
         <MenuIcon />
       </IconButton>
-      <Typography variant="h1" component="h1" color="primary">
+      <Typography variant="h1" component="h1" color="primary" marginTop="0.3rem">
         EyeSP.live
       </Typography>
       <img src={Logo} alt="Eyesp.live logo" height="30px" />
@@ -142,8 +142,8 @@ export default function Navbar({ themeMode, toggleTheme }) {
   const handleCloseDrawer = () => setDrawerOpen(false);
 
   const navigateTo = (path) => {
-    history(path);
     handleCloseDrawer();
+    history(path);
   };
 
   return (
