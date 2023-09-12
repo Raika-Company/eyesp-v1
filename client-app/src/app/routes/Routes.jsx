@@ -20,6 +20,7 @@ const Result = lazy(() => import("../../components/speedtest/Result"));
 const Information = lazy(() =>
   import("../../components/information/Information")
 );
+const ProvinceISP = lazy(() => import("../../components/provinceISP/ProvinceISP"));
 
 export const mainRoutes = [
   {
@@ -101,6 +102,14 @@ export const dashboardRoutes = [
     keywords: "ISP performance, ISP details, ISP configurations",
     robots: "noindex, nofollow",
   },
+  {
+    path: "/province-ISP",
+    element: <ProvinceISP />,
+    title: "Province ISP | Rayka ICT",
+    description: "Get insights into your ISP's performance.",
+    keywords: "ISP performance, ISP details, ISP configurations",
+    robots: "noindex, nofollow",
+  }
 ];
 
 export const otherRoutes = [

@@ -121,8 +121,6 @@ const Province = () => {
   const location = useLocation();
   const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [page, setPage] = useState(1);
 
   const fastAccessButtons = [
