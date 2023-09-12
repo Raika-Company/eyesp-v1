@@ -58,21 +58,6 @@ const DetailTest = () => {
       ...prevState,
       [city]: !prevState[city],
     }));
-
-    const activeCityCount =
-      Object.values(cityVisibility).filter(Boolean).length;
-
-    // If 2 or more cities are active, turn off the ISPs
-    if (activeCityCount >= 1) {
-      setIspVisibility({
-        ایرانسل: false,
-        همراه_اول: false,
-        رایتل: false,
-        شاتل: false,
-        مخابرات: false,
-        // ... other ISPs
-      });
-    }
   };
   console.log(cityVisibility);
   return (

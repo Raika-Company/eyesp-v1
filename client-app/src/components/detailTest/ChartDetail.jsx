@@ -547,6 +547,7 @@ const packetLossData = [
 const ChartDetail = ({ visibility, cityVisibility }) => {
   const { id } = useParams();
   const [chartData, setChartData] = useState([]); // default data (current dataset you've provided)
+  const activeCityCount = Object.values(cityVisibility).filter(Boolean).length;
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
@@ -922,7 +923,8 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
 
               <Tooltip />
               <Legend />
-              {visibility.مخابرات && (
+
+              {(activeCityCount < 1 || visibility.مخابرات) && (
                 <Line
                   type="monotone"
                   dataKey="مخابرات"
@@ -930,7 +932,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
                   activeDot={{ r: 8 }}
                 />
               )}
-              {visibility.ایرانسل && (
+              {(activeCityCount < 1 || visibility.ایرانسل) && (
                 <Line
                   type="monotone"
                   dataKey="ایرانسل"
@@ -940,7 +942,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               )}
 
               {/* The new lines */}
-              {visibility.شاتل && (
+              {(activeCityCount < 1 || visibility.شاتل) && (
                 <Line
                   type="monotone"
                   dataKey="شاتل"
@@ -948,7 +950,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
                   activeDot={{ r: 8 }}
                 />
               )}
-              {visibility.رایتل && (
+              {(activeCityCount < 1 || visibility.رایتل) && (
                 <Line
                   type="monotone"
                   dataKey="رایتل"
@@ -957,7 +959,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
                 />
               )}
 
-              {visibility.همراه_اول && (
+              {(activeCityCount < 1 || visibility.همراه_اول) && (
                 <Line
                   type="monotone"
                   dataKey="همراه_اول"
