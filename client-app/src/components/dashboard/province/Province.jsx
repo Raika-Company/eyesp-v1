@@ -105,24 +105,27 @@ const DisruptionList = ({ isSmScreen, color, provinceName }) => {
   );
 };
 
-const FastAccessButton = ({ label, switchName }) => (
-  <Button
-    component={Link}
-    to={`/admin/detail-test/${switchName}`}
-    variant="outlined"
-    sx={{ color: "info.main", borderColor: "info.main", fontWeight: 700 }}
-  >
-    {label}
-  </Button>
-);
+const FastAccessButton = ({ label, switchName }) => {
+  const routePath = switchName.startsWith("/")
+    ? switchName
+    : `/admin/detail-test/${switchName}`;
+  return (
+    <Button
+      component={Link}
+      to={routePath}
+      variant="outlined"
+      sx={{ color: "info.main", borderColor: "info.main", fontWeight: 700 }}
+    >
+      {label}
+    </Button>
+  );
+};
 
 const Province = () => {
   const theme = useTheme();
   const location = useLocation();
   const { provinceName, pathD, color, x, y, width, height } = location.state;
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isXlScreen = useMediaQuery((theme) => theme.breakpoints.down("xl"));
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [page, setPage] = useState(1);
 
   const fastAccessButtons = [
@@ -132,7 +135,7 @@ const Province = () => {
     },
     {
       label: "اختلال",
-      switchName: "performanceAverage",
+      switchName: "/admin/province-isp",
     },
     {
       label: "سرعت",
