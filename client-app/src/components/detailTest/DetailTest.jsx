@@ -1,14 +1,15 @@
-import { Box, Typography, Switch, useMediaQuery, Card } from "@mui/material";
 import { useState } from "react";
+import { Box, Typography, Switch, useMediaQuery, Card } from "@mui/material";
 import ChartDetail from "./ChartDetail";
 import OperatorsDetail from "./OperatorsDetail";
 import ArrowBack from "../../app/common/ArrowBack";
 import ChoseCityDrawer from "../../app/common/ChoseCityDrawer";
-const label = { inputProps: { "aria-label": "Color switch demo" } };
+
 const DetailTest = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
   const [selectedCity, setSelectedCity] = useState("فارس");
 
   const [ispVisibility, setIspVisibility] = useState({
@@ -18,18 +19,7 @@ const DetailTest = () => {
     شاتل: false,
     مخابرات: false,
   });
-  const [cityVisibility, setCityVisibility] = useState({
-    فارس: true,
-    تهران: false,
-    اصفهان: false,
-    مشهد: false,
-    اهواز: false,
-    تبریز: false,
-    مازندران: false,
-    سمنان: false,
-    خوزستان: false,
-    گیلان: false,
-  });
+
   const cities = [
     "فارس",
     "تهران",
@@ -43,31 +33,24 @@ const DetailTest = () => {
     "گیلان",
   ];
 
-  const [citySwitches, setCitySwitches] = useState(
+  const [cityVisibility, setCityVisibility] = useState(
     cities.reduce((acc, city) => {
       acc[city] = city === "فارس";
       return acc;
     }, {})
   );
 
-  // Event handler to toggle the switch state
-  const handleToggle = (city) => {
-    setCitySwitches((prevSwitches) => {
-      return {
-        ...prevSwitches,
-        [city]: !prevSwitches[city],
-      };
-    });
+  const handleToggleCity = (city) => {
+    setCityVisibility((prevState) => ({
+      ...prevState,
+      [city]: !prevState[city],
+    }));
   };
 
   return (
     <>
       <Box
-        sx={{
-          direction: "ltr",
-          display: "flex",
-          flexDirection: "row-reverse",
-        }}
+        sx={{ direction: "ltr", display: "flex", flexDirection: "row-reverse" }}
       >
         <Card
           sx={{
@@ -83,10 +66,7 @@ const DetailTest = () => {
             <Typography
               variant="subtitle2"
               color="textColor.light"
-              sx={{
-                borderBottom: "1px solid",
-                borderColor: "border.main",
-              }}
+              sx={{ borderBottom: "1px solid", borderColor: "border.main" }}
             >
               لیست استان ها
             </Typography>
@@ -97,22 +77,14 @@ const DetailTest = () => {
               sx={{
                 color: "textColor.dark",
                 display: "flex",
-                flexDirection: isMdScreen
-                  ? "column"
-                  : isXsScreen
-                  ? "column"
-                  : "row-reverse",
+                flexDirection:
+                  isMdScreen || isXsScreen ? "column" : "row-reverse",
                 justifyContent: "space-between",
                 width: "60%",
-                alignItems: isXsScreen
-                  ? "center"
-                  : isMdScreen
-                  ? "center"
-                  : "normal",
+                alignItems: isXsScreen || isMdScreen ? "center" : "normal",
               }}
             >
               <Typography
-                // variant="overline"
                 sx={{
                   marginTop: "3px",
                   fontSize: isMdScreen ? "10px" : isXsScreen ? "8px" : "",
@@ -121,9 +93,9 @@ const DetailTest = () => {
                 {city}
               </Typography>
               <Switch
-                {...label}
-                checked={citySwitches[city] || false}
-                onChange={() => handleToggle(city)}
+                checked={cityVisibility[city] || false}
+                onChange={() => handleToggleCity(city)}
+                inputProps={{ "aria-label": "Color switch demo" }}
               />
             </Box>
           ))}
@@ -140,7 +112,6 @@ const DetailTest = () => {
             gap: "2rem",
           }}
         >
-          {" "}
           <Box
             sx={{
               width: "93%",
@@ -161,34 +132,25 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant="h2"
+                variant={isSmScreen ? "h6" : "h2"}
                 sx={{
                   color: "textColor.main",
                 }}
               >
-                هایISP میانگین عملکرد{" "}
+                هایISP میانگین عملکرد
               </Typography>
-
               {isSmScreen ? (
                 <ChoseCityDrawer />
               ) : (
-                <Box>
-                  {" "}
-                  <Typography
-                    variant="h1"
-                    sx={{
-                      color: "info.main",
-                    }}
-                  >
-                    استان {selectedCity}{" "}
-                  </Typography>
-                </Box>
+                <Typography
+                  variant={isSmScreen ? "h6" : "h2"}
+                  sx={{ color: "info.main" }}
+                >
+                  استان {selectedCity}
+                </Typography>
               )}
             </Box>
-            <Box>
-              {" "}
-              <ArrowBack />
-            </Box>
+            <ArrowBack />
           </Box>
           <ChartDetail
             visibility={ispVisibility}
@@ -197,6 +159,7 @@ const DetailTest = () => {
           <OperatorsDetail
             visibility={ispVisibility}
             setVisibility={setIspVisibility}
+            cityVisibility={cityVisibility}
           />
         </Box>
       </Box>

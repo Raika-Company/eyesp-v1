@@ -8,10 +8,6 @@ function ResultTestHistory() {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const getTypographyStyles = () => ({
-    fontSize: isSmScreen ? "10px" : isMdScreen ? "14px" : "18px",
-  });
-
   const getImageWidth = () =>
     isSmScreen ? "1em" : isMdScreen ? "1.5em" : "2em";
 
@@ -49,9 +45,9 @@ function ResultTestHistory() {
         `${result.ping}ms`,
       ].map((text, idx) => (
         <Typography
+          variant="subtitle2"
           key={idx}
           sx={{
-            ...getTypographyStyles(),
             ...getFlexStyles(idx),
             color:
               idx === 2
@@ -110,7 +106,7 @@ function ResultTestHistory() {
             {image && (
               <img style={{ width: getImageWidth() }} src={image} alt={label} />
             )}
-            <Typography sx={getTypographyStyles()}>{label}</Typography>
+            <Typography variant="subtitle2">{label}</Typography>
           </Box>
         ))}
       </Box>

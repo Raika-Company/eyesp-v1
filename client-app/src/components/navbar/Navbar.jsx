@@ -91,12 +91,12 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
           <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
         </Box>
       </Box>
-      <Box display="flex" marginTop="0.5em">
+      <Box display="flex" marginTop="0.3em">
         <img
           src={Logo}
           alt="Eyesp.live logo"
           height="32px"
-          style={{ marginInline: "0.5rem" }}
+          style={{ marginInline: "0.5rem",marginTop:"0.4rem" }}
         />
         <Typography
           variant="h1"
