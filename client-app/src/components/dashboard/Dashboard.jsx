@@ -140,7 +140,7 @@ const Dashboard = () => {
   );
 
   const backgroundColor =
-    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
+    theme.palette.mode === "light" ? "#E8E8E8" : "#13171C";
   return (
     <Container maxWidth="xl" sx={{ direction: "rtl" }}>
       <div

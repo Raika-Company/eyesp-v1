@@ -8,6 +8,7 @@ import styles from "./IranMap.module.css";
 
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import { useTheme } from "@mui/material";
 
 const StyledSpan = styled("span")({
   position: "absolute",
@@ -41,6 +42,7 @@ const getProvinceColor = (provinceName) => {
 };
 
 const IranMap = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const { x, y } = useMouse();
   const [provinces] = useState(() => iranProvinces);
@@ -72,6 +74,8 @@ const IranMap = () => {
       setAdditionalText("");
     }
   }, [provinceName]);
+
+  const borderColor = theme.palette.mode === "dark" ? "#181D23" : "#FFF";
 
   return (
     <>
@@ -144,7 +148,7 @@ const IranMap = () => {
             enableBackground="new 20 0 970 960"
             xmlSpace="preserve"
           >
-            <g className={styles.border}>
+            <g style={{fill: borderColor}}>
               <path className={styles.iran} d={iranBorder} />
             </g>
             <g className={styles.province}>

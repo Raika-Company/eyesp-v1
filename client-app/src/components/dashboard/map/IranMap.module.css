@@ -65,9 +65,9 @@
   /* overflow: auto; */
 }
 
-.map .border path {
+/* .map .border path {
   fill: #fff;
-}
+} */
 
 .map .sea path,
 .map .lake path {
