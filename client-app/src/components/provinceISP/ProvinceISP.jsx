@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -7,13 +7,13 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-
-import provinces from "../../app/data/provinceISPsDetails.json";
+import axios from "axios";
 
 // Components
 import ProvinceNavbar from "./ProvinceNavbar";
 import ArrowBack from "../../app/common/ArrowBack";
 import ProvinceTable from "./../dashboard/province/ProvinceTable";
+import LoadingSpinner from "../../app/common/LoadingSpinner";
 
 /** Number of rows per page for pagination */
 const ROWS_PER_PAGE = 8;
@@ -38,14 +38,41 @@ const dateNavStyles = {
  */
 const ProvinceISP = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [provinces, setProvinces] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "./../src/app/data/provinceISPsDetails.json"
+        );
+        setProvinces(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [page, setPage] = useState(1);
-  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedProvince, setSelectedProvince] = useState("تهران");
   const rows = getProvinceRows(selectedProvince);
 
   /**
    * Main component to display ISP details for a province
    * @returns {JSX.Element} Rendered ProvinceISP component
    */
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+  if (error) {
+    return <Typography>Error: {error.message}</Typography>;
+  }
   return (
     <Box display="flex">
       <ProvinceNavbar onProvinceSelected={setSelectedProvince} />
@@ -59,9 +86,8 @@ const ProvinceISP = () => {
    * @returns {Array} Rows related to the provided province
    */
   function getProvinceRows(provinceName) {
-    return provinceName
-      ? provinces.find((p) => p.name === provinceName).rows
-      : [];
+    const matchedProvince = provinces.find((p) => p.name === provinceName);
+    return matchedProvince ? matchedProvince.rows : [];
   }
 
   /**

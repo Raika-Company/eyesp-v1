@@ -38,7 +38,7 @@ const provinces = [
  */
 const ProvinceNavbar = ({ onProvinceSelected }) => {
   const [boxHeight, setBoxHeight] = useState("100dvh");
-  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("تهران");
 
   useEffect(() => {
     const DashboardNavbarElement = document.querySelector(".dashboard-navbar");
