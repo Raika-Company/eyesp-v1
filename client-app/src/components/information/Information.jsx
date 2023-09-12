@@ -1,10 +1,52 @@
+/**
+ * Information component displays definitions related to a specific topic. 
+ * Each definition is presented with a term and its explanation.
+ * @module Information
+ */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Box, Container, Typography } from "@mui/material";
-import definitionsData from "../../app/data/definitions.json";
 import { useTheme } from "@mui/material/styles";
+
+import LoadingSpinner from "../../app/common/LoadingSpinner";
+
+/**
+ * Main component that wraps and presents the list of definitions.
+ * It uses Material-UI's Box and Typography components to structure and style its content.
+ * @function
+ * @returns {JSX.Element} The rendered Information component.
+ */
 
 const Information = () => {
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
+
+  const [definitionsData, setDefinitionsData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('./src/app/data/definitions.json');
+                setDefinitionsData(response.data);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
   return (
     <Container maxWidth="lg">
@@ -45,6 +87,15 @@ const Information = () => {
   );
 };
 
+/**
+ * Represents a single definition term with its explanation. 
+ * Uses the Material-UI's Typography component for displaying content.
+ * @function
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.title - The term/title for the definition.
+ * @param {JSX.Element|string} props.children - The explanation of the term.
+ * @returns {JSX.Element} The rendered DefinitionTerm component.
+ */
 const DefinitionTerm = ({ title, children }) => {
   const theme = useTheme();
 
