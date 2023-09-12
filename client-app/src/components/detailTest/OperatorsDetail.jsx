@@ -242,6 +242,7 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
           alignItems: "center",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
+          gap: "10px",
         }}
       >
         <Box

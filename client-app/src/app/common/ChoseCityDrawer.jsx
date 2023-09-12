@@ -63,7 +63,12 @@ export default function SwipeableTemporaryDrawer() {
 
   const list = (
     <Box
-      sx={{ width: 350 }}
+      sx={{
+        width: 200,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
@@ -73,9 +78,9 @@ export default function SwipeableTemporaryDrawer() {
           key={city}
           sx={{
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            width: "57%",
+            justifyContent: "space-between",
+            marginRight: "2rem",
+            width: "75%",
             alignItems: isXsScreen
               ? "center"
               : isMdScreen

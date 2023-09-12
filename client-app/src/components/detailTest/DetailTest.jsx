@@ -131,13 +131,21 @@ const DetailTest = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2" sx={{ color: "textColor.main" }}>
+              <Typography
+                variant={isSmScreen ? "h6" : "h2"}
+                sx={{
+                  color: "textColor.main",
+                }}
+              >
                 هایISP میانگین عملکرد
               </Typography>
               {isSmScreen ? (
                 <ChoseCityDrawer />
               ) : (
-                <Typography variant="h1" sx={{ color: "info.main" }}>
+                <Typography
+                  variant={isSmScreen ? "h6" : "h2"}
+                  sx={{ color: "info.main" }}
+                >
                   استان {selectedCity}
                 </Typography>
               )}
