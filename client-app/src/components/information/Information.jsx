@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 
 const Information = () => {
   const theme = useTheme();
-  const bgColor = theme.palette.mode === "dark" ? "#f7f9fc" : "#2a2c2f";
+  const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
 
   return (
     <Container maxWidth="lg">
@@ -16,7 +16,7 @@ const Information = () => {
           padding: "1rem",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
           width: "100%",
-          backgroundColor: { bgColor },
+          backgroundColor: bgColor,
           "&:hover": {
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
           },
@@ -68,7 +68,7 @@ const DefinitionTerm = ({ title, children }) => {
               ? "rgba(0, 0, 0, 1)"
               : "rgba(255, 255, 255, 1)",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          transform: "scale(1.04)",
+          transform: "scale(1.05)",
         },
       }}
     >

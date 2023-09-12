@@ -184,16 +184,50 @@ export const lightTheme = createTheme({
   },
 });
 
+/**
+ * Dark theme configuration.
+ *
+ * @type {Object}
+ * @constant
+ */
 export const darkTheme = createTheme({
-  ...lightTheme,
+  ...baseTheme,
   palette: {
-    ...lightTheme.palette,
     mode: "dark",
     primary: {
-      main: "#315A9E",
+      main: "#6798f8",
+      dark: "#527bcd",
+      light: "#8bb2fa"
     },
     secondary: {
-      main: "#B0680F",
+      main: "#f8a665",
+      dark: "#bfbfbf",
+      light: "#e0e0e0"
+    },
+    error: {
+      main: "#f77676",
+      dark: "#d36565",
+      light: "#d36565"
+    },
+    warning: {
+      main: "#FF8E4D",
+      dark: "#FF8E4D",
+      light: "#ffa56d"
+    },
+    info: {
+      main: "#6798f8",
+      dark: "#527bcd",
+      light: "#8bb2fa"
+    },
+    success: {
+      main: "#4ecdab",
+      dark: "#3fb391",
+      light: "#3fb391"
+    },
+    border: {
+      main: "#9e9ea1",
+      dark: "#6b6b6e",
+      light: "#b4b4b8"
     },
     background: {
       default: "#181D23",
@@ -210,65 +244,12 @@ export const darkTheme = createTheme({
       secondary: "#BBB",
     },
   },
-  typography: {
-    h1: {
-      fontFamily: "Peyda, serif",
-    },
-    h2: {
-      fontFamily: "Peyda, serif",
-    },
-    h3: {
-      fontFamily: "PeydaSemiBold, serif",
-      fontSize: "36px",
-    },
-    h4: {
-      fontFamily: "PeydaSemiBold, serif",
-      textEdge: "cap",
-      leadingTrim: "both",
-      fontSize: 30,
-      fontWeight: 600,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h5: {
-      fontFamily: "Peyda, serif",
-      fontWeight: 700,
-      fontSize: 25,
-      lineHeight: "normal",
-      fontStyle: "normal",
-    },
-    h6: {
-      fontFamily: "Peyda, serif",
-      fontSize: 25,
-    },
-    body1: {
-      fontFamily: "Peyda, sans-serif",
-      fontSize: 18,
-    },
-    body2: {
-      fontFamily: "Peyda, sans-serif",
-      fontSize: 16,
-    },
-    subtitle1: {
-      fontFamily: "Peyda, sans-serif",
-      fontSize: "1.35rem",
-      fontWeight: 500,
-      opacity: 0.5,
-    },
-    subtitle2: {
-      fontFamily: "Peyda, sans-serif",
-      fontSize: "1rem",
-      fontWeight: 500,
-      opacity: 0.3,
-    },
-    fontFamily: "Peyda",
-  },
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          background: "#171717",
-          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
+          background: "#13171C",
+          boxShadow: "0px 0px 28.442747116088867px 0px rgba(255, 255, 255, 0.03)",
           borderRadius: 20,
         },
       },

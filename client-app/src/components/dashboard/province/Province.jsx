@@ -8,7 +8,7 @@ import {
   Button,
   Card,
   IconButton,
-  useTheme
+  useTheme,
 } from "@mui/material";
 
 import styles from "../map/IranMap.module.css";
@@ -145,7 +145,7 @@ const Province = () => {
   ];
 
   const backgroundColor =
-    theme.palette.mode === "light" ? "#E8E8E8" : "#171717";
+    theme.palette.mode === "light" ? "#E8E8E8" : "#13171C";
   return (
     <Container maxWidth="xl">
       <Box display="flex" justifyContent="space-between">
@@ -206,8 +206,12 @@ const Province = () => {
           <Typography variant="h2" color="textColor.dark" paddingTop="0.3em">
             دسترسی سریع:
           </Typography>
-          {fastAccessButtons.map((label) => (
-            <FastAccessButton label={label} key={label} />
+          {fastAccessButtons.map((accessButton) => (
+            <FastAccessButton
+              label={accessButton.label}
+              switchName={accessButton.switchName}
+              key={accessButton.label}
+            />
           ))}
         </Box>
       </Card>
