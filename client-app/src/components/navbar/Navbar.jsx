@@ -126,7 +126,7 @@ function MobileNav({ handleOpenDrawer }) {
         <MenuIcon />
       </IconButton>
       <Typography variant="h1" component="h1" color="primary">
-        TIC Radar
+        EyeSP.live
       </Typography>
       <img src={Logo} alt="Eyesp.live logo" height="30px" />
     </Box>
