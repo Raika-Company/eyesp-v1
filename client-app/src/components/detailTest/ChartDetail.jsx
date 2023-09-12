@@ -876,7 +876,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
           }}
         >
           <Typography
-            variant="h1"
+            variant={isSmScreen ? "h3" : "h1"}
             sx={{
               marginRight: isSmScreen ? "3rem" : "5rem",
               marginTop: "2rem",
@@ -909,9 +909,12 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               <YAxis
                 domain={getYAxisDomain(activeSwitch)}
                 tickFormatter={getYAxisTickFormatter(activeSwitch)}
+                tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
               />
               <Tooltip />
-              <Legend />
+              <Legend
+                wrapperStyle={{ fontSize: isSmScreen ? "12px" : "20px" }}
+              />
 
               {renderLine(
                 "مخابرات",

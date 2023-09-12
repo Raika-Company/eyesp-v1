@@ -39,19 +39,17 @@ export default function SwipeableTemporaryDrawer() {
       return acc;
     }, {})
   );
-
   const handleToggle = (city) => {
-    // setCitySwitches((prev) => ({ ...prev, [city]: !prev[city] }));
-    // turn off all switches and turn on only the selected one
-    const updatedSwitches = Object.keys(citySwitches).reduce(
-      (acc, currCity) => {
-        acc[currCity] = currCity === city;
-        return acc;
-      },
-      {}
-    );
-    setCitySwitches(updatedSwitches);
+    setCitySwitches((prevState) => {
+      const newVisibility = { ...prevState };
+      Object.keys(newVisibility).forEach((c) => {
+        newVisibility[c] = false;
+      });
+      newVisibility[city] = true;
+      return newVisibility;
+    });
   };
+
   const label = { inputProps: { "aria-label": "Color switch demo" } };
 
   const getCurrentCity = () => {
