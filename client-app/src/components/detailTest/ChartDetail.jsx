@@ -548,7 +548,6 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
   const { id } = useParams();
   const [chartData, setChartData] = useState([]); // default data (current dataset you've provided)
   const activeCityCount = Object.values(cityVisibility).filter(Boolean).length;
-
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -579,6 +578,90 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
     }
   }, [activeSwitch]);
 
+  function MobileToggleSwitch() {
+    const containerStyle = {
+      marginRight: "1rem",
+      width: "80%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "row-reverse",
+      alignItems: "center",
+      justifyContent: "end",
+    };
+
+    const boxStyle = {
+      width: "50%",
+      display: "flex",
+      flexDirection: "column",
+    };
+
+    const switchBoxStyle = {
+      display: "flex",
+      flexDirection: "row-reverse",
+      alignItems: "center",
+    };
+
+    const typographyStyle = {
+      color: "textColor.dark",
+    };
+
+    const ToggleSwitchBox = ({
+      label,
+      checkedValue,
+      onChangeFunction,
+      chartData,
+    }) => (
+      <Box sx={switchBoxStyle}>
+        <Typography variant="subtitle2" sx={typographyStyle}>
+          {label}
+        </Typography>
+        <Switch
+          checked={activeSwitch === checkedValue}
+          onChange={onChangeFunction}
+          onClick={() => setActiveSwitch(checkedValue)}
+          {...label}
+        />
+      </Box>
+    );
+
+    return (
+      <Box sx={containerStyle}>
+        <Box sx={boxStyle}>
+          <ToggleSwitchBox
+            label="میانگین عملکرد"
+            checkedValue="performanceAverage"
+            onChangeFunction={(e) => setChartData(AveragePerformance)}
+            chartData={AveragePerformance}
+          />
+          <ToggleSwitchBox
+            label="میانگین پینگ"
+            checkedValue="pingAverage"
+            onChangeFunction={(e) => setChartData(pingData)}
+            chartData={pingData}
+            defaultChecked
+          />
+        </Box>
+        <Box sx={boxStyle}>
+          <ToggleSwitchBox
+            label="میانگین سرعت"
+            checkedValue="speedAverage"
+            onChangeFunction={(e) => {
+              setSpeedAverage(e.target.checked);
+              setChartData(speedData);
+            }}
+            chartData={speedData}
+          />
+          <ToggleSwitchBox
+            label="میانگین پکت پلاس"
+            checkedValue="packetLossAverage"
+            onChangeFunction={(e) => setChartData(packetLossData)}
+            chartData={packetLossData}
+          />
+        </Box>
+      </Box>
+    );
+  }
+
   const daysOfWeek = [
     "شنبه",
     "یکشنبه",
@@ -588,125 +671,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
     "پنج‌شنبه",
     "جمعه",
   ];
-  function MobileToggleSwitch() {
-    return (
-      <Box
-        sx={{
-          marginRight: "1rem",
-          width: "80%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "row-reverse",
-          alignItems: "center",
-          justifyContent: "end",
-        }}
-      >
-        <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                color: "textColor.dark",
-              }}
-            >
-              میانگین عملکرد
-            </Typography>
-            <Switch
-              checked={activeSwitch === "performanceAverage"}
-              onChange={(e) => {
-                setChartData(AveragePerformance); // change data to ping data
-              }}
-              onClick={() => setActiveSwitch("performanceAverage")}
-              {...label}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                color: "textColor.dark",
-              }}
-            >
-              میانگین پینگ
-            </Typography>
-            <Switch
-              checked={activeSwitch === "pingAverage"}
-              onChange={(e) => {
-                setChartData(pingData); // change data to ping data
-              }}
-              onClick={() => setActiveSwitch("pingAverage")}
-              {...label}
-              defaultChecked
-            />
-          </Box>
-        </Box>
-        <Box sx={{ width: "50%", display: "flex", flexDirection: "column" }}>
-          {" "}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                color: "textColor.dark",
-              }}
-            >
-              میانگین سرعت
-            </Typography>
-            <Switch
-              checked={activeSwitch === "speedAverage"}
-              onChange={(e) => {
-                setSpeedAverage(e.target.checked);
-                setChartData(speedData); // change data to speed data
-              }}
-              onClick={() => setActiveSwitch("speedAverage")}
-              {...label}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                color: "textColor.dark",
-              }}
-            >
-              میانگین پکت پلاس
-            </Typography>
-            <Switch
-              checked={activeSwitch === "packetLossAverage"}
-              onChange={(e) => {
-                setChartData(packetLossData); // change data to ping data
-              }}
-              onClick={() => setActiveSwitch("packetLossAverage")}
-              {...label}
-            />
-          </Box>
-        </Box>
-      </Box>
-    );
-  }
+
   function DesktopToggleSwitch() {
     return (
       <Box
@@ -791,6 +756,56 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       </Box>
     );
   }
+
+  const getYAxisDomain = (activeSwitch) => {
+    switch (activeSwitch) {
+      case "speedAverage":
+        return [10, 30];
+      case "pingAverage":
+        return [20, 60];
+      case "performanceAverage":
+        return [20, 32];
+      case "packetLossAverage":
+        return [0, 11];
+      default:
+        return [0, 11];
+    }
+  };
+
+  const getYAxisTickFormatter = (activeSwitch) => (value) => {
+    if (activeSwitch === "speedAverage") return `${value}Mb`;
+    if (["performanceAverage", "packetLossAverage"].includes(activeSwitch))
+      return `${value}%`;
+    return `${value}ms`;
+  };
+
+  const renderLine = (dataKey, stroke, condition = true) => {
+    if (condition) {
+      return (
+        <Line
+          type="monotone"
+          dataKey={dataKey}
+          stroke={stroke}
+          activeDot={{ r: 8 }}
+        />
+      );
+    }
+    return null;
+  };
+
+  const cityColorMapping = {
+    فارس: "#FF5733",
+    تهران: "#5D4295",
+    اصفهان: "#3357FF",
+    مشهد: "#FF33F4",
+    اهواز: "#57FF33",
+    تبریز: "#B89F88",
+    مازندران: "#AAD9DC",
+    سمنان: "#FF9533",
+    خوزستان: "#FFBF1B",
+    گیلان: "#9A1BFF",
+  };
+
   return (
     <>
       <Card
@@ -879,173 +894,53 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             marginTop: "1rem",
           }}
         >
-          {/* <Line responsive="true" options={options} data={data} /> */}
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               width={500}
               height={300}
               data={chartData}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="name"
                 tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
               />
-
               <YAxis
-                domain={
-                  activeSwitch === "speedAverage"
-                    ? [10, 30]
-                    : activeSwitch === "pingAverage"
-                    ? [20, 60]
-                    : activeSwitch === "performanceAverage"
-                    ? [20, 32]
-                    : activeSwitch === "packetLossAverage"
-                    ? [0, 11]
-                    : [0, 11]
-                }
-                tickFormatter={(value) => {
-                  if (activeSwitch === "speedAverage") return `${value}Mb`;
-                  if (
-                    activeSwitch === "performanceAverage" ||
-                    activeSwitch === "packetLossAverage"
-                  )
-                    return `${value}%`;
-                  return `${value}ms`;
-                }}
+                domain={getYAxisDomain(activeSwitch)}
+                tickFormatter={getYAxisTickFormatter(activeSwitch)}
               />
-
               <Tooltip />
               <Legend />
 
-              {(activeCityCount < 1 || visibility.مخابرات) && (
-                <Line
-                  type="monotone"
-                  dataKey="مخابرات"
-                  stroke="#126AED"
-                  activeDot={{ r: 8 }}
-                />
+              {renderLine(
+                "مخابرات",
+                "#126AED",
+                activeCityCount < 1 || visibility.مخابرات
               )}
-              {(activeCityCount < 1 || visibility.ایرانسل) && (
-                <Line
-                  type="monotone"
-                  dataKey="ایرانسل"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
+              {renderLine(
+                "ایرانسل",
+                "#82ca9d",
+                activeCityCount < 1 || visibility.ایرانسل
               )}
-
-              {/* The new lines */}
-              {(activeCityCount < 1 || visibility.شاتل) && (
-                <Line
-                  type="monotone"
-                  dataKey="شاتل"
-                  stroke="pink"
-                  activeDot={{ r: 8 }}
-                />
+              {renderLine(
+                "شاتل",
+                "pink",
+                activeCityCount < 1 || visibility.شاتل
               )}
-              {(activeCityCount < 1 || visibility.رایتل) && (
-                <Line
-                  type="monotone"
-                  dataKey="رایتل"
-                  stroke="purple"
-                  activeDot={{ r: 8 }}
-                />
+              {renderLine(
+                "رایتل",
+                "purple",
+                activeCityCount < 1 || visibility.رایتل
+              )}
+              {renderLine(
+                "همراه_اول",
+                "orange",
+                activeCityCount < 1 || visibility.همراه_اول
               )}
 
-              {(activeCityCount < 1 || visibility.همراه_اول) && (
-                <Line
-                  type="monotone"
-                  dataKey="همراه_اول"
-                  stroke="orange"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["فارس"] && (
-                <Line
-                  type="monotone"
-                  dataKey="فارس"
-                  stroke="#126AED"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["تهران"] && (
-                <Line
-                  type="monotone"
-                  dataKey="تهران"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["اصفهان"] && (
-                <Line
-                  type="monotone"
-                  dataKey="اصفهان"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["مشهد"] && (
-                <Line
-                  type="monotone"
-                  dataKey="مشهد"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["اهواز"] && (
-                <Line
-                  type="monotone"
-                  dataKey="اهواز"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["تبریز"] && (
-                <Line
-                  type="monotone"
-                  dataKey="تبریز"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["مازندران"] && (
-                <Line
-                  type="monotone"
-                  dataKey="مازندران"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["سمنان"] && (
-                <Line
-                  type="monotone"
-                  dataKey="سمنان"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["خوزستان"] && (
-                <Line
-                  type="monotone"
-                  dataKey="خوزستان"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
-              )}
-              {cityVisibility["گیلان"] && (
-                <Line
-                  type="monotone"
-                  dataKey="گیلان"
-                  stroke="#82ca9d"
-                  activeDot={{ r: 8 }}
-                />
+              {Object.entries(cityColorMapping).map(([city, color]) =>
+                renderLine(city, color, cityVisibility[city])
               )}
             </LineChart>
           </ResponsiveContainer>
