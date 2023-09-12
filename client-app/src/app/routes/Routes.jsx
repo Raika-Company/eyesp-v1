@@ -103,7 +103,7 @@ export const dashboardRoutes = [
     robots: "noindex, nofollow",
   },
   {
-    path: "/province-ISP",
+    path: "/province-isp",
     element: <ProvinceISP />,
     title: "Province ISP | Rayka ICT",
     description: "Get insights into your ISP's performance.",
