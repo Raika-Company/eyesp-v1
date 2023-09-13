@@ -9,6 +9,7 @@ const DetailTest = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [selectedCity, setSelectedCity] = useState("فارس");
 
@@ -66,7 +67,11 @@ const DetailTest = () => {
             <Typography
               variant="subtitle2"
               color="textColor.light"
-              sx={{ borderBottom: "1px solid", borderColor: "border.main" }}
+              sx={{
+                borderBottom: "1px solid",
+                borderColor: "border.main",
+                fontSize: "18px",
+              }}
             >
               لیست استان ها
             </Typography>
@@ -79,8 +84,8 @@ const DetailTest = () => {
                 display: "flex",
                 flexDirection:
                   isMdScreen || isXsScreen ? "column" : "row-reverse",
-                justifyContent: "space-between",
-                width: "60%",
+                justifyContent: "space-around",
+                width: "100%",
                 alignItems: isXsScreen || isMdScreen ? "center" : "normal",
               }}
             >

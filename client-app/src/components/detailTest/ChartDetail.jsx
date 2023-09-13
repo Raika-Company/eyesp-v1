@@ -882,7 +882,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
         </Box>
         <Box
           sx={{
-            width: "103%",
+            width: "97%",
             height: "56%",
             alignItems: "center",
             marginRight: "3rem",
