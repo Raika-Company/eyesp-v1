@@ -24,6 +24,7 @@ import {
 import "./detail.css";
 import jMoment from "moment-jalaali";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
+
 const startDay = jMoment().subtract(6, "days");
 const dates = Array.from({ length: 7 }).map((_, index) =>
   startDay.add(index === 0 ? 0 : 1, "days").format("jYYYY/jMM/jDD")
@@ -621,7 +622,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
           checked={activeSwitch === checkedValue}
           onChange={onChangeFunction}
           onClick={() => setActiveSwitch(checkedValue)}
-          {...label}
+          // {label}
         />
       </Box>
     );
@@ -785,6 +786,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
     if (condition) {
       return (
         <Line
+          key={dataKey}
           type="monotone"
           dataKey={dataKey}
           stroke={stroke}
