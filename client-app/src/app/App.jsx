@@ -1,7 +1,7 @@
 import { useState, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
 import Navbar from "../components/navbar/Navbar";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
