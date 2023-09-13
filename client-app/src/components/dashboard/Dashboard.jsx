@@ -216,7 +216,7 @@ const Dashboard = () => {
             رتبه بندی ISPها{" "}
           </Typography>
           <Typography
-            variant="subtitle2"
+            variant="h6"
             component="div"
             gutterBottom
             sx={{
@@ -248,7 +248,7 @@ const Dashboard = () => {
         <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
         {visibleRows < RawISPData.length && (
           <Typography
-            variant="h3"
+            variant="h2"
             sx={{
               color: "textColor.main",
               textAlign: "center",
@@ -271,7 +271,7 @@ const Dashboard = () => {
           padding: "1rem 2.5rem",
         }}
       >
-        <Typography textAlign="center" color="textColor.main" variant="h3">
+        <Typography textAlign="center" color="textColor.main" variant="h2">
           جزئیات فنی
         </Typography>
 

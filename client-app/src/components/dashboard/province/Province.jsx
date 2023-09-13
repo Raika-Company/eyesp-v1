@@ -151,8 +151,8 @@ const Province = () => {
     theme.palette.mode === "light" ? "#E8E8E8" : "#13171C";
   return (
     <Container maxWidth="xl">
-      <Box display="flex" justifyContent="space-between">
-        <Typography variant="h2" color="textColor.light" gutterBottom>
+      <Box display="flex" justifyContent="space-between" marginTop="1rem">
+        <Typography variant="h1" color="textColor.light" gutterBottom>
           میانگین عملکرد ISPهای{" "}
           <Typography variant="h1" component="span" sx={{ color: "info.main" }}>
             استان {provinceName}
@@ -206,7 +206,7 @@ const Province = () => {
           gap={2}
           padding="1em"
         >
-          <Typography variant="h2" color="textColor.dark" paddingTop="0.3em">
+          <Typography variant="h1" color="textColor.dark" paddingTop="0.3em">
             دسترسی سریع:
           </Typography>
           {fastAccessButtons.map((accessButton) => (
@@ -227,7 +227,7 @@ const Province = () => {
           padding: "1.5rem",
         }}
       >
-        <Typography variant="h2" gutterBottom color="textColor.light">
+        <Typography variant="h1" gutterBottom color="textColor.light">
           تاریخچه اختلالات
         </Typography>
         <IconButton aria-label="filter">
@@ -260,7 +260,7 @@ const Province = () => {
           }}
         >
           <Typography
-            variant="overline"
+            variant="subtitle1"
             sx={{
               color: "textColor.dark",
               display: "flex",
@@ -269,7 +269,7 @@ const Province = () => {
           >
             پرش به تاریخ:
             <Typography
-              variant="overline"
+              variant="subtitle1"
               component="span"
               sx={{
                 textAlign: "center",

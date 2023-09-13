@@ -132,7 +132,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant={isSmScreen ? "h6" : "h2"}
+                variant={isSmScreen ? "h3" : "h1"}
                 sx={{
                   color: "textColor.main",
                 }}
@@ -143,7 +143,7 @@ const DetailTest = () => {
                 <ChoseCityDrawer />
               ) : (
                 <Typography
-                  variant={isSmScreen ? "h6" : "h2"}
+                  variant={isSmScreen ? "h2" : "h1"}
                   sx={{ color: "info.main" }}
                 >
                   استان {selectedCity}

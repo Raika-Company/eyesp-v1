@@ -45,7 +45,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
     <Typography
-      variant="h5"
+      variant="h4"
       sx={{
         color: "textColor.dark",
         opacity: 0.3,
@@ -64,11 +64,11 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
           pt: "0.5rem",
         }}
       >
-        <Typography variant="h4" sx={{ color: "textColor.dark" }}>
+        <Typography variant="h3" sx={{ color: "textColor.dark" }}>
           {measure}
         </Typography>
 
-        <Typography variant="h4" sx={{ color: "textColor.dark" }}>
+        <Typography variant="h3" sx={{ color: "textColor.dark" }}>
           {value !== null ? value : "--"}
         </Typography>
       </Box>
@@ -81,10 +81,10 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" alignItems="flex-end" flexDirection="row" gap={1}>
     <img src={iconSrc} alt={altText} height="60px" />
     <Box display="flex" flexDirection="column" textAlign="right">
-      <Typography component="h6" variant="h4" color="textColor.dark">
+      <Typography component="h6" variant="h2" color="textColor.dark">
         {title}
       </Typography>
-      <Typography component="span" variant="h5" color="textColor.light">
+      <Typography component="span" variant="h3" color="textColor.light">
         {value}
       </Typography>
       {buttonLabel ? <Button>{buttonLabel}</Button> : null}

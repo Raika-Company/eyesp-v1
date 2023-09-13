@@ -80,7 +80,7 @@ const DashboardNavbar = () => {
             }}
           >
             {isAutoMosaicOpen && (
-              <Typography component="span" variant="h3">
+              <Typography component="span" variant="h6">
                 داشبورد
               </Typography>
             )}
@@ -126,7 +126,7 @@ const DashboardNavbar = () => {
               />
             </IconButton>
             {isSpeedIconOpen && (
-              <Typography component="span" variant="h3">
+              <Typography component="span" variant="h6">
                 تست سرعت
               </Typography>
             )}

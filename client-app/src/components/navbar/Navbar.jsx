@@ -81,7 +81,7 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
               marginLeft: "20px",
               color:
                 location.pathname === path ? "info.main" : "textColor.light",
-              marginTop: "0.55em",
+              marginTop: "0.9em",
             }}
           >
             {text}
@@ -91,12 +91,12 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
           <ThemeSwitcher themeMode={themeMode} toggleTheme={toggleTheme} />
         </Box>
       </Box>
-      <Box display="flex" marginTop="0.3em">
+      <Box display="flex" marginTop="0.9em">
         <img
           src={Logo}
           alt="Eyesp.live logo"
           height="32px"
-          style={{ marginInline: "0.5rem",marginTop:"0.4rem" }}
+          style={{ marginInline: "0.5rem" }}
         />
         <Typography
           variant="h1"

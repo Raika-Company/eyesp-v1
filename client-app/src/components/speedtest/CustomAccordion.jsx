@@ -13,6 +13,7 @@ import {
   Box,
   Typography,
   Button,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -33,6 +34,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
  * @returns {React.Element} Rendered CustomAccordion component.
  */
 const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
+  const theme = useTheme();
+
   return (
     <Accordion
       expanded={expanded}
@@ -54,7 +57,7 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography variant="h4" component="h6" color="textColor.dark">
+            <Typography variant="h2" component="h6" color="textColor.dark">
               همراه اول
             </Typography>
             <Typography variant="h3" color="textColor.light">
@@ -81,13 +84,15 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography component="h6" variant="h4" color="textColor.dark">
+            <Typography component="h6" variant="h2" color="textColor.dark">
               سرور مقصد
             </Typography>
             <Typography variant="h3" color="textColor.light">
               تهران - امام
             </Typography>
-            <Button variant="overline" sx={{ color: "info.main" }}>
+            <Button
+              sx={{ color: "info.main", fontSize: theme.typography.body2 }}
+            >
               تغییر سرور
             </Button>
           </Box>

@@ -49,15 +49,15 @@ const Divider = () => (
 // SpeedBox displays speed statistics such as ping, upload, and download speeds
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
-    <Typography variant="h4" color="textColor.light">
+    <Typography variant="h5" color="textColor.light">
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography variant="h2" component="span" color="textColor.dark">
+      <Typography variant="h3" component="span" color="textColor.dark">
         {measure}
       </Typography>
       <Typography
-        variant="h2"
+        variant="h3"
         component="span"
         marginX="0.5rem"
         color="textColor.dark"
@@ -114,7 +114,7 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           <Button
             sx={{
               color: "info.main",
-              fontSize: theme.typography.button,
+              fontSize: theme.typography.body1,
               display: "flex",
               justifyContent: "flex-start",
             }}

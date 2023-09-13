@@ -613,7 +613,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       chartData,
     }) => (
       <Box sx={switchBoxStyle}>
-        <Typography variant="subtitle2" sx={typographyStyle}>
+        <Typography variant="subtitle1" sx={typographyStyle}>
           {label}
         </Typography>
         <Switch
@@ -695,7 +695,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="h2" color="textColor.dark">
             میانگین عملکرد
           </Typography>
           <Switch
@@ -711,7 +711,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="h2" color="textColor.dark">
             میانگین پینگ
           </Typography>
           <Switch
@@ -728,7 +728,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="h2" color="textColor.dark">
             میانگین سرعت
           </Typography>
           <Switch
@@ -745,7 +745,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="h2" color="textColor.dark">
             میانگین پکت لاس
           </Typography>
           <Switch
@@ -873,7 +873,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               sx={{
                 color: "info.main",
               }}
-              variant={isSmScreen ? "h3" : "h1"}
+              variant={isSmScreen ? "h1" : "h1"}
             >
               98%
             </Typography>

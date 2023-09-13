@@ -7,8 +7,7 @@ import ping from "../../app/assets/image/ping.svg";
 function ResultTestHistory() {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const getImageWidth = () =>
-    isSmScreen ? "0.8rem" : "2rem";
+  const getImageWidth = () => (isSmScreen ? "0.8rem" : "2rem");
 
   const getFlexStyles = (idx) => {
     const basisValues = [
@@ -44,7 +43,7 @@ function ResultTestHistory() {
         `${result.ping}ms`,
       ].map((text, idx) => (
         <Typography
-          variant="subtitle2"
+          variant="body2"
           key={idx}
           sx={{
             ...getFlexStyles(idx),
@@ -100,12 +99,12 @@ function ResultTestHistory() {
             display="flex"
             justifyContent="center"
             {...getFlexStyles(idx)}
-            gap={ isSmScreen ? "0.3rem" : "0.5rem" }
+            gap={isSmScreen ? "0.3rem" : "0.5rem"}
           >
             {image && (
               <img style={{ width: getImageWidth() }} src={image} alt={label} />
             )}
-            <Typography variant="subtitle2">{label}</Typography>
+            <Typography variant="body2">{label}</Typography>
           </Box>
         ))}
       </Box>

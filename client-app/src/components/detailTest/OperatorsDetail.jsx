@@ -256,8 +256,8 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
           }}
         >
           {" "}
-          <Typography variant="h4" color="textColor.main">
-            ارایه دهنده های اینترنت
+          <Typography variant="h2" color="textColor.main">
+            ارائه دهنده های اینترنت
           </Typography>
         </Box>
         {isSmScreen ? (
