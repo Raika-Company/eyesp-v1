@@ -85,6 +85,7 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
         display: "flex",
         flexDirection: "row-reverse",
         alignItems: "center",
+        color: "textColor.light",
       }}
     >
       <Typography variant="h6">{name}</Typography>

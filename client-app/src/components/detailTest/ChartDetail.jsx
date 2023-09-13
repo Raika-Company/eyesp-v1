@@ -604,7 +604,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
     };
 
     const typographyStyle = {
-      color: "textColor.dark",
+      color: "textColor.light",
     };
 
     const ToggleSwitchBox = ({
@@ -813,14 +813,14 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       <Card
         sx={{
           width: "93%",
-          height: "44%",
+          height: "50%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
           alignItems: "center",
-          gap: "20px",
+          gap: "10px",
         }}
       >
         <Box
@@ -882,8 +882,8 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
         </Box>
         <Box
           sx={{
-            width: "99%",
-            height: "48%",
+            width: "103%",
+            height: "56%",
             alignItems: "center",
             marginRight: "3rem",
           }}
