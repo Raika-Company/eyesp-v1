@@ -8,7 +8,7 @@ import {
   Menu,
   Card,
 } from "@mui/material";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import {
@@ -838,7 +838,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
         </Box>
         <Box
           sx={{
-            width: "80%",
+            width: "78%",
             height: "10%",
             display: "flex",
             justifyContent: "space-between",

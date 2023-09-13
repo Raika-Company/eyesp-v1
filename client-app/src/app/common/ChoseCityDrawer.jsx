@@ -40,14 +40,10 @@ export default function SwipeableTemporaryDrawer() {
     }, {})
   );
   const handleToggle = (city) => {
-    setCitySwitches((prevState) => {
-      const newVisibility = { ...prevState };
-      Object.keys(newVisibility).forEach((c) => {
-        newVisibility[c] = false;
-      });
-      newVisibility[city] = true;
-      return newVisibility;
-    });
+    setCitySwitches((prevState) => ({
+      ...prevState,
+      [city]: !prevState[city],
+    }));
   };
 
   const label = { inputProps: { "aria-label": "Color switch demo" } };
