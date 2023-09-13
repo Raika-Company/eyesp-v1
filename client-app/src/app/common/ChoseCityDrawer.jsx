@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-
 import { Link, useMediaQuery, Switch, Typography } from "@mui/material";
 
 export default function ChoseCityDrawer({ cityChosen, setCityChosen }) {
@@ -9,6 +8,8 @@ export default function ChoseCityDrawer({ cityChosen, setCityChosen }) {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+
+  const [lastSelectedCity, setLastSelectedCity] = useState("فارس"); // State to track the last selected city
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -21,6 +22,7 @@ export default function ChoseCityDrawer({ cityChosen, setCityChosen }) {
 
     setIsOpen(open);
   };
+
   const cities = [
     "فارس",
     "تهران",
@@ -33,17 +35,28 @@ export default function ChoseCityDrawer({ cityChosen, setCityChosen }) {
     "خوزستان",
     "گیلان",
   ];
+
   const handleToggle = (city) => {
-    setCityChosen((prevState) => ({
-      ...prevState,
-      [city]: !prevState[city],
-    }));
+    setCityChosen((prevState) => {
+      const updatedState = {
+        ...prevState,
+        [city]: !prevState[city],
+      };
+
+      // Update the lastSelectedCity when a city is toggled on
+      if (updatedState[city]) {
+        setLastSelectedCity(city);
+      }
+
+      return updatedState;
+    });
   };
+
   const label = { inputProps: { "aria-label": "Color switch demo" } };
 
   const getCurrentCity = () => {
-    for (const city in cityChosen) {
-      if (cityChosen[city]) return `استان ${city}`;
+    if (lastSelectedCity && cityChosen[lastSelectedCity]) {
+      return `استان ${lastSelectedCity}`;
     }
     return "استان فارس";
   };

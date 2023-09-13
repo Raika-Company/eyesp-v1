@@ -42,12 +42,17 @@ const DetailTest = () => {
   );
 
   const handleToggleCity = (city) => {
-    setCityVisibility((prevState) => ({
-      ...prevState,
-      [city]: !prevState[city],
-    }));
-  };
+    setCityVisibility((prevState) => {
+      const newState = { ...prevState, [city]: !prevState[city] };
 
+      // Only update the selectedCity if the city is being toggled on
+      if (newState[city]) {
+        setSelectedCity(city);
+      }
+
+      return newState;
+    });
+  };
   return (
     <>
       <Box
