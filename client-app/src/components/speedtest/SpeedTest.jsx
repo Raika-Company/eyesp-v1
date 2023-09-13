@@ -22,7 +22,7 @@ import Upload from "../../app/assets/image/upload.svg";
 import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
-import Result from "./Result";
+
 
 // utils
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";

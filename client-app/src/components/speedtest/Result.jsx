@@ -222,7 +222,7 @@ const Result = () => {
         gap={4}
         display="flex"
         justifyContent="space-evenly"
-        width="35%"
+        width="55%"
         marginTop="5dvh"
         marginX="auto"
         alignItems="center"
@@ -237,14 +237,19 @@ const Result = () => {
           to="/"
           variant="outlined"
           sx={{
-            backgroundColor: "#126AED",
+            backgroundColor: "primary.main",
             color: "white",
             fontSize: "1.8rem",
             borderRadius: "1.3rem",
             border: 0,
-            width: "24rem",
+            width: "26rem",
             p: "0.7rem",
             textAlign: "center",
+            ":hover": {
+              bgcolor: "#191970",
+              color: "white",
+              border: "none",
+            },
           }}
         >
           تست مجدد
@@ -253,13 +258,18 @@ const Result = () => {
           onClick={handleClickOpen}
           variant="outlined"
           sx={{
-            backgroundColor: "#DB7F12",
+            backgroundColor: "secondary.main",
             color: "white",
             fontSize: "1.8rem",
             borderRadius: "1.3rem",
             border: 0,
-            width: "15rem",
+            width: "19rem",
             p: "0.7rem",
+            ":hover": {
+              bgcolor: "#893101",
+              color: "white",
+              border: "none",
+            },
           }}
         >
           اشتراک گذاری
@@ -334,7 +344,12 @@ const Result = () => {
             borderRadius: "1.625rem",
             border: 0,
             p: "1rem",
-            width: "90%",
+            width: "95%",
+            ":hover": {
+              bgcolor: "#191970",
+              color: "white",
+              border: "none",
+            },
           }}
         >
           تست مجدد
@@ -349,7 +364,12 @@ const Result = () => {
             borderRadius: "1.625rem",
             border: 0,
             p: "1rem",
-            width: "90%",
+            width: "95%",
+            ":hover": {
+              bgcolor: "#893101",
+              color: "white",
+              border: "none",
+            },
           }}
         >
           اشتراک گذاری
@@ -376,10 +396,11 @@ const Result = () => {
             fontSize: "10px",
             justifyContent: "center",
             alignItems: "center",
+            overflow: "auto",
           }}
         >
           {ShareDialog.map((item, index) => (
-            <ListItem sx={{}} key={index}>
+            <ListItem key={index}>
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -417,16 +438,15 @@ const Result = () => {
             </ListItem>
           ))}
         </List>
-
         <DialogContent>
           <DialogContentText
             sx={{
               fontSize: theme.typography.h6,
               p: "1.5rem 0.5rem",
-              border: "1px solid",
               color: "textColor.main",
-              borderColor: "border.main",
               borderRadius: "0.6rem",
+              boxShadow:
+                "inset 1px 1px 5px #b8b9be, inset -1px -1px 7px #b8b9be",
             }}
             id="alert-dialog-slide-description"
             ref={textRef}
