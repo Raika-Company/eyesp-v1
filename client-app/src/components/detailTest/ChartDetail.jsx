@@ -909,7 +909,10 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               />
               <Tooltip />
               <Legend
-                wrapperStyle={{ fontSize: isSmScreen ? "12px" : "20px" }}
+                wrapperStyle={{
+                  fontSize: isSmScreen ? "12px" : "20px",
+                  marginLeft: "2rem",
+                }}
               />
 
               {renderLine(
