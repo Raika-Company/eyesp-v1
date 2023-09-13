@@ -140,7 +140,10 @@ const DetailTest = () => {
                 هایISP میانگین عملکرد
               </Typography>
               {isSmScreen ? (
-                <ChoseCityDrawer />
+                <ChoseCityDrawer
+                  cityChosen={cityVisibility}
+                  setCityChosen={setCityVisibility}
+                />
               ) : (
                 <Typography
                   variant={isSmScreen ? "h6" : "h2"}

@@ -4,7 +4,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 import { Link, useMediaQuery, Switch, Typography } from "@mui/material";
 
-export default function SwipeableTemporaryDrawer() {
+export default function ChoseCityDrawer({ cityChosen, setCityChosen }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -33,24 +33,17 @@ export default function SwipeableTemporaryDrawer() {
     "خوزستان",
     "گیلان",
   ];
-  const [citySwitches, setCitySwitches] = useState(
-    cities.reduce((acc, city) => {
-      acc[city] = city === "فارس";
-      return acc;
-    }, {})
-  );
   const handleToggle = (city) => {
-    setCitySwitches((prevState) => ({
+    setCityChosen((prevState) => ({
       ...prevState,
       [city]: !prevState[city],
     }));
   };
-
   const label = { inputProps: { "aria-label": "Color switch demo" } };
 
   const getCurrentCity = () => {
-    for (const city in citySwitches) {
-      if (citySwitches[city]) return `استان ${city}`;
+    for (const city in cityChosen) {
+      if (cityChosen[city]) return `استان ${city}`;
     }
     return "استان فارس";
   };
@@ -93,7 +86,7 @@ export default function SwipeableTemporaryDrawer() {
           </Typography>
           <Switch
             {...label}
-            checked={citySwitches[city] || false}
+            checked={cityChosen[city] || false}
             onChange={() => handleToggle(city)}
           />
         </Box>
