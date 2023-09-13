@@ -590,7 +590,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
     };
 
     const boxStyle = {
-      width: "50%",
+      width: "53%",
       display: "flex",
       flexDirection: "column",
       whiteSpace: "nowrap",
@@ -600,6 +600,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       display: "flex",
       flexDirection: "row-reverse",
       alignItems: "center",
+      justifyContent: "space-between",
     };
 
     const typographyStyle = {
@@ -812,14 +813,14 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       <Card
         sx={{
           width: "93%",
-          height: "51%",
+          height: "44%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
           border: "2px solid #E0E0E0",
           borderRadius: "2em",
           alignItems: "center",
-          gap: "2px",
+          gap: "20px",
         }}
       >
         <Box
@@ -882,9 +883,9 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
         <Box
           sx={{
             width: "99%",
-            height: "67%",
+            height: "48%",
             alignItems: "center",
-            marginTop: "1rem",
+            marginRight: "3rem",
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
