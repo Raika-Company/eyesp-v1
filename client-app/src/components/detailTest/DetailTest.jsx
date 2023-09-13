@@ -70,12 +70,11 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="subtitle2"
+              variant="h3"
               color="textColor.light"
               sx={{
                 borderBottom: "1px solid",
                 borderColor: "border.main",
-                fontSize: "18px",
               }}
             >
               لیست استان ها
@@ -85,7 +84,7 @@ const DetailTest = () => {
             <Box
               key={city}
               sx={{
-                color: "textColor.dark",
+                color: "textColor.main",
                 display: "flex",
                 flexDirection:
                   isMdScreen || isXsScreen ? "column" : "row-reverse",
@@ -95,9 +94,9 @@ const DetailTest = () => {
               }}
             >
               <Typography
+                variant="h4"
                 sx={{
                   marginTop: "3px",
-                  fontSize: isMdScreen ? "10px" : isXsScreen ? "8px" : "",
                 }}
               >
                 {city}

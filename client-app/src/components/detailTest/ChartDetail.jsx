@@ -697,7 +697,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.main">
             میانگین عملکرد
           </Typography>
           <Switch
@@ -713,7 +713,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.main">
             میانگین پینگ
           </Typography>
           <Switch
@@ -730,7 +730,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.main">
             میانگین سرعت
           </Typography>
           <Switch
@@ -747,7 +747,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2" color="textColor.dark">
+          <Typography variant="subtitle2" color="textColor.main">
             میانگین پکت لاس
           </Typography>
           <Switch

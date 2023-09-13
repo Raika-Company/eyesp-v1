@@ -85,10 +85,10 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
         display: "flex",
         flexDirection: "row-reverse",
         alignItems: "center",
-        color: "textColor.light",
+        color: "textColor.main",
       }}
     >
-      <Typography variant="h6">{name}</Typography>
+      <Typography variant="h4">{name}</Typography>
       {color === "pink" ? (
         <PinkSwitch
           {...label}
