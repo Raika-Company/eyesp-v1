@@ -75,7 +75,7 @@ const baseTheme = {
     MuiDrawer: {
       styleOverrides: {
         root: {
-          direction: "rtl",
+          direction: "ltr",
         },
         paper: {
           position: "absolute",

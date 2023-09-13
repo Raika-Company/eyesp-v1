@@ -125,7 +125,7 @@ const DefinitionTerm = ({ title, children }) => {
     >
       <Typography
         component="span"
-        fontWeight="bold"
+        fontFamily="PeydaBold"
         sx={{
           color: "#0077b6",
           marginRight: "0.5em",
