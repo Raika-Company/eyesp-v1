@@ -1,13 +1,16 @@
 import { forwardRef, useState, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
+  Alert,
   Box,
   Button,
+  Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -16,6 +19,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import { Snackbar, SnackbarContent } from "@mui/material";
 
@@ -139,7 +143,6 @@ const Result = () => {
   const handleCopyLink = () => {
     if (textRef.current) {
       navigator.clipboard.writeText(textRef.current.innerText).then(() => {
-        handleClose();
         setSnackbarOpen(true);
       });
     }
@@ -388,8 +391,6 @@ const Result = () => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"اشتراک گذاری تست سرعت شما"}</DialogTitle>
-
         <List
           sx={{
             display: "flex",
@@ -438,26 +439,33 @@ const Result = () => {
             </ListItem>
           ))}
         </List>
-        <DialogContent>
-          <DialogContentText
-            sx={{
-              fontSize: theme.typography.h6,
-              p: "1.5rem 0.5rem",
-              color: "textColor.main",
-              borderRadius: "0.6rem",
-              boxShadow:
-                "inset 1px 1px 5px #b8b9be, inset -1px -1px 7px #b8b9be",
-            }}
-            id="alert-dialog-slide-description"
-            ref={textRef}
-          >
-            {`http://185.11.89.101:6530/result?ping=${ping}&download=${download}&upload=${upload}`}
-          </DialogContentText>
+        <DialogContent
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0.5em",
+            gap: 1,
+          }}
+        >
+          <Button variant="contained" color="success" onClick={handleCopyLink}>
+            کپی
+          </Button>
+          <Card sx={{height: "50px", display: "flex", alignItems: "center"}}>
+            <DialogContentText
+              sx={{
+                fontSize: theme.typography.h6,
+                color: "textColor.main",
+                whiteSpace: "nowrap",
+                overflow: "auto",
+              }}
+              id="alert-dialog-slide-description"
+              ref={textRef}
+            >
+              {`http://185.11.89.101:6530/result?ping=${ping}&download=${download}&upload=${upload}`}
+            </DialogContentText>
+          </Card>
         </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleCopyLink}>کپی کردن لینک</Button>
-        </DialogActions>
       </Dialog>
       <Snackbar
         open={snackbarOpen}
@@ -465,18 +473,9 @@ const Result = () => {
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <SnackbarContent
-          message="لینک کپی شد"
-          action={
-            <Button
-              color="primary"
-              size="small"
-              onClick={() => setSnackbarOpen(false)}
-            >
-              بستن
-            </Button>
-          }
-        />
+        <Alert severity="success" sx={{ width: "100%" }}>
+          لینک شما با موفقیت کپی شد.
+        </Alert>
       </Snackbar>
     </>
   );

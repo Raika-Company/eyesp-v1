@@ -16,7 +16,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import rows from "../../../app/data/provinceTableRows.json";
+import rows from "../../../../public/data/provinceTableRows.json";
 import "./Province.css";
 import ArrowBack from "../../../app/common/ArrowBack";
 import ProvinceTable from "./ProvinceTable";

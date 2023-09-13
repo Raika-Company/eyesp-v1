@@ -46,7 +46,7 @@ const ProvinceISP = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "./../src/app/data/provinceISPsDetails.json"
+          "/data/provinceISPsDetails.json"
         );
         setProvinces(response.data);
         setLoading(false);

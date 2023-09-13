@@ -6,6 +6,7 @@ import {
   alpha,
   useTheme,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import React, { useState } from "react";
@@ -77,65 +78,51 @@ function DlandUlCharts() {
 
   return (
     <CustomBox>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          zIndex: "3",
-        }}
-      >
-        <InputLabel
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h6">Mbps</Typography>
+        <Box
           sx={{
-            marginTop: "5px",
-            fontSize: {
-              xs: "1rem",
-              sm: "1rem",
-            },
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            zIndex: "3",
           }}
         >
-          آپلود
-        </InputLabel>
-        <PinkSwitch
-          {...label}
-          defaultChecked
-          onChange={handleSwitchChange}
-          size={isXsOrSmScreen ? "small" : "medium"}
-        />
-        <InputLabel
-          sx={{
-            marginTop: "5px",
-            fontSize: {
-              xs: "1rem",
-              sm: "1rem",
-            },
-          }}
-        >
-          دانلود
-        </InputLabel>
+          <InputLabel
+            sx={{
+              marginTop: "5px",
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+              },
+            }}
+          >
+            آپلود
+          </InputLabel>
+          <PinkSwitch
+            {...label}
+            defaultChecked
+            onChange={handleSwitchChange}
+            size={isXsOrSmScreen ? "small" : "medium"}
+          />
+          <InputLabel
+            sx={{
+              marginTop: "5px",
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+              },
+            }}
+          >
+            دانلود
+          </InputLabel>
+        </Box>
       </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "90%",
-          justifyContent: "flex-start",
-        }}
-      >
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={transformedData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fontSize: xAxisTickSize }}/>
-            <YAxis
-              label={{
-                value: "Mbps",
-                position: "insideTopLeft",
-                fontSize: labelFontSize,
-                viewBox: { x: -4, y: 0, width: 100, height: 100 },
-              }}
-              tick={{ fontSize: yAxisTickSize }}
-            />
+            <XAxis dataKey="name" tick={{ fontSize: xAxisTickSize }} />
+            <YAxis tick={{ fontSize: yAxisTickSize }} />
             <Tooltip />
             <Legend wrapperStyle={legendStyle} />
             <Line type="monotone" dataKey="دانلود" stroke="#8884d8" />
@@ -144,7 +131,6 @@ function DlandUlCharts() {
             )}
           </LineChart>
         </ResponsiveContainer>
-      </Box>
     </CustomBox>
   );
 }

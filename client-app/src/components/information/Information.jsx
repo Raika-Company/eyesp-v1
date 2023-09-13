@@ -28,7 +28,7 @@ const Information = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('./src/app/data/definitions.json');
+                const response = await axios.get('/data/definitions.json');
                 setDefinitionsData(response.data);
                 setLoading(false);
             } catch (error) {
@@ -125,7 +125,7 @@ const DefinitionTerm = ({ title, children }) => {
     >
       <Typography
         component="span"
-        fontWeight="bold"
+        fontFamily="PeydaBold"
         sx={{
           color: "#0077b6",
           marginRight: "0.5em",
