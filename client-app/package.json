@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.6",
     "@mui/material": "^5.14.6",
     "@vitejs/plugin-react": "^4.0.4",
+    "axios": "^1.5.0",
     "moment-jalaali": "^0.10.0",
     "npm": "^9.8.1",
     "react": "^18.2.0",
