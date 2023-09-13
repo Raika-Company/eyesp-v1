@@ -7,7 +7,7 @@ import {
  *
  * @function
  * @param {string} fontSize - The font size.
- * @param {number} fontWeight - The font weight.
+ * @param {string} fontFamily - The font family.
  * @returns {Object} A typography style object.
  */
 const createTypography = (fontSize, fontFamily,) => ({
@@ -22,12 +22,12 @@ const createTypography = (fontSize, fontFamily,) => ({
  */
 const baseTheme = {
   typography: {
-    h1: createTypography("clamp(1.5rem,1rem + 1vw, 4rem)", "PeydaBold"),
-    h2: createTypography("clamp(1.125rem, 0.75rem + 1vw, 3rem)", "PeydaBold"),
-    h3: createTypography("clamp(1.125rem, 0.5rem + 1vw, 2.5rem)", "PeydaBold"),
-    h4: createTypography("clamp(1rem, 1rem + 0.5vw, 1.875rem)", "PeydaBold"),
-    h5: createTypography("clamp(1rem, 0.5rem + 0.5vw, 1.875rem)", "PeydaSemibold"),
-    h6: createTypography("clamp(1rem, 1vw, 1.5rem)", "PeydaSemibold"),
+    h1: createTypography("clamp(1.5rem, 1.77vw, 4rem)", "PeydaBold"),
+    h2: createTypography("clamp(1.125rem, 1.5625vw, 3rem)", "PeydaBold"),
+    h3: createTypography("clamp(1.125rem, 1.25vw, 2.5rem)", "PeydaBold"),
+    h4: createTypography("clamp(1rem, 1.04vw, 1.875rem)", "PeydaBold"),
+    h5: createTypography("clamp(1rem, 0.9vw, 1.875rem)", "PeydaSemibold"),
+    h6: createTypography("clamp(1rem, 0.8vw, 1.5rem)", "PeydaSemibold"),
     body1: createTypography("clamp(1rem, 0.1rem + 0.8vw, 1.5rem)", "PeydaRegular"),
     body2: createTypography("clamp(0.9rem, 0.8vw, 1.2rem)", "Peyda"),
     subtitle1: createTypography("clamp(0.8rem, 0.5vw, 1rem)", "Peyda"),
