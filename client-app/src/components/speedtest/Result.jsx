@@ -1,6 +1,7 @@
 import { forwardRef, useState, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -465,18 +466,9 @@ const Result = () => {
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <SnackbarContent
-          message="لینک کپی شد"
-          action={
-            <Button
-              color="primary"
-              size="small"
-              onClick={() => setSnackbarOpen(false)}
-            >
-              بستن
-            </Button>
-          }
-        />
+        <Alert severity="success" sx={{ width: '100%' }}>
+          لینک شما با موفقیت کپی شد.
+        </Alert>
       </Snackbar>
     </>
   );

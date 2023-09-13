@@ -28,7 +28,7 @@ const Information = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('./src/app/data/definitions.json');
+                const response = await axios.get('/data/definitions.json');
                 setDefinitionsData(response.data);
                 setLoading(false);
             } catch (error) {

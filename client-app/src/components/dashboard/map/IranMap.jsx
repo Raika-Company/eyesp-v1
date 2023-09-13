@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import iranProvinces from "../../../app/data/IranProvinces";
+import iranProvinces from "../../../../public/data/IranProvinces.js";
 import iranBorder, {
   caspianD,
   persianGulfD,
-} from "../../../app/data/IranMapData";
+} from "../../../../public/data/IranMapData.js";
 import styles from "./IranMap.module.css";
 
 import { useNavigate } from "react-router-dom";
