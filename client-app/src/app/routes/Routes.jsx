@@ -4,7 +4,7 @@ const TestHistory = lazy(() =>
   import("../../components/testHistory/TestHistory")
 );
 const Login = lazy(() => import("../../components/login/Login"));
-const Pc = lazy(() => import("../../components/pc/pc"));
+const Pc = lazy(() => import("../../components/pc/Pc"));
 const Dashboard = lazy(() => import("../../components/dashboard/Dashboard"));
 const Province = lazy(() =>
   import("../../components/dashboard/province/Province")
@@ -20,7 +20,9 @@ const Result = lazy(() => import("../../components/speedtest/Result"));
 const Information = lazy(() =>
   import("../../components/information/Information")
 );
-const ProvinceISP = lazy(() => import("../../components/provinceISP/ProvinceISP"));
+const ProvinceISP = lazy(() =>
+  import("../../components/provinceISP/ProvinceISP")
+);
 
 export const mainRoutes = [
   {
@@ -109,7 +111,7 @@ export const dashboardRoutes = [
     description: "Get insights into your ISP's performance.",
     keywords: "ISP performance, ISP details, ISP configurations",
     robots: "noindex, nofollow",
-  }
+  },
 ];
 
 export const otherRoutes = [

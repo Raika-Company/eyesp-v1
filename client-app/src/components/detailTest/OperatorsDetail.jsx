@@ -88,7 +88,7 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
         color: "textColor.main",
       }}
     >
-      <Typography variant="h4">{name}</Typography>
+      <Typography variant={isSmScreen ? "h6" : "h3"}>{name}</Typography>
       {color === "pink" ? (
         <PinkSwitch
           {...label}

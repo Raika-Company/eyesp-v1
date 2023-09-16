@@ -9,7 +9,6 @@ const DetailTest = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [selectedCity, setSelectedCity] = useState("فارس");
 
@@ -155,7 +154,7 @@ const DetailTest = () => {
                 />
               ) : (
                 <Typography
-                  variant={isSmScreen ? "h6" : "h2"}
+                  variant={isMdScreen ? "h1" : "h1"}
                   sx={{ color: "info.main" }}
                 >
                   استان {selectedCity}
