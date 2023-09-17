@@ -28,6 +28,8 @@ const NewSpeedTest = lazy(() =>
   import("../../components/newSpeedtest/NewSpeedTest")
 );
 
+const NewDashboard = lazy(() => import("../../components/newDashboard/NewDashboard"));
+
 export const mainRoutes = [
   {
     path: "/",
@@ -123,6 +125,10 @@ export const newSpeedTest = [
     path: "/",
     element: <NewSpeedTest />,
   },
+  {
+    path: "/dashboard",
+    element: <NewDashboard />,
+  }
 ];
 
 export const otherRoutes = [
