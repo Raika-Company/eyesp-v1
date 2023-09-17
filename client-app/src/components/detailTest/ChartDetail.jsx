@@ -23,6 +23,7 @@ import {
 } from "recharts";
 import "./detail.css";
 import jMoment from "moment-jalaali";
+import axios from "axios";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const startDay = jMoment().subtract(6, "days");
