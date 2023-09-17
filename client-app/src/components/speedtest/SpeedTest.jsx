@@ -23,7 +23,6 @@ import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
 
-
 // utils
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
@@ -49,15 +48,15 @@ const Divider = () => (
 // SpeedBox displays speed statistics such as ping, upload, and download speeds
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
-    <Typography variant="h4" color="textColor.light">
+    <Typography variant="h6" color="textColor.light">
       {title}
     </Typography>
     <Box display="flex" alignItems="center" gap={1} sx={{ opacity: opacity }}>
-      <Typography variant="h2" component="span" color="textColor.dark">
+      <Typography variant="h6" component="span" color="textColor.dark">
         {measure}
       </Typography>
       <Typography
-        variant="h2"
+        variant="h3"
         component="span"
         marginX="0.5rem"
         color="textColor.dark"
@@ -104,17 +103,17 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
   return (
     <Box display="flex" flexDirection="row" gap={3}>
       <Box display="flex" flexDirection="column" textAlign="right">
-        <Typography component="h6" variant="h2" color="textColor.dark">
+        <Typography component="h6" variant="h6" color="textColor.dark">
           {title}
         </Typography>
-        <Typography component="span" variant="h3" color="textColor.light">
+        <Typography component="span" variant="body1" color="textColor.light">
           {value}
         </Typography>
         {buttonLabel ? (
           <Button
             sx={{
               color: "info.main",
-              fontSize: theme.typography.button,
+              fontSize: theme.typography.body1,
               display: "flex",
               justifyContent: "flex-start",
             }}

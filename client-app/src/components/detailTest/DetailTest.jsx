@@ -140,7 +140,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant={isSmScreen ? "h6" : "h2"}
+                variant={isSmScreen ? "h4" : "h3"}
                 sx={{
                   color: "textColor.main",
                 }}

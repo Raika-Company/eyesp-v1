@@ -28,7 +28,7 @@ const DashboardNavbar = () => {
 
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [isAutoMosaicOpen, setIsAutoMosaicOpen] = useState(false);
-  const [isSpeedIconOpen, setIsSpeedIconOpen] = useState(true);
+  const [isSpeedIconOpen, setIsSpeedIconOpen] = useState(false);
 
   const toggleAutoMosaic = () => {
     setIsAutoMosaicOpen(!isAutoMosaicOpen);
@@ -80,7 +80,7 @@ const DashboardNavbar = () => {
             }}
           >
             {isAutoMosaicOpen && (
-              <Typography component="span" variant="h3">
+              <Typography component="span" variant="h6">
                 داشبورد
               </Typography>
             )}
@@ -89,6 +89,9 @@ const DashboardNavbar = () => {
                 sx={{
                   color:
                     location.pathname === "/admin"
+                      ? "info.main"
+                      : "textColor.dark" ||
+                        location.pathname === "/admin/:provinceName"
                       ? "info.main"
                       : "textColor.dark",
                 }}
@@ -126,7 +129,7 @@ const DashboardNavbar = () => {
               />
             </IconButton>
             {isSpeedIconOpen && (
-              <Typography component="span" variant="h3">
+              <Typography component="span" variant="h6">
                 تست سرعت
               </Typography>
             )}

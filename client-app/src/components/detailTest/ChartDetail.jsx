@@ -616,7 +616,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
       chartData,
     }) => (
       <Box sx={switchBoxStyle}>
-        <Typography variant="subtitle2" sx={typographyStyle}>
+        <Typography variant="subtitle1" sx={typographyStyle}>
           {label}
         </Typography>
         <Switch
@@ -877,7 +877,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               sx={{
                 color: "info.main",
               }}
-              variant={isSmScreen ? "h3" : "h1"}
+              variant="h2"
             >
               98%
             </Typography>

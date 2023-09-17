@@ -87,7 +87,7 @@ const selectionItems = [
 
 const DisturbanceText = ({ text }) => (
   <Typography
-    variant="h3"
+    variant="body1"
     sx={{
       flexWrap: "600",
       color: "textColor.main",
@@ -207,7 +207,7 @@ const Dashboard = () => {
           }}
         >
           <Typography
-            variant="h1"
+            variant="h3"
             gutterBottom
             sx={{
               color: "info.main",
@@ -216,7 +216,7 @@ const Dashboard = () => {
             رتبه بندی ISPها{" "}
           </Typography>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             component="div"
             gutterBottom
             sx={{
@@ -248,7 +248,7 @@ const Dashboard = () => {
         <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
         {visibleRows < RawISPData.length && (
           <Typography
-            variant="h3"
+            variant="body1"
             sx={{
               color: "textColor.main",
               textAlign: "center",
@@ -271,7 +271,7 @@ const Dashboard = () => {
           padding: "1rem 2.5rem",
         }}
       >
-        <Typography textAlign="center" color="textColor.main" variant="h3">
+        <Typography textAlign="center" color="textColor.main" variant="body1">
           جزئیات فنی
         </Typography>
 
