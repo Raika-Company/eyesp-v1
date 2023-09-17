@@ -64,7 +64,7 @@ const DetailTest = () => {
         >
           <Box sx={{ marginTop: "2rem" }}>
             <Typography
-              variant="subtitle2"
+              variant="subtitle1"
               color="textColor.light"
               sx={{ borderBottom: "1px solid", borderColor: "border.main" }}
             >
@@ -132,7 +132,7 @@ const DetailTest = () => {
               }}
             >
               <Typography
-                variant={isSmScreen ? "h3" : "h1"}
+                variant={isSmScreen ? "h4" : "h3"}
                 sx={{
                   color: "textColor.main",
                 }}
@@ -143,7 +143,7 @@ const DetailTest = () => {
                 <ChoseCityDrawer />
               ) : (
                 <Typography
-                  variant={isSmScreen ? "h2" : "h1"}
+                  variant={isSmScreen ? "h1" : "h2"}
                   sx={{ color: "info.main" }}
                 >
                   استان {selectedCity}

@@ -28,7 +28,7 @@ const DashboardNavbar = () => {
 
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [isAutoMosaicOpen, setIsAutoMosaicOpen] = useState(false);
-  const [isSpeedIconOpen, setIsSpeedIconOpen] = useState(true);
+  const [isSpeedIconOpen, setIsSpeedIconOpen] = useState(false);
 
   const toggleAutoMosaic = () => {
     setIsAutoMosaicOpen(!isAutoMosaicOpen);

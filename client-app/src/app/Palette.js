@@ -43,6 +43,10 @@ const baseTheme = {
     body2: createTypography("clamp(0.9rem, 0.9rem + 0.0115vw, 1.2rem)", "Peyda"),
     subtitle1: createTypography("clamp(0.8rem, 0.8rem + 0.0076vw, 1rem)", "Peyda"),
     subtitle2: createTypography("clamp(0.81rem, 0.81rem + 0.0073vw, 1rem)", "PeydaLight"),
+    smallText: createTypography("clamp(0.75rem, 0.75rem + 0.090vw, 1rem)", "PeydaSemibold"),
+
+
+
 
     button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)"),
     caption: createTypography("1.65rem"),

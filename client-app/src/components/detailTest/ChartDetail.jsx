@@ -695,7 +695,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" color="textColor.dark">
+          <Typography variant="smallText" color="textColor.dark">
             میانگین عملکرد
           </Typography>
           <Switch
@@ -711,7 +711,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" color="textColor.dark">
+          <Typography variant="smallText" color="textColor.dark">
             میانگین پینگ
           </Typography>
           <Switch
@@ -728,7 +728,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" color="textColor.dark">
+          <Typography variant="smallText" color="textColor.dark">
             میانگین سرعت
           </Typography>
           <Switch
@@ -745,7 +745,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" color="textColor.dark">
+          <Typography variant="smallText" color="textColor.dark">
             میانگین پکت لاس
           </Typography>
           <Switch
@@ -873,7 +873,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               sx={{
                 color: "info.main",
               }}
-              variant={isSmScreen ? "h1" : "h1"}
+              variant="h2"
             >
               98%
             </Typography>

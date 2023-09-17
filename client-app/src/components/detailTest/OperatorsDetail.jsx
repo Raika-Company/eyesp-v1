@@ -87,7 +87,7 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
         alignItems: "center",
       }}
     >
-      <Typography variant="h6">{name}</Typography>
+      <Typography variant="body1">{name}</Typography>
       {color === "pink" ? (
         <PinkSwitch
           {...label}
@@ -256,7 +256,7 @@ const OperatorsDetail = ({ visibility, setVisibility, cityVisibility }) => {
           }}
         >
           {" "}
-          <Typography variant="h2" color="textColor.main">
+          <Typography variant="body1" color="textColor.main">
             ارائه دهنده های اینترنت
           </Typography>
         </Box>

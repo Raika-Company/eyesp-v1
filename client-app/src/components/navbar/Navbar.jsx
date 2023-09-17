@@ -74,7 +74,7 @@ function DesktopNav({ pages, navigateTo, location, themeMode, toggleTheme }) {
         {pages.map(([text, path]) => (
           <Typography
             key={text}
-            variant="h3"
+            variant="body1"
             onClick={() => navigateTo(path)}
             sx={{
               cursor: "pointer",

@@ -57,10 +57,10 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography variant="h2" component="h6" color="textColor.dark">
+            <Typography variant="h6" component="h6" color="textColor.dark">
               همراه اول
             </Typography>
-            <Typography variant="h3" color="textColor.light">
+            <Typography variant="body1" color="textColor.light">
               51.15.57.153
             </Typography>
           </Box>
@@ -84,10 +84,10 @@ const CustomAccordion = ({ expanded, setExpanded, Person, Globe }) => {
           width="100%"
         >
           <Box display="flex" flexDirection="column">
-            <Typography component="h6" variant="h2" color="textColor.dark">
+            <Typography component="h6" variant="h6" color="textColor.dark">
               سرور مقصد
             </Typography>
-            <Typography variant="h3" color="textColor.light">
+            <Typography variant="body1" color="textColor.light">
               تهران - امام
             </Typography>
             <Button
