@@ -24,6 +24,10 @@ const ProvinceISP = lazy(() =>
   import("../../components/provinceISP/ProvinceISP")
 );
 
+const NewSpeedTest = lazy(() =>
+  import("../../components/newSpeedtest/NewSpeedTest")
+);
+
 export const mainRoutes = [
   {
     path: "/",
@@ -111,6 +115,13 @@ export const dashboardRoutes = [
     description: "Get insights into your ISP's performance.",
     keywords: "ISP performance, ISP details, ISP configurations",
     robots: "noindex, nofollow",
+  },
+];
+
+export const newSpeedTest = [
+  {
+    path: "/",
+    element: <NewSpeedTest />,
   },
 ];
 

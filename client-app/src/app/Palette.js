@@ -48,7 +48,7 @@ const baseTheme = {
 
 
 
-    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)"),
+    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)", "PeydaSemibold"),
     caption: createTypography("1.65rem"),
     overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)"),
     fontFamily: "Peyda",

@@ -5,8 +5,9 @@ import { CssBaseline } from "@mui/material";
 
 import Navbar from "../components/navbar/Navbar";
 import DashboardNavbar from "../components/navbar/DashboardNavbar";
+import NewNavbar from "../components/navbar/NewNavbar";
 import { lightTheme, darkTheme } from "./Palette";
-import { mainRoutes, dashboardRoutes, otherRoutes } from "./routes/Routes";
+import { mainRoutes, dashboardRoutes, otherRoutes, newSpeedTest } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
@@ -38,6 +39,7 @@ function App() {
               <Route key={route.path} path={route.path} element={route.element} />
             ))}
             <Route path="/admin/*" element={<DashboardRoutes />} />
+            <Route path="/new/*" element={<NewRoutes />} />
             <Route
               path="/*"
               element={
@@ -73,5 +75,18 @@ const DashboardRoutes = () => {
     </>
   );
 };
+
+const NewRoutes = () => {
+  return (
+    <>
+      <NewNavbar />
+      <Routes>
+        {newSpeedTest.map(route => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes>
+    </>
+  );
+}
 
 export default App;

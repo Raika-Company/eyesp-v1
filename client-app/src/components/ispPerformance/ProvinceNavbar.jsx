@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Drawer,
-  Button,
   Box,
   Typography,
   Card,
@@ -24,7 +22,7 @@ const provinces = [
   "یزد",
 ];
 
-const ISPNavbar = () => {
+const ProvinceNavbar = ({ selectedProvince, onSelectProvince }) => {
   const [boxHeight, setBoxHeight] = useState("100dvh");
   useEffect(() => {
     const DashboardNavbarElement = document.querySelector(".dashboard-navbar");
@@ -51,10 +49,13 @@ const ISPNavbar = () => {
       <Box padding="1rem">
         {provinces.map((province, index) => (
           <Box key={index} display="flex" justifyContent="space-between">
-            <Typography gutterBottom >
+            <Typography gutterBottom>
               {province}
             </Typography>
-            <Switch />
+            <Switch 
+              checked={selectedProvince === province}
+              onChange={() => onSelectProvince(province)}
+            />
           </Box>
         ))}
       </Box>
@@ -62,4 +63,4 @@ const ISPNavbar = () => {
   );
 };
 
-export default ISPNavbar;
+export default ProvinceNavbar;
