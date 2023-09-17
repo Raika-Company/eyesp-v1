@@ -23,11 +23,24 @@ const Information = lazy(() =>
 const ProvinceISP = lazy(() =>
   import("../../components/provinceISP/ProvinceISP")
 );
+const NewSpeedTest = lazy(() =>
+  import("../../components/newSpeedTest/NewSpeedTest")
+);
 
 export const mainRoutes = [
   {
     path: "/",
     element: <SpeedTest />,
+    title: "Speed Test | Rayka ICT",
+    description:
+      "Test your internet speed with our reliable and fast speed testing tool.",
+    keywords:
+      "speed test, internet speed, broadband speed, download speed, upload speed",
+    robots: "index, follow",
+  },
+  {
+    path: "/new-speed-test",
+    element: <NewSpeedTest />,
     title: "Speed Test | Rayka ICT",
     description:
       "Test your internet speed with our reliable and fast speed testing tool.",

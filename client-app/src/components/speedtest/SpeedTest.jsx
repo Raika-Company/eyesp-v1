@@ -23,7 +23,6 @@ import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
 
-
 // utils
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
