@@ -1,4 +1,13 @@
+/**
+ * @file Result.js
+ * This file contains the `Result` component that displays the internet speed test results.
+ */
+
+// React core and hooks
 import { forwardRef, useState, useRef } from "react";
+
+// Third-party libraries or components
+// Import Material-UI components and styles
 import { useLocation, Link } from "react-router-dom";
 import {
   Alert,
@@ -20,15 +29,15 @@ import {
   useTheme,
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import { Snackbar, SnackbarContent } from "@mui/material";
 
+// Assets
+// Importing images used in the Result component
 import Download from "../../app/assets/image/download.svg";
 import Upload from "../../app/assets/image/upload.svg";
 import Ping from "../../app/assets/image/ping.svg";
 import Globe from "../../app/assets/image/globe.svg";
 import Person from "../../app/assets/image/person.svg";
-
 import FaceBook from "../../app/assets/image/imgLogoSocialM/Facebook.webp";
 import Twitter from "../../app/assets/image/imgLogoSocialM/twitter.webp";
 import Linkedin from "../../app/assets/image/imgLogoSocialM/linkedin.webp";
@@ -36,12 +45,25 @@ import Telegram from "../../app/assets/image/imgLogoSocialM/Telegram.webp";
 import WhatsApp from "../../app/assets/image/imgLogoSocialM/WhatsApp.webp";
 import Eita from "../../app/assets/image/imgLogoSocialM/eita.webp";
 
+// Local components
+// Importing custom CustomAccordion component for modular structure
 import CustomAccordion from "./CustomAccordion";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
+/**
+ * SpeedBox Component for displaying speed information.
+ *
+ * @param {object} props - Input properties.
+ * @param {string} props.title - Speed title.
+ * @param {string} props.iconSrc - Icon image path.
+ * @param {string} props.altText - Alternate text for the image.
+ * @param {number|null} props.value - Speed value.
+ * @param {string} props.measure - Speed unit.
+ * @param {number} props.opacity - Title opacity.
+ * @returns {JSX.Element}
+ */
 const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
   <Box>
     <Typography
@@ -55,7 +77,6 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
     >
       {title}
     </Typography>
-
     <Box display="flex" alignItems="center" sx={{ opacity: opacity }}>
       <Box
         sx={{
@@ -76,7 +97,17 @@ const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
     </Box>
   </Box>
 );
-
+/**
+ * InformationBox Component for displaying information.
+ *
+ * @param {object} props - Input properties.
+ * @param {string} props.title - Information title.
+ * @param {string} props.value - Information value.
+ * @param {string} props.iconSrc - Icon image path.
+ * @param {string} props.altText - Alternate text for the image.
+ * @param {string} [props.buttonLabel] - Optional button label.
+ * @returns {JSX.Element}
+ */
 const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
   <Box display="flex" alignItems="flex-end" flexDirection="row" gap={1}>
     <img src={iconSrc} alt={altText} height="60px" />
@@ -91,10 +122,36 @@ const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
     </Box>
   </Box>
 );
+/**
+ * Result Component
+ *
+ * This component displays the results of the internet speed test, including ping, download speed,
+ * and upload speed. It also provides options for sharing the results and copying the link.
+ *
+ * @returns {React.Element} Rendered Result component.
+ */
 
 const Result = () => {
+  //State and variable declarations here
+
+  /**
+   * Snackbar open state.
+   *
+   * State variable to manage the open state of the snackbar.
+   *
+   * @type {boolean}
+   */
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  /**
+   * ShareDialog data.
+   *
+   * An array of social media platforms for sharing the results.
+   *
+   * @type {object[]}
+   * @property {string} name - The name of the social media platform.
+   * @property {string} avatar - The URL of the platform's avatar.
+   */
   const ShareDialog = [
     {
       name: "فیسبوک",
@@ -121,25 +178,102 @@ const Result = () => {
       avatar: Eita,
     },
   ];
+
+  /**
+   * Location data.
+   *
+   * The location object from the React Router.
+   *
+   * @type {object}
+   */
   const location = useLocation();
+
+  /**
+   * Text reference.
+   *
+   * A reference to the text element used for copying the link.
+   *
+   * @type {object}
+   */
   const textRef = useRef(null);
+
+  /**
+   * Query parameters.
+   *
+   * Parsed query parameters from the URL.
+   *
+   * @type {object}
+   */
   const queryParams = new URLSearchParams(location.search);
 
+  /**
+   * Ping value.
+   *
+   * The ping value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
   const ping = queryParams.get("ping");
+
+  /**
+   * Download value.
+   *
+   * The download speed value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
   const download = queryParams.get("download");
+
+  /**
+   * Upload value.
+   *
+   * The upload speed value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
   const upload = queryParams.get("upload");
 
+  /**
+   * Expanded state.
+   *
+   * State variable to manage the expanded state of a component.
+   *
+   * @type {boolean}
+   */
   const [expanded, setExpanded] = useState(false);
+
+  /**
+   * Dialog open state.
+   *
+   * State variable to manage the open state of a dialog.
+   *
+   * @type {boolean}
+   */
   const [open, setOpen] = useState(false);
 
+  /**
+   * Handle opening the dialog.
+   *
+   * Function to open the sharing dialog.
+   */
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  /**
+   * Handle closing the dialog.
+   *
+   * Function to close the sharing dialog.
+   */
   const handleClose = () => {
     setOpen(false);
   };
 
+  /**
+   * Handle copying the link.
+   *
+   * Function to copy the result link to the clipboard.
+   */
   const handleCopyLink = () => {
     if (textRef.current) {
       navigator.clipboard.writeText(textRef.current.innerText).then(() => {
@@ -147,6 +281,14 @@ const Result = () => {
       });
     }
   };
+
+  /**
+   * Theme.
+   *
+   * Material-UI theme object.
+   *
+   * @type {object}
+   */
   const theme = useTheme();
 
   return (
@@ -167,7 +309,7 @@ const Result = () => {
           border: "1.468px solid rgba(0, 0, 0, 0.10)",
           background: "transparent",
           display: { xs: "none", md: "flex" },
-        }}
+        }} //Main content section
       >
         <Box
           display="flex"
@@ -182,6 +324,7 @@ const Result = () => {
             value={ping}
             measure="ms"
             opacity={1}
+            //Display ping, download, and upload speeds
           />
           <SpeedBox
             title="سرعت آپلود"
@@ -254,6 +397,7 @@ const Result = () => {
               border: "none",
             },
           }}
+          //Share and retry buttons
         >
           تست مجدد
         </Button>
@@ -383,6 +527,7 @@ const Result = () => {
         setExpanded={setExpanded}
         Person={Person}
         Globe={Globe}
+        //Custom accordion for small screens
       />
       <Dialog
         open={open}
@@ -399,6 +544,7 @@ const Result = () => {
             alignItems: "center",
             overflow: "auto",
           }}
+          //List of social media options for share link
         >
           {ShareDialog.map((item, index) => (
             <ListItem key={index}>
@@ -451,7 +597,7 @@ const Result = () => {
           <Button variant="contained" color="success" onClick={handleCopyLink}>
             کپی
           </Button>
-          <Card sx={{height: "50px", display: "flex", alignItems: "center"}}>
+          <Card sx={{ height: "50px", display: "flex", alignItems: "center" }}>
             <DialogContentText
               sx={{
                 fontSize: theme.typography.h6,
@@ -461,6 +607,7 @@ const Result = () => {
               }}
               id="alert-dialog-slide-description"
               ref={textRef}
+              //Speed Test sharing link0660
             >
               {`http://185.11.89.101:6530/result?ping=${ping}&download=${download}&upload=${upload}`}
             </DialogContentText>

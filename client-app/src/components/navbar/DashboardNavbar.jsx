@@ -90,6 +90,9 @@ const DashboardNavbar = () => {
                   color:
                     location.pathname === "/admin"
                       ? "info.main"
+                      : "textColor.dark" ||
+                        location.pathname === "/admin/:provinceName"
+                      ? "info.main"
                       : "textColor.dark",
                 }}
               />
