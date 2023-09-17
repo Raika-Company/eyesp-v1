@@ -1,6 +1,6 @@
-import { Card, IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 
 import CompanyLogo from "../../app/assets/image/logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -20,20 +20,51 @@ const pages = [
 ];
 
 const NewNavbar = () => {
+  const [homeOpen, setHomeOpen] = useState(false);
+  const [historyOpenOpen, setHistoryOpen] = useState(false);
+
+  const toggleOpenMenu = () => {
+    setHomeOpen(!homeOpen);
+    setHistoryOpen(!historyOpenOpen);
+  };
+
   return (
     <Box
       sx={{
-        width: "130px",
-        height: "85vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "transparent",
+        pt: "2.1rem",
+        mr: "0.7rem",
       }}
     >
-      <Card
+      <Box
         sx={{
-          width: "60px",
+          mr: "0.2rem",
+          mb: "1rem",
+          width: "55px",
+          height: "55px",
+          borderRadius: "50%",
+          bgcolor: "#f4f6f9",
+          color: "#676767",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          ":hover": {
+            bgcolor: "primary.light",
+            color: "white",
+            border: "none",
+          },
+        }}
+      >
+        <IconButton onClick={toggleOpenMenu}>
+          <MenuIcon
+            sx={{
+              cursor: "pointer",
+            }}
+          />
+        </IconButton>
+      </Box>
+      <Box
+        sx={{
+          width: homeOpen || historyOpenOpen ? "180px" : "60px",
           height: "500px",
           display: "flex",
           flexWrap: "wrap",
@@ -42,39 +73,14 @@ const NewNavbar = () => {
       >
         <Box
           sx={{
-            width: "55px",
-            height: "55px",
-            borderRadius: "50%",
-            bgcolor: "#f4f6f9",
-            color: "#676767",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            ":hover": {
-              bgcolor: "primary.light",
-              color: "white",
-              border: "none",
-            },
-          }}
-        >
-          <IconButton>
-            <MenuIcon
-              sx={{
-                cursor: "pointer",
-              }}
-            />
-          </IconButton>
-        </Box>
-        <Box
-          sx={{
-            width: "55px",
+            width: homeOpen ? "177px" : "55px",
             height: "140px",
             borderRadius: "25px",
             bgcolor: "#f4f6f9",
             color: "#676767",
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "center",
           }}
         >
@@ -83,22 +89,34 @@ const NewNavbar = () => {
               sx={{ width: "35px", height: "35px", cursor: "pointer" }}
             />
           </IconButton>
+          {homeOpen && (
+            <Typography component="span" variant="h6">
+              صفحه اصلی
+            </Typography>
+          )}
           <IconButton>
             <SpeedIcon
               sx={{ width: "35px", height: "35px", cursor: "pointer" }}
             />
           </IconButton>
+          {homeOpen && (
+            <Typography component="span" variant="h6">
+              تست سرعت
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
-            width: "55px",
+            width: historyOpenOpen ? "177px" : "55px",
+            textAlign: historyOpenOpen ? "right" : "center",
+
             height: "250px",
             borderRadius: "25px",
             bgcolor: "#f4f6f9",
             color: "#676767",
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
@@ -106,29 +124,59 @@ const NewNavbar = () => {
             <HistoryIcon
               sx={{ width: "35px", height: "35px", cursor: "pointer" }}
             />
+            {historyOpenOpen && (
+              <Typography component="span" variant="h6">
+                تست های گذشته
+              </Typography>
+            )}
           </IconButton>
-          <img
+          <figure
             style={{
-              cursor: "pointer",
-              userSelect: "none",
-              width: "30px",
-              height: "30px",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: "0.5rem",
             }}
-            src={CompanyLogo}
-            alt="Company-logo"
-          />
+          >
+            <img
+              style={{
+                cursor: "pointer",
+                userSelect: "none",
+                width: "30px",
+                height: "30px",
+              }}
+              src={CompanyLogo}
+              alt="Company-logo"
+            />
+            {historyOpenOpen && (
+              <Typography component="span" variant="h6">
+                اپراتور من
+              </Typography>
+            )}
+          </figure>
           <IconButton>
             <InfoOutlinedIcon
               sx={{ width: "35px", height: "35px", cursor: "pointer" }}
             />
+            {historyOpenOpen && (
+              <Typography component="span" variant="h6">
+                اطلاعات شبکه من
+              </Typography>
+            )}
           </IconButton>
           <IconButton>
             <SignalCellularAltOutlinedIcon
               sx={{ width: "35px", height: "35px", cursor: "pointer" }}
             />
+            {historyOpenOpen && (
+              <Typography component="span" variant="h6">
+                گزارش ها
+              </Typography>
+            )}
           </IconButton>
         </Box>
-      </Card>
+      </Box>
     </Box>
   );
 };
