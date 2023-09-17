@@ -27,11 +27,9 @@ const NewSpeedTest = lazy(() =>
   import("../../components/newSpeedTest/NewSpeedTest")
 );
 
-const NewSpeedTest = lazy(() =>
-  import("../../components/newSpeedtest/NewSpeedTest")
+const NewDashboard = lazy(() =>
+  import("../../components/newDashboard/NewDashboard")
 );
-
-const NewDashboard = lazy(() => import("../../components/newDashboard/NewDashboard"));
 
 export const mainRoutes = [
   {
@@ -44,16 +42,7 @@ export const mainRoutes = [
       "speed test, internet speed, broadband speed, download speed, upload speed",
     robots: "index, follow",
   },
-  {
-    path: "/new-speed-test",
-    element: <NewSpeedTest />,
-    title: "Speed Test | Rayka ICT",
-    description:
-      "Test your internet speed with our reliable and fast speed testing tool.",
-    keywords:
-      "speed test, internet speed, broadband speed, download speed, upload speed",
-    robots: "index, follow",
-  },
+
   {
     path: "/test-history",
     element: <TestHistory />,
@@ -141,7 +130,7 @@ export const newSpeedTest = [
   {
     path: "/dashboard",
     element: <NewDashboard />,
-  }
+  },
 ];
 
 export const otherRoutes = [

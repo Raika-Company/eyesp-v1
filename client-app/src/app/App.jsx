@@ -93,7 +93,7 @@ const NewRoutes = () => {
   return (
     <Box display="flex" width="100%" backgroundColor="#E3EEF7">
       <NewNavbar />
-      <Box sx={{flex: 1}}>
+      <Box sx={{ flex: 1 }}>
         <Routes>
           {newSpeedTest.map((route) => (
             <Route key={route.path} path={route.path} element={route.element} />
