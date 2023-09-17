@@ -1,5 +1,13 @@
 import styled from "@emotion/styled";
-import { Box, InputLabel, Switch, alpha } from "@mui/material";
+import {
+  Box,
+  InputLabel,
+  Switch,
+  alpha,
+  useTheme,
+  useMediaQuery,
+  Typography,
+} from "@mui/material";
 import { pink } from "@mui/material/colors";
 import React, { useState } from "react";
 import {
@@ -14,7 +22,7 @@ import {
 } from "recharts";
 
 const CustomBox = styled(Box)(({ theme }) => ({
-  width: "90vw", // Default width for lg screens
+  width: "90vw",
   height: "20em",
   border: "2px solid #E0E0E0",
   borderRadius: "2em",
@@ -25,6 +33,7 @@ const CustomBox = styled(Box)(({ theme }) => ({
 
   [theme.breakpoints.down("sm")]: {
     height: "29vh",
+    padding: "0.5em",
   },
 }));
 
@@ -40,23 +49,17 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const resultsFromLocalStorage = JSON.parse(localStorage.getItem("testResults") || "[]");
-
-const transformedData = resultsFromLocalStorage.map((result, index) => ({
-  name: result.date, // This will generate names like "Test 1", "Test 2", etc.
-  دانلود: result.download,
-  آپلود: result.upload,
-}));
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 function DlandUlCharts() {
   const [isUploadVisible, setIsUploadVisible] = useState(false);
 
   // Fetching and transforming data from localStorage
-  const resultsFromLocalStorage = JSON.parse(localStorage.getItem("testResults") || "[]");
+  const resultsFromLocalStorage = JSON.parse(
+    localStorage.getItem("testResults") || "[]"
+  );
   const transformedData = resultsFromLocalStorage.map((result) => ({
-    name: result.date,  // Using date from testResult as the name
+    name: result.date, // Using date from testResult as the name
     دانلود: result.download,
     آپلود: result.upload,
   }));
@@ -65,45 +68,69 @@ function DlandUlCharts() {
     setIsUploadVisible((prevValue) => !prevValue);
   };
 
+  const theme = useTheme();
+  const isXsOrSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const legendStyle = isXsOrSmScreen ? { fontSize: "10px" } : {};
+  const labelFontSize = isXsOrSmScreen ? "0.8rem" : "1rem";
+  const xAxisTickSize = isXsOrSmScreen ? 10 : 16;
+  const yAxisTickSize = isXsOrSmScreen ? 10 : 16;
+
   return (
     <CustomBox>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          zIndex: "3",
-        }}
-      >
-        <InputLabel sx={{ marginTop: "5px" }}>آپلود</InputLabel>
-        <PinkSwitch {...label} defaultChecked onChange={handleSwitchChange} />
-        <InputLabel sx={{ marginTop: "5px", paddingLeft: "30px" }}>
-          دانلود
-        </InputLabel>
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h6">Mbps</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            zIndex: "3",
+          }}
+        >
+          <InputLabel
+            sx={{
+              marginTop: "5px",
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+              },
+            }}
+          >
+            آپلود
+          </InputLabel>
+          <PinkSwitch
+            {...label}
+            defaultChecked
+            onChange={handleSwitchChange}
+            size={isXsOrSmScreen ? "small" : "medium"}
+          />
+          <InputLabel
+            sx={{
+              marginTop: "5px",
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+              },
+            }}
+          >
+            دانلود
+          </InputLabel>
+        </Box>
       </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "90%",
-          justifyContent: "flex-start",
-        }}
-      >
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={transformedData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis label={{ value: 'Mbps', angle: -90, position: 'insideLeft' }} />
+            <XAxis dataKey="name" tick={{ fontSize: xAxisTickSize }} />
+            <YAxis tick={{ fontSize: yAxisTickSize }} />
             <Tooltip />
-            <Legend />
+            <Legend wrapperStyle={legendStyle} />
             <Line type="monotone" dataKey="دانلود" stroke="#8884d8" />
             {!isUploadVisible && (
               <Line type="monotone" dataKey="آپلود" stroke="#82ca9d" />
             )}
           </LineChart>
         </ResponsiveContainer>
-      </Box>
     </CustomBox>
   );
 }

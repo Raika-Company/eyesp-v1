@@ -3,26 +3,17 @@ import {
 } from "@mui/material";
 
 /**
- * Common typography settings.
- * @type {Object}
- */
-const commonTypography = {
-  fontFamily: "Peyda",
-  fontStyle: "normal",
-  lineHeight: "normal",
-};
-
-/**
  * Create typography style with given font size and weight.
  *
  * @function
  * @param {string} fontSize - The font size.
- * @param {number} fontWeight - The font weight.
+ * @param {string} fontFamily - The font family.
  * @returns {Object} A typography style object.
  */
-const createTypography = (fontSize) => ({
-  ...commonTypography,
-  fontSize,
+const createTypography = (fontSize, fontFamily,) => ({
+  fontSize: fontSize,
+  fontFamily: fontFamily,
+
 });
 
 /**
@@ -31,25 +22,16 @@ const createTypography = (fontSize) => ({
  */
 const baseTheme = {
   typography: {
-    h1: createTypography("clamp(1.3rem,1.3rem + 3vw, 2.2rem)"),
-    h2: createTypography("clamp(1rem,1rem + 3vw, 1.6rem)"),
-    h3: createTypography("clamp(1rem,1rem + 3vw, 1.3rem)"),
-    h4: createTypography("clamp(1rem,1rem + 3vw, 1.2rem)"),
-    h5: createTypography("clamp(0.5rem,0.5rem + 3vw, 1.1rem)"),
-    h6: createTypography("clamp(0.8rem,1rem + 3vw, 1rem)"),
-    body1: {
-      ...commonTypography,
-      textAlign: "right",
-      textLeadingTrim: "both",
-      textEdge: "cap",
-      fontSize: "1.51394rem",
-    },
-    body2: {
-      fontFamily: "Peyda, sans-serif",
-      fontSize: 16,
-    },
-    subtitle1: createTypography("clamp(0.4rem,0.4rem + 3vw, 1.6rem)"),
-    subtitle2: createTypography("clamp(0.01rem,0.01rem + 3vw, 1.3rem)"),
+    h1: createTypography("clamp(1.5rem, 1.77vw, 4rem)", "PeydaBold"),
+    h2: createTypography("clamp(1.125rem, 1.5625vw, 3rem)", "PeydaBold"),
+    h3: createTypography("clamp(1.125rem, 1.25vw, 2.5rem)", "PeydaBold"),
+    h4: createTypography("clamp(1rem, 1.04vw, 1.875rem)", "PeydaBold"),
+    h5: createTypography("clamp(1rem, 0.9vw, 1.875rem)", "PeydaSemibold"),
+    h6: createTypography("clamp(1rem, 0.8vw, 1.5rem)", "PeydaSemibold"),
+    body1: createTypography("clamp(1rem, 0.1rem + 0.8vw, 1.5rem)", "PeydaRegular"),
+    body2: createTypography("clamp(0.9rem, 0.8vw, 1.2rem)", "Peyda"),
+    subtitle1: createTypography("clamp(0.8rem, 0.5vw, 1rem)", "Peyda"),
+    subtitle2: createTypography("clamp(0.81rem, 0.5vw, 1rem)", "PeydaLight"),
     button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)"),
     caption: createTypography("1.65rem"),
     overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)"),
