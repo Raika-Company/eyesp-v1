@@ -557,11 +557,23 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
   const [activeSwitch, setActiveSwitch] = useState("pingAverage");
   const [selectedDate, setSelectedDate] = useState("شنبه");
 
+  const getData = () => {
+    axios
+      .get("../../../public/data/DetailTest.json")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     setActiveSwitch(id);
   }, [id]);
 
   useEffect(() => {
+    getData();
     switch (activeSwitch) {
       case "pingAverage":
         setChartData(pingData);
@@ -898,7 +910,7 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
+              fd <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="name"
                 tick={{ fontSize: isSmScreen ? "10px" : "16px" }}
@@ -915,7 +927,6 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
                   marginLeft: "2rem",
                 }}
               />
-
               {renderLine(
                 "مخابرات",
                 "#126AED",
@@ -941,7 +952,6 @@ const ChartDetail = ({ visibility, cityVisibility }) => {
                 "orange",
                 activeCityCount < 1 || visibility.همراه_اول
               )}
-
               {Object.entries(cityColorMapping).map(([city, color]) =>
                 renderLine(city, color, cityVisibility[city])
               )}
