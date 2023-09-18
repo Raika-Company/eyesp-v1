@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Container, Typography, Button, Link } from "@mui/material";
+import { Box, Container, Typography, Button, Link } from "@mui/material";
 import NewLogo from "../../app/common/NewLogo";
 import clock from "../../app/assets/image/clock.svg";
 import { styled } from "@mui/material/styles";
@@ -62,7 +63,7 @@ const NewSpeedTest = () => {
               width: "80%",
               display: "flex",
               justifyContent: "space-between",
-              marginTop: "2.5em",
+              marginTop: "1.5em",
               alignItems: "center",
             }}
           >
