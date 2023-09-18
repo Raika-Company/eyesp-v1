@@ -10,8 +10,6 @@ import upload from "../../app/assets/image/uploadIcon.svg";
 import download from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
 
-const TRANSPARENT_BLUE = "rgba(54, 129, 241, 0.8)";
-
 const NewSpeedTest = () => {
   const AnimatedButton = styled(Button)(({ theme }) => ({
     position: "relative",
