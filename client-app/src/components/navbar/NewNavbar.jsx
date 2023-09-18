@@ -24,14 +24,13 @@ const NewNavbar = () => {
     <Box
       sx={{
         width: "130px",
-        height: "85vh",
+        marginTop: "1rem",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
         bgcolor: "transparent",
       }}
     >
-      <Card
+      <Box
         sx={{
           width: "60px",
           height: "500px",
@@ -128,7 +127,7 @@ const NewNavbar = () => {
             />
           </IconButton>
         </Box>
-      </Card>
+      </Box>
     </Box>
   );
 };

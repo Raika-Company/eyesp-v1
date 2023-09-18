@@ -10,7 +10,7 @@ import {
  * @param {string} fontFamily - The font family.
  * @returns {Object} A typography style object.
  */
-const createTypography = (fontSize, fontFamily, ) => ({
+const createTypography = (fontSize, fontFamily,) => ({
   fontSize: fontSize,
   fontFamily: fontFamily,
 
