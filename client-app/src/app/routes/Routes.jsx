@@ -24,17 +24,21 @@ const Information = lazy(() =>
 const ProvinceISP = lazy(() =>
   import("../../components/provinceISP/ProvinceISP")
 );
-
 const NewSpeedTest = lazy(() =>
-  import("../../components/newSpeedtest/NewSpeedTest")
+  import("../../components/newSpeedTest/NewSpeedTest")
 );
 
 const NewDashboard = lazy(() =>
   import("../../components/newDashboard/NewDashboard")
 );
+<<<<<<< HEAD
 
 const NewInformation = lazy(() =>
   import("../../components/information/NewInformation")
+=======
+const NewTestHistory = lazy(() =>
+  import("../../components/newTestHistory/NewTestHistory")
+>>>>>>> 3ae502dff3ce8e653c175b1647cb5f1997194f9e
 );
 
 export const mainRoutes = [
@@ -48,6 +52,7 @@ export const mainRoutes = [
       "speed test, internet speed, broadband speed, download speed, upload speed",
     robots: "index, follow",
   },
+
   {
     path: "/test-history",
     element: <TestHistory />,
@@ -140,6 +145,10 @@ export const newSpeedTest = [
     path: "/information",
     element: <NewInformation />,
   },
+  {
+    path: "/history",
+    element: <NewTestHistory />,
+  }
 ];
 
 export const otherRoutes = [

@@ -13,7 +13,7 @@ import {
   Typography,
   useMediaQuery,
   Select,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
@@ -23,9 +23,12 @@ import WestIcon from "@mui/icons-material/West";
 
 import { ContainedButton } from "../../app/common/ContainedButton";
 import IranMap from "../dashboard/map/IranMap";
-import provinces from "./../../../public/data/provinces.json?url";
+import provinces from "./../../../public/data/provinces.json";
 
 import ISPTable from "../dashboard/ISPTable";
+
+import frame from "../../app/assets/image/Frame.svg";
+import NewLogo from "../../app/common/NewLogo";
 
 const disorders = [
   {
@@ -129,6 +132,7 @@ const StatisticBox = ({ background, title, unit, value }) => (
 
 const NewDashboard = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
 
@@ -149,6 +153,7 @@ const NewDashboard = () => {
 
   return (
     <Container maxWidth="xl">
+      <NewLogo />
       <Grid
         container
         component={Paper}
@@ -163,7 +168,7 @@ const NewDashboard = () => {
           background: radialBackground,
         }}
       >
-        <Grid xs={12} md={6} height="100%">
+        <Grid xs={12} md={6}>
           <Typography
             fontFamily="PeydaSemibold"
             fontSize="1.5rem"
@@ -180,6 +185,11 @@ const NewDashboard = () => {
           >
             سراسر کشور
           </Typography>
+          <img
+            src={frame}
+            alt="frame"
+            style={{ width: "100%", marginTop: "0.69rem" }}
+          />
           <Box
             height="0.875rem"
             backgroundColor="#D9D9D9"
@@ -195,12 +205,34 @@ const NewDashboard = () => {
             ></Box>
           </Box>
           <Box display="flex" justifyContent="space-between">
-            <Typography>وضعیت:</Typography>
+            <Typography
+              fontSize="1rem"
+              fontFamily="PeydaLight"
+              sx={{ color: "#676767" }}
+            >
+              وضعیت:{" "}
+              <Typography
+                component="span"
+                fontFamily="PeydaSemiBold"
+                fontSize="1.5rem"
+                sx={{ color: "#008EDD" }}
+              >
+                مطلوب
+              </Typography>
+            </Typography>
+            <Typography
+              fontSize="1rem"
+              fontFamily="PeydaLight"
+              sx={{ color: "#676767" }}
+            >
+              عملکرد کلی
+            </Typography>
           </Box>
           <Typography
             fontFamily="PeydaRegular"
             fontSize="1.25rem"
             color="#676767"
+            marginTop="2.875rem"
             gutterBottom
           >
             اختلالات موجود (
@@ -241,7 +273,7 @@ const NewDashboard = () => {
               </Accordion>
             ))}
           </Box>
-          <Box>
+          <Box marginTop="2.875rem">
             <ContainedButton
               color="warning"
               variant="contained"
@@ -282,19 +314,24 @@ const NewDashboard = () => {
           <IranMap />
         </Grid>
       </Grid>
-      <Grid container marginY="1rem" >
-        <Grid
-          xs={12}
-          md={6}
+      <Box
+        display="flex"
+        flexDirection={isMdScreen ? "row" : "column"}
+        width="100%"
+        justifyContent="space-between"
+        marginY="1rem"
+      >
+        <Box
           paddingY="2rem"
           component={Paper}
           elevation={8}
           borderRadius="2rem"
+          width={isMdScreen ? "48%" : "100%"}
           sx={{
             background: radialBackground,
           }}
         >
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" marginX="0.5rem">
             <Typography
               color="#2C2C2C"
               fontSize="1.5rem"
@@ -311,7 +348,7 @@ const NewDashboard = () => {
               مشاهده جزئیات
             </Button>
           </Box>
-          <Grid container justifyContent="space-between">
+          <Grid container justifyContent="space-evenly">
             <Grid xs={6} width="45%" marginY="0.875rem">
               <StatisticBox
                 background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #BDE7FF 0%, rgba(205, 224, 235, 0.00) 100%)"
@@ -345,14 +382,13 @@ const NewDashboard = () => {
               />
             </Grid>
           </Grid>
-        </Grid>
-        <Grid
-          xs={12}
-          md={6}
+        </Box>
+        <Box
           paddingY="2rem"
           component={Paper}
           elevation={8}
           borderRadius="2rem"
+          width={isMdScreen ? "48%" : "100%"}
           sx={{
             background: radialBackground,
           }}
@@ -361,6 +397,7 @@ const NewDashboard = () => {
             sx={{
               display: "flex",
               justifyContent: isSmScreen ? "center" : "space-between",
+              paddingX: "0.5rem",
               flexWrap: "wrap",
             }}
           >
@@ -419,8 +456,8 @@ const NewDashboard = () => {
               -- مشاهده بیشتر --
             </Typography>
           )}
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Container>
   );
 };

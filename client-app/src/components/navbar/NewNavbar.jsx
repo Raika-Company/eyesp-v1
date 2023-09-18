@@ -42,7 +42,7 @@ const NewNavbar = () => {
 
   const toggleHomeOpen = () => {
     setIsHomeOpen(!ishomeopen);
-    navigateTo("/new");
+    navigateTo("/new/dashboard");
   };
   const toggleSpeedTest = () => {
     setIsSpeedTest(!isspeedtest);
@@ -50,7 +50,7 @@ const NewNavbar = () => {
   };
   const toggleHistoryTest = () => {
     setIsHistoryTest(!ishistorytest);
-    navigateTo("/test-history");
+    navigateTo("/new/history");
   };
   const toggleMyOperator = () => {
     setIsMyOperator(!ismyoperator);
