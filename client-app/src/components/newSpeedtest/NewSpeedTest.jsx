@@ -10,19 +10,7 @@ const NewSpeedTest = () => {
   const AnimatedButton = styled(Button)(({ theme }) => ({
     position: "relative",
     overflow: "visible",
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      top: "-5px",
-      left: "-5px",
-      right: "-5px",
-      bottom: "-5px",
-      borderRadius: "50%",
-      border: `6px solid ${TRANSPARENT_BLUE}`,
-      animation: "ringAnimation 3s infinite",
-      transform: "scale(1)",
-      opacity: 0.6,
-    },
+
     "@keyframes ringAnimation": {
       "0%": {
         transform: "scale(1)",
@@ -32,6 +20,12 @@ const NewSpeedTest = () => {
         transform: "scale(1.3)",
         opacity: 0,
       },
+    },
+    "&:focus": {
+      outline: "none", // remove the default browser focus outline
+    },
+    "&:hover": {
+      border: "none", // you can add this if you don't want any border on hover
     },
   }));
   return (
@@ -60,14 +54,14 @@ const NewSpeedTest = () => {
           <Box
             sx={{
               height: "10%",
-              width: "85%",
+              width: "80%",
               display: "flex",
               justifyContent: "space-between",
               marginTop: "4.5em",
               alignItems: "center",
             }}
           >
-            <Typography>تست سرعت</Typography>
+            <Typography variant="h2">تست سرعت</Typography>
             <Box
               sx={{
                 display: "flex",
@@ -77,7 +71,7 @@ const NewSpeedTest = () => {
             >
               {" "}
               <img src={clock} alt="clock" />
-              <Typography>تست های گذشته</Typography>
+              <Typography variant="h3">تست های گذشته</Typography>
             </Box>
           </Box>
           <Box
@@ -89,7 +83,7 @@ const NewSpeedTest = () => {
               alignItems: "center",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <Box
                 sx={{
                   display: "flex",
@@ -97,8 +91,8 @@ const NewSpeedTest = () => {
                   width: "126%",
                 }}
               >
-                <Typography>ادرس IP:</Typography>
-                <Typography>129.86.45.122</Typography>
+                <Typography variant="h3">ادرس IP:</Typography>
+                <Typography variant="h7">129.86.45.122</Typography>
               </Box>
               <Box
                 sx={{
@@ -107,8 +101,8 @@ const NewSpeedTest = () => {
                   width: "126%",
                 }}
               >
-                <Typography>سرور:</Typography>
-                <Typography>ایرانسل-تهران</Typography>
+                <Typography variant="h3">سرور:</Typography>
+                <Typography variant="h7">ایرانسل-تهران</Typography>
               </Box>
             </Box>
             <Box>
@@ -119,19 +113,15 @@ const NewSpeedTest = () => {
                   height: "clamp(10rem,10rem + 10vmin,16rem)",
                   width: "clamp(10rem,10rem + 10vmin,16rem)",
                   borderRadius: "50%",
-                  borderColor: "transparent",
-                  borderWidth: "6px",
-                  borderStyle: "solid",
-                  border: "3px solid rgba(54, 129, 241, 0.8)",
-                  backgroundOrigin: "border-box",
-                  backgroundClip: "padding-box, border-box",
-                  boxShadow:
-                    "inset 0 0 0 4px transparent, 0 0 0 4px transparent",
-                  fontSize: "4rem",
+                  // borderWidth: "6px",
+                  // backgroundOrigin: "border-box",
+                  boxShadow: "inset  0px 0px 15px black", // Updated the color to #3686B4
+
+                  fontSize: "2rem",
                   fontWeight: "400",
                   lineHeight: "normal",
                   fontStyle: "normal",
-                  paddingTop: "2rem",
+                  color: "black",
                 }}
                 variant="outlined"
               >
