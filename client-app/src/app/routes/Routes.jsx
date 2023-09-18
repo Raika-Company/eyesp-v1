@@ -31,14 +31,12 @@ const NewSpeedTest = lazy(() =>
 const NewDashboard = lazy(() =>
   import("../../components/newDashboard/NewDashboard")
 );
-<<<<<<< HEAD
-
 const NewInformation = lazy(() =>
   import("../../components/information/NewInformation")
-=======
+);
+
 const NewTestHistory = lazy(() =>
   import("../../components/newTestHistory/NewTestHistory")
->>>>>>> 3ae502dff3ce8e653c175b1647cb5f1997194f9e
 );
 
 export const mainRoutes = [

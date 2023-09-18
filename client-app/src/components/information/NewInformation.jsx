@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
+import NewLogo from "../../app/common/NewLogo";
 
 const NewInformation = () => {
   const theme = useTheme();
@@ -46,92 +47,94 @@ const NewInformation = () => {
   }
 
   return (
-    <Box
-      my="4.1rem"
-      sx={{
-        width: "85%",
-        height: "auto",
-        mx: "auto",
-        padding: "3rem",
-        borderRadius: "1.2rem",
-        border: "1.468px solid rgba(0, 0, 0, 0.10)",
-        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-        backgroundColor: bgColor,
-      }}
-    >
+    <Container maxWidth="lg">
+      <NewLogo />
       <Box
+        my="1rem"
+        overflow="hidden"
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
+          height: "auto",
+          padding: "3rem",
+          borderRadius: "1.2rem",
+          border: "1.468px solid rgba(0, 0, 0, 0.10)",
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+          backgroundColor: bgColor,
         }}
       >
-        <Typography
-          component="h2"
-          gutterBottom
-          sx={{
-            fontSize: "2rem",
-          }}
-        >
-          مفاهیم
-        </Typography>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-evenly",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <Paper
-            component="form"
+          <Typography
+            component="h2"
+            gutterBottom
             sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 200,
-              borderRadius: "25px",
+              fontSize: "2rem",
             }}
           >
-            <InputBase
-              sx={{ mr: 1, flex: 1 }}
-              placeholder="جست و جو"
-              inputProps={{ "aria-label": "جست و جو" }}
-            />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
+            مفاهیم
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: 200,
+                borderRadius: "25px",
+              }}
+            >
+              <InputBase
+                sx={{ mr: 1, flex: 1 }}
+                placeholder="جست و جو"
+                inputProps={{ "aria-label": "جست و جو" }}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+            <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+              <FilterListIcon />
             </IconButton>
-          </Paper>
-          <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
-            <FilterListIcon />
-          </IconButton>
+          </Box>
         </Box>
-      </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Box className={styles.ScrollBar}>
-          {definitionsData.map((definition) => (
-            <DefinitionTerm title={definition.title} key={definition.title}>
-              {definition.definition}
-            </DefinitionTerm>
-          ))}
-        </Box>
-        <Box sx={{ mx: "auto" }}>
-          <img
-            src={informationLogo}
-            alt="information-logo"
-            style={{ opacity: "0.2" }}
-          />
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box className={styles.ScrollBar}>
+            {definitionsData.map((definition) => (
+              <DefinitionTerm title={definition.title} key={definition.title}>
+                {definition.definition}
+              </DefinitionTerm>
+            ))}
+          </Box>
+          <Box sx={{ mx: "auto" }}>
+            <img
+              src={informationLogo}
+              alt="information-logo"
+              style={{ opacity: "0.2" }}
+            />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
@@ -158,7 +161,7 @@ const DefinitionTerm = ({ title, children }) => {
         component="span"
         fontFamily="PeydaBold"
         sx={{
-          marginRight: "0.5em" ,
+          marginRight: "0.5em",
           marginLeft: "0.4em",
         }}
       >
