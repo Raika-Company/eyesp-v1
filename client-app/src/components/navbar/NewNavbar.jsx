@@ -88,6 +88,7 @@ const NewNavbar = () => {
     <Box
       sx={{
         width: "55px",
+        width: opennav || historyOpen ? "180px" : "60px",
         pt: "2rem",
         mr: "2rem",
       }}
