@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import SpeedTest from "../../components/speedtest/SpeedTest";
+
 const TestHistory = lazy(() =>
   import("../../components/testHistory/TestHistory")
 );
@@ -28,7 +29,13 @@ const NewSpeedTest = lazy(() =>
   import("../../components/newSpeedtest/NewSpeedTest")
 );
 
-const NewDashboard = lazy(() => import("../../components/newDashboard/NewDashboard"));
+const NewDashboard = lazy(() =>
+  import("../../components/newDashboard/NewDashboard")
+);
+
+const NewInformation = lazy(() =>
+  import("../../components/information/NewInformation")
+);
 
 export const mainRoutes = [
   {
@@ -128,7 +135,11 @@ export const newSpeedTest = [
   {
     path: "/dashboard",
     element: <NewDashboard />,
-  }
+  },
+  {
+    path: "/information",
+    element: <NewInformation />,
+  },
 ];
 
 export const otherRoutes = [

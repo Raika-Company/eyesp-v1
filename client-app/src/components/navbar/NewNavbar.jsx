@@ -62,7 +62,7 @@ const NewNavbar = () => {
   };
   const toggleInformation = () => {
     setIsInformation(!isinformation);
-    navigateTo("/information");
+    navigateTo("/new/information");
   };
 
   const toggleOpenMenu = () => {
@@ -289,7 +289,7 @@ const NewNavbar = () => {
               alignItems: "center",
             }}
           >
-            <IconButton onClick={toggleResult}>
+            <IconButton onClick={toggleInformation}>
               <InfoOutlinedIcon
                 sx={{ width: "24px", height: "24px", cursor: "pointer" }}
               />
@@ -315,7 +315,7 @@ const NewNavbar = () => {
               alignItems: "center",
             }}
           >
-            <IconButton onClick={toggleInformation}>
+            <IconButton onClick={toggleResult}>
               <SignalCellularAltOutlinedIcon
                 sx={{ width: "24px", height: "24px", cursor: "pointer" }}
               />
