@@ -105,13 +105,7 @@ const NewNavbar = () => {
   };
 
   useEffect(() => {
-    if (openNav) {
-      setTimeout(() => {
-        setIsTypographyVisible(true);
-      }, 80);
-    } else {
-      setIsTypographyVisible(false);
-    }
+    setIsTypographyVisible(openNav);
   }, [openNav]);
 
   return (
@@ -121,7 +115,12 @@ const NewNavbar = () => {
       alignItems="flex-start"
       marginRight="max(1.5rem, 1.5vw)"
     >
-      <Box padding="0.75rem" backgroundColor="white" borderRadius="50%" marginTop="2.635rem">
+      <Box
+        padding="0.75rem"
+        backgroundColor="white"
+        borderRadius="50%"
+        marginTop="2.635rem"
+      >
         <IconButton onClick={toggleOpenMenu}>
           <MenuIcon />
         </IconButton>
@@ -153,7 +152,7 @@ const NewNavbar = () => {
                 sx={{
                   visibility: isTypographyVisible ? "visible" : "hidden",
                   opacity: isTypographyVisible ? 1 : 0,
-                  transition: "visibility 0s linear 0.3s, opacity 0.3s",
+                  transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
                 }}
               >
                 {item.label}
@@ -191,7 +190,7 @@ const NewNavbar = () => {
                 sx={{
                   visibility: isTypographyVisible ? "visible" : "hidden",
                   opacity: isTypographyVisible ? 1 : 0,
-                  transition: "visibility 0s linear 0.3s, opacity 0.3s",
+                  transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
                 }}
               >
                 {item.label}
