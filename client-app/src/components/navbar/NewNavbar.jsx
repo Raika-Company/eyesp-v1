@@ -76,7 +76,7 @@ const NAV_ITEMS = [
         alt="Company-logo"
       />
     ),
-    path: "/ISP-performance",
+    path: "/new/my-isp",
     toggle: "isMyOperator",
   },
   {

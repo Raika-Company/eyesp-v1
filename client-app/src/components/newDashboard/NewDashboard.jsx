@@ -251,7 +251,7 @@ const NewDashboard = () => {
               <Button
                 fontSize="1rem"
                 variant="text"
-                sx={{ color: "#676767", fontFamily: "PeydaRegular" }}
+                sx={{ color: "#676767", fontFamily: "PeydaRegular", marginRight: "min(1.94rem, 2vw)" }}
               >
                 گزارش خطا در اطلاعات
               </Button>

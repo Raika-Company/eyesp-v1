@@ -34,6 +34,8 @@ const NewTestHistory = lazy(() =>
   import("../../components/newTestHistory/NewTestHistory")
 );
 
+const MyISP = lazy(() => import("../../components/myISP/MyISP"));
+
 export const mainRoutes = [
   {
     path: "/",
@@ -137,6 +139,10 @@ export const newSpeedTest = [
   {
     path: "/history",
     element: <NewTestHistory />,
+  },
+  {
+    path: "/my-isp",
+    element: <MyISP />,
   },
 ];
 
