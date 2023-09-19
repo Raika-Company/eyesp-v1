@@ -34,6 +34,9 @@ const NewDashboard = lazy(() =>
 const NewInformation = lazy(() =>
   import("../../components/information/NewInformation")
 );
+const NewOperatorPerformance = lazy(() =>
+  import("../../components/ispPerformance/NewOperatorPerformance")
+);
 
 const NewTestHistory = lazy(() =>
   import("../../components/newTestHistory/NewTestHistory")
@@ -146,7 +149,11 @@ export const newSpeedTest = [
   {
     path: "/history",
     element: <NewTestHistory />,
-  }
+  },
+  {
+    path: "/operator-performance",
+    element: <NewOperatorPerformance />,
+  },
 ];
 
 export const otherRoutes = [
