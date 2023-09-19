@@ -1,9 +1,28 @@
+/**
+ * Custom Information component for the application.
+ * @module NewInformation
+ * @description This component displays new information with definitions.
+ */
+// React core and hooks
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 import { Box, Container, TextField, Typography } from "@mui/material";
+
+/**
+ * A hook from Material-UI to access the current theme.
+ * @function useTheme
+ * @returns {Object} The current theme object.
+ */
 import { useTheme } from "@mui/material/styles";
-import informationLogo from "../../../public/icon-information.png";
+
+// Local components
+// Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
+
+// Assets
+// Importing images used in the Result component
+import informationLogo from "../../../public/icon-information.png";
 import styles from "./NewInformation.module.css";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Paper from "@mui/material/Paper";
@@ -14,15 +33,27 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import NewLogo from "../../app/common/NewLogo";
+/**
+ * React component for displaying new information with definitions.
+ * @function NewInformation
+ * @returns {React.Element} The rendered React component.
+ */
 
 const NewInformation = () => {
+  //State and variable declarations here
+
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
-
   const [definitionsData, setDefinitionsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  /**
+   * Fetch definitions data from the server.
+   * @async
+   * @function
+   * @returns {Promise<void>} A promise that resolves when the data is fetched.
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,6 +69,7 @@ const NewInformation = () => {
     fetchData();
   }, []);
 
+  // Importing custom LoadingSpinner component for modular structure
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -109,7 +141,6 @@ const NewInformation = () => {
             </IconButton>
           </Box>
         </Box>
-
         <Box
           sx={{
             display: "flex",
@@ -137,7 +168,14 @@ const NewInformation = () => {
     </Container>
   );
 };
-
+/**
+ * React component for rendering a definition term.
+ * @function DefinitionTerm
+ * @param {Object} props - The component's props.
+ * @param {string} props.title - The title of the definition.
+ * @param {React.Node} props.children - The content of the definition.
+ * @returns {React.Element} The rendered React component.
+ */
 const DefinitionTerm = ({ title, children }) => {
   const theme = useTheme();
 
