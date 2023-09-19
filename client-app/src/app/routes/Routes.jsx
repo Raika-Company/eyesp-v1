@@ -25,7 +25,7 @@ const ProvinceISP = lazy(() =>
   import("../../components/provinceISP/ProvinceISP")
 );
 const NewSpeedTest = lazy(() =>
-  import("../../components/newSpeedTest/NewSpeedTest")
+  import("../../components/newSpeedtest/NewSpeedTest")
 );
 
 const NewDashboard = lazy(() =>

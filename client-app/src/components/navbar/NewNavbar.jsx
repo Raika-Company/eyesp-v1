@@ -1,3 +1,7 @@
+/**
+ * @module NewNavbar
+ * @description Custom navbar component for the application.
+ */
 import React, { useEffect, useState } from "react";
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -10,36 +14,55 @@ import {
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
-import CompanyLogo from "../../app/assets/image/logo.png";
+import isp from "../../app/assets/image/isp.svg";
 
+/**
+ * @typedef {Object} NavItemConfig
+ * @property {string} label - Display name for the navigation item.
+ * @property {function(string): JSX.Element} icon - Function that returns a JSX Element for the icon based on color.
+ * @property {string} path - Router path for navigation.
+ * @property {string} toggle - Toggle state name.
+ */
+
+/**
+ * @const
+ * @type {NavItemConfig[]}
+ * @description Predefined navigation items for the navbar.
+ */
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
-    icon: (
-      <HomeIcon sx={{ width: "24px", height: "24px", cursor: "pointer" }} />
+    icon: (color) => (
+      <HomeIcon
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+      />
     ),
     path: "/new/dashboard",
     toggle: "isHomeOpen",
   },
   {
     label: "تست سرعت",
-    icon: (
-      <SpeedIcon sx={{ width: "24px", height: "24px", cursor: "pointer" }} />
+    icon: (color) => (
+      <SpeedIcon
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+      />
     ),
     path: "/new",
     toggle: "isSpeedTest",
   },
   {
     label: "تست های گذشته",
-    icon: (
-      <HistoryIcon sx={{ width: "24px", height: "24px", cursor: "pointer" }} />
+    icon: (color) => (
+      <HistoryIcon
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+      />
     ),
     path: "/new/history",
     toggle: "isHistoryTest",
   },
   {
     label: "اپراتور من",
-    icon: (
+    icon: (color) => (
       <img
         style={{
           width: "24px",
@@ -47,8 +70,9 @@ const NAV_ITEMS = [
           cursor: "pointer",
           userSelect: "none",
           objectFit: "cover",
+          color: color,
         }}
-        src={CompanyLogo}
+        src={isp}
         alt="Company-logo"
       />
     ),
@@ -57,9 +81,9 @@ const NAV_ITEMS = [
   },
   {
     label: "اطلاعات شبکه من",
-    icon: (
+    icon: (color) => (
       <InfoOutlinedIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer" }}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/result",
@@ -67,9 +91,9 @@ const NAV_ITEMS = [
   },
   {
     label: "گزارش ها",
-    icon: (
+    icon: (color) => (
       <SignalCellularAltOutlinedIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer" }}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/information",
@@ -77,36 +101,76 @@ const NAV_ITEMS = [
   },
 ];
 
+/**
+ * @function iconColor
+ * @description Determines the color of an icon based on current location.
+ * @param {string} path - Path to compare against current location.
+ * @returns {string} - Color code.
+ */
+const iconColor = (path) =>
+  location.pathname === path ? "#00A3FF" : "inherit";
+
+/**
+ * @component
+ * @name NewNavbar
+ * @description A custom navbar component.
+ * @returns {JSX.Element}
+ */
 const NewNavbar = () => {
   const [isTypographyVisible, setIsTypographyVisible] = useState(false);
   const [openNav, setOpenNav] = useState(false);
-  const [stateToggles, setStateToggles] = useState({
-    isHomeOpen: false,
-    isSpeedTest: false,
-    isHistoryTest: false,
-    isMyOperator: false,
-    isResult: false,
-    isInformation: false,
-  });
+  const toggleOpenMenu = () => {
+    setOpenNav(!openNav);
+  };
 
   const history = useNavigate();
   const location = useLocation();
 
-  const toggleNavState = (toggleName, path) => {
-    setStateToggles((prevState) => ({
-      ...prevState,
-      [toggleName]: !prevState[toggleName],
-    }));
+  const toggleNavState = (path) => {
     history(path);
-  };
-
-  const toggleOpenMenu = () => {
-    setOpenNav(!openNav);
   };
 
   useEffect(() => {
     setIsTypographyVisible(openNav);
   }, [openNav]);
+
+  /**
+   * @component
+   * @name NavItem
+   * @description A single navigation item for the navbar.
+   * @param {Object} props - Props for the component.
+   * @param {NavItemConfig} props.item - Configuration for the navigation item.
+   * @returns {JSX.Element}
+   */
+  const NavItem = ({ item }) => (
+    <Box
+      key={item.label}
+      sx={{
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        margin: "10px 0",
+      }}
+    >
+      <IconButton onClick={() => toggleNavState(item.path)}>
+        {item.icon(iconColor(item.path))}
+      </IconButton>
+      {openNav && (
+        <Typography
+          component="span"
+          variant="h6"
+          sx={{
+            visibility: isTypographyVisible ? "visible" : "hidden",
+            opacity: isTypographyVisible ? 1 : 0,
+            transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
+            color: iconColor(item.path),
+          }}
+        >
+          {item.label}
+        </Typography>
+      )}
+    </Box>
+  );
 
   return (
     <Box
@@ -128,37 +192,15 @@ const NewNavbar = () => {
       <Box
         display="flex"
         flexDirection="column"
-        alignItems="center"
+        alignItems="flex-start"
         borderRadius="1.96875rem"
         padding="0.75rem"
         marginTop="1.56rem"
         backgroundColor="white"
+        alignSelf="stretch"
       >
         {NAV_ITEMS.slice(0, 2).map((item) => (
-          <Box
-            key={item.label}
-            display="flex"
-            justifyContent="space-evenly"
-            alignItems="center"
-            margin="10px 0"
-          >
-            <IconButton onClick={() => toggleNavState(item.toggle, item.path)}>
-              {item.icon}
-            </IconButton>
-            {openNav && (
-              <Typography
-                component="span"
-                variant="h6"
-                sx={{
-                  visibility: isTypographyVisible ? "visible" : "hidden",
-                  opacity: isTypographyVisible ? 1 : 0,
-                  transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
-                }}
-              >
-                {item.label}
-              </Typography>
-            )}
-          </Box>
+          <NavItem item={item} key={item.label} />
         ))}
       </Box>
       <Box
@@ -171,32 +213,7 @@ const NewNavbar = () => {
         borderRadius="1.96875rem"
       >
         {NAV_ITEMS.slice(2).map((item) => (
-          <Box
-            key={item.label}
-            sx={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              alignItems: "flex-start",
-              margin: "10px 0",
-            }}
-          >
-            <IconButton onClick={() => toggleNavState(item.toggle, item.path)}>
-              {item.icon}
-            </IconButton>
-            {openNav && (
-              <Typography
-                component="span"
-                variant="h6"
-                sx={{
-                  visibility: isTypographyVisible ? "visible" : "hidden",
-                  opacity: isTypographyVisible ? 1 : 0,
-                  transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
-                }}
-              >
-                {item.label}
-              </Typography>
-            )}
-          </Box>
+          <NavItem item={item} key={item.label} />
         ))}
       </Box>
     </Box>
