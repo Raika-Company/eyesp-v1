@@ -179,10 +179,11 @@ const TestHistoryCard = () => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 height: "20%",
-                width: "50%",
+                width: "100%",
                 alignItems: "center",
+                gap: "5px",
               }}
             >
               {" "}

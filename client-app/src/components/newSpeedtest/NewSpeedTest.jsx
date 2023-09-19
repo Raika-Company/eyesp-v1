@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Container, Typography, Button, Link } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Link,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import NewLogo from "../../app/common/NewLogo";
 import clock from "../../app/assets/image/clock.svg";
 import { styled } from "@mui/material/styles";
@@ -11,6 +19,9 @@ import download from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
 
 const NewSpeedTest = () => {
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.down("md"));
+  const isXS = useMediaQuery(theme.breakpoints.only("xs"));
   const AnimatedButton = styled(Button)(({ theme }) => ({
     position: "relative",
     overflow: "visible",
@@ -33,6 +44,101 @@ const NewSpeedTest = () => {
       border: "none", // you can add this if you don't want any border on hover
     },
   }));
+
+  const MobileIP = () => {
+    return (
+      <Box
+        sx={{
+          height: "60%",
+          width: isMD ? "88%" : "73%",
+          display: "flex",
+          justifyContent: "center",
+          gap: "50px",
+          alignItems: "center",
+        }}
+      >
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h3">ادرس IP:</Typography>
+            <Typography variant="h7">129.86.45.122</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h3">سرور:</Typography>
+            <Typography variant="h7">ایرانسل-تهران</Typography>
+          </Box>
+        </Box>
+        <Box>
+          {" "}
+          <AnimatedButton
+            // onClick={handleButtonClick}
+            sx={{
+              height: "clamp(10rem,10rem + 10vmin,16rem)",
+              width: "clamp(10rem,10rem + 10vmin,16rem)",
+              borderRadius: "50%",
+              // borderWidth: "6px",
+              // backgroundOrigin: "border-box",
+              boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
+
+              fontSize: "2rem",
+              fontWeight: "400",
+              lineHeight: "normal",
+              fontStyle: "normal",
+              color: "black",
+            }}
+            variant="outlined"
+          >
+            شروع
+          </AnimatedButton>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "12px",
+          }}
+          className="btn-container"
+        >
+          <label className="switch btn-color-mode-switch">
+            <input
+              type="checkbox"
+              name="color_mode"
+              id="color_mode"
+              value="1"
+            />
+            <label
+              htmlFor="color_mode"
+              data-on="تست فوری"
+              data-off="تست دقیق"
+              className="btn-color-mode-switch-inner"
+            ></label>
+          </label>
+          <Box
+            sx={{
+              width: "96%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Typography variant="h7">نوع تست</Typography>
+            <img src={iLogo} alt="iLogo" />
+          </Box>
+        </Box>
+      </Box>
+    );
+  };
   return (
     <Container maxWidth="xl">
       <Box
@@ -54,120 +160,131 @@ const NewSpeedTest = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginTop: "2em",
           }}
         >
           <Box
             sx={{
               height: "10%",
-              width: "80%",
+              width: isMD ? "88%" : "80%",
               display: "flex",
               justifyContent: "space-between",
               marginTop: "1.5em",
               alignItems: "center",
             }}
           >
-            <Typography variant="h2">تست سرعت</Typography>
+            <Typography variant={isMD ? "h4" : "h2"}>تست سرعت</Typography>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-evenly",
-                width: "16%",
+                justifyContent: "flex-end",
+                gap: "10px",
+                width: isMD ? "40%" : "41%",
               }}
             >
               {" "}
               <img src={clock} alt="clock" />
-              <Typography variant="h3">تست های گذشته</Typography>
+              <Typography variant={isMD ? "h4" : "h2"}>
+                تست های گذشته
+              </Typography>
             </Box>
           </Box>
-          <Box
-            sx={{
-              height: "60%",
-              width: "66%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {isMD ? (
+            <MobileIP />
+          ) : (
+            <>
               <Box
                 sx={{
+                  height: "60%",
+                  width: isMD ? "88%" : "73%",
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <Typography variant="h3">ادرس IP:</Typography>
-                <Typography sx={{ marginRight: "2rem" }} variant="h7">
-                  129.86.45.122
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography variant="h3">سرور:</Typography>
-                <Typography variant="h7">ایرانسل-تهران</Typography>
-              </Box>
-            </Box>
-            <Box>
-              {" "}
-              <AnimatedButton
-                // onClick={handleButtonClick}
-                sx={{
-                  height: "clamp(10rem,10rem + 10vmin,16rem)",
-                  width: "clamp(10rem,10rem + 10vmin,16rem)",
-                  borderRadius: "50%",
-                  // borderWidth: "6px",
-                  // backgroundOrigin: "border-box",
-                  boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="h3">ادرس IP:</Typography>
+                    <Typography variant="h7">129.86.45.122</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="h3">سرور:</Typography>
+                    <Typography variant="h7">ایرانسل-تهران</Typography>
+                  </Box>
+                </Box>
+                <Box>
+                  {" "}
+                  <AnimatedButton
+                    // onClick={handleButtonClick}
+                    sx={{
+                      height: "clamp(10rem,10rem + 10vmin,16rem)",
+                      width: "clamp(10rem,10rem + 10vmin,16rem)",
+                      borderRadius: "50%",
+                      // borderWidth: "6px",
+                      // backgroundOrigin: "border-box",
+                      boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
 
-                  fontSize: "2rem",
-                  fontWeight: "400",
-                  lineHeight: "normal",
-                  fontStyle: "normal",
-                  color: "black",
-                }}
-                variant="outlined"
-              >
-                شروع
-              </AnimatedButton>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                gap: "12px",
-              }}
-              class="btn-container"
-            >
-              <label class="switch btn-color-mode-switch">
-                <input
-                  type="checkbox"
-                  name="color_mode"
-                  id="color_mode"
-                  value="1"
-                />
-                <label
-                  for="color_mode"
-                  data-on="تست فوری"
-                  data-off="تست دقیق"
-                  class="btn-color-mode-switch-inner"
-                ></label>
-              </label>
-              <Box
-                sx={{
-                  width: "96%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Typography variant="h7">نوع تست</Typography>
-                <img src={iLogo} alt="iLogo" />
+                      fontSize: "2rem",
+                      fontWeight: "400",
+                      lineHeight: "normal",
+                      fontStyle: "normal",
+                      color: "black",
+                    }}
+                    variant="outlined"
+                  >
+                    شروع
+                  </AnimatedButton>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                  className="btn-container"
+                >
+                  <label className="switch btn-color-mode-switch">
+                    <input
+                      type="checkbox"
+                      name="color_mode"
+                      id="color_mode"
+                      value="1"
+                    />
+                    <label
+                      htmlFor="color_mode"
+                      data-on="تست فوری"
+                      data-off="تست دقیق"
+                      className="btn-color-mode-switch-inner"
+                    ></label>
+                  </label>
+                  <Box
+                    sx={{
+                      width: "96%",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Typography variant="h7">نوع تست</Typography>
+                    <img src={iLogo} alt="iLogo" />
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-          </Box>
+            </>
+          )}
+
           <Box
             sx={{
               display: "flex",

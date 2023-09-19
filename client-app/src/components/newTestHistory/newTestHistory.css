@@ -1,12 +1,11 @@
-/* Scrollbar Styles */
 ::-webkit-scrollbar {
-    width: 8px; /* Width of the scrollbar track */
-    background-color: #F5F5F5;
+    width: 8px;
 }
 
-   ::-webkit-scrollbar-button {
-    width: 50px;
-    height: 20px; /* Reduce this height to make the buttons smaller */
+::-webkit-scrollbar-track {
+    border-top: 20px solid transparent;  /* Adjust these values to 'shorten' the track visually */
+    border-bottom: 20px solid transparent;
+    background-color: #F5F5F5;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -14,13 +13,11 @@
     background-image: -webkit-gradient(linear,
                        left bottom,
                        left top,
-                       color-stop(0.44, rgb(122,153,217)),
-                       color-stop(0.72, rgb(73,125,189)),
-                       color-stop(0.86, rgb(28,58,148)));
+                       color-stop(0.44, rgb(62, 99, 137)),
+                       color-stop(0.72, rgb(37, 159, 218)),
+                       color-stop(0.86, rgb(37, 159, 218)));
 }
 
-/* Make scrollbar thin for all elements.
-   Ensure that this is the desired effect across the entire application. */
-* {
-    scrollbar-width: thin;
-}
+::-webkit-scrollbar-button {
+    width: 50px;
+    height: 100px; }
