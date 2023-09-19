@@ -62,7 +62,7 @@ const NewSpeedTest = () => {
               width: "80%",
               display: "flex",
               justifyContent: "space-between",
-              marginTop: "2.5em",
+              marginTop: "1.5em",
               alignItems: "center",
             }}
           >

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 // Third-party libraries or components
 // Import Material-UI components and styles
-import { Button, Box, Typography, useTheme } from "@mui/material";
+import { Button, Box, Typography, useTheme, Alert } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import moment from "moment-jalaali";
 
@@ -146,6 +146,12 @@ const SpeedTest = ({ themeMode }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const [showAlert, setShowAlert] = useState(true);
+
+  const handleAlertClick = () => {
+    navigate("/new");
+  };
+
   const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const [animationInterval, setAnimationInterval] = useState(null);
 
@@ -267,6 +273,15 @@ const SpeedTest = ({ themeMode }) => {
 
   return (
     <>
+      {showAlert ? (
+        <Alert
+          severity="warning"
+          onClick={handleAlertClick}
+          sx={{ cursor: "pointer", width: "fit-content", marginY: "1rem", marginX: "auto" , textAlign: "center", fontSize: "1.2rem" }}
+        >
+          برای دیدن نسخه جدید وبسایت کلیک کنید.
+        </Alert>
+      ) : null}
       <Box
         component="main"
         height={boxHeight}

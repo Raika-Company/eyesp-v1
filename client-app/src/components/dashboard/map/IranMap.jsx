@@ -162,9 +162,6 @@ const IranMap = () => {
                     <stop offset="100%" style={{ stopColor: '#DA8E8E' }} />
                 </linearGradient>
             </defs>
-            <g style={{ fill: borderColor }}>
-              <path className={styles.iran} d={iranBorder} />
-            </g>
             <g className={styles.province}>
               {provinces.map((province) => (
                 <path
