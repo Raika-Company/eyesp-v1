@@ -1,12 +1,18 @@
-import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Container,
+  Grid,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import NewLogo from "../../app/common/NewLogo";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import {
   AreaChart,
@@ -46,12 +52,12 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-const NewOperatorPerformance = () => {
-  const [alignment, setAlignment] = React.useState("مشاهده تکی");
 
-  const handleChangeBtn = (event, newAlignment) => {
-    setAlignment(newAlignment);
-    setSelectedButton(newAlignment);
+const NewOperatorPerformance = () => {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const handleButtonClick = (index) => {
+    setSelectedButton(index);
   };
 
   const theme = useTheme();
@@ -75,11 +81,10 @@ const NewOperatorPerformance = () => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg" sx={{height: "100dvh"}}>
+    <Container maxWidth="lg" sx={{ height: "100dvh" }}>
       <NewLogo />
       <Box
         sx={{
-          bgcolor: "darkgoldenrod",
           mt: "1rem",
           p: "2rem",
           borderRadius: "25px",
@@ -91,6 +96,7 @@ const NewOperatorPerformance = () => {
           sx={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-evenly",
           }}
         >
           <Box
@@ -119,6 +125,7 @@ const NewOperatorPerformance = () => {
                     borderRadius: "25px",
                     display: "flex",
                     justifyContent: "space-between",
+                    height: "38px",
                   }}
                   multiple
                   displayEmpty
@@ -154,44 +161,29 @@ const NewOperatorPerformance = () => {
             sx={{
               bgcolor: "#F4F4F4",
               borderRadius: "25px",
-              width: "185px",
+              p: "0.3rem",
+              width: "230px",
               boxShadow: "0px 0px 10px 1px rgba(0, 0, 0, 0.10) inset",
-              p: "0.2rem",
+              display: "flex",
+              justifyContent: "space-between",
             }}
           >
-            <ToggleButtonGroup
-              sx={{ border: "none", direction: "ltr" }}
-              color="primary"
-              value={alignment}
-              exclusive
-              onChange={handleChangeBtn}
-              aria-label="Platform"
-            >
-              <ToggleButton
+            {["مقایسه", "مشاهده تکی"].map((text, index) => (
+              <Button
+                key={text}
                 sx={{
-                  border: "none",
-                  color: "#989898",
+                  width: index === 0 ? "95px" : "125px",
                   borderRadius: "25px",
-                  fontSize: "0.995rem",
-                  bgcolor: alignment === "مشاهده تکی" ? "yellow" : "white", // تنظیم پس زمینه باتن انتخاب شده
+                  fontSize: "1rem",
+                  color: selectedButton === index ? "white" : "#989898",
+                  backgroundColor:
+                    selectedButton === index ? "#259FDA" : "transparent",
                 }}
-                value="مشاهده تکی"
+                onClick={() => handleButtonClick(index)}
               >
-                مشاهده تکی
-              </ToggleButton>
-              <ToggleButton
-                sx={{
-                  border: "none",
-                  borderRadius: "25px",
-                  fontSize: "0.995rem",
-                  color: "#989898",
-                  bgcolor: alignment === "مقایسه" ? "yellow" : "white", // تنظیم پس زمینه باتن انتخاب شده
-                }}
-                value="مقایسه"
-              >
-                مقایسه
-              </ToggleButton>
-            </ToggleButtonGroup>
+                {text}
+              </Button>
+            ))}
           </Box>
         </Box>
         <Grid container>
