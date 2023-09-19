@@ -1,9 +1,21 @@
 import React from "react";
-import { Box, Container, Typography, Button, Link } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Link,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import NewLogo from "../../app/common/NewLogo";
 import TestHistoryCard from "../../app/common/TestHistoryCard";
+
 import "./NewTestHistory.css";
 const NewTestHistory = () => {
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.down("md"));
+  const isXS = useMediaQuery(theme.breakpoints.only("xs"));
   return (
     <Container maxWidth="xl">
       <Box
@@ -17,6 +29,10 @@ const NewTestHistory = () => {
       >
         <NewLogo />
         <Box
+          borderbottomleftradius="2em"
+          borderbottomrightradius="2em"
+          mt={2}
+          pb={2}
           sx={{
             height: "85%",
             width: "100%",
@@ -26,7 +42,8 @@ const NewTestHistory = () => {
             alignItems: "center",
             borderRadius: "2rem",
             gap: "3em",
-            overflow: "auto",
+            overflowY: "auto",
+            overflowX: "hidden",
           }}
         >
           <Box
@@ -39,12 +56,14 @@ const NewTestHistory = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h2">تست‌های گذشته</Typography>
+            <Typography variant={isXS ? "h5" : isMD ? "h3" : "h2"}>
+              تست‌های گذشته
+            </Typography>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-evenly",
-                width: "40%",
+                width: isXS ? "50%" : isMD ? "60%" : "36%",
                 alignItems: "center",
               }}
             >
@@ -59,11 +78,17 @@ const NewTestHistory = () => {
               >
                 انجام تست
               </Button>
-              <Typography variant="h3"> آدرس IP : </Typography>
-              <Typography variant="h4"> 192.168.0.129 </Typography>
+              <Typography variant={isXS ? "h5" : isMD ? "h4" : "h3"}>
+                {" "}
+                آدرس IP :{" "}
+              </Typography>
+              <Typography variant={isXS ? "h6" : isMD ? "h5" : "h4"}>
+                {" "}
+                192.168.0.129{" "}
+              </Typography>
             </Box>
           </Box>
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -73,8 +98,10 @@ const NewTestHistory = () => {
               borderRadius: "2rem",
             }}
           >
-            <Typography variant="h5">امروز</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+            <Typography variant={isXS ? "h5" : isMD ? "h4" : "h3"}>
+              امروز
+            </Typography>
+            <Box gap={3} sx={{ display: "flex", justifyContent: "flex-start" }}>
               <TestHistoryCard />
               <TestHistoryCard />
               <TestHistoryCard />
@@ -93,9 +120,10 @@ const NewTestHistory = () => {
               borderRadius: "2rem",
             }}
           >
-            <Typography variant="h5">امروز</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-              <TestHistoryCard />
+            <Typography variant={isXS ? "h5" : isMD ? "h4" : "h3"}>
+              هفته گذشته
+            </Typography>
+            <Box gap={3} sx={{ display: "flex", justifyContent: "flex-start" }}>
               <TestHistoryCard />
               <TestHistoryCard />
               <TestHistoryCard />
@@ -108,19 +136,26 @@ const NewTestHistory = () => {
               flexDirection: "column",
               height: "50%",
               gap: "1em",
-
               width: "87%",
+
               borderRadius: "2rem",
             }}
           >
-            <Typography variant="h5">امروز</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-              <TestHistoryCard />
+            <Typography variant={isXS ? "h5" : isMD ? "h4" : "h3"}>
+              ماه گذشته
+            </Typography>
+            <Box
+              gap={3}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
               <TestHistoryCard />
               <TestHistoryCard />
               <TestHistoryCard />
             </Box>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Container>
