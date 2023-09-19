@@ -75,7 +75,7 @@ const NewOperatorPerformance = () => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg" sx={{height: "100dvh"}}>
+    <Container maxWidth="lg" sx={{ height: "100dvh" }}>
       <NewLogo />
       <Box
         sx={{
@@ -411,6 +411,7 @@ const NewOperatorPerformance = () => {
               <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
             </Box>
           </Grid>
+          <Box>dfsgjik</Box>
         </Grid>
       </Box>
     </Container>

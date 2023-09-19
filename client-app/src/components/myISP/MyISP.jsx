@@ -10,6 +10,8 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import "./MyISP.css";
+import leftArrow from "../../app/assets/image/leftArrow.svg";
 import frame from "../../app/assets/image/frame.svg";
 import { ContainedButton } from "../../app/common/ContainedButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -367,6 +369,37 @@ const MyISP = () => {
               <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
             </Box>
           </Grid>
+          <Box
+            sx={{
+              marginRight: "8rem",
+            }}
+          >
+            {" "}
+            <div class="component">
+              <div class="overlap-group">
+                <div class="rectangle"></div>
+                <div class="group">
+                  <div class="text-wrapper">سرعت دانلود</div>
+                  <div class="div">سرعت آپلود</div>
+                  <div class="text-wrapper-2">پینگ</div>
+                  <div class="text-wrapper-3">درصد عملکرد</div>
+                </div>
+              </div>
+            </div>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "2rem",
+              }}
+            >
+              <Typography>سال:</Typography>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography>سایر اپراتورها</Typography>
+              <img src={leftArrow} alt="leftArrow" />
+            </Box>
+          </Box>
         </Grid>
       </Box>
     </Container>
