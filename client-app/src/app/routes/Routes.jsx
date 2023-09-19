@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import SpeedTest from "../../components/speedtest/SpeedTest";
+
 const TestHistory = lazy(() =>
   import("../../components/testHistory/TestHistory")
 );
@@ -30,6 +31,13 @@ const NewSpeedTest = lazy(() =>
 const NewDashboard = lazy(() =>
   import("../../components/newDashboard/NewDashboard")
 );
+const NewInformation = lazy(() =>
+  import("../../components/information/NewInformation")
+);
+const NewOperatorPerformance = lazy(() =>
+  import("../../components/ispPerformance/NewOperatorPerformance")
+);
+
 const NewTestHistory = lazy(() =>
   import("../../components/newTestHistory/NewTestHistory")
 );
@@ -137,12 +145,20 @@ export const newSpeedTest = [
     element: <NewDashboard />,
   },
   {
+    path: "/information",
+    element: <NewInformation />,
+  },
+  {
     path: "/history",
     element: <NewTestHistory />,
   },
   {
     path: "/my-isp",
     element: <MyISP />,
+  },
+  {
+    path: "/operator-performance",
+    element: <NewOperatorPerformance />,
   },
 ];
 

@@ -86,7 +86,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/result",
+    path: "/new/operator-performance",
     toggle: "isResult",
   },
   {
@@ -96,7 +96,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/information",
+    path: "/new/information",
     toggle: "isInformation",
   },
 ];
