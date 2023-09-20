@@ -28,7 +28,7 @@ import WestIcon from "@mui/icons-material/West";
 // Local component and utility imports
 import { ContainedButton } from "../../app/common/ContainedButton";
 import NewIranMap from "./map/NewIranMap";
-import ISPTable from "../dashboard/ISPTable";
+import ISPTable from "./NewISPTable";
 import NewLogo from "../../app/common/NewLogo";
 import StatisticBox from "../../app/common/StatisticBox";
 
@@ -360,12 +360,14 @@ const NewDashboard = () => {
         >
           <Box
             paddingY="2rem"
-            component={Paper}
-            elevation={8}
+            // component={Paper}
+            // elevation={8}
             borderRadius="2rem"
             width={isMdScreen ? "48%" : "100%"}
             sx={{
               background: radialBackground,
+              boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
+              backdropFilter: "blur(35px)"
             }}
           >
             <Box display="flex" justifyContent="space-between" marginX="0.5rem">
@@ -422,6 +424,7 @@ const NewDashboard = () => {
           </Box>
           <Box
             paddingY="2rem"
+            paddingX="0.5rem"
             component={Paper}
             elevation={8}
             borderRadius="2rem"
@@ -463,7 +466,7 @@ const NewDashboard = () => {
                   onChange={(e) => setSortCriteria(e.target.value)}
                   variant="outlined"
                   color="primary"
-                  sx={{ marginRight: "0.5rem", color: "info.main" }}
+                  sx={{ marginRight: "0.5rem", color: "info.main", borderRadius: "1.25rem" }}
                 >
                   {selectionItems.map((item) => (
                     <MenuItem
