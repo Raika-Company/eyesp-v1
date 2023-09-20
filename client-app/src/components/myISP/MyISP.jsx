@@ -14,7 +14,15 @@ import {
   Rating,
   Snackbar,
   Typography,
+  ButtonGroup,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Link,
 } from "@mui/material";
+import "./MyISP.css";
+import leftArrow from "../../app/assets/image/leftArrow.svg";
 import frame from "../../app/assets/image/frame.svg";
 import { ContainedButton } from "../../app/common/ContainedButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -53,13 +61,67 @@ const disorders = [
       "توضیحات مربوط به افزایش پینگ می تواند در این قسمت قرار گیرد. ممکن است شما بخواهید جزئیات بیشتری در مورد این اختلال، دلایل آن یا راه حل های پیشنهادی را در این قسمت ارائه دهید.",
   },
 ];
-
 const MyISP = () => {
   const [rendered, setRendered] = useState(false);
+  const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
+  const [chartData, setChartData] = useState(data[0].data);
 
+  const handleButtonClick = (index) => {
+    setClickedButtonIndex(index);
+    updateChartData(index);
+  };
+
+  const updateChartData = (index) => {
+    if (index < data.length) {
+      setChartData(data[index].data);
+    }
+  };
   useEffect(() => {
     setRendered(true);
   }, []);
+  const buttonGroupStyle = {
+    backgroundColor: "#F4F4F4",
+    width: "11vw",
+    alignItems: "center",
+    gap: "11px",
+    height: "27dvh",
+    justifyContent: "center",
+    borderRadius: "2rem",
+    boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
+  };
+
+  const activeButtonStyle = {
+    backgroundColor: "#008EDD",
+    color: "white",
+    borderRadius: "2rem",
+    border: "none",
+    width: "8vw",
+  };
+
+  const defaultButtonStyle = {
+    borderRadius: "2rem",
+    border: "none",
+    width: "8vw",
+    color: "#676767",
+  };
+
+  const buttons = [
+    { label: "سرعت دانلود", width: "8vw" },
+    { label: "سرعت آپلود", width: "8vw" },
+    { label: "پینگ", width: "8vw" },
+    { label: "درصد عملکرد", width: "9vw" },
+  ];
+  const [age, setAge] = useState("");
+
+  const handleChange = (event) => {
+    const selectedYear = event.target.value;
+    setAge(selectedYear);
+
+    const yearData = data.find((d) => d.id === selectedYear.toString());
+    if (yearData) {
+      setChartData(yearData.data);
+    }
+  };
 
   const [disturbance, setDisturbance] = useState(false);
 
@@ -357,8 +419,8 @@ const MyISP = () => {
         >
           نمودار عملکرد اپراتور
         </Typography>
-        <Grid container>
-          <Grid xs={12} md={9}>
+        <Grid container justifyContent={"space-around"}>
+          <Grid item xs={12} md={9}>
             <Box display="flex">
               <Box>
                 <Box
@@ -374,7 +436,7 @@ const MyISP = () => {
                   {rendered && (
                     <Box>
                       <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart width="100%" height="100%" data={data}>
+                        <AreaChart width="100%" height="100%" data={chartData}>
                           <Tooltip />
                           <defs>
                             <linearGradient
@@ -412,6 +474,53 @@ const MyISP = () => {
               <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
             </Box>
           </Grid>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
+            gap={4}
+          >
+            {" "}
+            <ButtonGroup
+              orientation="vertical"
+              variant="outlined"
+              aria-label="outlined button group"
+              style={buttonGroupStyle}
+            >
+              {buttons.map((btn, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleButtonClick(index)}
+                  style={
+                    clickedButtonIndex === index
+                      ? { ...activeButtonStyle, width: btn.width }
+                      : { ...defaultButtonStyle, width: btn.width }
+                  }
+                >
+                  {btn.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+            <Typography>سال:</Typography>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">سال</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="سال"
+                onChange={handleChange}
+              >
+                <MenuItem value="1400">1400</MenuItem>
+                <MenuItem value="1401">1401</MenuItem>
+                <MenuItem value="1402">1402</MenuItem>
+              </Select>
+            </FormControl>
+            <Box display={"flex"} justifyContent={"center"} gap={2}>
+              <Link>سایر اپراتورها</Link>
+              <img src={leftArrow} alt="leftArrow" />
+            </Box>
+          </Box>
         </Grid>
       </Box>
       <Snackbar
@@ -433,7 +542,7 @@ const MyISP = () => {
             name="simple-controlled"
             value={starsValue}
             size="large"
-            sx={{direction: "ltr"}}
+            sx={{ direction: "ltr" }}
             onChange={(event, newValue) => {
               setStarsValue(newValue);
             }}
