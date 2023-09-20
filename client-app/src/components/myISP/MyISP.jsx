@@ -37,7 +37,7 @@ import {
 import data from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
-import yAxis from "../../app/assets/image/yAxis.svg";
+import yAxis from "../../app/assets/image/yAxisEmpty.svg";
 import SendReport from "../../app/common/SendReport";
 import { Link } from "react-router-dom";
 
