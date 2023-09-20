@@ -4,7 +4,6 @@ import {
   Container,
   Typography,
   Button,
-  Link,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -17,6 +16,14 @@ import leftArrow from "../../app/assets/image/leftArrow.svg";
 import upload from "../../app/assets/image/uploadIcon.svg";
 import download from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
+import DrawMeter from "../speedtest/DrawMeter";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import moment from "moment-jalaali";
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+
+import {Link} from "react-router-dom"
+
 
 const NewSpeedTest = () => {
   const theme = useTheme();
@@ -44,6 +51,133 @@ const NewSpeedTest = () => {
       border: "none", // you can add this if you don't want any border on hover
     },
   }));
+
+  const navigate = useNavigate();
+
+  const [showAlert, setShowAlert] = useState(true);
+
+  const handleAlertClick = () => {
+    navigate("/new");
+  };
+
+  const beforeMobileBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
+  const [animationInterval, setAnimationInterval] = useState(null);
+
+  const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [speedData, setSpeedData] = useState({
+    ping: null,
+    downloadSpeed: null,
+  });
+  const [uploadSpeed, setUploadSpeed] = useState(null);
+  const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
+
+  const handleButtonClick = () => {
+    setIsGoButtonVisible(false);
+    setTimeout(() => {
+      // After 1 second, display ping value
+      setSpeedData((prev) => ({
+        ...prev,
+        ping: Math.floor(Math.random() * 31) + 50,
+      }));
+      setTestStage("download");
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (testStage === "download") {
+      // Simulate download test
+      let timeElapsed = 0;
+      // Generate initial random number for download
+      let initialDownload = parseFloat((Math.random() * 20 + 10).toFixed(2)); // random number between 10 and 30
+
+      const interval = setInterval(() => {
+        timeElapsed += 100;
+        if (timeElapsed <= 1000) {
+          setSpeedData((prev) => ({
+            ...prev,
+            downloadSpeed: initialDownload,
+          }));
+        } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
+          // Ensure subsequent values are within ±2 of the initial value
+          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
+          setSpeedData((prev) => ({
+            ...prev,
+            downloadSpeed: parseFloat(
+              (initialDownload + parseFloat(randomDifference)).toFixed(2)
+            ),
+          }));
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            // Add a timeout here to delay the next test
+            setTestStage("upload");
+          }, 3000); // Delay the upload test by 3 seconds
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    } else if (testStage === "upload") {
+      // Simulate upload test
+      let timeElapsed = 0;
+      // Generate initial random number for upload
+      let initialUpload = parseFloat((Math.random() * 10 + 5).toFixed(2)); // random number between 5 and 15
+
+      const interval = setInterval(() => {
+        timeElapsed += 100;
+        if (timeElapsed <= 500) {
+          setUploadSpeed(10 * (timeElapsed / 500));
+        } else if (timeElapsed > 500 && timeElapsed <= 5500) {
+          // Ensure subsequent values are within ±2 of the initial value
+          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
+          setUploadSpeed(
+            parseFloat(
+              (initialUpload + parseFloat(randomDifference)).toFixed(2)
+            )
+          );
+        } else {
+          clearInterval(interval);
+          const currentJalaliDateInEnglish = moment().format("jYYYY/jM/jD");
+          const currentJalaliDateInFarsi = convertToPersianNumbers(
+            currentJalaliDateInEnglish
+          );
+
+          const testResults = {
+            date: currentJalaliDateInFarsi, // Store the current Jalali date with Farsi numbers
+            ping: speedData.ping,
+            download: speedData.downloadSpeed,
+            upload: parseFloat(
+              (
+                initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
+              ).toFixed(2)
+            ),
+            providerLocation: "ایرانسل-تهران",
+          };
+
+          const existingResults = JSON.parse(
+            localStorage.getItem("testResults") || "[]"
+          );
+          existingResults.push(testResults);
+          localStorage.setItem("testResults", JSON.stringify(existingResults));
+          // navigate(
+          //   `/new/result?ping=${speedData.ping}&download=${speedData.downloadSpeed}&upload=${testResults.upload}`
+          // );
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [testStage]);
+
+  const [boxHeight, setBoxHeight] = useState("90dvh");
+  useEffect(() => {
+    const navbarElement = document.querySelector(".nav-height");
+
+    if (navbarElement) {
+      const navbarHeight = navbarElement.offsetHeight;
+      setBoxHeight(`calc(98dvh - ${navbarHeight}px)`);
+    } else {
+      setBoxHeight("98dvh");
+    }
+  }, []);
 
   const MobileIP = () => {
     return (
@@ -85,8 +219,8 @@ const NewSpeedTest = () => {
             </Box>
           </Box>
           <Box>
-            {" "}
             <AnimatedButton
+              onClick={handleButtonClick}
               // onClick={handleButtonClick}
               sx={{
                 height: "clamp(10rem,10rem + 10vmin,16rem)",
@@ -302,28 +436,62 @@ const NewSpeedTest = () => {
                     <Typography variant="h7">ایرانسل-تهران</Typography>
                   </Box>
                 </Box>
-                <Box>
-                  {" "}
-                  <AnimatedButton
-                    // onClick={handleButtonClick}
-                    sx={{
-                      height: "clamp(10rem,10rem + 10vmin,16rem)",
-                      width: "clamp(10rem,10rem + 10vmin,16rem)",
-                      borderRadius: "50%",
-                      // borderWidth: "6px",
-                      // backgroundOrigin: "border-box",
-                      boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
+                <Box width="100%" display="flex" justifyContent="center">
+                  {isGoButtonVisible ? (
+                    <AnimatedButton
+                      // onClick={handleButtonClick}
+                      onClick={handleButtonClick}
+                      sx={{
+                        height: "clamp(10rem,10rem + 10vmin,16rem)",
+                        width: "clamp(10rem,10rem + 10vmin,16rem)",
+                        borderRadius: "50%",
+                        // borderWidth: "6px",
+                        // backgroundOrigin: "border-box",
+                        boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
 
-                      fontSize: "2rem",
-                      fontWeight: "400",
-                      lineHeight: "normal",
-                      fontStyle: "normal",
-                      color: "black",
-                    }}
-                    variant="outlined"
-                  >
-                    شروع
-                  </AnimatedButton>
+                        fontSize: "2rem",
+                        fontWeight: "400",
+                        lineHeight: "normal",
+                        fontStyle: "normal",
+                        color: "black",
+                      }}
+                      variant="outlined"
+                    >
+                      شروع
+                    </AnimatedButton>
+                  ) : (
+                    <Box
+                      sx={{
+                        [theme.breakpoints.between("xs", "sm")]: {
+                          width: "100%",
+                        },
+                        [theme.breakpoints.up("md")]: {
+                          width: "80%",
+                        },
+                        height: "clamp(10rem,10rem + 10vmin,16rem)",
+                        width: "clamp(10rem,10rem + 10vmin,16rem)",
+                      }}
+                    >
+                      <DrawMeter
+                        amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
+                        bk={
+                          /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                            ? "#45628A"
+                            : "#1B70EE1C"
+                        }
+                        fg={"#1B70EE1C"}
+                        progress={0.3}
+                        prog={0.3} // Adjust this if it's being used differently than 'progress'
+                        mbps={
+                          testStage === "download"
+                            ? speedData.downloadSpeed
+                            : uploadSpeed
+                        }
+                        isDl={true}
+                        theme="light"
+                      />
+                    </Box>
+                  )}
                 </Box>
                 <Box
                   sx={{
@@ -393,7 +561,8 @@ const NewSpeedTest = () => {
                     <img src={clockIcon} alt="clockIcon" />
 
                     <Typography variant="h6">پینگ:</Typography>
-                  </Box>{" "}
+                    <Typography variant="h6">{speedData.ping}</Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: "flex",
@@ -402,8 +571,9 @@ const NewSpeedTest = () => {
                     }}
                   >
                     <img src={download} alt="clockIcon" />
-                    <Typography variant="h6">سرعت دانلود:</Typography>{" "}
-                  </Box>{" "}
+                    <Typography variant="h6">سرعت دانلود:</Typography>
+                    <Typography variant="h6">{speedData.downloadSpeed}</Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: "flex",
@@ -412,9 +582,10 @@ const NewSpeedTest = () => {
                     }}
                   >
                     <img src={upload} alt="clockIcon" />
-                    <Typography variant="h6">سرعت اپلود:</Typography>{" "}
+                    <Typography variant="h6">سرعت اپلود:</Typography>
+                    <Typography variant="h6">{uploadSpeed}</Typography>
                   </Box>
-                </Box>{" "}
+                </Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -437,7 +608,7 @@ const NewSpeedTest = () => {
                     gap: "5px",
                   }}
                 >
-                  <Link variant="h7">مشاهده جزئیات </Link>
+                  <Button component={Link} to="/new/history" variant="text">مشاهده جزوئیات</Button>
                   <img src={leftArrow} alt="leftArrow" />
                 </Box>
               </Box>

@@ -2,12 +2,17 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   Box,
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
   Grid,
   Paper,
   Rating,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import frame from "../../app/assets/image/frame.svg";
@@ -26,6 +31,7 @@ import data from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
+import SendReport from "../../app/common/SendReport";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -55,6 +61,40 @@ const MyISP = () => {
     setRendered(true);
   }, []);
 
+  const [disturbance, setDisturbance] = useState(false);
+
+  const handleDisturbanceClick = () => {
+    setDisturbance(true);
+  };
+
+  const handleDisturbanceClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setDisturbance(false);
+  };
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const [openFeedBackDialog, setOpenFeedBackDialog] = useState(false);
+
+  const handleClickOpenFeedbackDialog = () => {
+    setOpenFeedBackDialog(true);
+  };
+  const handleCloseFeedbackDialog = () => {
+    setOpenFeedBackDialog(false);
+  };
+
+  const [starsValue, setStarsValue] = useState(0);
+
   return (
     <Container maxWidth="xl">
       <NewLogo />
@@ -67,7 +107,7 @@ const MyISP = () => {
           paddingTop="3.5rem"
           paddingBottom="2.25rem"
           paddingX="5%"
-          background={radialBackground}
+          sx={{ background: radialBackground }}
           flexBasis="50%"
         >
           <Typography
@@ -179,6 +219,7 @@ const MyISP = () => {
               color="warning"
               variant="contained"
               sx={{ fontSize: "1rem" }}
+              onClick={handleClickOpenDialog}
             >
               گزارش اختلال
             </ContainedButton>
@@ -190,6 +231,7 @@ const MyISP = () => {
                 fontFamily: "PeydaRegular",
                 marginRight: "min(1.94rem, 2vw)",
               }}
+              onClick={handleDisturbanceClick}
             >
               گزارش خطا در اطلاعات
             </Button>
@@ -203,7 +245,7 @@ const MyISP = () => {
           paddingTop="3.5rem"
           paddingBottom="2.25rem"
           paddingX="5%"
-          background={radialBackground}
+          sx={{ background: radialBackground }}
           flexBasis="50%"
         >
           <Typography
@@ -253,7 +295,10 @@ const MyISP = () => {
                 10423 نظر
               </Typography>
             </Box>
-            <ContainedButton sx={{ backgroundColor: "#008EDD" }}>
+            <ContainedButton
+              onClick={handleClickOpenFeedbackDialog}
+              sx={{ backgroundColor: "#008EDD" }}
+            >
               ثبت بازخورد
             </ContainedButton>
           </Box>
@@ -301,7 +346,7 @@ const MyISP = () => {
         paddingTop="3.5rem"
         paddingBottom="4.25rem"
         paddingX="5%"
-        background={radialBackground}
+        sx={{ background: radialBackground }}
         flexBasis="50%"
       >
         <Typography
@@ -369,6 +414,54 @@ const MyISP = () => {
           </Grid>
         </Grid>
       </Box>
+      <Snackbar
+        open={disturbance}
+        autoHideDuration={6000}
+        onClose={handleDisturbanceClose}
+      >
+        <Alert
+          onClose={handleDisturbanceClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          گزارش شما با موفقیت ارسال شد.
+        </Alert>
+      </Snackbar>
+      <Dialog open={openFeedBackDialog} onClose={handleCloseFeedbackDialog}>
+        <DialogContent>
+          <Rating
+            name="simple-controlled"
+            value={starsValue}
+            size="large"
+            sx={{direction: "ltr"}}
+            onChange={(event, newValue) => {
+              setStarsValue(newValue);
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="text"
+            color="success"
+            autoFocus
+            onClick={handleCloseFeedbackDialog}
+          >
+            ثبت بازخورد
+          </Button>
+          <Button
+            variant="text"
+            color="error"
+            autoFocus
+            onClick={handleCloseFeedbackDialog}
+          >
+            لغو
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <SendReport
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+      />
     </Container>
   );
 };

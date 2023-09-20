@@ -14,7 +14,6 @@ const StatisticBox = ({ background, title, unit, value }) => (
       color="#676767"
       fontSize="1.25rem"
       fontFamily="PeydaRegular"
-      sx={{ alignSelf: "flex-end" }}
     >
       {title}:
     </Typography>
@@ -25,6 +24,7 @@ const StatisticBox = ({ background, title, unit, value }) => (
       fontWeight="300"
       sx={{ position: "absolute", bottom: "1rem", left: "1rem" }}
     >
+      {value}
       <Typography
         color="#676767"
         fontFamily="PeydaRegular"
@@ -33,7 +33,6 @@ const StatisticBox = ({ background, title, unit, value }) => (
       >
         {unit}
       </Typography>
-      {value}
     </Typography>
   </Box>
 );
