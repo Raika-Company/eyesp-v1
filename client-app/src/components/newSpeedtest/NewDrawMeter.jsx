@@ -63,154 +63,50 @@ function DrawMeter({
     const startAngle = -Math.PI * 1.2;
     const endAngle = Math.PI * 0.2;
 
-    ctx.beginPath();
-    ctx.strokeStyle = bk;
-    ctx.lineWidth = 20 * sizScale;
-    ctx.arc(
-      canvas.width / 2,
-      canvas.height - 78 * sizScale,
-      Math.max(canvas.height / 1.5 - ctx.lineWidth, 0.1),
-      startAngle,
-      endAngle
-    );
-    ctx.stroke();
-
-    const gradient = ctx.createLinearGradient(
-      canvas.width / 2 - (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height - 78 * sizScale,
-      canvas.width / 2 + (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height - 78 * sizScale
-    );
-
-    gradient.addColorStop(0, "#84B3FA");
-    gradient.addColorStop(0.5, "#5A9CFF");
-    gradient.addColorStop(1, "#126AED");
-
-    ctx.beginPath();
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = 20 * sizScale;
-    ctx.arc(
-      canvas.width / 2,
-      canvas.height - 78 * sizScale,
-      Math.max(canvas.height / 1.5 - ctx.lineWidth, 0.1),
-      startAngle,
-      startAngle + ((endAngle - startAngle) * mbps) / 100
-    );
-    ctx.stroke();
-
-    const radiusForRoundedEffect = ctx.lineWidth / 2;
-
-    ctx.beginPath();
-    var tangentStartAngle = Math.atan2(
-      -Math.sin(startAngle),
-      -Math.cos(startAngle)
-    );
-    var tangentEndAngle = Math.atan2(-Math.sin(endAngle), -Math.cos(endAngle));
-    var startHalfCircleBegin = tangentStartAngle;
-    var startHalfCircleEnd = tangentStartAngle + Math.PI;
-
-    ctx.arc(
-      canvas.width / 2 +
-        Math.cos(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height -
-        78 * sizScale +
-        Math.sin(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-      radiusForRoundedEffect,
-      startHalfCircleBegin,
-      startHalfCircleEnd
-    );
-    ctx.fillStyle = mbps > 0.1 ? "#84B3FA" : fg;
-    ctx.fill();
-
-    ctx.beginPath();
-    var endHalfCircleBegin = tangentEndAngle - Math.PI;
-    var endHalfCircleEnd = tangentEndAngle;
-
-    ctx.arc(
-      canvas.width / 2 +
-        Math.cos(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height -
-        78 * sizScale +
-        Math.sin(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-      radiusForRoundedEffect,
-      endHalfCircleBegin,
-      endHalfCircleEnd
-    );
-    ctx.fillStyle = mbps > 99 ? "#126AED" : fg;
-    ctx.fill();
-
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = 12 * sizScale + "px PeydaBold";
-
-    const calculatePosition = (angle, distance, height, lineWidth) => {
-      return {
-        x:
-          canvas.width / 2 +
-          Math.cos(angle) * (height / 1.6 - lineWidth - distance),
-        y:
-          canvas.height -
-          78 * sizScale +
-          Math.sin(angle) * (height / 1.6 - lineWidth - distance),
-      };
-    };
-
-    function drawNumber(currentNumberIndex) {
-      let angle =
-        startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
-      let distanceFromEdge = 15 * sizScale;
-      let position = calculatePosition(
-        angle,
-        distanceFromEdge,
-        canvas.height,
-        ctx.lineWidth
-      );
-      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#126AED" : numberColor;
-      ctx.fillText(currentNumberIndex * 10, position.x, position.y);
-    }
-
-    if (isDl) {
-      for (let i = 0; i <= 10; i++) {
-        drawNumber(i);
-      }
-    }
-
     // Drawing the trapezoid hand (pointer)
     function drawPointer(angle) {
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
       ctx.rotate(angle);
 
-      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.7;
+      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.9;
       var pointerWidthTop = 0; // The triangle's top is a point, so width is 0
       var pointerWidthBottom = 15 * sizScale * 1.5;
-      var semicircleRadius = pointerWidthBottom / 2;
+      var smallTriangleHeight = pointerWidthBottom / 2; // Height of the small triangle at the base
 
       ctx.beginPath();
 
-      // Draw the triangle
+      // Draw the large triangle
       ctx.moveTo(0, -pointerLength); // Starting from the tip of the triangle
       ctx.lineTo(pointerWidthBottom / 2, 0); // Right bottom corner of the triangle
       ctx.lineTo(-pointerWidthBottom / 2, 0); // Left bottom corner of the triangle
       ctx.lineTo(0, -pointerLength); // Back to the tip
 
-      // Draw the semicircle at the base of the triangle
-      ctx.arc(0, 0, semicircleRadius, 0, Math.PI, false);
+      // Draw the small triangle at the base of the large triangle
+      ctx.moveTo(-pointerWidthBottom / 2, 0); // Left bottom corner of the large triangle
+      ctx.lineTo(pointerWidthBottom / 2, 0); // Right bottom corner of the large triangle
+      ctx.lineTo(0, smallTriangleHeight); // Tip of the small triangle pointing downwards
 
       ctx.closePath();
 
       // Create the gradient
-      var gradient = ctx.createLinearGradient(0, -pointerLength, 0, 0);
-      gradient.addColorStop(0, "#126AED");
-      gradient.addColorStop(1, "#84B3FA");
-      ctx.fillStyle = gradient;
+      ctx.fillStyle = "#397393";
       ctx.fill();
 
       ctx.restore();
     }
 
+    function normalizeMbps(mbps) {
+      if (mbps <= 10) {
+        return (mbps / 20); 
+      }
+      return 0.55 + (mbps - 10) / 220; 
+    }
+
+    var normalizedMbps = normalizeMbps(mbps);
     var pointerAngle =
-      -startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3;
+      -startAngle + (endAngle - startAngle) * normalizedMbps + 0.2;
+
     drawPointer(pointerAngle);
   }, [amount, bk, fg, mbps, isDl, theme]);
 
