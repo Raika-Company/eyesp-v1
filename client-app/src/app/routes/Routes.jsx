@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import SpeedTest from "../../components/speedtest/SpeedTest";
+import NewResult from "../../components/newSpeedtest/NewResult";
 
 const TestHistory = lazy(() =>
   import("../../components/testHistory/TestHistory")
@@ -43,6 +44,8 @@ const NewTestHistory = lazy(() =>
 );
 
 const MyISP = lazy(() => import("../../components/myISP/MyISP"));
+
+const NewProvince = lazy(() => import("../../components/newDashboard/province/NewProvince"));
 
 export const mainRoutes = [
   {
@@ -160,6 +163,14 @@ export const newSpeedTest = [
     path: "/operator-performance",
     element: <NewOperatorPerformance />,
   },
+  {
+    path: "/result",
+    element: <NewResult />,
+  },
+  {
+    path: "/dashboard/:provinceName",
+    element: <NewProvince />,
+  }
 ];
 
 export const otherRoutes = [

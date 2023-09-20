@@ -4,7 +4,6 @@ import {
   Container,
   Typography,
   Button,
-  Link,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -12,6 +11,7 @@ import NewLogo from "../../app/common/NewLogo";
 import TestHistoryCard from "../../app/common/TestHistoryCard";
 
 import "./NewTestHistory.css";
+import { Link } from "react-router-dom";
 const NewTestHistory = () => {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -69,6 +69,8 @@ const NewTestHistory = () => {
             >
               {" "}
               <Button
+                component={Link}
+                to="/new/"
                 sx={{
                   borderRadius: "2rem",
                   width: "40%",
@@ -88,7 +90,7 @@ const NewTestHistory = () => {
               </Typography>
             </Box>
           </Box>
-          {/* <Box
+          <Box
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -155,7 +157,7 @@ const NewTestHistory = () => {
               <TestHistoryCard />
               <TestHistoryCard />
             </Box>
-          </Box> */}
+          </Box>
         </Box>
       </Box>
     </Container>
