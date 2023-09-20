@@ -1,19 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Container,
-  Grid,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import NewLogo from "../../app/common/NewLogo";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 import {
   AreaChart,
   Area,
@@ -25,6 +16,62 @@ import chartData from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
+import SwitchBtn from "../../app/common/SwitchBtn";
+
+function GridItem({ rendered }) {
+  return (
+    <Grid xs={12} md={6} padding="2rem">
+      <Box display="flex">
+        <Box>
+          <Box
+            borderRadius="3rem"
+            padding="1rem"
+            sx={{
+              backgroundImage:
+                "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+            }}
+            width="100%"
+            height="250px"
+          >
+            {rendered && (
+              <Box>
+                <ResponsiveContainer width="100%" height={150}>
+                  <AreaChart width="100%" height="100%" data={chartData}>
+                    <Tooltip />
+                    <defs>
+                      <linearGradient
+                        id="gradientChart"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0.333333"
+                          stopColor="#0091E3"
+                          stopOpacity="0.167089"
+                        />
+                        <stop offset="1" stopColor="#008EDD" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <Area
+                      type="monotone"
+                      dataKey="value"
+                      stroke="#008EDD"
+                      fill="url(#gradientChart)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </Box>
+            )}
+          </Box>
+          <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
+        </Box>
+        <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
+      </Box>
+    </Grid>
+  );
+}
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;
@@ -52,28 +99,69 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-
 const NewOperatorPerformance = () => {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [irancellData, setIrancellData] = useState([]);
+  const [hamrahAvalData, setHamrahAvalData] = useState([]);
+  const [raytelData, setRaytelData] = useState([]);
+  const [shatelData, setShatelData] = useState([]);
+  const [asiatechData, setAsiaTechData] = useState([]);
+  const [mokhaberatData, setMokhaberatData] = useState([]);
 
-  const handleButtonClick = (index) => {
-    setSelectedButton(index);
+  useEffect(() => {
+    fetch("/data/myISPChartData.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setIrancellData(data.irancell);
+        setHamrahAvalData(data.hamrahAval);
+        setRaytelData(data.raytel);
+        setShatelData(data.shatel);
+        setAsiaTechData(data.asiatech);
+        setMokhaberatData(data.mokhaberat);
+      })
+      .catch((error) => {
+        console.log("خطا در بارگذاری اطلاعات", error);
+      });
+  }, []);
+
+  const handleChange = (event, index) => {
+    const {
+      target: { value },
+    } = event;
+
+    setPersonName((prevPersonName) => {
+      const newPersonName = [...prevPersonName];
+      newPersonName[index] =
+        typeof value === "string" ? value.split(",") : value;
+      let selectedData;
+      switch (value) {
+        case "ایرانسل":
+          selectedData = irancellData;
+          break;
+        case "همراه اول":
+          selectedData = hamrahAvalData;
+          break;
+        case "رایتل":
+          selectedData = raytelData;
+          break;
+        case "شاتل":
+          selectedData = shatelData;
+          break;
+        case "آسیاتک":
+          selectedData = asiatechData;
+          break;
+        case "مخابرات":
+          selectedData = mokhaberatData;
+          break;
+        default:
+          selectedData = [];
+      }
+      return newPersonName;
+    });
   };
 
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
   const [personName, setPersonName] = React.useState([]);
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName((prevPersonName) => {
-      const newPersonName = [...prevPersonName];
-      newPersonName[index] =
-        typeof value === "string" ? value.split(",") : value;
-      return newPersonName;
-    });
-  };
 
   const [rendered, setRendered] = useState(false);
 
@@ -95,19 +183,14 @@ const NewOperatorPerformance = () => {
         <Box
           sx={{
             display: "flex",
+            flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-evenly",
           }}
         >
-          <Box
-            sx={{
-              width: 200,
-            }}
-          >
-            <Typography fontSize="1.5rem" fontWeight={700}>
-              نمودار عملکرد اپراتور
-            </Typography>
-          </Box>
+          <Typography fontSize="1.5rem" fontWeight={700}>
+            نمودار عملکرد اپراتور
+          </Typography>
           <Box>
             {data.map((group, index) => (
               <FormControl
@@ -117,7 +200,6 @@ const NewOperatorPerformance = () => {
                   m: "0.4rem",
                   width: 150,
                   borderRadius: "25px",
-                  position: "relative",
                 }}
               >
                 <Select
@@ -157,252 +239,12 @@ const NewOperatorPerformance = () => {
               </FormControl>
             ))}
           </Box>
-          <Box
-            sx={{
-              bgcolor: "#F4F4F4",
-              borderRadius: "25px",
-              p: "0.3rem",
-              width: "230px",
-              boxShadow: "0px 0px 10px 1px rgba(0, 0, 0, 0.10) inset",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {["مقایسه", "مشاهده تکی"].map((text, index) => (
-              <Button
-                key={text}
-                sx={{
-                  width: index === 0 ? "95px" : "125px",
-                  borderRadius: "25px",
-                  fontSize: "1rem",
-                  color: selectedButton === index ? "white" : "#989898",
-                  backgroundColor:
-                    selectedButton === index ? "#259FDA" : "transparent",
-                }}
-                onClick={() => handleButtonClick(index)}
-              >
-                {text}
-              </Button>
-            ))}
-          </Box>
+          <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
         </Box>
         <Grid container>
-          <Grid xs={12} md={6} padding="2rem">
-            <Box display="flex">
-              <Box>
-                <Box
-                  borderRadius="3rem"
-                  padding="1rem"
-                  sx={{
-                    backgroundImage:
-                      "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-                  }}
-                  width="100%"
-                  height="250px"
-                >
-                  {rendered && (
-                    <Box>
-                      <ResponsiveContainer width="100%" height={150}>
-                        <AreaChart width="100%" height="100%" data={chartData}>
-                          <Tooltip />
-                          <defs>
-                            <linearGradient
-                              id="gradientChart"
-                              x1="0"
-                              y1="0"
-                              x2="0"
-                              y2="1"
-                            >
-                              <stop
-                                offset="0.333333"
-                                stopColor="#0091E3"
-                                stopOpacity="0.167089"
-                              />
-                              <stop
-                                offset="1"
-                                stopColor="#008EDD"
-                                stopOpacity="0"
-                              />
-                            </linearGradient>
-                          </defs>
-                          <Area
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#008EDD"
-                            fill="url(#gradientChart)"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </Box>
-                  )}
-                </Box>
-                <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
-              </Box>
-              <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
-            </Box>
-          </Grid>
-          <Grid xs={12} md={6} padding="2rem">
-            <Box display="flex">
-              <Box>
-                <Box
-                  borderRadius="3rem"
-                  padding="1rem"
-                  sx={{
-                    backgroundImage:
-                      "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-                  }}
-                  width="100%"
-                  height="250px"
-                >
-                  {rendered && (
-                    <Box>
-                      <ResponsiveContainer width="100%" height={150}>
-                        <AreaChart width="100%" height="100%" data={chartData}>
-                          <Tooltip />
-                          <defs>
-                            <linearGradient
-                              id="gradientChart"
-                              x1="0"
-                              y1="0"
-                              x2="0"
-                              y2="1"
-                            >
-                              <stop
-                                offset="0.333333"
-                                stopColor="#0091E3"
-                                stopOpacity="0.167089"
-                              />
-                              <stop
-                                offset="1"
-                                stopColor="#008EDD"
-                                stopOpacity="0"
-                              />
-                            </linearGradient>
-                          </defs>
-                          <Area
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#008EDD"
-                            fill="url(#gradientChart)"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </Box>
-                  )}
-                </Box>
-                <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
-              </Box>
-              <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
-            </Box>
-          </Grid>
-          <Grid xs={12} md={6} padding="2rem">
-            <Box display="flex">
-              <Box>
-                <Box
-                  borderRadius="3rem"
-                  padding="1rem"
-                  sx={{
-                    backgroundImage:
-                      "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-                  }}
-                  width="100%"
-                  height="250px"
-                >
-                  {rendered && (
-                    <Box>
-                      <ResponsiveContainer width="100%" height={150}>
-                        <AreaChart width="100%" height="100%" data={chartData}>
-                          <Tooltip />
-                          <defs>
-                            <linearGradient
-                              id="gradientChart"
-                              x1="0"
-                              y1="0"
-                              x2="0"
-                              y2="1"
-                            >
-                              <stop
-                                offset="0.333333"
-                                stopColor="#0091E3"
-                                stopOpacity="0.167089"
-                              />
-                              <stop
-                                offset="1"
-                                stopColor="#008EDD"
-                                stopOpacity="0"
-                              />
-                            </linearGradient>
-                          </defs>
-                          <Area
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#008EDD"
-                            fill="url(#gradientChart)"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </Box>
-                  )}
-                </Box>
-                <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
-              </Box>
-              <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
-            </Box>
-          </Grid>
-          <Grid xs={12} md={6} padding="2rem">
-            <Box display="flex">
-              <Box>
-                <Box
-                  borderRadius="3rem"
-                  padding="1rem"
-                  sx={{
-                    backgroundImage:
-                      "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-                  }}
-                  width="100%"
-                  height="250px"
-                >
-                  {rendered && (
-                    <Box>
-                      <ResponsiveContainer width="100%" height={150}>
-                        <AreaChart width="100%" height="100%" data={chartData}>
-                          <Tooltip />
-                          <defs>
-                            <linearGradient
-                              id="gradientChart"
-                              x1="0"
-                              y1="0"
-                              x2="0"
-                              y2="1"
-                            >
-                              <stop
-                                offset="0.333333"
-                                stopColor="#0091E3"
-                                stopOpacity="0.167089"
-                              />
-                              <stop
-                                offset="1"
-                                stopColor="#008EDD"
-                                stopOpacity="0"
-                              />
-                            </linearGradient>
-                          </defs>
-                          <Area
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#008EDD"
-                            fill="url(#gradientChart)"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </Box>
-                  )}
-                </Box>
-                <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
-              </Box>
-              <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
-            </Box>
-          </Grid>
+          {[1, 2, 3, 4].map((item) => (
+            <GridItem key={item} rendered={rendered} />
+          ))}
         </Grid>
       </Box>
     </Container>
