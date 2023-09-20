@@ -15,7 +15,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import chartData from "../../../public/data/myISPChartData.json";
+
+import dataAverage from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
@@ -74,6 +75,8 @@ const NewOperatorPerformance = () => {
   useEffect(() => {
     setRendered(true);
   }, []);
+
+  const [chartData, setChartData] = useState(dataAverage[0].data);
   return (
     <Container maxWidth="lg" sx={{ height: "100dvh" }}>
       <NewLogo />
@@ -198,6 +201,10 @@ const NewOperatorPerformance = () => {
           <Grid xs={12} md={6} padding="2rem">
             <Box display="flex">
               <Box>
+                <Typography color={"#676767"} variant="h3">
+                  میانگین عملکرد
+                </Typography>
+
                 <Box
                   borderRadius="3rem"
                   padding="1rem"
@@ -252,6 +259,9 @@ const NewOperatorPerformance = () => {
           <Grid xs={12} md={6} padding="2rem">
             <Box display="flex">
               <Box>
+                <Typography color={"#676767"} variant="h3">
+                  پکت لاس
+                </Typography>
                 <Box
                   borderRadius="3rem"
                   padding="1rem"
@@ -306,6 +316,9 @@ const NewOperatorPerformance = () => {
           <Grid xs={12} md={6} padding="2rem">
             <Box display="flex">
               <Box>
+                <Typography color={"#676767"} variant="h3">
+                  میانگین سرعت
+                </Typography>
                 <Box
                   borderRadius="3rem"
                   padding="1rem"
@@ -360,6 +373,9 @@ const NewOperatorPerformance = () => {
           <Grid xs={12} md={6} padding="2rem">
             <Box display="flex">
               <Box>
+                <Typography color={"#676767"} variant="h3">
+                  پینگ{" "}
+                </Typography>
                 <Box
                   borderRadius="3rem"
                   padding="1rem"
@@ -372,7 +388,7 @@ const NewOperatorPerformance = () => {
                 >
                   {rendered && (
                     <Box>
-                      <ResponsiveContainer width="100%" height={150}>
+                      <ResponsiveContainer width="100%" height={300}>
                         <AreaChart width="100%" height="100%" data={chartData}>
                           <Tooltip />
                           <defs>
@@ -411,7 +427,6 @@ const NewOperatorPerformance = () => {
               <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
             </Box>
           </Grid>
-          <Box>dfsgjik</Box>
         </Grid>
       </Box>
     </Container>
