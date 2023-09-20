@@ -70,7 +70,7 @@ const NewTestHistory = () => {
               {" "}
               <Button
                 component={Link}
-                to="/new/"
+                to="/"
                 sx={{
                   borderRadius: "2rem",
                   width: "40%",
