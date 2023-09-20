@@ -182,16 +182,21 @@ function DrawMeter({
       ctx.rotate(angle);
 
       var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.7;
-      var pointerWidthTop = 9 * sizScale * 1.5;
+      var pointerWidthTop = 0; // The triangle's top is a point, so width is 0
       var pointerWidthBottom = 15 * sizScale * 1.5;
+      var semicircleRadius = pointerWidthBottom / 2;
 
       ctx.beginPath();
-      // Start from the narrower end
-      ctx.moveTo(-pointerWidthTop / 2, -pointerLength);
-      ctx.lineTo(pointerWidthTop / 2, -pointerLength);
-      // Drawing the wider base
-      ctx.lineTo(pointerWidthBottom / 2, 0);
-      ctx.lineTo(-pointerWidthBottom / 2, 0);
+
+      // Draw the triangle
+      ctx.moveTo(0, -pointerLength); // Starting from the tip of the triangle
+      ctx.lineTo(pointerWidthBottom / 2, 0); // Right bottom corner of the triangle
+      ctx.lineTo(-pointerWidthBottom / 2, 0); // Left bottom corner of the triangle
+      ctx.lineTo(0, -pointerLength); // Back to the tip
+
+      // Draw the semicircle at the base of the triangle
+      ctx.arc(0, 0, semicircleRadius, 0, Math.PI, false);
+
       ctx.closePath();
 
       // Create the gradient
@@ -203,6 +208,7 @@ function DrawMeter({
 
       ctx.restore();
     }
+
     var pointerAngle =
       -startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3;
     drawPointer(pointerAngle);

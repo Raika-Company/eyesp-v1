@@ -79,7 +79,7 @@ const NewInformation = () => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ height: "calc(100dvh - 2.5rem)" }}>
       <NewLogo />
       <Box
         my="1rem"
@@ -149,7 +149,7 @@ const NewInformation = () => {
             alignItems: "center",
           }}
         >
-          <Box className={styles.ScrollBar}>
+          <Box sx={{ overflowX: "hidden"}} className={styles.ScrollBar}>
             {definitionsData.map((definition) => (
               <DefinitionTerm title={definition.title} key={definition.title}>
                 {definition.definition}
@@ -193,6 +193,12 @@ const DefinitionTerm = ({ title, children }) => {
         padding: "1em",
         boxShadow: "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
+        transition: "all 0.3s ease-in-out",
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          transform: "scale(1.05)",
+        },
       }}
     >
       <Typography
