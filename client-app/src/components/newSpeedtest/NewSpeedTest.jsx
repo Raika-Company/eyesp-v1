@@ -608,7 +608,7 @@ const NewSpeedTest = () => {
                     gap: "5px",
                   }}
                 >
-                  <Button component={Link} to="/new/history" variant="text">مشاهده جزوئیات</Button>
+                  <Button component={Link} to="/history" variant="text">مشاهده جزوئیات</Button>
                   <img src={leftArrow} alt="leftArrow" />
                 </Box>
               </Box>
