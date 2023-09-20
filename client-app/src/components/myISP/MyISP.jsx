@@ -19,6 +19,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Link,
 } from "@mui/material";
 import "./MyISP.css";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
@@ -39,7 +40,6 @@ import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
 import SendReport from "../../app/common/SendReport";
-import { Link } from "react-router-dom";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -488,14 +488,39 @@ const MyISP = () => {
                 aria-label="outlined button group"
                 sx={buttonGroupStyle}
               >
-                <MenuItem value="1400">1400</MenuItem>
-                <MenuItem value="1401">1401</MenuItem>
-                <MenuItem value="1402">1402</MenuItem>
-              </Select>
-            </FormControl>
-            <Box display={"flex"} justifyContent={"center"} gap={2}>
-              <Button variant="text" component={Link} to="/new/operator-performance">سایر اپراتورها</Button>
-              <img src={leftArrow} alt="leftArrow" />
+                {buttons.map((btn, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => handleButtonClick(index)}
+                    style={
+                      clickedButtonIndex === index
+                        ? { ...activeButtonStyle, width: btn.width }
+                        : { ...defaultButtonStyle, width: btn.width }
+                    }
+                  >
+                    {btn.label}
+                  </Button>
+                ))}
+              </ButtonGroup>
+              <Typography>سال:</Typography>
+              <FormControl sx={{ width: "50%" }}>
+                <InputLabel id="demo-simple-select-label">سال</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="سال"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="1400">1400</MenuItem>
+                  <MenuItem value="1401">1401</MenuItem>
+                  <MenuItem value="1402">1402</MenuItem>
+                </Select>
+              </FormControl>
+              <Box display={"flex"} justifyContent={"center"} gap={2}>
+                <Link>سایر اپراتورها</Link>
+                <img src={leftArrow} alt="leftArrow" />
+              </Box>
             </Box>
           </Grid>
         </Grid>
