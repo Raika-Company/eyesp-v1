@@ -5,24 +5,26 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import {
-  AreaChart,
-  Area,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import chartData from "../../../public/data/ispPerformanceChart.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
 import SwitchBtn from "../../app/common/SwitchBtn";
+import axios from "axios";
 
-function GridItem({ rendered }) {
+import InputLabel from "@mui/material/InputLabel";
+
+const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
+
+function GridItem({ rendered, title }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
         <Box>
+          <Typography variant="h6" gutterBottom>
+            {title}
+          </Typography>
           <Box
             borderRadius="3rem"
             padding="1rem"
@@ -73,101 +75,50 @@ function GridItem({ rendered }) {
   );
 }
 
-const ITEM_HEIGHT = 40;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-const FormControlItems = ["انتخاب اپراتور", "سالیانه", "1400", "استان"];
+const FormControlItems = ["انتخاب اپراتور", "سالیانه", "سال", "استان"];
 const data = [
   ["ایرانسل", "همراه اول", "رایتل", "شاتل", "آسیاتک", "مخابرات"],
   ["سالیانه", "ماهیانه", "هفتگی", "روزانه", "ساعتی"],
   ["1402", "1401", "1400", "1399", "1398", "1397"],
-  ["بندرعباس", "شیراز", "مشهد", "اصفهان", "مازندران", "تهران"],
+  [
+    "بندرعباس",
+    "شیراز",
+    "مشهد",
+    "اصفهان",
+    "مازندران",
+    "تهران",
+    "اهواز",
+    "سمنان",
+    "خوزستان",
+    "گیلان",
+  ],
 ];
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 const NewOperatorPerformance = () => {
-  const [irancellData, setIrancellData] = useState([]);
-  const [hamrahAvalData, setHamrahAvalData] = useState([]);
-  const [raytelData, setRaytelData] = useState([]);
-  const [shatelData, setShatelData] = useState([]);
-  const [asiatechData, setAsiaTechData] = useState([]);
-  const [mokhaberatData, setMokhaberatData] = useState([]);
+  const [formControlItems, setFormControlItems] = React.useState("");
+  const handleChange = (event) => {
+    setFormControlItems(event.target.value);
+  };
 
   useEffect(() => {
-    fetch("/data/myISPChartData.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setIrancellData(data.irancell);
-        setHamrahAvalData(data.hamrahAval);
-        setRaytelData(data.raytel);
-        setShatelData(data.shatel);
-        setAsiaTechData(data.asiatech);
-        setMokhaberatData(data.mokhaberat);
+    axios
+      .get("/data/myISPChartData.json")
+      .then((response) => {
+        const data = response.data;
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
       });
   }, []);
 
-  const handleChange = (event, index) => {
-    const {
-      target: { value },
-    } = event;
-
-    setPersonName((prevPersonName) => {
-      const newPersonName = [...prevPersonName];
-      newPersonName[index] =
-        typeof value === "string" ? value.split(",") : value;
-      let selectedData;
-      switch (value) {
-        case "ایرانسل":
-          selectedData = irancellData;
-          break;
-        case "همراه اول":
-          selectedData = hamrahAvalData;
-          break;
-        case "رایتل":
-          selectedData = raytelData;
-          break;
-        case "شاتل":
-          selectedData = shatelData;
-          break;
-        case "آسیاتک":
-          selectedData = asiatechData;
-          break;
-        case "مخابرات":
-          selectedData = mokhaberatData;
-          break;
-        default:
-          selectedData = [];
-      }
-      return newPersonName;
-    });
-  };
-
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
-  const [personName, setPersonName] = React.useState([]);
-
   const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
     setRendered(true);
   }, []);
+
   return (
     <Container maxWidth="lg" sx={{ height: "100dvh" }}>
       <NewLogo />
@@ -192,47 +143,36 @@ const NewOperatorPerformance = () => {
             نمودار عملکرد اپراتور
           </Typography>
           <Box>
-            {data.map((group, index) => (
+            {FormControlItems.map((items, index) => (
               <FormControl
-                key={FormControlItems[index]}
-                value={FormControlItems[index]}
                 sx={{
                   m: "0.4rem",
                   width: 150,
                   borderRadius: "25px",
                 }}
+                size="small"
               >
+                <InputLabel id={`demo-select-small-label-${index}`}>
+                  {items}
+                </InputLabel>
                 <Select
+                  labelId={`demo-select-small-label-${index}`}
+                  id={`demo-select-small-${index}`}
+                  label={items}
+                  onChange={handleChange}
                   sx={{
                     borderRadius: "25px",
                     display: "flex",
                     justifyContent: "space-between",
                     height: "38px",
                   }}
-                  multiple
-                  displayEmpty
-                  value={personName[index] || []}
-                  onChange={(event) => handleChange(event, index)}
-                  input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <span>{FormControlItems[index]}</span>;
-                    }
-                    return selected.join(", ");
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem disabled>
-                    <span>{FormControlItems[index]}</span>
+                    <span>{items}</span>
                   </MenuItem>
-                  {group.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, personName[index] || [], theme)}
-                    >
-                      {name}
+                  {data[index].map((menuItem, menuItemIndex) => (
+                    <MenuItem key={menuItemIndex} value={menuItem}>
+                      {menuItem}
                     </MenuItem>
                   ))}
                 </Select>
@@ -241,9 +181,9 @@ const NewOperatorPerformance = () => {
           </Box>
           <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
         </Box>
-        <Grid container>
-          {[1, 2, 3, 4].map((item) => (
-            <GridItem key={item} rendered={rendered} />
+        <Grid sx={{ mt: "2rem" }} container>
+          {titlesChart.map((title, index) => (
+            <GridItem key={index} rendered={rendered} title={title} />
           ))}
         </Grid>
       </Box>
