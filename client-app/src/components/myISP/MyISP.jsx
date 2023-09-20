@@ -157,6 +157,21 @@ const MyISP = () => {
 
   const [starsValue, setStarsValue] = useState(0);
 
+  const getChartLabel = () => {
+    switch (clickedButtonIndex) {
+      case 0:
+        return "mb";
+      case 1:
+        return "mb";
+      case 2:
+        return "ms";
+      case 3:
+        return "%";
+      default:
+        return "mb";
+    }
+  };
+
   return (
     <Container maxWidth="xl">
       <NewLogo />
@@ -471,7 +486,10 @@ const MyISP = () => {
                 </Box>
                 <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
               </Box>
-              <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
+              <Box display={"flex"} flexDirection={"column"} mr={1}>
+                <Typography>{getChartLabel()}</Typography>
+                <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={3}>

@@ -124,7 +124,7 @@ const NewDashboard = () => {
     }
   }, [sortCriteria]);
 
-  const [province, setProvince] = useState("انتخاب کنید");
+  const [province, setProvince] = useState("");
 
   const handleProvinceChange = (event) => {
     const selectedProvince = event.target.value;
@@ -338,8 +338,10 @@ const NewDashboard = () => {
                 label="انتخاب کنید"
                 value={province}
                 onChange={handleProvinceChange}
+                displayEmpty
                 sx={{ borderRadius: "1.25rem" }}
               >
+                <MenuItem value="">انتخاب کنید</MenuItem>
                 {provinces.map((provinceItem) => (
                   <MenuItem key={provinceItem.name} value={provinceItem.name}>
                     {provinceItem.name}
@@ -367,7 +369,7 @@ const NewDashboard = () => {
             sx={{
               background: radialBackground,
               boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
-              backdropFilter: "blur(35px)"
+              backdropFilter: "blur(35px)",
             }}
           >
             <Box display="flex" justifyContent="space-between" marginX="0.5rem">
@@ -466,7 +468,11 @@ const NewDashboard = () => {
                   onChange={(e) => setSortCriteria(e.target.value)}
                   variant="outlined"
                   color="primary"
-                  sx={{ marginRight: "0.5rem", color: "info.main", borderRadius: "1.25rem" }}
+                  sx={{
+                    marginRight: "0.5rem",
+                    color: "info.main",
+                    borderRadius: "1.25rem",
+                  }}
                 >
                   {selectionItems.map((item) => (
                     <MenuItem
@@ -512,7 +518,10 @@ const NewDashboard = () => {
           گزارش شما با موفقیت ارسال شد.
         </Alert>
       </Snackbar>
-      <SendReport openDialog={openDialog} handleCloseDialog={handleCloseDialog} />
+      <SendReport
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+      />
     </Box>
   );
 };
