@@ -94,16 +94,15 @@ const MyISP = () => {
     backgroundColor: "#008EDD",
     color: "white",
     borderRadius: "2rem",
-    borderBottomColor: "none",
+    border: "none",
     width: "8vw",
   };
 
   const defaultButtonStyle = {
     borderRadius: "2rem",
-    borderBottomColor: "none",
+    border: "none",
     width: "8vw",
     color: "#676767",
-    border: "none",
   };
 
   const buttons = [
@@ -421,7 +420,7 @@ const MyISP = () => {
           نمودار عملکرد اپراتور
         </Typography>
         <Grid container justifyContent={"space-around"}>
-          <Grid xs={12} md={9}>
+          <Grid item xs={12} md={9}>
             <Box display="flex">
               <Box>
                 <Box
@@ -543,7 +542,7 @@ const MyISP = () => {
             name="simple-controlled"
             value={starsValue}
             size="large"
-            sx={{direction: "ltr"}}
+            sx={{ direction: "ltr" }}
             onChange={(event, newValue) => {
               setStarsValue(newValue);
             }}
