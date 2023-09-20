@@ -16,14 +16,15 @@ import leftArrow from "../../app/assets/image/leftArrow.svg";
 import upload from "../../app/assets/image/uploadIcon.svg";
 import download from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
-import DrawMeter from "../speedtest/DrawMeter";
+import DrawMeter from "./NewDrawMeter";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import elipse from "../../app/assets/image/elipse.svg";
 
-import {Link} from "react-router-dom"
-
+import { Link } from "react-router-dom";
+import ShowResult from "./ShowResult";
 
 const NewSpeedTest = () => {
   const theme = useTheme();
@@ -52,6 +53,15 @@ const NewSpeedTest = () => {
     },
   }));
 
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const navigate = useNavigate();
 
   const [showAlert, setShowAlert] = useState(true);
@@ -64,6 +74,7 @@ const NewSpeedTest = () => {
   const [animationInterval, setAnimationInterval] = useState(null);
 
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
+  
   const [expanded, setExpanded] = useState(false);
   const [speedData, setSpeedData] = useState({
     ping: null,
@@ -158,6 +169,7 @@ const NewSpeedTest = () => {
           );
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
+          setOpenDialog(true);
           // navigate(
           //   `/new/result?ping=${speedData.ping}&download=${speedData.downloadSpeed}&upload=${testResults.upload}`
           // );
@@ -264,7 +276,7 @@ const NewSpeedTest = () => {
                 className="btn-color-mode-switch-inner"
               ></label>
             </label>
-            <Box
+            {/* <Box
               sx={{
                 width: "96%",
                 display: "flex",
@@ -273,7 +285,7 @@ const NewSpeedTest = () => {
             >
               <Typography variant="h7">نوع تست</Typography>
               <img src={iLogo} alt="iLogo" />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -325,19 +337,6 @@ const NewSpeedTest = () => {
             <Typography variant="body">سرعت دانلود</Typography>{" "}
             <Typography variant="body">سرعت اپلود</Typography>{" "}
           </Box>
-          {/* <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-            <img src={clockIcon} alt="clockIcon" />
-
-            <Typography variant="h6">پینگ:</Typography>
-          </Box>{" "}
-          <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-            <img src={download} alt="clockIcon" />
-            <Typography variant="h6">سرعت دانلود:</Typography>{" "}
-          </Box>{" "}
-          <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-            <img src={upload} alt="clockIcon" />
-            <Typography variant="h6">سرعت اپلود:</Typography>{" "}
-          </Box> */}
         </Box>{" "}
         <Box
           sx={{
@@ -462,6 +461,11 @@ const NewSpeedTest = () => {
                   ) : (
                     <Box
                       sx={{
+                        display: "flex",
+                        justifyContent: "center", // Centers children horizontally
+                        alignItems: "center", // Centers children vertically
+                        position: "relative", // Set to relative to allow absolute positioning of children
+
                         [theme.breakpoints.between("xs", "sm")]: {
                           width: "100%",
                         },
@@ -472,24 +476,39 @@ const NewSpeedTest = () => {
                         width: "clamp(10rem,10rem + 10vmin,16rem)",
                       }}
                     >
-                      <DrawMeter
-                        amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
-                        bk={
-                          /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                            ? "#45628A"
-                            : "#1B70EE1C"
-                        }
-                        fg={"#1B70EE1C"}
-                        progress={0.3}
-                        prog={0.3} // Adjust this if it's being used differently than 'progress'
-                        mbps={
-                          testStage === "download"
-                            ? speedData.downloadSpeed
-                            : uploadSpeed
-                        }
-                        isDl={true}
-                        theme="light"
+                      <img
+                        src={elipse}
+                        alt="speed-meter"
+                        style={{ maxWidth: "100%", height: "auto", zIndex: 1 }}
                       />
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          zIndex: 2,
+                        }}
+                      >
+                        <DrawMeter
+                          amount={0.2}
+                          bk={
+                            /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                              ? "#45628A"
+                              : "#1B70EE1C"
+                          }
+                          fg={"#1B70EE1C"}
+                          progress={0.3}
+                          prog={0.3}
+                          mbps={
+                            testStage === "download"
+                              ? speedData.downloadSpeed
+                              : uploadSpeed
+                          }
+                          isDl={true}
+                          theme="light"
+                        />
+                      </div>
                     </Box>
                   )}
                 </Box>
@@ -516,7 +535,7 @@ const NewSpeedTest = () => {
                       className="btn-color-mode-switch-inner"
                     ></label>
                   </label>
-                  <Box
+                  {/* <Box
                     sx={{
                       width: "96%",
                       display: "flex",
@@ -525,7 +544,7 @@ const NewSpeedTest = () => {
                   >
                     <Typography variant="h7">نوع تست</Typography>
                     <img src={iLogo} alt="iLogo" />
-                  </Box>
+                  </Box> */}
                 </Box>
               </Box>
               <Box
@@ -572,7 +591,9 @@ const NewSpeedTest = () => {
                   >
                     <img src={download} alt="clockIcon" />
                     <Typography variant="h6">سرعت دانلود:</Typography>
-                    <Typography variant="h6">{speedData.downloadSpeed}</Typography>
+                    <Typography variant="h6">
+                      {speedData.downloadSpeed}
+                    </Typography>
                   </Box>
                   <Box
                     sx={{
@@ -608,7 +629,9 @@ const NewSpeedTest = () => {
                     gap: "5px",
                   }}
                 >
-                  <Button component={Link} to="/history" variant="text">مشاهده جزوئیات</Button>
+                  <Button component={Link} to="/history" variant="text">
+                    مشاهده جزوئیات
+                  </Button>
                   <img src={leftArrow} alt="leftArrow" />
                 </Box>
               </Box>
@@ -616,6 +639,7 @@ const NewSpeedTest = () => {
           )}
         </Box>
       </Box>
+      <ShowResult openDialog={openDialog} handleCloseDialog={handleCloseDialog} ping={speedData.ping} download={speedData.downloadSpeed} upload={uploadSpeed}/>
     </Container>
   );
 };

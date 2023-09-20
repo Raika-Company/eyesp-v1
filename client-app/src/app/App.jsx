@@ -3,16 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
 
-import Navbar from "../components/navbar/Navbar";
-import DashboardNavbar from "../components/navbar/DashboardNavbar";
+// import Navbar from "../components/navbar/Navbar";
+// import DashboardNavbar from "../components/navbar/DashboardNavbar";
 import NewNavbar from "../components/navbar/NewNavbar";
 import { lightTheme, darkTheme } from "./Palette";
-import {
-  mainRoutes,
-  dashboardRoutes,
-  otherRoutes,
-  newSpeedTest,
-} from "./routes/Routes";
+import { newSpeedTest } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
@@ -40,14 +35,14 @@ function App() {
       <Router>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            {otherRoutes.map((route) => (
+            {/* {otherRoutes.map((route) => (
               <Route
                 key={route.path}
                 path={route.path}
                 element={route.element}
               />
-            ))}
-            <Route path="/admin/*" element={<DashboardRoutes />} />
+            ))} */}
+            {/* <Route path="/admin/*" element={<DashboardRoutes />} /> */}
             <Route path="/*" element={<NewRoutes />} />
             {/* <Route
               path="/*"
@@ -76,18 +71,18 @@ function App() {
   );
 }
 
-const DashboardRoutes = () => {
-  return (
-    <>
-      <DashboardNavbar />
-      <Routes>
-        {dashboardRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes>
-    </>
-  );
-};
+// const DashboardRoutes = () => {
+//   return (
+//     <>
+//       <DashboardNavbar />
+//       <Routes>
+//         {dashboardRoutes.map((route) => (
+//           <Route key={route.path} path={route.path} element={route.element} />
+//         ))}
+//       </Routes>
+//     </>
+//   );
+// };
 
 const NewRoutes = () => {
   return (

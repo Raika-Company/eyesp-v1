@@ -160,7 +160,7 @@ const TestHistoryCard = () => {
               sx={{
                 display: "flex",
                 justifyContent: "space-evenly",
-                height: "20%",
+                // height: "20%",
                 width: "90%",
                 alignItems: "center",
               }}
@@ -176,7 +176,7 @@ const TestHistoryCard = () => {
                 ( m/s ){" "}
               </Typography>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -191,7 +191,7 @@ const TestHistoryCard = () => {
                 مشاهده جزئیات{" "}
               </Link>
               <img src={leftArrow} alt="leftArrow" />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Box>
