@@ -16,14 +16,14 @@ import chartData from "../../../public/data/ispPerformanceChart.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
-import SwitchBtn from "../../app/common/SwitchBtn";
+import SoloSwitch from "../../app/common/SoloSwitch";
 import axios from "axios";
 
 import InputLabel from "@mui/material/InputLabel";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 
-function GridItem({ rendered, title }) {
+function GridItem({ rendered, title, data }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
@@ -44,7 +44,7 @@ function GridItem({ rendered, title }) {
             {rendered && (
               <Box>
                 <ResponsiveContainer width="100%" height={150}>
-                  <AreaChart width="100%" height="100%" data={chartData}>
+                  <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip />
                     <defs>
                       <linearGradient
@@ -81,11 +81,11 @@ function GridItem({ rendered, title }) {
   );
 }
 
-const FormControlItems = ["انتخاب اپراتور", "سالیانه", "سال", "استان"];
+const FormControlItems = ["انتخاب اپراتور"];
 const data = [
-  ["ایرانسل", "همراه اول", "رایتل", "شاتل", "آسیاتک", "مخابرات"],
-  ["سالیانه", "ماهیانه", "هفتگی", "روزانه", "ساعتی"],
-  ["1402", "1401", "1400", "1399", "1398", "1397"],
+  ["ایرانسل", "همراه اول", "رایتل", "شاتل"],
+  ["سالیانه", "ماهیانه", "هفتگی"],
+  ["1402", "1401", "1400"],
   [
     "بندرعباس",
     "شیراز",
@@ -101,16 +101,30 @@ const data = [
 ];
 
 const NewOperatorPerformance = () => {
-  const [formControlItems, setFormControlItems] = React.useState("");
+  const [formControlItems, setFormControlItems] = useState("ایرانسل");
+
+  const [ispData, setIspData] = useState([]); // state to store the data from JSON
+  const [currentChartData, setCurrentChartData] = useState({});
+
   const handleChange = (event) => {
     setFormControlItems(event.target.value);
+    const selectedISPData = ispData.find(
+      (item) => item.id === event.target.value
+    );
+    if (selectedISPData) {
+      setCurrentChartData(selectedISPData);
+    }
   };
-
   useEffect(() => {
     axios
       .get("/data/myISPChartData.json")
       .then((response) => {
         const data = response.data;
+        setIspData(data);
+        const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
+        if (defaultISPData) {
+          setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
+        }
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
@@ -118,22 +132,23 @@ const NewOperatorPerformance = () => {
   }, []);
 
   const theme = useTheme();
-  const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
   const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg" sx={{ height: "100dvh" }}>
+    <Container maxWidth="lg">
       <NewLogo />
       <Box
         sx={{
           mt: "1rem",
+          mb: "2rem",
           p: "2rem",
           borderRadius: "25px",
           boxShadow: "0 4px 40px 0 rgba(0, 0, 0, 0.20)",
-          backgroundColor: bgColor,
+          backgroundImage:
+            "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)",
         }}
       >
         <Box
@@ -184,11 +199,16 @@ const NewOperatorPerformance = () => {
               </FormControl>
             ))}
           </Box>
-          <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
+          <SoloSwitch text="مقایسه" />
         </Box>
         <Grid container>
-          {[1, 2, 3, 4].map((item) => (
-            <GridItem key={item} rendered={rendered} />
+          {titlesChart.map((title, index) => (
+            <GridItem
+              key={index}
+              rendered={rendered}
+              title={title}
+              data={currentChartData[`chart${index + 1}`]}
+            />
           ))}
         </Grid>
       </Box>
