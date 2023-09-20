@@ -37,7 +37,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/new/dashboard",
+    path: "/dashboard",
     toggle: "isHomeOpen",
   },
   {
@@ -47,7 +47,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/new",
+    path: "/",
     toggle: "isSpeedTest",
   },
   {
@@ -57,7 +57,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/new/history",
+    path: "/history",
     toggle: "isHistoryTest",
   },
   {
@@ -76,7 +76,7 @@ const NAV_ITEMS = [
         alt="Company-logo"
       />
     ),
-    path: "/new/my-isp",
+    path: "/my-isp",
     toggle: "isMyOperator",
   },
   {
@@ -86,7 +86,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/new/information",
+    path: "/information",
     toggle: "isResult",
   },
   {
@@ -96,7 +96,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/new/operator-performance",
+    path: "/operator-performance",
     toggle: "isInformation",
   },
 ];

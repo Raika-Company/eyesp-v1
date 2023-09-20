@@ -19,6 +19,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Link,
 } from "@mui/material";
 import "./MyISP.css";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
@@ -37,9 +38,8 @@ import {
 import data from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
-import yAxis from "../../app/assets/image/yAxis.svg";
+import yAxis from "../../app/assets/image/yAxisEmpty.svg";
 import SendReport from "../../app/common/SendReport";
-import { Link } from "react-router-dom";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -81,12 +81,12 @@ const MyISP = () => {
   }, []);
   const buttonGroupStyle = {
     backgroundColor: "#F4F4F4",
-    width: "11vw",
+    width: "70%",
     alignItems: "center",
     gap: "11px",
-    height: "27dvh",
     justifyContent: "center",
     borderRadius: "2rem",
+    paddingY: "1rem",
     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
   };
 
@@ -95,21 +95,21 @@ const MyISP = () => {
     color: "white",
     borderRadius: "2rem",
     border: "none",
-    width: "8vw",
+    width: "60%",
   };
 
   const defaultButtonStyle = {
     borderRadius: "2rem",
     border: "none",
-    width: "8vw",
+    width: "60%",
     color: "#676767",
   };
 
   const buttons = [
-    { label: "سرعت دانلود", width: "8vw" },
-    { label: "سرعت آپلود", width: "8vw" },
-    { label: "پینگ", width: "8vw" },
-    { label: "درصد عملکرد", width: "9vw" },
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
   ];
   const [age, setAge] = useState("");
 
@@ -419,7 +419,7 @@ const MyISP = () => {
         >
           نمودار عملکرد اپراتور
         </Typography>
-        <Grid container justifyContent={"space-around"}>
+        <Grid container>
           <Grid item xs={12} md={9}>
             <Box display="flex">
               <Box>
@@ -436,7 +436,7 @@ const MyISP = () => {
                   {rendered && (
                     <Box>
                       <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart width="100%" height="100%" data={chartData}>
+                        <AreaChart data={chartData}>
                           <Tooltip />
                           <defs>
                             <linearGradient
@@ -474,53 +474,55 @@ const MyISP = () => {
               <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
             </Box>
           </Grid>
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            gap={4}
-          >
-            {" "}
-            <ButtonGroup
-              orientation="vertical"
-              variant="outlined"
-              aria-label="outlined button group"
-              style={buttonGroupStyle}
+          <Grid item xs={12} md={3}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              gap={4}
             >
-              {buttons.map((btn, index) => (
-                <Button
-                  key={index}
-                  onClick={() => handleButtonClick(index)}
-                  style={
-                    clickedButtonIndex === index
-                      ? { ...activeButtonStyle, width: btn.width }
-                      : { ...defaultButtonStyle, width: btn.width }
-                  }
-                >
-                  {btn.label}
-                </Button>
-              ))}
-            </ButtonGroup>
-            <Typography>سال:</Typography>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">سال</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label="سال"
-                onChange={handleChange}
+              {" "}
+              <ButtonGroup
+                orientation="vertical"
+                variant="outlined"
+                aria-label="outlined button group"
+                sx={buttonGroupStyle}
               >
-                <MenuItem value="1400">1400</MenuItem>
-                <MenuItem value="1401">1401</MenuItem>
-                <MenuItem value="1402">1402</MenuItem>
-              </Select>
-            </FormControl>
-            <Box display={"flex"} justifyContent={"center"} gap={2}>
-              <Button variant="text" component={Link} to="/new/operator-performance">سایر اپراتورها</Button>
-              <img src={leftArrow} alt="leftArrow" />
+                {buttons.map((btn, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => handleButtonClick(index)}
+                    style={
+                      clickedButtonIndex === index
+                        ? { ...activeButtonStyle, width: btn.width }
+                        : { ...defaultButtonStyle, width: btn.width }
+                    }
+                  >
+                    {btn.label}
+                  </Button>
+                ))}
+              </ButtonGroup>
+              <Typography>سال:</Typography>
+              <FormControl sx={{ width: "50%" }}>
+                <InputLabel id="demo-simple-select-label">سال</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="سال"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="1400">1400</MenuItem>
+                  <MenuItem value="1401">1401</MenuItem>
+                  <MenuItem value="1402">1402</MenuItem>
+                </Select>
+              </FormControl>
+              <Box display={"flex"} justifyContent={"center"} gap={2}>
+                <Link>سایر اپراتورها</Link>
+                <img src={leftArrow} alt="leftArrow" />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
       </Box>
       <Snackbar

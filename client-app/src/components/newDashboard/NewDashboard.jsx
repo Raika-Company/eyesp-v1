@@ -131,7 +131,7 @@ const NewDashboard = () => {
 
     setProvince(selectedProvince);
 
-    navigate(`/new/dashboard/${selectedProvince}`, {
+    navigate(`/dashboard/${selectedProvince}`, {
       state: {
         provinceName: selectedProvince,
       },
@@ -360,12 +360,14 @@ const NewDashboard = () => {
         >
           <Box
             paddingY="2rem"
-            component={Paper}
-            elevation={8}
+            // component={Paper}
+            // elevation={8}
             borderRadius="2rem"
             width={isMdScreen ? "48%" : "100%"}
             sx={{
               background: radialBackground,
+              boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
+              backdropFilter: "blur(35px)"
             }}
           >
             <Box display="flex" justifyContent="space-between" marginX="0.5rem">

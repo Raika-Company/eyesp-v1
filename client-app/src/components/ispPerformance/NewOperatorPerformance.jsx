@@ -5,7 +5,13 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import chartData from "../../../public/data/ispPerformanceChart.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
@@ -118,7 +124,6 @@ const NewOperatorPerformance = () => {
   useEffect(() => {
     setRendered(true);
   }, []);
-
   return (
     <Container maxWidth="lg" sx={{ height: "100dvh" }}>
       <NewLogo />
@@ -181,9 +186,9 @@ const NewOperatorPerformance = () => {
           </Box>
           <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
         </Box>
-        <Grid sx={{ mt: "2rem" }} container>
-          {titlesChart.map((title, index) => (
-            <GridItem key={index} rendered={rendered} title={title} />
+        <Grid container>
+          {[1, 2, 3, 4].map((item) => (
+            <GridItem key={item} rendered={rendered} />
           ))}
         </Grid>
       </Box>

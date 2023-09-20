@@ -165,7 +165,7 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
                     setProvinceName(province.name);
                   }}
                   onClick={() => {
-                    navigate(`/new/dashboard/${province.name}`, {
+                    navigate(`/dashboard/${province.name}`, {
                       state: {
                         provinceName: province.name
                       },
