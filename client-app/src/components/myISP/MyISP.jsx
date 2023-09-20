@@ -19,7 +19,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Link,
 } from "@mui/material";
 import "./MyISP.css";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
@@ -40,6 +39,7 @@ import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
 import SendReport from "../../app/common/SendReport";
+import { Link } from "react-router-dom";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -517,7 +517,7 @@ const MyISP = () => {
               </Select>
             </FormControl>
             <Box display={"flex"} justifyContent={"center"} gap={2}>
-              <Link>سایر اپراتورها</Link>
+              <Button variant="text" component={Link} to="/new/operator-performance">سایر اپراتورها</Button>
               <img src={leftArrow} alt="leftArrow" />
             </Box>
           </Box>
