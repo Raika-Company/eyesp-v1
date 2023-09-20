@@ -63,7 +63,7 @@ const disorders = [
 ];
 const MyISP = () => {
   const [rendered, setRendered] = useState(false);
-  const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
+  const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
   const [chartData, setChartData] = useState(data[0].data);
 
   const handleButtonClick = (index) => {
@@ -111,7 +111,7 @@ const MyISP = () => {
     { label: "پینگ", width: "80%" },
     { label: "درصد عملکرد", width: "80%" },
   ];
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState("1400");
 
   const handleChange = (event) => {
     const selectedYear = event.target.value;
