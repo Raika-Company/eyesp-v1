@@ -138,7 +138,7 @@ const NewOperatorPerformance = () => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{minHeight: "100dvh"}}>
       <NewLogo />
       <Box
         sx={{

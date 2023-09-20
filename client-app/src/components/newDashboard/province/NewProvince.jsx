@@ -32,7 +32,7 @@ import WestIcon from "@mui/icons-material/West";
 // Local component and utility imports
 import { ContainedButton } from "../../../app/common/ContainedButton";
 import NewIranMap from "./../map/NewIranMap";
-import ISPTable from "../../dashboard/ISPTable";
+import ISPTable from "../NewISPTable";
 import NewLogo from "../../../app/common/NewLogo";
 import StatisticBox from "../../../app/common/StatisticBox";
 
@@ -321,11 +321,28 @@ const NewProvince = () => {
                 open={disturbance}
                 autoHideDuration={6000}
                 onClose={handleDisturbanceClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
                 <Alert
                   onClose={handleDisturbanceClose}
-                  severity="success"
-                  sx={{ width: "100%" }}
+                  severity="info"
+                  sx={{
+                    backgroundColor: "#48C237",
+                    width: "100%",
+                    fontSize: "1.5rem",
+                    padding: "1rem 2rem",
+                    ".MuiAlert-icon": {
+                      // Targeting the alert icon
+                      fontSize: "2.5rem", // Adjust the size as per your needs
+                    },
+                    ".MuiAlert-action": {
+                      // Targeting the close action icon
+                      "& .MuiIconButton-root": {
+                        // Directly targeting the IconButton
+                        fontSize: "2rem", // Adjust the size as per your needs
+                      },
+                    },
+                  }}
                 >
                   گزارش شما با موفقیت ارسال شد.
                 </Alert>

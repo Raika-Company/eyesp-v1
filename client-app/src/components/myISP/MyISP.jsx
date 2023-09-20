@@ -19,7 +19,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Link,
 } from "@mui/material";
 import "./MyISP.css";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
@@ -40,6 +39,7 @@ import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxisEmpty.svg";
 import SendReport from "../../app/common/SendReport";
+import { Link } from "react-router-dom";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -536,26 +536,50 @@ const MyISP = () => {
                 </Select>
               </FormControl>
               <Box display={"flex"} justifyContent={"center"} gap={2}>
-                <Link>سایر اپراتورها</Link>
+                <Button
+                  variant="text"
+                  component={Link}
+                  to="/operator-performance"
+                >
+                  سایر اپراتورها
+                </Button>
                 <img src={leftArrow} alt="leftArrow" />
               </Box>
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Snackbar
+`      <Snackbar
         open={disturbance}
         autoHideDuration={6000}
         onClose={handleDisturbanceClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleDisturbanceClose}
-          severity="success"
-          sx={{ width: "100%" }}
+          severity="info"
+          sx={{
+            backgroundColor: "#48C237",
+            width: "100%",
+            fontSize: "1.5rem",
+            padding: "1rem 2rem",
+            ".MuiAlert-icon": {
+              // Targeting the alert icon
+              fontSize: "2.5rem", // Adjust the size as per your needs
+            },
+            ".MuiAlert-action": {
+              // Targeting the close action icon
+              "& .MuiIconButton-root": {
+                // Directly targeting the IconButton
+                fontSize: "2rem", // Adjust the size as per your needs
+              },
+            },
+          }}
         >
           گزارش شما با موفقیت ارسال شد.
         </Alert>
-      </Snackbar>
+      </Snackbar>`
+
       <Dialog open={openFeedBackDialog} onClose={handleCloseFeedbackDialog}>
         <DialogContent>
           <Rating
