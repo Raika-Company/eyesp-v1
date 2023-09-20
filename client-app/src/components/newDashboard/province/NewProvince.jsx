@@ -135,7 +135,7 @@ const NewProvince = () => {
 
     setProvince(selectedProvince);
 
-    navigate(`/new/dashboard/${selectedProvince}`, {
+    navigate(`/dashboard/${selectedProvince}`, {
       state: {
         provinceName: selectedProvince,
       },
@@ -363,7 +363,7 @@ const NewProvince = () => {
               </Box>
               <Button
                 component={Link}
-                to="/new/dashboard"
+                to="/dashboard"
                 fontSize="1rem"
                 variant="text"
                 sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}

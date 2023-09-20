@@ -131,7 +131,7 @@ const NewDashboard = () => {
 
     setProvince(selectedProvince);
 
-    navigate(`/new/dashboard/${selectedProvince}`, {
+    navigate(`/dashboard/${selectedProvince}`, {
       state: {
         provinceName: selectedProvince,
       },

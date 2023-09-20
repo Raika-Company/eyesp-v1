@@ -48,8 +48,8 @@ function App() {
               />
             ))}
             <Route path="/admin/*" element={<DashboardRoutes />} />
-            <Route path="/new/*" element={<NewRoutes />} />
-            <Route
+            <Route path="/*" element={<NewRoutes />} />
+            {/* <Route
               path="/*"
               element={
                 <>
@@ -68,7 +68,7 @@ function App() {
                   </Routes>
                 </>
               }
-            />
+            /> */}
           </Routes>
         </Suspense>
       </Router>
