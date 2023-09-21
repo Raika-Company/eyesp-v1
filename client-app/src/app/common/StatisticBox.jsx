@@ -17,23 +17,35 @@ const StatisticBox = ({ background, title, unit, value }) => (
     >
       {title}:
     </Typography>
-    <Typography
-      color="#676767"
-      fontSize="2.5rem"
-      fontFamily="PeydaLight"
-      fontWeight="300"
-      sx={{ position: "absolute", bottom: "1rem", left: "1rem" }}
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: "0.5rem",
+        left: "1rem",
+        display: "flex",
+        flexDirection: "row-reverse",
+        alignItems: "baseline",
+      }}
     >
-      {value}
+      <Typography
+        color="#676767"
+        fontSize="2rem"
+        fontFamily="PeydaLight"
+        fontWeight="300"
+        component="span"
+      >
+        {value}
+      </Typography>
       <Typography
         color="#676767"
         fontFamily="PeydaRegular"
         fontSize="1.25rem"
         component="span"
+        mr={1} 
       >
         {unit}
       </Typography>
-    </Typography>
+    </Box>
   </Box>
 );
 
