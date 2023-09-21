@@ -20,10 +20,10 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
+import styles from "./NewInformation.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";
-import styles from "./NewInformation.module.css";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -35,7 +35,6 @@ import NewLogo from "../../app/common/NewLogo";
  * @function NewInformation
  * @returns {React.Element} The rendered React component.
  */
-
 const NewInformation = () => {
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
@@ -44,7 +43,7 @@ const NewInformation = () => {
   const [error, setError] = useState(null);
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
   /**
    * Fetch definitions data from the server.
    * @async
@@ -62,19 +61,15 @@ const NewInformation = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
-
   // Importing custom LoadingSpinner component for modular structure
   if (loading) {
     return <LoadingSpinner />;
   }
-
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
   return (
     <Container sx={{ height: "calc(100dvh - 2.5rem)" }}>
       <NewLogo />
@@ -82,7 +77,6 @@ const NewInformation = () => {
         my="1rem"
         overflow="hidden"
         sx={{
-          // width: isSmScreen ? "100%" : isMdScreen ? "100%" : "100%",
           height: "auto",
           padding: isSmScreen ? "0.7rem" : "3rem",
           borderRadius: "1.2rem",
@@ -152,11 +146,11 @@ const NewInformation = () => {
           <Box
             sx={{
               overflowX: "hidden",
-              width: isSmScreen ? "100%" : "60%",
+              width: isLgScreen ? "100%" : "60%",
               p: isSmScreen ? "0.5rem" : "1rem",
               direction: "ltr",
             }}
-            className={styles.ScrollBar}
+            className={isMdScreen ? "" : styles.ScrollBar}
           >
             {definitionsData.map((definition) => (
               <DefinitionTerm title={definition.title} key={definition.title}>
@@ -164,7 +158,7 @@ const NewInformation = () => {
               </DefinitionTerm>
             ))}
           </Box>
-          <Box sx={{ mx: "auto" }}>
+          <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
             <img
               src={informationLogo}
               alt="information-logo"
@@ -187,19 +181,21 @@ const NewInformation = () => {
 const DefinitionTerm = ({ title, children }) => {
   const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   return (
     <Typography
       component="p"
       gutterBottom
       sx={{
+        borderBottom: isSmScreen ? "1px solid #E2E4E7" : "none",
+        display: "flex",
+        justifyContent: "space-between",
         fontSize: "1.1rem",
         backgroundColor: isSmScreen
           ? "transparent"
           : theme.palette.mode === "dark"
           ? "rgba(0, 0, 0, 0.8)"
           : "rgba(255, 255, 255, 0.8)",
-        borderRadius: "32px",
+        borderRadius: isSmScreen ? "" : "32px",
         py: "1em",
         boxShadow: isSmScreen ? "" : "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
@@ -212,16 +208,18 @@ const DefinitionTerm = ({ title, children }) => {
       }}
     >
       <Typography
+        sx={{
+          width: isSmScreen ? "100px" : "27%",
+          mr: isSmScreen ? "0" : "1rem",
+        }}
         component="span"
         fontFamily="PeydaBold"
-        sx={{
-          // marginRight: "0.5em",
-          // marginLeft: "0.4em",
-        }}
       >
         {title}
       </Typography>
-      {children}
+      <Typography sx={{ width: isSmScreen ? "207px" : "100%" }}>
+        {children}
+      </Typography>
     </Typography>
   );
 };
