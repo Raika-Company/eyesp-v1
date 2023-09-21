@@ -1,5 +1,5 @@
 /**
- * @module NewNavbar
+ * @module Navbar
  * @description Custom navbar component for the application.
  */
 import React, { useEffect, useState } from "react";
@@ -112,11 +112,11 @@ const iconColor = (path) =>
 
 /**
  * @component
- * @name NewNavbar
+ * @name Navbar
  * @description A custom navbar component.
  * @returns {JSX.Element}
  */
-const NewNavbar = () => {
+const Navbar = () => {
   const [isTypographyVisible, setIsTypographyVisible] = useState(false);
   const [openNav, setOpenNav] = useState(false);
   const toggleOpenMenu = () => {
@@ -220,4 +220,4 @@ const NewNavbar = () => {
   );
 };
 
-export default NewNavbar;
+export default Navbar;
