@@ -1,6 +1,0 @@
-/* Style the scrollbar thumb for Firefox */
-.custom-scrollbar {
-  overflow-y: scroll;
-  scrollbar-color: #126AED #E0E0E0 !important; /* Blue thumb and gray track for Firefox */
-  scrollbar-width: thin; /* Adjust the width as needed */
-}
