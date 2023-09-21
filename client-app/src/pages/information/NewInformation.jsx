@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Box, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery } from "@mui/material";
 
 /**
  * A hook from Material-UI to access the current theme.
@@ -37,13 +37,13 @@ import NewLogo from "../../app/common/NewLogo";
  */
 
 const NewInformation = () => {
-  //State and variable declarations here
-
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
   const [definitionsData, setDefinitionsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   /**
    * Fetch definitions data from the server.
@@ -76,14 +76,15 @@ const NewInformation = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: "calc(100dvh - 2.5rem)" }}>
+    <Container sx={{ height: "calc(100dvh - 2.5rem)" }}>
       <NewLogo />
       <Box
         my="1rem"
         overflow="hidden"
         sx={{
+          // width: isSmScreen ? "100%" : isMdScreen ? "100%" : "100%",
           height: "auto",
-          padding: "3rem",
+          padding: isSmScreen ? "0.7rem" : "3rem",
           borderRadius: "1.2rem",
           border: "1.468px solid rgba(0, 0, 0, 0.10)",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
@@ -92,6 +93,7 @@ const NewInformation = () => {
       >
         <Box
           sx={{
+            width: "100%",
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-between",
@@ -102,7 +104,8 @@ const NewInformation = () => {
             component="h2"
             gutterBottom
             sx={{
-              fontSize: "2rem",
+              fontSize: isSmScreen ? "1.7rem" : "2rem",
+              pt: "1rem",
             }}
           >
             مفاهیم
@@ -120,7 +123,7 @@ const NewInformation = () => {
                 p: "2px 4px",
                 display: "flex",
                 alignItems: "center",
-                width: 200,
+                width: isSmScreen ? 160 : 200,
                 borderRadius: "25px",
               }}
             >
@@ -146,7 +149,15 @@ const NewInformation = () => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ overflowX: "hidden"}} className={styles.ScrollBar}>
+          <Box
+            sx={{
+              overflowX: "hidden",
+              width: isSmScreen ? "100%" : "60%",
+              p: isSmScreen ? "0.5rem" : "1rem",
+              direction: "ltr",
+            }}
+            className={styles.ScrollBar}
+          >
             {definitionsData.map((definition) => (
               <DefinitionTerm title={definition.title} key={definition.title}>
                 {definition.definition}
@@ -175,20 +186,22 @@ const NewInformation = () => {
  */
 const DefinitionTerm = ({ title, children }) => {
   const theme = useTheme();
-
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   return (
     <Typography
       component="p"
       gutterBottom
       sx={{
         fontSize: "1.1rem",
-        backgroundColor:
-          theme.palette.mode === "dark"
-            ? "rgba(0, 0, 0, 0.8)"
-            : "rgba(255, 255, 255, 0.8)",
+        backgroundColor: isSmScreen
+          ? "transparent"
+          : theme.palette.mode === "dark"
+          ? "rgba(0, 0, 0, 0.8)"
+          : "rgba(255, 255, 255, 0.8)",
         borderRadius: "32px",
-        padding: "1em",
-        boxShadow: "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
+        py: "1em",
+        boxShadow: isSmScreen ? "" : "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
@@ -202,8 +215,8 @@ const DefinitionTerm = ({ title, children }) => {
         component="span"
         fontFamily="PeydaBold"
         sx={{
-          marginRight: "0.5em",
-          marginLeft: "0.4em",
+          // marginRight: "0.5em",
+          // marginLeft: "0.4em",
         }}
       >
         {title}
