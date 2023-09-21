@@ -180,7 +180,7 @@ const NewSpeedTest = () => {
           />
         </Box>
 
-        <Box width="100%" display="flex" justifyContent="center">
+        <Box width="40%" display="flex" justifyContent="center">
           {isGoButtonVisible ? (
             <AnimatedButton
               onClick={handleButtonClick}
