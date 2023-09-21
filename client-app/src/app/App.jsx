@@ -2,12 +2,9 @@ import { useState, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
-
-// import Navbar from "../components/navbar/Navbar";
-// import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import NewNavbar from "../components/navbar/NewNavbar";
-import { lightTheme, darkTheme } from "./Palette";
-import { newSpeedTest } from "./routes/Routes";
+import NewNavbar from "./layouts/Navbar";
+import { lightTheme, darkTheme } from "./layouts/Palette";
+import { mainRoutes } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
@@ -35,68 +32,30 @@ function App() {
       <Router>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            {/* {otherRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={route.element}
-              />
-            ))} */}
-            {/* <Route path="/admin/*" element={<DashboardRoutes />} /> */}
-            <Route path="/*" element={<NewRoutes />} />
-            {/* <Route
+            <Route
               path="/*"
               element={
-                <>
-                  <Navbar
-                    themeMode={currentThemeMode}
-                    toggleTheme={toggleTheme}
-                  />
-                  <Routes>
-                    {mainRoutes.map((route) => (
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
-                      />
-                    ))}
-                  </Routes>
-                </>
+                <Box display="flex" width="100%" backgroundColor="#E3EEF7">
+                  <NewNavbar />
+                  <Box sx={{ flex: 1 }}>
+                    <Routes>
+                      {mainRoutes.map((route) => (
+                        <Route
+                          key={route.path}
+                          path={route.path}
+                          element={route.element}
+                        />
+                      ))}
+                    </Routes>
+                  </Box>
+                </Box>
               }
-            /> */}
+            />
           </Routes>
         </Suspense>
       </Router>
     </ThemeProvider>
   );
-}
-
-// const DashboardRoutes = () => {
-//   return (
-//     <>
-//       <DashboardNavbar />
-//       <Routes>
-//         {dashboardRoutes.map((route) => (
-//           <Route key={route.path} path={route.path} element={route.element} />
-//         ))}
-//       </Routes>
-//     </>
-//   );
-// };
-
-const NewRoutes = () => {
-  return (
-    <Box display="flex" width="100%" backgroundColor="#E3EEF7">
-      <NewNavbar />
-      <Box sx={{ flex: 1 }}>
-        <Routes>
-          {newSpeedTest.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Routes>
-      </Box>
-    </Box>
-  );
-};
+} 
 
 export default App;

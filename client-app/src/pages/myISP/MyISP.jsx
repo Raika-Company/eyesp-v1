@@ -20,7 +20,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import "./MyISP.css";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import frame from "../../app/assets/image/frame.svg";
 import { ContainedButton } from "../../app/common/ContainedButton";
@@ -30,7 +29,6 @@ import NewLogo from "../../app/common/NewLogo";
 import {
   AreaChart,
   Area,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
