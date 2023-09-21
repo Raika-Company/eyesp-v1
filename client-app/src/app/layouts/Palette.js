@@ -88,15 +88,6 @@ const baseTheme = {
         },
       },
     },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
-          borderRadius: 20,
-          background: "#E8E8E8",
-        },
-      },
-    },
     MuiPaginationItem: {
       styleOverrides: {
         root: {
@@ -169,17 +160,6 @@ export const lightTheme = createTheme({
       default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
     },
   },
-  components: {
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          boxShadow: "0px 0px 28.442747116088867px 0px rgba(0, 0, 0, 0.03)",
-          borderRadius: 20,
-          background: "#E8E8E8"
-        },
-      },
-    },
-  },
 });
 
 /**
@@ -240,17 +220,6 @@ export const darkTheme = createTheme({
     text: {
       primary: "#FFF",
       secondary: "#BBB",
-    },
-  },
-  components: {
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          background: "#13171C",
-          boxShadow: "0px 0px 28.442747116088867px 0px rgba(255, 255, 255, 0.03)",
-          borderRadius: 20,
-        },
-      },
     },
   },
 });
