@@ -132,7 +132,6 @@ const InternetStatusCard = (props) => {
         flexDirection: isMdScreen ? "row" : "column-reverse",
         marginTop: "1rem",
         paddingTop: "3.5rem",
-        paddingBottom: "2.3rem",
         paddingX: paddingMainBox,
       }}
     >
@@ -251,7 +250,9 @@ const InternetStatusCard = (props) => {
             ))}
           </Select>
         </Box>
-        <NewIranMap />
+        <Box margin="5%">
+          <NewIranMap />
+        </Box>
       </Box>
     </CardContainer>
   );

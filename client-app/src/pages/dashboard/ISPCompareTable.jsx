@@ -10,6 +10,10 @@ import {
 import ISPTable from "./ISPTable";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 
+/**
+ * Raw data for the ISPs for comparison.
+ * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
+ */
 const RawISPData = [
   {rank: "#1", ISPname: "زیتل", disturbance: "1", pings: "49", speed: "28" },
   {rank: "#2", ISPname: "همراه اول", disturbance: "3", pings: "51", speed: "23" },
@@ -21,6 +25,10 @@ const RawISPData = [
   {rank: "#8", ISPname: "های وب", disturbance: "11", pings: "53", speed: "19" },
 ];
 
+/**
+ * Selection items for sorting the ISP data.
+ * @type {string[]}
+ */
 const selectionItems = [
   "نام ISP",
   "بیشترین اختلال",
@@ -31,10 +39,22 @@ const selectionItems = [
   "کمترین میانگین سرعت",
 ];
 
+/**
+ * Parse a string and extracts the number from it.
+ * @param {string} str - The string to parse.
+ * @returns {number} - The extracted number.
+ */
 const parseNumber = (str) => {
   return parseFloat(str.replace(/[^0-9.]/g, ""));
 };
 
+/**
+ * ISPCompareTable Component - Compares different ISPs based on various criteria.
+ *
+ * @param {Object} props - Component properties.
+ * @param {number} props.mpCardContainers - Padding value.
+ * @returns {JSX.Element} The rendered component.
+ */
 const ISPCompareTable = ({ mpCardContainers }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -81,6 +101,7 @@ const ISPCompareTable = ({ mpCardContainers }) => {
           display: "flex",
           justifyContent: isSmScreen ? "center" : "space-between",
           flexWrap: "wrap",
+          marginBottom: "1.4rem",
         }}
       >
         <Typography
