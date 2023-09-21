@@ -5,7 +5,7 @@ import { Box, CssBaseline } from "@mui/material";
 
 // import Navbar from "../components/navbar/Navbar";
 // import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import NewNavbar from "../components/navbar/Navbar";
+import NewNavbar from "../pages/navbar/Navbar";
 import { lightTheme, darkTheme } from "./Palette";
 import { mainRoutes } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
