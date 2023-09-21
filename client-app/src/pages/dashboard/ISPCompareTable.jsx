@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useMemo } from "react";
 import CardContainer from "../../app/common/CardContainer";
 import {
   Box,
@@ -10,19 +10,15 @@ import {
 import ISPTable from "./ISPTable";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 
-const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
-  return { rank, ISPname, disturbance, pings, speed, desc };
-};
-
 const RawISPData = [
-  createData("1", "زیتل", "1", "49", "28"),
-  createData("2", "همراه اول", "3", "51", "23"),
-  createData("3", "ایرانسل", "3", "52", "21"),
-  createData("4", "رایتل", "4", "59", "19"),
-  createData("5", "شاتل", "6", "61", "18"),
-  createData("6", "مخابرات", "8", "61", "16"),
-  createData("7", "آسیاتک", "9", "64", "14"),
-  createData("8", "های وب", "11", "53", "19"),
+  {rank: "#1", ISPname: "زیتل", disturbance: "1", pings: "49", speed: "28" },
+  {rank: "#2", ISPname: "همراه اول", disturbance: "3", pings: "51", speed: "23" },
+  {rank: "#3", ISPname: "ایرانسل", disturbance: "3", pings: "52", speed: "21" },
+  {rank: "#4", ISPname: "رایتل", disturbance: "4", pings: "59", speed: "19" },
+  {rank: "#5", ISPname: "شاتل", disturbance: "6", pings: "61", speed: "18" },
+  {rank: "#6", ISPname: "مخابرات", disturbance: "8", pings: "61", speed: "16" },
+  {rank: "#7", ISPname: "آسیاتک", disturbance: "9", pings: "64", speed: "14" },
+  {rank: "#8", ISPname: "های وب", disturbance: "11", pings: "53", speed: "19" },
 ];
 
 const selectionItems = [
@@ -39,37 +35,42 @@ const parseNumber = (str) => {
   return parseFloat(str.replace(/[^0-9.]/g, ""));
 };
 
-const sortFunctions = {
-  "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
-  "بیشترین اختلال": (a, b) =>
-    parseNumber(b.disturbance) - parseNumber(a.disturbance),
-  "کمترین اختلال": (a, b) =>
-    parseNumber(a.disturbance) - parseNumber(b.disturbance),
-  "بیشترین میانگین پینگ": (a, b) => parseNumber(b.pings) - parseNumber(a.pings),
-  "کمترین میانگین پینگ": (a, b) => parseNumber(a.pings) - parseNumber(b.pings),
-  "بیشترین میانگین سرعت": (a, b) => parseNumber(b.speed) - parseNumber(a.speed),
-  "کمترین میانگین سرعت": (a, b) => parseNumber(a.speed) - parseNumber(b.speed),
-};
-
 const ISPCompareTable = ({ mpCardContainers }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
-
-  const [ISPData, setISPData] = useState(RawISPData);
-
   const [visibleRows, setVisibleRows] = useState(6);
+
+  const sortFunctions = useMemo(
+    () => ({
+      "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
+      "بیشترین اختلال": (a, b) =>
+        parseNumber(b.disturbance) - parseNumber(a.disturbance),
+      "کمترین اختلال": (a, b) =>
+        parseNumber(a.disturbance) - parseNumber(b.disturbance),
+      "بیشترین میانگین پینگ": (a, b) =>
+        parseNumber(b.pings) - parseNumber(a.pings),
+      "کمترین میانگین پینگ": (a, b) =>
+        parseNumber(a.pings) - parseNumber(b.pings),
+      "بیشترین میانگین سرعت": (a, b) =>
+        parseNumber(b.speed) - parseNumber(a.speed),
+      "کمترین میانگین سرعت": (a, b) =>
+        parseNumber(a.speed) - parseNumber(b.speed),
+    }),
+    []
+  );
+
+  const sortedISPData = useMemo(() => {
+    const sortFunction = sortFunctions[sortCriteria];
+    if (sortFunction) {
+      return [...RawISPData].sort(sortFunction);
+    }
+    return RawISPData;
+  }, [sortCriteria]);
 
   const handleShowMore = () => {
     setVisibleRows((prev) => prev + 2);
   };
-
-  useEffect(() => {
-    const sortFunction = sortFunctions[sortCriteria];
-    if (sortFunction) {
-      setISPData([...ISPData].sort(sortFunction));
-    }
-  }, [sortCriteria]);
 
   return (
     <CardContainer
@@ -91,7 +92,7 @@ const ISPCompareTable = ({ mpCardContainers }) => {
         </Typography>
         <ViewDetailsButton target="/isp-performance" />
       </Box>
-      <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
+      <ISPTable ISPdata={sortedISPData.slice(0, visibleRows)} />
       {visibleRows < RawISPData.length && (
         <Typography
           variant="body1"
@@ -116,7 +117,7 @@ const ISPCompareTable = ({ mpCardContainers }) => {
           marginRight: "0.5rem",
           color: "#676767",
           borderRadius: "1.25rem",
-          float: "left"
+          float: "left",
         }}
       >
         {selectionItems.map((item) => (

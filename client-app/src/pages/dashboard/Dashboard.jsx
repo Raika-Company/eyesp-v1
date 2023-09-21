@@ -64,7 +64,7 @@ const dashboard = () => {
   return (
     <>
       <Container maxWidth="xl" sx={{ minHeight: "100dvh" }}>
-        {/* <NewLogo /> */}
+        <NewLogo />
         <InternetStatusCard
           handleClickOpenDialog={handleClickOpenDialog}
           handleDisturbanceClick={handleDisturbanceClick}
