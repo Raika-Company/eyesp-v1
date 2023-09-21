@@ -2,11 +2,8 @@ import { useState, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
-
-// import Navbar from "../components/navbar/Navbar";
-// import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import NewNavbar from "../pages/navbar/Navbar";
-import { lightTheme, darkTheme } from "./Palette";
+import NewNavbar from "./layouts/Navbar";
+import { lightTheme, darkTheme } from "./layouts/Palette";
 import { mainRoutes } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";

@@ -29,7 +29,6 @@ import NewLogo from "../../app/common/NewLogo";
 import {
   AreaChart,
   Area,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
