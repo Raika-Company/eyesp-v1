@@ -5,7 +5,7 @@ const NewSpeedTest = lazy(() =>
 );
 
 const Dashboard = lazy(() =>
-  import("../../pages/dashboard/dashboard")
+  import("../../pages/dashboard/Dashboard")
 );
 const NewInformation = lazy(() =>
   import("../../pages/information/NewInformation")
