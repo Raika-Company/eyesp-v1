@@ -4,8 +4,8 @@ const NewSpeedTest = lazy(() =>
   import("../../pages/newSpeedtest/NewSpeedTest")
 );
 
-const NewDashboard = lazy(() =>
-  import("../../pages/newDashboard/NewDashboard")
+const Dashboard = lazy(() =>
+  import("../../pages/dashboard/Dashboard")
 );
 const NewInformation = lazy(() =>
   import("../../pages/information/NewInformation")
@@ -21,7 +21,7 @@ const NewTestHistory = lazy(() =>
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
 const NewProvince = lazy(() =>
-  import("../../pages/newDashboard/province/NewProvince")
+  import("../../pages/dashboard/province/NewProvince")
 );
 
 export const mainRoutes = [
@@ -37,7 +37,7 @@ export const mainRoutes = [
   },
   {
     path: "/dashboard",
-    element: <NewDashboard />,
+    element: <Dashboard />,
     title: "Dashboard | TIC Radar",
     description: "Admin dashboard to manage and review system metrics.",
     keywords: "dashboard, admin panel, system metrics",

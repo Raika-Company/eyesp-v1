@@ -23,7 +23,6 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { Snackbar, SnackbarContent } from "@mui/material";
 
 // Assets

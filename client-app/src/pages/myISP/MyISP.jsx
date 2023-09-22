@@ -26,18 +26,14 @@ import { ContainedButton } from "../../app/common/ContainedButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatisticBox from "../../app/common/StatisticBox";
 import NewLogo from "../../app/common/NewLogo";
-import {
-  AreaChart,
-  Area,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import data from "../../../public/data/myISPChartData.json";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxisEmpty.svg";
 import SendReport from "../../app/common/SendReport";
 import { Link } from "react-router-dom";
+import CustomSnackbar from "../../app/common/CustomeSnackbar";
 
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
@@ -547,37 +543,14 @@ const MyISP = () => {
           </Grid>
         </Grid>
       </Box>
-`      <Snackbar
+      `{" "}
+      <CustomSnackbar
         open={disturbance}
-        autoHideDuration={6000}
-        onClose={handleDisturbanceClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleDisturbanceClose}
-          severity="info"
-          sx={{
-            backgroundColor: "#48C237",
-            width: "100%",
-            fontSize: "1.5rem",
-            padding: "1rem 2rem",
-            ".MuiAlert-icon": {
-              // Targeting the alert icon
-              fontSize: "2.5rem", // Adjust the size as per your needs
-            },
-            ".MuiAlert-action": {
-              // Targeting the close action icon
-              "& .MuiIconButton-root": {
-                // Directly targeting the IconButton
-                fontSize: "2rem", // Adjust the size as per your needs
-              },
-            },
-          }}
-        >
-          گزارش شما با موفقیت ارسال شد.
-        </Alert>
-      </Snackbar>`
-
+        message="گزارش شما با موفقیت ارسال شد."
+        severity="info"
+        handleClose={handleDisturbanceClose}
+      />
+      `
       <Dialog open={openFeedBackDialog} onClose={handleCloseFeedbackDialog}>
         <DialogContent>
           <Rating

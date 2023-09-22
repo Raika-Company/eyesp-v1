@@ -11,13 +11,17 @@ import {
   Button,
   Container,
   Paper,
-  IconButton,
+  TextField,
   Typography,
   useMediaQuery,
   Select,
   MenuItem,
   Snackbar,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
@@ -26,18 +30,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 
 // Local component and utility imports
-import { ContainedButton } from "../../app/common/ContainedButton";
-import NewIranMap from "./map/NewIranMap";
-import ISPTable from "./NewISPTable";
-import NewLogo from "../../app/common/NewLogo";
-import StatisticBox from "../../app/common/StatisticBox";
+import { ContainedButton } from "../../../app/common/ContainedButton";
+import NewIranMap from "./../map/NewIranMap";
+import ISPTable from "../NewISPTable";
+import NewLogo from "../../../app/common/NewLogo";
+import StatisticBox from "../../../app/common/StatisticBox";
 
 // Assets and data imports
-import frame from "../../app/assets/image/Frame.svg";
-import provinces from "./../../../public/data/provinces.json";
-import { useNavigate } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
-import SendReport from "../../app/common/SendReport";
+import frame from "../../../app/assets/image/Frame.svg";
+import provinces from "./../../../../public/data/provinces.json";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import SendReport from "../../../app/common/SendReport";
+import CustomSnackbar from "../../../app/common/CustomeSnackbar";
 
 const disorders = [
   {
@@ -101,12 +105,13 @@ const sortFunctions = {
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
 
-const NewDashboard = () => {
+const NewProvince = () => {
   const navigate = useNavigate();
-
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
+  const location = useLocation();
+  const { provinceName } = location.state;
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
 
   const [ISPData, setISPData] = useState(RawISPData);
@@ -124,7 +129,7 @@ const NewDashboard = () => {
     }
   }, [sortCriteria]);
 
-  const [province, setProvince] = useState("");
+  const [province, setProvince] = useState(provinceName);
 
   const handleProvinceChange = (event) => {
     const selectedProvince = event.target.value;
@@ -161,22 +166,6 @@ const NewDashboard = () => {
     setOpenDialog(false);
   };
 
-  // const action = (
-  //   <>
-  //     <Button variant="text" size="small" onClick={handleDisturbanceClose}>
-  //       لغو کردن
-  //     </Button>
-  //     <IconButton
-  //       size="small"
-  //       aria-label="close"
-  //       color="#4E9A51"
-  //       onClick={handleDisturbanceClose}
-  //     >
-  //       <CloseIcon fontSize="small" />
-  //     </IconButton>
-  //   </>
-  // );
-
   return (
     <Box width="100%">
       <Container maxWidth="xl">
@@ -210,7 +199,15 @@ const NewDashboard = () => {
               color="#676767"
               gutterBottom
             >
-              سراسر کشور
+              استان{" "}
+              <Typography
+                component="span"
+                fontSize="1.5rem"
+                fontFamily="PeydaLight"
+                color="#008EDD"
+              >
+                {provinceName}
+              </Typography>
             </Typography>
             <img
               src={frame}
@@ -321,35 +318,55 @@ const NewDashboard = () => {
               >
                 گزارش خطا در اطلاعات
               </Button>
+              <CustomSnackbar
+                open={disturbance}
+                message="گزارش شما با موفقیت ارسال شد."
+                severity="info"
+                handleClose={handleDisturbanceClose}
+              />
             </Box>
           </Grid>
           <Grid xs={12} md={6}>
             <Box
               display="flex"
-              justifyContent="center"
+              justifyContent="space-between"
               alignItems="center"
-              gap="1rem"
               width="100%"
             >
-              <Typography>استان مورد نظر:</Typography>
-              <Select
-                labelId="change-province-label"
-                id="change-province"
-                label="انتخاب کنید"
-                value={province}
-                onChange={handleProvinceChange}
-                displayEmpty
-                sx={{ borderRadius: "1.25rem" }}
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                gap="1rem"
               >
-                <MenuItem value="">انتخاب کنید</MenuItem>
-                {provinces.map((provinceItem) => (
-                  <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                    {provinceItem.name}
-                  </MenuItem>
-                ))}
-              </Select>
+                <Typography>استان مورد نظر:</Typography>
+                <Select
+                  labelId="change-province-label"
+                  id="change-province"
+                  label={provinceName}
+                  value={provinceName}
+                  onChange={handleProvinceChange}
+                  sx={{ borderRadius: "1.25rem" }}
+                >
+                  {provinces.map((provinceItem) => (
+                    <MenuItem key={provinceItem.name} value={provinceItem.name}>
+                      {provinceItem.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Button
+                component={Link}
+                to="/dashboard"
+                fontSize="1rem"
+                variant="text"
+                sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}
+                endIcon={<WestIcon />}
+              >
+                وضعیت کل کشور
+              </Button>
             </Box>
-            <NewIranMap />
+            <NewIranMap currentProvince={provinceName} isProvince={true} />
           </Grid>
         </Grid>
         <Box
@@ -362,14 +379,12 @@ const NewDashboard = () => {
         >
           <Box
             paddingY="2rem"
-            // component={Paper}
-            // elevation={8}
+            component={Paper}
+            elevation={8}
             borderRadius="2rem"
             width={isMdScreen ? "48%" : "100%"}
             sx={{
               background: radialBackground,
-              boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
-              backdropFilter: "blur(35px)",
             }}
           >
             <Box display="flex" justifyContent="space-between" marginX="0.5rem">
@@ -378,7 +393,7 @@ const NewDashboard = () => {
                 fontSize="1.5rem"
                 fontFamily="PeydaSemiBold"
               >
-                آمار ISP های کشور
+                آمار ISP های استان
               </Typography>
               <Button
                 fontSize="1rem"
@@ -395,7 +410,7 @@ const NewDashboard = () => {
                   background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #BDE7FF 0%, rgba(205, 224, 235, 0.00) 100%)"
                   title="تعداد"
                   unit=""
-                  value="112"
+                  value="16"
                 />
               </Grid>
               <Grid xs={6} width="45%" marginY="0.875rem">
@@ -426,7 +441,6 @@ const NewDashboard = () => {
           </Box>
           <Box
             paddingY="2rem"
-            paddingX="0.5rem"
             component={Paper}
             elevation={8}
             borderRadius="2rem"
@@ -468,11 +482,7 @@ const NewDashboard = () => {
                   onChange={(e) => setSortCriteria(e.target.value)}
                   variant="outlined"
                   color="primary"
-                  sx={{
-                    marginRight: "0.5rem",
-                    color: "info.main",
-                    borderRadius: "1.25rem",
-                  }}
+                  sx={{ marginRight: "0.5rem", color: "info.main" }}
                 >
                   {selectionItems.map((item) => (
                     <MenuItem
@@ -504,43 +514,13 @@ const NewDashboard = () => {
             )}
           </Box>
         </Box>
+        <SendReport
+          openDialog={openDialog}
+          handleCloseDialog={handleCloseDialog}
+        />
       </Container>
-      <Snackbar
-        open={disturbance}
-        autoHideDuration={6000}
-        onClose={handleDisturbanceClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleDisturbanceClose}
-          severity="info"
-          sx={{
-            backgroundColor: "#48C237",
-            width: "100%",
-            fontSize: "1.5rem",
-            padding: "1rem 2rem",
-            ".MuiAlert-icon": {
-              // Targeting the alert icon
-              fontSize: "2.5rem", // Adjust the size as per your needs
-            },
-            ".MuiAlert-action": {
-              // Targeting the close action icon
-              "& .MuiIconButton-root": {
-                // Directly targeting the IconButton
-                fontSize: "2rem", // Adjust the size as per your needs
-              },
-            },
-          }}
-        >
-          گزارش شما با موفقیت ارسال شد.
-        </Alert>
-      </Snackbar>
-      <SendReport
-        openDialog={openDialog}
-        handleCloseDialog={handleCloseDialog}
-      />
     </Box>
   );
 };
 
-export default NewDashboard;
+export default NewProvince;
