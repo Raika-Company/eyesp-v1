@@ -1,29 +1,20 @@
 // React core imports
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // MUI (Material-UI) core and component imports
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Autocomplete,
   Box,
   Button,
   Container,
-  Paper,
-  TextField,
   Typography,
   useMediaQuery,
   Select,
   MenuItem,
-  Snackbar,
-  Alert,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  SvgIcon,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 // MUI Icons
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -32,9 +23,7 @@ import WestIcon from "@mui/icons-material/West";
 // Local component and utility imports
 import { ContainedButton } from "../../../app/common/ContainedButton";
 import NewIranMap from "./../map/NewIranMap";
-import ISPTable from "../NewISPTable";
 import NewLogo from "../../../app/common/NewLogo";
-import StatisticBox from "../../../app/common/StatisticBox";
 
 // Assets and data imports
 import frame from "../../../app/assets/image/Frame.svg";
@@ -42,6 +31,10 @@ import provinces from "./../../../../public/data/provinces.json";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SendReport from "../../../app/common/SendReport";
 import CustomSnackbar from "../../../app/common/CustomeSnackbar";
+import ISPStatistics from "../ISPStatistics";
+import ISPCompareTable from "../ISPCompareTable";
+import useDynamicMP from "../../../app/hooks/useDynamicMP";
+import CardContainer from "../../../app/common/CardContainer";
 
 const disorders = [
   {
@@ -61,87 +54,33 @@ const disorders = [
   },
 ];
 
-const createData = (rank, ISPname, disturbance, pings, speed, desc) => {
-  return { rank, ISPname, disturbance, pings, speed, desc };
-};
-
-const RawISPData = [
-  createData("1", "زیتل", "1%", "49ms", "28Mbps"),
-  createData("2", "همراه اول", "3%", "51ms", "23Mbps"),
-  createData("3", "ایرانسل", "3%", "52ms", "21Mbps"),
-  createData("4", "رایتل", "4%", "59ms", "19Mbps"),
-  createData("5", "شاتل", "6%", "61ms", "18Mbps"),
-  createData("6", "مخابرات", "8%", "61ms", "16Mbps"),
-  createData("7", "آسیاتک", "9%", "64ms", "14Mbps"),
-  createData("8", "های وب", "11%", "53ms", "19Mbps"),
-];
-
-const selectionItems = [
-  "نام ISP",
-  "بیشترین اختلال",
-  "کمترین اختلال",
-  "بیشترین میانگین پینگ",
-  "کمترین میانگین پینگ",
-  "بیشترین میانگین سرعت",
-  "کمترین میانگین سرعت",
-];
-
-const parseNumber = (str) => {
-  return parseFloat(str.replace(/[^0-9.]/g, ""));
-};
-
-const sortFunctions = {
-  "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
-  "بیشترین اختلال": (a, b) =>
-    parseNumber(b.disturbance) - parseNumber(a.disturbance),
-  "کمترین اختلال": (a, b) =>
-    parseNumber(a.disturbance) - parseNumber(b.disturbance),
-  "بیشترین میانگین پینگ": (a, b) => parseNumber(b.pings) - parseNumber(a.pings),
-  "کمترین میانگین پینگ": (a, b) => parseNumber(a.pings) - parseNumber(b.pings),
-  "بیشترین میانگین سرعت": (a, b) => parseNumber(b.speed) - parseNumber(a.speed),
-  "کمترین میانگین سرعت": (a, b) => parseNumber(a.speed) - parseNumber(b.speed),
-};
-
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
 
 const NewProvince = () => {
   const navigate = useNavigate();
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   const location = useLocation();
-  const { provinceName } = location.state;
-  const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
-
-  const [ISPData, setISPData] = useState(RawISPData);
-
-  const [visibleRows, setVisibleRows] = useState(6);
-
-  const handleShowMore = () => {
-    setVisibleRows((prev) => prev + 2);
-  };
-
-  useEffect(() => {
-    const sortFunction = sortFunctions[sortCriteria];
-    if (sortFunction) {
-      setISPData([...ISPData].sort(sortFunction));
-    }
-  }, [sortCriteria]);
+  const { provinceName, provinceQuality } = location.state;
 
   const [province, setProvince] = useState(provinceName);
 
   const handleProvinceChange = (event) => {
     const selectedProvince = event.target.value;
-
+  
     setProvince(selectedProvince);
-
+  
     navigate(`/dashboard/${selectedProvince}`, {
       state: {
         provinceName: selectedProvince,
+        provinceQuality: Math.floor(Math.random() * 50) + 50,
       },
     });
   };
+
+  const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
+  const paddingMainBox = useDynamicMP(390, 1440, 1.81, 4);
 
   const [disturbance, setDisturbance] = useState(false);
 
@@ -166,25 +105,68 @@ const NewProvince = () => {
     setOpenDialog(false);
   };
 
+  const [fillPercentage, setFillPercentage] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  const targetPercentage = provinceQuality;
+  const duration = 5000;
+  const startTime = useRef(Date.now());
+
+  const cubicEaseOut = (t, b, c, d) => {
+    t /= d;
+    t--;
+    return c * (t * t * t + 1) + b;
+  };
+
+  const updateFillPercentage = () => {
+    const currentTime = Date.now() - startTime.current;
+    if (currentTime >= duration) {
+      clearInterval(intervalId.current);
+      setIsAnimating(false);
+      setFillPercentage(targetPercentage);
+    } else {
+      const newPercentage = cubicEaseOut(
+        currentTime,
+        0,
+        targetPercentage,
+        duration
+      );
+      setFillPercentage(Math.round(newPercentage));
+    }
+  };
+
+  const intervalId = useRef(null);
+
+  useEffect(() => {
+    if (isAnimating) {
+      intervalId.current = setInterval(updateFillPercentage, 50);
+    }
+    return () => {
+      clearInterval(intervalId.current);
+    };
+  }, [isAnimating]);
+
+  useEffect(() => {
+    setIsAnimating(true);
+    setFillPercentage(0);
+    startTime.current = Date.now();
+
+  }, [provinceQuality]);
+
   return (
     <Box width="100%">
       <Container maxWidth="xl">
         <NewLogo />
-        <Grid
-          container
-          component={Paper}
-          elevation={8}
-          marginY="1rem"
-          borderRadius="2rem"
-          paddingTop="3.5rem"
-          paddingBottom="2.25rem"
-          paddingX="5%"
-          spacing={4}
+        <CardContainer
           sx={{
-            background: radialBackground,
+            display: "flex",
+            flexDirection: isMdScreen ? "row" : "column-reverse",
+            marginTop: "1rem",
+            paddingTop: "3.5rem",
+            paddingX: paddingMainBox,
           }}
         >
-          <Grid xs={12} md={6}>
+          <Box flex={1}>
             <Typography
               fontFamily="PeydaSemibold"
               fontSize="1.5rem"
@@ -209,24 +191,51 @@ const NewProvince = () => {
                 {provinceName}
               </Typography>
             </Typography>
-            <img
-              src={frame}
-              alt="frame"
-              style={{ width: "100%", marginTop: "0.69rem" }}
-            />
-            <Box
-              height="0.875rem"
-              backgroundColor="#D9D9D9"
-              width="100%"
-              borderRadius="0.65625rem"
-              sx={{ direction: "ltr" }}
-            >
+            <Box display="flex" flexDirection="column" marginTop="5.75rem">
               <Box
-                height="100%"
-                width="58%"
-                backgroundColor="#008EDD"
+                position="relative"
+                height="0.875rem"
+                backgroundColor="#D9D9D9"
+                width="100%"
                 borderRadius="0.65625rem"
-              ></Box>
+                sx={{ direction: "ltr" }}
+              >
+                <Box
+                  position="absolute"
+                  top="-4rem"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  transition="left 5s cubic-bezier(0.23, 1, 0.32, 1)"
+                  sx={{ left: `${fillPercentage - 3}%` }}
+                >
+                  <Typography
+                    fontSize="1.5rem"
+                    fontFamily="PeydaSemiBold"
+                    color="#008EDD"
+                  >{`${fillPercentage}%`}</Typography>
+                  <SvgIcon>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="38"
+                      viewBox="0 0 18 38"
+                      fill="none"
+                    >
+                      <path
+                        d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                        fill="#008EDD"
+                      />
+                    </svg>
+                  </SvgIcon>
+                </Box>
+                <Box
+                  height="100%"
+                  width={`${fillPercentage}%`}
+                  backgroundColor="#008EDD"
+                  borderRadius="0.65625rem"
+                ></Box>
+              </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Typography
@@ -325,8 +334,8 @@ const NewProvince = () => {
                 handleClose={handleDisturbanceClose}
               />
             </Box>
-          </Grid>
-          <Grid xs={12} md={6}>
+          </Box>
+          <Box flex={1}>
             <Box
               display="flex"
               justifyContent="space-between"
@@ -367,152 +376,19 @@ const NewProvince = () => {
               </Button>
             </Box>
             <NewIranMap currentProvince={provinceName} isProvince={true} />
-          </Grid>
-        </Grid>
+          </Box>
+        </CardContainer>
         <Box
-          display="flex"
-          alignItems="flex-start"
-          flexDirection={isMdScreen ? "row" : "column"}
-          width="100%"
-          justifyContent="space-between"
-          marginY="1rem"
+          sx={{
+            display: "flex",
+            flexDirection: isMdScreen ? "row" : "column-reverse",
+            marginTop: mpCardContainers,
+            gap: mpCardContainers,
+            marginBottom: "2rem",
+          }}
         >
-          <Box
-            paddingY="2rem"
-            component={Paper}
-            elevation={8}
-            borderRadius="2rem"
-            width={isMdScreen ? "48%" : "100%"}
-            sx={{
-              background: radialBackground,
-            }}
-          >
-            <Box display="flex" justifyContent="space-between" marginX="0.5rem">
-              <Typography
-                color="#2C2C2C"
-                fontSize="1.5rem"
-                fontFamily="PeydaSemiBold"
-              >
-                آمار ISP های استان
-              </Typography>
-              <Button
-                fontSize="1rem"
-                variant="text"
-                sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}
-                endIcon={<WestIcon />}
-              >
-                مشاهده جزئیات
-              </Button>
-            </Box>
-            <Grid container justifyContent="space-evenly">
-              <Grid xs={6} width="45%" marginY="0.875rem">
-                <StatisticBox
-                  background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #BDE7FF 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  title="تعداد"
-                  unit=""
-                  value="16"
-                />
-              </Grid>
-              <Grid xs={6} width="45%" marginY="0.875rem">
-                <StatisticBox
-                  background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C1E0B9 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  title="میانگین سرعت"
-                  unit="(mb/s)"
-                  value="21"
-                />
-              </Grid>
-              <Grid xs={6} width="45%" marginY="0.875rem">
-                <StatisticBox
-                  background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C1E0B9 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  title="میانگین پینگ"
-                  unit="ms"
-                  value="43"
-                />
-              </Grid>
-              <Grid xs={6} width="45%" marginY="0.875rem">
-                <StatisticBox
-                  background="radial-gradient(467.22% 181.99% at -1.81% 6.72%, #FFCCA8 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  title="میانگین درصد عملکرد"
-                  unit="%"
-                  value="58"
-                />
-              </Grid>
-            </Grid>
-          </Box>
-          <Box
-            paddingY="2rem"
-            component={Paper}
-            elevation={8}
-            borderRadius="2rem"
-            width={isMdScreen ? "48%" : "100%"}
-            sx={{
-              background: radialBackground,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: isSmScreen ? "center" : "space-between",
-                paddingX: "0.5rem",
-                flexWrap: "wrap",
-              }}
-            >
-              <Typography
-                variant="h3"
-                gutterBottom
-                sx={{
-                  color: "info.main",
-                }}
-              >
-                رتبه بندی ISPها{" "}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                component="div"
-                gutterBottom
-                sx={{
-                  color: "textColor.main",
-                  fontWeight: "700",
-                  fontSize: isSmScreen ? "0.9rem" : "overline",
-                }}
-              >
-                براساس:{" "}
-                <Select
-                  value={sortCriteria}
-                  onChange={(e) => setSortCriteria(e.target.value)}
-                  variant="outlined"
-                  color="primary"
-                  sx={{ marginRight: "0.5rem", color: "info.main" }}
-                >
-                  {selectionItems.map((item) => (
-                    <MenuItem
-                      key={item}
-                      sx={{ color: "textColor.light" }}
-                      value={item}
-                    >
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Typography>
-            </Box>
-            <ISPTable ISPdata={ISPData.slice(0, visibleRows)} />
-            {visibleRows < RawISPData.length && (
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "textColor.main",
-                  textAlign: "center",
-                  marginY: "1rem",
-                  cursor: "pointer",
-                  width: "100%",
-                }}
-                onClick={handleShowMore}
-              >
-                -- مشاهده بیشتر --
-              </Typography>
-            )}
-          </Box>
+          <ISPStatistics mpCardContainers={mpCardContainers} />
+          <ISPCompareTable mpCardContainers={mpCardContainers} />
         </Box>
         <SendReport
           openDialog={openDialog}

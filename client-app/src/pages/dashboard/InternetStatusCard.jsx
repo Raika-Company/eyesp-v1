@@ -10,8 +10,11 @@ import {
   Select,
   Typography,
   useMediaQuery,
+  keyframes,
+  SvgIcon,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 
 // Local Components
 import NewIranMap from "./map/NewIranMap";
@@ -120,10 +123,52 @@ const InternetStatusCard = (props) => {
     handleDisturbanceClick,
     province,
     handleProvinceChange,
+    qualityPercentage,
   } = props;
 
   const paddingMainBox = useDynamicMP(390, 1440, 1.81, 4);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
+
+  const [fillPercentage, setFillPercentage] = React.useState(0);
+  const [isAnimating, setIsAnimating] = React.useState(true);
+
+  const targetPercentage = qualityPercentage;
+  const duration = 5000;
+  const startTime = React.useRef(Date.now());
+
+  const cubicEaseOut = (t, b, c, d) => {
+    t /= d;
+    t--;
+    return c * (t * t * t + 1) + b;
+  };
+
+  const updateFillPercentage = () => {
+    const currentTime = Date.now() - startTime.current;
+    if (currentTime >= duration) {
+      clearInterval(intervalId.current);
+      setIsAnimating(false);
+      setFillPercentage(targetPercentage);
+    } else {
+      const newPercentage = cubicEaseOut(
+        currentTime,
+        0,
+        targetPercentage,
+        duration
+      );
+      setFillPercentage(Math.round(newPercentage));
+    }
+  };
+
+  const intervalId = React.useRef(null);
+
+  React.useEffect(() => {
+    if (isAnimating) {
+      intervalId.current = setInterval(updateFillPercentage, 50);
+    }
+    return () => {
+      clearInterval(intervalId.current);
+    };
+  }, [isAnimating]);
 
   return (
     <CardContainer
@@ -137,24 +182,51 @@ const InternetStatusCard = (props) => {
     >
       <Box flex={1}>
         <InternetStatusTitle />
-        <img
-          src={frame}
-          alt="frame"
-          style={{ width: "100%", marginTop: "0.69rem" }}
-        />
-        <Box
-          height="0.875rem"
-          backgroundColor="#D9D9D9"
-          width="100%"
-          borderRadius="0.65625rem"
-          sx={{ direction: "ltr" }}
-        >
+        <Box display="flex" flexDirection="column" marginTop="5.75rem">
           <Box
-            height="100%"
-            width="58%"
-            backgroundColor="#008EDD"
+            position="relative"
+            height="0.875rem"
+            backgroundColor="#D9D9D9"
+            width="100%"
             borderRadius="0.65625rem"
-          ></Box>
+            sx={{ direction: "ltr" }}
+          >
+            <Box
+              position="absolute"
+              top="-4rem"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              transition="left 5s cubic-bezier(0.23, 1, 0.32, 1)"
+              sx={{ left: `${fillPercentage - 3}%` }}
+            >
+              <Typography
+                fontSize="1.5rem"
+                fontFamily="PeydaSemiBold"
+                color="#008EDD"
+              >{`${fillPercentage}%`}</Typography>
+              <SvgIcon>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="38"
+                  viewBox="0 0 18 38"
+                  fill="none"
+                >
+                  <path
+                    d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                    fill="#008EDD"
+                  />
+                </svg>
+              </SvgIcon>
+            </Box>
+            <Box
+              height="100%"
+              width={`${fillPercentage}%`}
+              backgroundColor="#008EDD"
+              borderRadius="0.65625rem"
+            ></Box>
+          </Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography

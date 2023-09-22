@@ -24,6 +24,8 @@ const NewProvince = lazy(() =>
   import("../../pages/dashboard/province/NewProvince")
 );
 
+// import SpeedTestWorker from "../../pages/newSpeedtest/SpeedTestWorker";
+
 export const mainRoutes = [
   {
     path: "/",
@@ -84,4 +86,8 @@ export const mainRoutes = [
     keywords: "province, details, insights, metrics",
     robots: "noindex, nofollow",
   },
+  // {
+  //   path: "/test",
+  //   element: <SpeedTestWorker />
+  // }
 ];

@@ -160,7 +160,6 @@
 
 .city_label {
   display: inline-block;
-  margin: 0.25rem 0.1rem;
 }
 
 .cities form {
@@ -186,7 +185,6 @@
 .cities input[type="submit"],
 .cities button {
   width: 50%;
-  margin: 0.5rem;
   border-radius: 0.7rem;
   cursor: pointer;
 }
@@ -221,5 +219,4 @@
   width: 350%;
   height: 120%;
   padding: 0;
-  margin: 2rem auto 0 45%;
 }

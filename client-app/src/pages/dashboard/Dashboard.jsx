@@ -5,17 +5,20 @@ import { useNavigate } from "react-router-dom";
 // Lazy load the components
 const NewLogo = React.lazy(() => import("../../app/common/NewLogo"));
 const SendReport = React.lazy(() => import("../../app/common/SendReport"));
-const CustomSnackbar = React.lazy(() => import("../../app/common/CustomeSnackbar"));
+const CustomSnackbar = React.lazy(() =>
+  import("../../app/common/CustomeSnackbar")
+);
 const InternetStatusCard = React.lazy(() => import("./InternetStatusCard"));
 const ISPStatistics = React.lazy(() => import("./ISPStatistics"));
 const ISPCompareTable = React.lazy(() => import("./ISPCompareTable"));
 
 import useDynamicMP from "../../app/hooks/useDynamicMP";
+import LoadingSpinner from "../../app/common/LoadingSpinner";
 
 /**
  * Dashboard component displays the main user interface of the application.
  * It shows status, statistics, and comparison data related to internet service providers.
- * 
+ *
  * @component
  * @example
  * return (
@@ -35,13 +38,16 @@ const Dashboard = () => {
    * Handles province selection and navigates to the specific province dashboard.
    * @param {Object} event - The event object
    */
-  const handleProvinceChange = useCallback((event) => {
-    const selectedProvince = event.target.value;
-    setProvince(selectedProvince);
-    navigate(`/dashboard/${selectedProvince}`, {
-      state: { provinceName: selectedProvince },
-    });
-  }, [navigate]);
+  const handleProvinceChange = useCallback(
+    (event) => {
+      const selectedProvince = event.target.value;
+      setProvince(selectedProvince);
+      navigate(`/dashboard/${selectedProvince}`, {
+        state: { provinceName: selectedProvince },
+      });
+    },
+    [navigate]
+  );
 
   /**
    * Sets disturbance state to true.
@@ -70,7 +76,7 @@ const Dashboard = () => {
   const handleCloseDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+    <>
       <Container maxWidth="xl" sx={{ minHeight: "100vh" }}>
         <NewLogo />
         <InternetStatusCard
@@ -78,6 +84,7 @@ const Dashboard = () => {
           handleDisturbanceClick={handleDisturbanceClick}
           province={province}
           handleProvinceChange={handleProvinceChange}
+          qualityPercentage={78}
         />
         <Box
           sx={{
@@ -98,8 +105,11 @@ const Dashboard = () => {
         severity="info"
         handleClose={handleDisturbanceClose}
       />
-      <SendReport openDialog={openDialog} handleCloseDialog={handleCloseDialog} />
-    </React.Suspense>
+      <SendReport
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+      />
+    </>
   );
 };
 
