@@ -19,7 +19,7 @@ body {
 
 @font-face {
   font-family: 'PeydaBold';
-  src: url('assets/fonts/Peyda-Bold.ttf') format('truetype');
+  src: url('assets/fonts/peyda-bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
@@ -47,7 +47,7 @@ body {
 
 @font-face {
   font-family: 'Peyda';
-  src: url('assets/fonts/Peyda-Medium.ttf') format('truetype');
+  src: url('assets/fonts/peyda-medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -61,7 +61,7 @@ body {
 
 @font-face {
   font-family: 'PeydaSemibold';
-  src: url('assets/fonts/Peyda-SemiBold.ttf') format('truetype');
+  src: url('assets/fonts/peyda-semibold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }

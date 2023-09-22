@@ -26,7 +26,7 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 
 // Data & Assets
 import provinces from "./../../../public/data/provinces.json";
-import frame from "../../app/assets/image/Frame.svg";
+import frame from "../../app/assets/image/frame.svg";
 
 /**
  * Sample disorder data.
