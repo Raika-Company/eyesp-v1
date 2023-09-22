@@ -35,7 +35,7 @@ function App() {
             <Route
               path="/*"
               element={
-                <Box display="flex" width="100%" backgroundColor="#E3EEF7">
+                <Box display="flex" width="100%" backgroundColor="#E3EEF7" minHeight="100dvh">
                   <NewNavbar />
                   <Box sx={{ flex: 1 }}>
                     <Routes>

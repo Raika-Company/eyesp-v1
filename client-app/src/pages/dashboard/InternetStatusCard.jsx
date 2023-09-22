@@ -133,7 +133,7 @@ const InternetStatusCard = (props) => {
   const [isAnimating, setIsAnimating] = React.useState(true);
 
   const targetPercentage = qualityPercentage;
-  const duration = 5000;
+  const duration = 3000;
   const startTime = React.useRef(Date.now());
 
   const cubicEaseOut = (t, b, c, d) => {

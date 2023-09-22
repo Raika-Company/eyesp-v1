@@ -77,7 +77,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ minHeight: "100vh" }}>
+      <Container maxWidth="xl">
         <NewLogo />
         <InternetStatusCard
           handleClickOpenDialog={handleClickOpenDialog}

@@ -109,7 +109,7 @@ const NewProvince = () => {
   const [isAnimating, setIsAnimating] = useState(true);
 
   const targetPercentage = provinceQuality;
-  const duration = 5000;
+  const duration = 3000;
   const startTime = useRef(Date.now());
 
   const cubicEaseOut = (t, b, c, d) => {

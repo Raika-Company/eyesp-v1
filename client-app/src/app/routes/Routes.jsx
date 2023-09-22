@@ -14,8 +14,8 @@ const NewOperatorPerformance = lazy(() =>
   import("../../pages/ispPerformance/NewOperatorPerformance")
 );
 
-const NewTestHistory = lazy(() =>
-  import("../../pages/newTestHistory/NewTestHistory")
+const TestHistory = lazy(() =>
+  import("../../pages/testHistory/TestHistory")
 );
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
@@ -56,7 +56,7 @@ export const mainRoutes = [
   },
   {
     path: "/history",
-    element: <NewTestHistory />,
+    element: <TestHistory />,
     title: "Test History | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
