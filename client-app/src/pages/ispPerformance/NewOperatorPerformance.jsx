@@ -1,28 +1,18 @@
 import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import NewLogo from "../../app/common/NewLogo";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import {
-  AreaChart,
-  Area,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import chartData from "../../../public/data/ispPerformanceChart.json";
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
-import SoloSwitch from "../../app/common/SoloSwitch";
 import axios from "axios";
-
 import InputLabel from "@mui/material/InputLabel";
+import SwitchBtn from "../../app/common/SwitchBtn";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
-
 function GridItem({ rendered, title, data }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
@@ -80,8 +70,7 @@ function GridItem({ rendered, title, data }) {
     </Grid>
   );
 }
-
-const FormControlItems = ["انتخاب اپراتور"];
+const FormControlItems = ["انتخاب اپراتورها", "سالیانه", "سال", "استان"];
 const data = [
   ["ایرانسل", "همراه اول", "رایتل", "شاتل"],
   ["سالیانه", "ماهیانه", "هفتگی"],
@@ -100,12 +89,27 @@ const data = [
   ],
 ];
 
+function generateRandomData() {
+  // Generate random data for the chart
+  const data = [];
+  for (let i = 1; i <= 12; i++) {
+    data.push({
+      month: `${i} ماه`,
+      value: Math.floor(Math.random() * 100), // Adjust the range as needed
+    });
+  }
+  return data;
+}
 const NewOperatorPerformance = () => {
+  const theme = useTheme();
   const [formControlItems, setFormControlItems] = useState("ایرانسل");
-
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [currentChartData, setCurrentChartData] = useState({});
-
+  const [randomChartData1, setRandomChartData1] = useState([]);
+  const [randomChartData2, setRandomChartData2] = useState([]);
+  const [randomChartData3, setRandomChartData3] = useState([]);
+  const [randomChartData4, setRandomChartData4] = useState([]);
+  const [rendered, setRendered] = useState(false);
   const handleChange = (event) => {
     setFormControlItems(event.target.value);
     const selectedISPData = ispData.find(
@@ -113,32 +117,38 @@ const NewOperatorPerformance = () => {
     );
     if (selectedISPData) {
       setCurrentChartData(selectedISPData);
+      setRandomChartData1(generateRandomData());
+      setRandomChartData2(generateRandomData());
+      setRandomChartData3(generateRandomData());
+      setRandomChartData4(generateRandomData());
     }
   };
+
   useEffect(() => {
     axios
-      .get("/data/myISPChartData.json")
+      .get("/data/chartData.json")
       .then((response) => {
         const data = response.data;
         setIspData(data);
         const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
         if (defaultISPData) {
           setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
+
+          setRandomChartData1(generateRandomData());
+          setRandomChartData2(generateRandomData());
+          setRandomChartData3(generateRandomData());
+          setRandomChartData4(generateRandomData());
         }
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
       });
   }, []);
-
-  const theme = useTheme();
-  const [rendered, setRendered] = useState(false);
-
   useEffect(() => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg" sx={{minHeight: "100dvh"}}>
+    <Container maxWidth="lg" sx={{ minHeight: "100dvh" }}>
       <NewLogo />
       <Box
         sx={{
@@ -199,7 +209,7 @@ const NewOperatorPerformance = () => {
               </FormControl>
             ))}
           </Box>
-          <SoloSwitch text="مقایسه" />
+          <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
         </Box>
         <Grid container>
           {titlesChart.map((title, index) => (
@@ -207,7 +217,16 @@ const NewOperatorPerformance = () => {
               key={index}
               rendered={rendered}
               title={title}
-              data={currentChartData[`chart${index + 1}`]}
+              data={
+                // Assign each chart a different randomChartData
+                index === 0
+                  ? randomChartData1
+                  : index === 1
+                  ? randomChartData2
+                  : index === 2
+                  ? randomChartData3
+                  : randomChartData4
+              }
             />
           ))}
         </Grid>
