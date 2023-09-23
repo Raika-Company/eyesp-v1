@@ -168,11 +168,13 @@ const NewSpeedTest = () => {
             download: convertToPersianNumbers(speedData.downloadSpeed),
             testDuration: convertToPersianNumbers("00:16"),
             testType: "دقیق",
-            upload: convertToPersianNumbers(parseFloat(
-              (
-                initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
-              ).toFixed(2)
-            )),
+            upload: convertToPersianNumbers(
+              parseFloat(
+                (
+                  initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
+                ).toFixed(2)
+              )
+            ),
             server: "ایرانسل-تهران",
           };
 
@@ -444,7 +446,7 @@ const NewSpeedTest = () => {
                     <Typography variant="h7">ایرانسل-تهران</Typography>
                   </Box>
                 </Box>
-                <Box width="100%" display="flex" justifyContent="center">
+                <Box width="40%" display="flex" justifyContent="center">
                   {isGoButtonVisible ? (
                     <AnimatedButton
                       // onClick={handleButtonClick}

@@ -1,15 +1,16 @@
 label {
-    font-size: 13px;
+    font-size: 14px;
     color: #424242;
     font-weight: 500;
+    font-family: "Peyda";
 }
 
 
 
 .btn-color-mode-switch > label.btn-color-mode-switch-inner{
     margin: 0px;
-    width: 158px;
-    height: 37px;
+    width: 193px;
+    height: 48px;
     background: #E0E0E0;
     border-radius: 26px;
     overflow: hidden;
@@ -22,27 +23,27 @@ label {
 .btn-color-mode-switch > label.btn-color-mode-switch-inner:before{
     content: attr(data-on);
     position: absolute;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
-    top: 7px;
+    top: 12px;
     right: 20px;
 
 }
 
 .btn-color-mode-switch > label.btn-color-mode-switch-inner:after{
     content: attr(data-off);
-    width: 78px;
-    height: 33px;
+    width: 95px;
+    height: 39px;
     background: #259FDA;
     color: #fff;
     border-radius: 26px;
     position: absolute;
-    left: 2px;
-    top: 2px;
+    left: 6px;
+    top: 4px;
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: 0px 0px 6px -2px #111;
-    padding: 5px 0px;
+    padding: 9px 0px;
 }
 
 .btn-color-mode-switch > .alert{
@@ -70,7 +71,7 @@ label {
 
 .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after{
     content: attr(data-on);
-    left: 78px;
+    left: 93px;
     background: #259FDA;
 }
 
