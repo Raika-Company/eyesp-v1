@@ -56,7 +56,7 @@ function App() {
             <Route
               path="/*"
               element={
-                <Container maxWidth="xl">
+                <Container maxWidth="xl" sx={{ overflow: "hidden" }}>
                   <Box display="flex" justifyContent="space-between">
                     <NewNavbar
                       toggleOpenMenu={toggleOpenMenu}

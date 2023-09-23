@@ -167,8 +167,7 @@ const MyISP = () => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <NewLogo />
+    <>
       <Box display="flex" gap="1rem">
         <Box
           component={Paper}
@@ -586,7 +585,7 @@ const MyISP = () => {
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
       />
-    </Container>
+    </>
   );
 };
 
