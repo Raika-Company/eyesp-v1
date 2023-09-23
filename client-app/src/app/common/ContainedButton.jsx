@@ -7,6 +7,12 @@ const ContainedButton = styled(Button)(({ theme }) => ({
   color: "white",
   borderColor: "#FF8A35",
   border: "2px solid transparent", // Initially setting the border color to transparent
+  "&:hover": {
+    backgroundColor: "white",
+    color: "#FF8A35",
+    borderColor: "#FF8A35",
+    boxShadow: "none",
+  },
 }));
 
 const OutlinedButton = styled(Button)({
