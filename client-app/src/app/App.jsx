@@ -1,27 +1,26 @@
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import Navbar from "../components/navbar/Navbar";
-import { lightTheme, darkTheme } from "./Palette";
-import SpeedTest from "../components/speedtest/SpeedTest";
-import TestHistory from "../components/testHistory/TestHistory";
-import Login from "../components/login/Login";
-import Pc from "../components/pc/Pc";
-import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import Dashboard from "../components/dashboard/Dashboard";
-
+import { ThemeProvider } from "@mui/material/styles";
+import { Box, CssBaseline } from "@mui/material";
+import NewNavbar from "./layouts/Navbar";
+import { lightTheme, darkTheme } from "./layouts/Palette";
+import { mainRoutes } from "./routes/Routes";
+import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 
 function App() {
-  const [theme, setTheme] = useState(lightTheme);
+  const storedThemeMode = localStorage.getItem("themeMode");
+  const initialTheme = storedThemeMode === "dark" ? darkTheme : lightTheme;
+
+  const [theme, setTheme] = useState(initialTheme);
 
   const toggleTheme = () => {
     if (theme === lightTheme) {
       setTheme(darkTheme);
+      localStorage.setItem("themeMode", "dark");
     } else {
       setTheme(lightTheme);
+      localStorage.setItem("themeMode", "light");
     }
   };
 
@@ -31,46 +30,36 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          {/* Routes without Navbar */}
-          <Route path="/pc" element={<Pc themeMode={currentThemeMode} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<DashboardRoutes/>} />
-
-          {/* Main route with Navbar */}
-          <Route
-            path="/*"
-            element={
-              <>
-                <Navbar
-                  themeMode={currentThemeMode}
-                  toggleTheme={toggleTheme}
-                />
-                <Routes>
-                  <Route
-                    index
-                    element={<SpeedTest themeMode={currentThemeMode} />}
-                  />
-                  <Route path="test-history" element={<TestHistory />} />
-                </Routes>
-              </>
-            }
-          />
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <Box
+                  display="flex"
+                  width="100%"
+                  backgroundColor="#E3EEF7"
+                  minHeight="100dvh"
+                >
+                  <NewNavbar />
+                  <Box sx={{ flex: 1 }}>
+                    <Routes>
+                      {mainRoutes.map((route) => (
+                        <Route
+                          key={route.path}
+                          path={route.path}
+                          element={route.element}
+                        />
+                      ))}
+                    </Routes>
+                  </Box>
+                </Box>
+              }
+            />
+          </Routes>
+        </Suspense>
       </Router>
     </ThemeProvider>
-  );
-}
-
-const DashboardRoutes = () => {
-  return (
-    <>
-      <DashboardNavbar />
-      <Routes>
-        <Route index element={<Dashboard/>} />
-        <Route path="speed-test" element={<TestHistory />} />
-      </Routes>
-    </>
   );
 }
 
