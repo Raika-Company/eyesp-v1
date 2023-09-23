@@ -79,3 +79,27 @@ body {
   font-weight: 100;
   font-style: normal;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-top: 20px solid transparent;  /* Adjust these values to 'shorten' the track visually */
+  border-bottom: 20px solid transparent;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear,
+                     left bottom,
+                     left top,
+                     color-stop(0.44, rgb(62, 99, 137)),
+                     color-stop(0.72, rgb(37, 159, 218)),
+                     color-stop(0.86, rgb(37, 159, 218)));
+}
+
+::-webkit-scrollbar-button {
+  width: 50px;
+  height: 100px; }

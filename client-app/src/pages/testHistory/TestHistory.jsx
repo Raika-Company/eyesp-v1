@@ -13,7 +13,6 @@ import moment from "moment-jalaali";
 import { Link } from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import Carousel from './Carousel';
-import "./TestHistory.css";
 
 const TEST_RESULTS = "testResults";
 
