@@ -140,7 +140,7 @@ const NewTestHistory = () => {
               <Typography fontFamily="PeydaRegular" fontSize="1rem">
                 آدرس IP :
               </Typography>
-              <Typography ontFamily="PeydaRegular" fontSize="1rem">
+              <Typography fontFamily="PeydaRegular" fontSize="1rem">
                 192.168.0.129
               </Typography>
             </>

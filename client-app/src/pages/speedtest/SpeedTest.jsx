@@ -1,17 +1,15 @@
 import React from "react";
 import {
   Box,
-  Container,
   Typography,
   Button,
   useMediaQuery,
   useTheme,
+  keyframes,
 } from "@mui/material";
-import NewLogo from "../../app/common/NewLogo";
 import clock from "../../app/assets/image/clock.svg";
 import { styled } from "@mui/material/styles";
 import "./SpeedTest.css";
-import iLogo from "../../app/assets/image/iLogo.svg";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import upload from "../../app/assets/image/uploadIcon.svg";
 import download from "../../app/assets/image/downloadIcon.svg";
@@ -25,7 +23,26 @@ import elipse from "../../app/assets/image/elipse.svg";
 import { Link } from "react-router-dom";
 import ShowResult from "./ShowResult";
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 const SpeedTest = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
+  const [speedData, setSpeedData] = useState({
+    ping: null,
+    downloadSpeed: null,
+  });
+  const [uploadSpeed, setUploadSpeed] = useState(null);
+  const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
+  const [boxHeight, setBoxHeight] = useState("90dvh");
+
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.down("md"));
   const isXS = useMediaQuery(theme.breakpoints.only("xs"));
@@ -46,7 +63,7 @@ const SpeedTest = () => {
         ...prev,
         ping: Math.floor(Math.random() * 31) + 50,
       }));
-      setTestStage("download");
+      setTestStage("init");
     }, 1000);
   };
   const boxesData = [
@@ -61,7 +78,26 @@ const SpeedTest = () => {
   ];
 
   useEffect(() => {
-    if (testStage === "download") {
+    if (testStage === "init") {
+      let index = 0;
+      let increment = true;  // A flag to determine whether to increment or decrement the index
+      const interval = setInterval(() => {
+        if (increment) {
+          index = index < 9 ? + index + 0.125 : index + 1;
+        } else {
+          index = index < 9 ? + index - 0.125 : index - 1;;
+        }
+        setSpeedData((prev) => ({
+          ...prev,
+          downloadSpeed: index,
+        }));
+        if (index >= 120) {
+          increment = false;  
+        } else if (index <= 0) {
+          increment = true; 
+        }
+      }, 1000 / 240);
+    } else if (testStage === "download") {
       let timeElapsed = 0;
       let initialDownload = parseFloat((Math.random() * 20 + 10).toFixed(2)); // random number between 10 and 30
 
@@ -73,7 +109,6 @@ const SpeedTest = () => {
             downloadSpeed: initialDownload,
           }));
         } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
-          // Ensure subsequent values are within ±2 of the initial value
           let randomDifference = (Math.random() * 4 - 2).toFixed(2);
           setSpeedData((prev) => ({
             ...prev,
@@ -85,20 +120,19 @@ const SpeedTest = () => {
           clearInterval(interval);
           setTimeout(() => {
             setTestStage("upload");
-          }, 3000); // Delay the upload test by 3 seconds
+          }, 3000);
         }
       }, 100);
       return () => clearInterval(interval);
     } else if (testStage === "upload") {
       let timeElapsed = 0;
-      let initialUpload = parseFloat((Math.random() * 10 + 5).toFixed(2)); // random number between 5 and 15
+      let initialUpload = parseFloat((Math.random() * 10 + 5).toFixed(2));
 
       const interval = setInterval(() => {
         timeElapsed += 100;
         if (timeElapsed <= 500) {
           setUploadSpeed(10 * (timeElapsed / 500));
         } else if (timeElapsed > 500 && timeElapsed <= 5500) {
-          // Ensure subsequent values are within ±2 of the initial value
           let randomDifference = (Math.random() * 4 - 2).toFixed(2);
           setUploadSpeed(
             parseFloat(
@@ -384,10 +418,10 @@ const SpeedTest = () => {
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "center", // Centers children horizontally
-                    alignItems: "center", // Centers children vertically
-                    position: "relative", // Set to relative to allow absolute positioning of children
-
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                    animation: `${fadeIn} 1s ease-in-out`,
                     [theme.breakpoints.between("xs", "sm")]: {
                       width: "100%",
                     },
@@ -423,7 +457,9 @@ const SpeedTest = () => {
                       progress={0.3}
                       prog={0.3}
                       mbps={
-                        testStage === "download"
+                        testStage === "init"
+                          ? speedData.downloadSpeed
+                          : testStage === "download"
                           ? speedData.downloadSpeed
                           : uploadSpeed
                       }
