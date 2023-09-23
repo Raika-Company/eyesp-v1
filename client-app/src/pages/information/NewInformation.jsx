@@ -71,103 +71,100 @@ const NewInformation = () => {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <Container sx={{ height: "calc(100dvh - 2.5rem)" }}>
-      <NewLogo />
+    <Box
+      my="1rem"
+      overflow="hidden"
+      sx={{
+        height: "auto",
+        padding: isSmScreen ? "0.7rem" : "3rem",
+        borderRadius: "1.2rem",
+        border: "1.468px solid rgba(0, 0, 0, 0.10)",
+        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+        backgroundColor: bgColor,
+      }}
+    >
       <Box
-        my="1rem"
-        overflow="hidden"
         sx={{
-          height: "auto",
-          padding: isSmScreen ? "0.7rem" : "3rem",
-          borderRadius: "1.2rem",
-          border: "1.468px solid rgba(0, 0, 0, 0.10)",
-          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-          backgroundColor: bgColor,
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          component="h2"
+          gutterBottom
+          sx={{
+            fontSize: isSmScreen ? "1.7rem" : "2rem",
+            pt: "1rem",
+          }}
+        >
+          مفاهیم
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: isSmScreen ? 160 : 200,
+              borderRadius: "25px",
+            }}
+          >
+            <InputBase
+              sx={{ mr: 1, flex: 1 }}
+              placeholder="جست و جو"
+              inputProps={{ "aria-label": "جست و جو" }}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+            <FilterListIcon />
+          </IconButton>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
+            overflowX: "hidden",
+            width: isLgScreen ? "100%" : "60%",
+            p: isSmScreen ? "0.5rem" : "1rem",
+            direction: "ltr",
           }}
+          className={isMdScreen ? "" : styles.ScrollBar}
         >
-          <Typography
-            component="h2"
-            gutterBottom
-            sx={{
-              fontSize: isSmScreen ? "1.7rem" : "2rem",
-              pt: "1rem",
-            }}
-          >
-            مفاهیم
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-            }}
-          >
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: isSmScreen ? 160 : 200,
-                borderRadius: "25px",
-              }}
-            >
-              <InputBase
-                sx={{ mr: 1, flex: 1 }}
-                placeholder="جست و جو"
-                inputProps={{ "aria-label": "جست و جو" }}
-              />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-            <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
-              <FilterListIcon />
-            </IconButton>
-          </Box>
+          {definitionsData.map((definition) => (
+            <DefinitionTerm title={definition.title} key={definition.title}>
+              {definition.definition}
+            </DefinitionTerm>
+          ))}
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              overflowX: "hidden",
-              width: isLgScreen ? "100%" : "60%",
-              p: isSmScreen ? "0.5rem" : "1rem",
-              direction: "ltr",
-            }}
-            className={isMdScreen ? "" : styles.ScrollBar}
-          >
-            {definitionsData.map((definition) => (
-              <DefinitionTerm title={definition.title} key={definition.title}>
-                {definition.definition}
-              </DefinitionTerm>
-            ))}
-          </Box>
-          <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
-            <img
-              src={informationLogo}
-              alt="information-logo"
-              style={{ opacity: "0.2" }}
-            />
-          </Box>
+        <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
+          <img
+            src={informationLogo}
+            alt="information-logo"
+            style={{ opacity: "0.2" }}
+          />
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 /**

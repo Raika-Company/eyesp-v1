@@ -168,11 +168,13 @@ const NewSpeedTest = () => {
             download: convertToPersianNumbers(speedData.downloadSpeed),
             testDuration: convertToPersianNumbers("00:16"),
             testType: "دقیق",
-            upload: convertToPersianNumbers(parseFloat(
-              (
-                initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
-              ).toFixed(2)
-            )),
+            upload: convertToPersianNumbers(
+              parseFloat(
+                (
+                  initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
+                ).toFixed(2)
+              )
+            ),
             server: "ایرانسل-تهران",
           };
 
@@ -359,7 +361,7 @@ const NewSpeedTest = () => {
     );
   };
   return (
-    <Container maxWidth="xl">
+    <>
       <Box
         sx={{
           height: "100dvh",
@@ -368,7 +370,6 @@ const NewSpeedTest = () => {
           alignItems: "flex-end",
         }}
       >
-        <NewLogo />
         <Box
           sx={{
             backgroundColor: "#ffffff",
@@ -655,7 +656,7 @@ const NewSpeedTest = () => {
         download={speedData.downloadSpeed}
         upload={uploadSpeed}
       />
-    </Container>
+    </>
   );
 };
 

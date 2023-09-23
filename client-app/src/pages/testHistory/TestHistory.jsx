@@ -12,7 +12,7 @@ import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
 import { Link } from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
-import Carousel from './Carousel';
+import Carousel from "./Carousel";
 
 const TEST_RESULTS = "testResults";
 
@@ -44,7 +44,6 @@ const categorizeTests = (tests) => {
   return categories;
 };
 
-
 const CategorySection = ({ title, category }) => {
   if (!category || category.length === 0) return null;
 
@@ -54,9 +53,10 @@ const CategorySection = ({ title, category }) => {
         {title}
       </Typography>
       <Carousel itemsToShow={4} itemsToShowSm={1}>
-        {category && category.map((result, index) => (
-          <HistoryCard key={index} {...result} />
-        ))}
+        {category &&
+          category.map((result, index) => (
+            <HistoryCard key={index} {...result} />
+          ))}
       </Carousel>
     </>
   );
@@ -98,75 +98,72 @@ const NewTestHistory = () => {
   );
 
   return (
-    <Container maxWidth="xl">
-      <NewLogo />
+    <Box
+      borderRadius="2rem"
+      marginTop="1rem"
+      marginBottom="4rem"
+      paddingX={cardContainerPaddingX}
+      paddingY={cardContainerPaddingY}
+      backgroundColor="#F7FAFD"
+      overflowY="auto"
+      overflowX="hidden"
+    >
       <Box
-        borderRadius="2rem"
-        marginTop="1rem"
-        marginBottom="4rem"
-        paddingX={cardContainerPaddingX}
-        paddingY={cardContainerPaddingY}
-        backgroundColor="#F7FAFD"
-        overflowY="auto"
-        overflowX="hidden"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
+        <Typography
+          fontFamily="PeydaSemibold"
+          fontSize="1.5rem"
+          color="#2C2C2C"
+          gutterBottom
         >
-          <Typography
-            fontFamily="PeydaSemibold"
-            fontSize="1.5rem"
-            color="#2C2C2C"
-            gutterBottom
+          تست های گذشته
+        </Typography>
+        <Box display="flex" alignItems="center" gap="1.19rem">
+          <Button
+            component={Link}
+            to="/"
+            sx={{
+              borderRadius: "2rem",
+              backgroundColor: "#259FDA",
+              paddingX: "2.75rem",
+              color: "#ffffff",
+            }}
           >
-            تست های گذشته
-          </Typography>
-          <Box display="flex" alignItems="center" gap="1.19rem">
-            <Button
-              component={Link}
-              to="/"
-              sx={{
-                borderRadius: "2rem",
-                backgroundColor: "#259FDA",
-                paddingX: "2.75rem",
-                color: "#ffffff",
-              }}
-            >
-              انجام تست
-            </Button>
-            {isMD ? (
-              <>
-                <Typography fontFamily="PeydaRegular" fontSize="1rem">
-                  آدرس IP :
-                </Typography>
-                <Typography ontFamily="PeydaRegular" fontSize="1rem">
-                  192.168.0.129
-                </Typography>
-              </>
-            ) : (
-              <></>
-            )}
-          </Box>
+            انجام تست
+          </Button>
+          {isMD ? (
+            <>
+              <Typography fontFamily="PeydaRegular" fontSize="1rem">
+                آدرس IP :
+              </Typography>
+              <Typography ontFamily="PeydaRegular" fontSize="1rem">
+                192.168.0.129
+              </Typography>
+            </>
+          ) : (
+            <></>
+          )}
         </Box>
-        {isMD ? (
-          <></>
-        ) : (
-          <Typography
-            fontFamily="PeydaRegular"
-            fontSize="1rem"
-            marginTop="0.88rem"
-          >
-            آدرس IP: 192.168.0.129
-          </Typography>
-        )}
-        {sections.map((section, index) => (
-          <CategorySection key={index} {...section} />
-        ))}
       </Box>
-    </Container>
+      {isMD ? (
+        <></>
+      ) : (
+        <Typography
+          fontFamily="PeydaRegular"
+          fontSize="1rem"
+          marginTop="0.88rem"
+        >
+          آدرس IP: 192.168.0.129
+        </Typography>
+      )}
+      {sections.map((section, index) => (
+        <CategorySection key={index} {...section} />
+      ))}
+    </Box>
   );
 };
 
