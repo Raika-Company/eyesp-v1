@@ -234,7 +234,12 @@ const NewSpeedTest = () => {
               gap: "5px",
             }}
           >
-            <Button component={Link} to="/history" variant="text">
+            <Button
+              component={Link}
+              to="/history"
+              variant="text"
+              sx={{ color: "#259FDA" }}
+            >
               مشاهده جزوئیات
             </Button>
             <img src={leftArrow} alt="leftArrow" />

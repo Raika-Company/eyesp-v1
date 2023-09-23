@@ -15,14 +15,38 @@ import ViewDetailsButton from "../../app/common/ViewDetailsButton";
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
  */
 const RawISPData = [
-  {rank: "#1", ISPname: "زیتل", disturbance: "1", pings: "49", speed: "28" },
-  {rank: "#2", ISPname: "همراه اول", disturbance: "3", pings: "51", speed: "23" },
-  {rank: "#3", ISPname: "ایرانسل", disturbance: "3", pings: "52", speed: "21" },
-  {rank: "#4", ISPname: "رایتل", disturbance: "4", pings: "59", speed: "19" },
-  {rank: "#5", ISPname: "شاتل", disturbance: "6", pings: "61", speed: "18" },
-  {rank: "#6", ISPname: "مخابرات", disturbance: "8", pings: "61", speed: "16" },
-  {rank: "#7", ISPname: "آسیاتک", disturbance: "9", pings: "64", speed: "14" },
-  {rank: "#8", ISPname: "های وب", disturbance: "11", pings: "53", speed: "19" },
+  { rank: "#1", ISPname: "زیتل", disturbance: "1", pings: "49", speed: "28" },
+  {
+    rank: "#2",
+    ISPname: "همراه اول",
+    disturbance: "3",
+    pings: "51",
+    speed: "23",
+  },
+  {
+    rank: "#3",
+    ISPname: "ایرانسل",
+    disturbance: "3",
+    pings: "52",
+    speed: "21",
+  },
+  { rank: "#4", ISPname: "رایتل", disturbance: "4", pings: "59", speed: "19" },
+  { rank: "#5", ISPname: "شاتل", disturbance: "6", pings: "61", speed: "18" },
+  {
+    rank: "#6",
+    ISPname: "مخابرات",
+    disturbance: "8",
+    pings: "61",
+    speed: "16",
+  },
+  { rank: "#7", ISPname: "آسیاتک", disturbance: "9", pings: "64", speed: "14" },
+  {
+    rank: "#8",
+    ISPname: "های وب",
+    disturbance: "11",
+    pings: "53",
+    speed: "19",
+  },
 ];
 
 /**
