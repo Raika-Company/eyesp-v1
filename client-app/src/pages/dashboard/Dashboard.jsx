@@ -38,17 +38,19 @@ const Dashboard = () => {
    * Handles province selection and navigates to the specific province dashboard.
    * @param {Object} event - The event object
    */
-  const handleProvinceChange = useCallback(
-    (event) => {
-      const selectedProvince = event.target.value;
-      setProvince(selectedProvince);
-      navigate(`/dashboard/${selectedProvince}`, {
-        state: { provinceName: selectedProvince },
-      });
-    },
-    [navigate]
-  );
 
+  const handleProvinceChange = (event) => {
+    const selectedProvince = event.target.value;
+
+    setProvince(selectedProvince);
+
+    navigate(`/dashboard/${selectedProvince}`, {
+      state: {
+        provinceName: selectedProvince,
+        provinceQuality: Math.floor(Math.random() * 50) + 50,
+      },
+    });
+  };
   /**
    * Sets disturbance state to true.
    */
