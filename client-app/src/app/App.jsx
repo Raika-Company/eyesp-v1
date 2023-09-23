@@ -55,7 +55,16 @@ function App() {
                     />
                     <NewLogo />
                   </Box>
-                  <Box display="flex" gap={isMdUp ? mpCardContainers : openNav ? mpCardContainers : "0"}>
+                  <Box
+                    display="flex"
+                    gap={
+                      isMdUp
+                        ? mpCardContainers
+                        : openNav
+                        ? mpCardContainers
+                        : "0"
+                    }
+                  >
                     <Box>
                       <NavSection
                         startIndex={0}
