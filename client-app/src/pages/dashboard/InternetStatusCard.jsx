@@ -277,8 +277,11 @@ const InternetStatusCard = (props) => {
         <Box marginTop="2.875rem">
           <ContainedButton
             variant="contained"
-            sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
+            sx={{ fontSize: "1rem" }}
             onClick={handleClickOpenDialog}
+            bgColor="#FF8A35"
+            bgHover="white"
+            txtHover="#FF8A35"
           >
             گزارش اختلال
           </ContainedButton>

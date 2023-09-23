@@ -10,9 +10,10 @@ import {
 import NewLogo from "../../app/common/NewLogo";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import Carousel from "./Carousel";
+import { ContainedButton } from "../../app/common/ContainedButton";
 
 const TEST_RESULTS = "testResults";
 
@@ -63,6 +64,10 @@ const CategorySection = ({ title, category }) => {
 };
 
 const NewTestHistory = () => {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate("/");
+  };
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up("md"));
   const cardContainerPaddingX = useDynamicMP(390, 1440, 1.75, 4);
@@ -96,7 +101,6 @@ const NewTestHistory = () => {
     ],
     [testHistory]
   );
-
   return (
     <Box
       borderRadius="2rem"
@@ -123,7 +127,20 @@ const NewTestHistory = () => {
           تست های گذشته
         </Typography>
         <Box display="flex" alignItems="center" gap="1.19rem">
-          <Button
+          <ContainedButton
+            onClick={handleButtonClick}
+            variant="contained"
+            bgColor=" #259FDA"
+            bgHover="white"
+            txtHover=" #259FDA"
+            sx={{
+              fontSize: "1rem",
+            }}
+          >
+            {" "}
+            انجام تست
+          </ContainedButton>
+          {/* <Button
             component={Link}
             to="/"
             sx={{
@@ -134,7 +151,7 @@ const NewTestHistory = () => {
             }}
           >
             انجام تست
-          </Button>
+          </Button> */}
           {isMD ? (
             <>
               <Typography fontFamily="PeydaRegular" fontSize="1rem">

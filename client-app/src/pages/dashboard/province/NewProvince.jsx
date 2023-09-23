@@ -305,9 +305,8 @@ const NewProvince = () => {
           </Box>
           <Box marginTop="2.875rem">
             <ContainedButton
-              color="warning"
               variant="contained"
-              sx={{ fontSize: "1rem" }}
+              sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
               onClick={handleClickOpenDialog}
             >
               گزارش اختلال
