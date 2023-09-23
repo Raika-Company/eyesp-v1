@@ -42,23 +42,6 @@ const NewSpeedTest = () => {
     position: "relative",
     overflow: "visible",
     border: "none",
-
-    "@keyframes ringAnimation": {
-      "0%": {
-        transform: "scale(1)",
-        opacity: 0.6,
-      },
-      "100%": {
-        transform: "scale(1.3)",
-        opacity: 0,
-      },
-    },
-    "&:focus": {
-      outline: "none", // remove the default browser focus outline
-    },
-    "&:hover": {
-      border: "none", // you can add this if you don't want any border on hover
-    },
   }));
 
   const handleCloseDialog = () => {
@@ -356,141 +339,137 @@ const NewSpeedTest = () => {
             </Box>
           </Box>
 
-          <>
-            <Box
-              sx={{
-                height: "60%",
-                width: isMD ? "88%" : "73%",
-                display: "flex",
-                flexDirection: isMD ? "column" : "row",
-                gap: isMD ? "30px" : "1px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+          <Box
+            sx={{
+              height: "60%",
+              width: isMD ? "88%" : "73%",
+              display: "flex",
+              flexDirection: isMD ? "column" : "row",
+              gap: isMD ? "30px" : "1px",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <Box
-                sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography variant="h3">ادرس IP:</Typography>
-                  <Typography variant="h7">129.86.45.122</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography variant="h3">سرور:</Typography>
-                  <Typography variant="h7">ایرانسل-تهران</Typography>
-                </Box>
-              </Box>
-              <Box width="66%" display="flex" justifyContent="center">
-                {isGoButtonVisible ? (
-                  <AnimatedButton
-                    onClick={handleButtonClick}
-                    sx={{
-                      height: "clamp(10rem,10rem + 10vmin,16rem)",
-                      width: "clamp(10rem,10rem + 10vmin,16rem)",
-                      borderRadius: "50%",
-                      boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
-
-                      fontSize: "2rem",
-                      fontWeight: "400",
-                      lineHeight: "normal",
-                      fontStyle: "normal",
-                      color: "black",
-                    }}
-                    variant="outlined"
-                  >
-                    شروع
-                  </AnimatedButton>
-                ) : (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center", // Centers children horizontally
-                      alignItems: "center", // Centers children vertically
-                      position: "relative", // Set to relative to allow absolute positioning of children
-
-                      [theme.breakpoints.between("xs", "sm")]: {
-                        width: "100%",
-                      },
-                      [theme.breakpoints.up("md")]: {
-                        width: "80%",
-                      },
-                      height: "clamp(10rem,10rem + 10vmin,16rem)",
-                      width: "clamp(10rem,10rem + 10vmin,16rem)",
-                    }}
-                  >
-                    <img
-                      src={elipse}
-                      alt="speed-meter"
-                      style={{ maxWidth: "100%", height: "auto", zIndex: 1 }}
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        zIndex: 2,
-                      }}
-                    >
-                      <DrawMeter
-                        amount={0.2}
-                        bk={
-                          /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                            ? "#45628A"
-                            : "#1B70EE1C"
-                        }
-                        fg={"#1B70EE1C"}
-                        progress={0.3}
-                        prog={0.3}
-                        mbps={
-                          testStage === "download"
-                            ? speedData.downloadSpeed
-                            : uploadSpeed
-                        }
-                        isDl={true}
-                        theme="light"
-                      />
-                    </div>
-                  </Box>
-                )}
+                <Typography variant="h3">ادرس IP:</Typography>
+                <Typography variant="h7">129.86.45.122</Typography>
               </Box>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  gap: "12px",
+                  justifyContent: "space-between",
                 }}
-                className="btn-container"
               >
-                <label className="switch btn-color-mode-switch">
-                  <input
-                    type="checkbox"
-                    name="color_mode"
-                    id="color_mode"
-                    value="1"
-                  />
-                  <label
-                    htmlFor="color_mode"
-                    data-on="تست فوری"
-                    data-off="تست دقیق"
-                    className="btn-color-mode-switch-inner"
-                  ></label>
-                </label>
+                <Typography variant="h3">سرور:</Typography>
+                <Typography variant="h7">ایرانسل-تهران</Typography>
               </Box>
             </Box>
-            {isMD ? <MobileIP /> : <DesktopIP />}
-          </>
+            <Box width="66%" display="flex" justifyContent="center">
+              {isGoButtonVisible ? (
+                <AnimatedButton
+                  onClick={handleButtonClick}
+                  sx={{
+                    height: "clamp(10rem,10rem + 10vmin,16rem)",
+                    width: "clamp(10rem,10rem + 10vmin,16rem)",
+                    borderRadius: "50%",
+                    boxShadow: "inset  0px 0px 20px #9C9C9C", // Updated the color to #3686B4
+
+                    fontSize: "2rem",
+                    fontWeight: "400",
+                    lineHeight: "normal",
+                    fontStyle: "normal",
+                    color: "black",
+                  }}
+                  variant="outlined"
+                >
+                  شروع
+                </AnimatedButton>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center", // Centers children horizontally
+                    alignItems: "center", // Centers children vertically
+                    position: "relative", // Set to relative to allow absolute positioning of children
+
+                    [theme.breakpoints.between("xs", "sm")]: {
+                      width: "100%",
+                    },
+                    [theme.breakpoints.up("md")]: {
+                      width: "80%",
+                    },
+                    height: "clamp(10rem,10rem + 10vmin,16rem)",
+                    width: "clamp(10rem,10rem + 10vmin,16rem)",
+                  }}
+                >
+                  <img
+                    src={elipse}
+                    alt="speed-meter"
+                    style={{ maxWidth: "100%", height: "auto", zIndex: 1 }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 2,
+                    }}
+                  >
+                    <DrawMeter
+                      amount={0.2}
+                      bk={
+                        /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
+                          ? "#45628A"
+                          : "#1B70EE1C"
+                      }
+                      fg={"#1B70EE1C"}
+                      progress={0.3}
+                      prog={0.3}
+                      mbps={
+                        testStage === "download"
+                          ? speedData.downloadSpeed
+                          : uploadSpeed
+                      }
+                      isDl={true}
+                      theme="light"
+                    />
+                  </div>
+                </Box>
+              )}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "12px",
+              }}
+              className="btn-container"
+            >
+              <label className="switch btn-color-mode-switch">
+                <input
+                  type="checkbox"
+                  name="color_mode"
+                  id="color_mode"
+                  value="1"
+                />
+                <label
+                  htmlFor="color_mode"
+                  data-on="تست فوری"
+                  data-off="تست دقیق"
+                  className="btn-color-mode-switch-inner"
+                ></label>
+              </label>
+            </Box>
+          </Box>
+          {isMD ? <MobileIP /> : <DesktopIP />}
         </Box>
       </Box>
       <ShowResult
