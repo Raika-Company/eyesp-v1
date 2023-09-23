@@ -11,7 +11,7 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import "./NewOperatorPerformance.css"
+import "./OperatorPerformance.css"
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {
@@ -101,7 +101,7 @@ function generateRandomData() {
   }
   return data;
 }
-const NewOperatorPerformance = () => {
+const OperatorPerformance = () => {
   const theme = useTheme();
   const [formControlItems, setFormControlItems] = useState("");
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
@@ -233,4 +233,4 @@ const NewOperatorPerformance = () => {
   );
 };
 
-export default NewOperatorPerformance;
+export default OperatorPerformance;

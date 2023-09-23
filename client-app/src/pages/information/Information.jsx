@@ -1,6 +1,6 @@
 /**
  * Custom Information component for the application.
- * @module NewInformation
+ * @module Information
  * @description This component displays new information with definitions.
  */
 // React core and hooks
@@ -20,7 +20,7 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
-import styles from "./NewInformation.module.css";
+import styles from "./Information.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";
@@ -32,10 +32,10 @@ import SearchIcon from "@mui/icons-material/Search";
 
 /**
  * React component for displaying new information with definitions.
- * @function NewInformation
+ * @function Information
  * @returns {React.Element} The rendered React component.
  */
-const NewInformation = () => {
+const Information = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
@@ -231,4 +231,4 @@ const DefinitionTerm = ({ title, children }) => {
   );
 };
 
-export default NewInformation;
+export default Information;
