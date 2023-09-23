@@ -10,13 +10,13 @@ import {
 import NewLogo from "../../app/common/NewLogo";
 import clock from "../../app/assets/image/clock.svg";
 import { styled } from "@mui/material/styles";
-import "./NewSpeedTest.css";
+import "./SpeedTest.css";
 import iLogo from "../../app/assets/image/iLogo.svg";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import upload from "../../app/assets/image/uploadIcon.svg";
 import download from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
-import DrawMeter from "./NewDrawMeter";
+import DrawMeter from "./DrawMeter";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment-jalaali";
@@ -26,7 +26,7 @@ import elipse from "../../app/assets/image/elipse.svg";
 import { Link } from "react-router-dom";
 import ShowResult from "./ShowResult";
 
-const NewSpeedTest = () => {
+const SpeedTest = () => {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.down("md"));
   const isXS = useMediaQuery(theme.breakpoints.only("xs"));
@@ -660,4 +660,4 @@ const NewSpeedTest = () => {
   );
 };
 
-export default NewSpeedTest;
+export default SpeedTest;

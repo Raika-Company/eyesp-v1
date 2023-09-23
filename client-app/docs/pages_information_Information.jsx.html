@@ -1,6 +1,34 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/information/Information.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/information/Information.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Custom Information component for the application.
- * @module NewInformation
+ * @module Information
  * @description This component displays new information with definitions.
  */
 // React core and hooks
@@ -20,7 +48,7 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
-import styles from "./NewInformation.module.css";
+import styles from "./Information.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";
@@ -32,10 +60,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import NewLogo from "../../app/common/NewLogo";
 /**
  * React component for displaying new information with definitions.
- * @function NewInformation
+ * @function Information
  * @returns {React.Element} The rendered React component.
  */
-const NewInformation = () => {
+const Information = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
@@ -49,7 +77,7 @@ const NewInformation = () => {
    * Fetch definitions data from the server.
    * @async
    * @function
-   * @returns {Promise<void>} A promise that resolves when the data is fetched.
+   * @returns {Promise&lt;void>} A promise that resolves when the data is fetched.
    */
   useEffect(() => {
     const fetchData = async () => {
@@ -71,16 +99,16 @@ const NewInformation = () => {
 
   // Importing custom LoadingSpinner component for modular structure
   if (loading) {
-    return <LoadingSpinner />;
+    return &lt;LoadingSpinner />;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return &lt;div>Error: {error.message}&lt;/div>;
   }
 
   return (
-    <Container sx={{ height: "calc(100dvh - 2.5rem)", mb: "4rem" }}>
-      <NewLogo />
-      <Box
+    &lt;Container sx={{ height: "calc(100dvh - 2.5rem)", mb: "4rem" }}>
+      &lt;NewLogo />
+      &lt;Box
         my="1rem"
         overflow="hidden"
         sx={{
@@ -92,7 +120,7 @@ const NewInformation = () => {
           backgroundColor: bgColor,
         }}
       >
-        <Box
+        &lt;Box
           sx={{
             width: "100%",
             display: "flex",
@@ -101,7 +129,7 @@ const NewInformation = () => {
             alignItems: "center",
           }}
         >
-          <Typography
+          &lt;Typography
             component="h2"
             gutterBottom
             sx={{
@@ -111,15 +139,15 @@ const NewInformation = () => {
             }}
           >
             مفاهیم
-          </Typography>
-          <Box
+          &lt;/Typography>
+          &lt;Box
             sx={{
               display: "flex",
               justifyContent: "space-evenly",
               alignItems: "center",
             }}
           >
-            <Paper
+            &lt;Paper
               component="form"
               sx={{
                 p: "2px 4px",
@@ -129,23 +157,23 @@ const NewInformation = () => {
                 borderRadius: "25px",
               }}
             >
-              <InputBase
+              &lt;InputBase
                 sx={{ mr: 1, flex: 1 }}
                 placeholder="جست و جو"
                 inputProps={{ "aria-label": "جست و جو" }}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-            <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
-              <FilterListIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Box
+              &lt;IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                &lt;SearchIcon />
+              &lt;/IconButton>
+            &lt;/Paper>
+            &lt;IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+              &lt;FilterListIcon />
+            &lt;/IconButton>
+          &lt;/Box>
+        &lt;/Box>
+        &lt;Box
           sx={{
             display: "flex",
             flexWrap: "wrap",
@@ -153,7 +181,7 @@ const NewInformation = () => {
             alignItems: "center",
           }}
         >
-          <Box
+          &lt;Box
             sx={{
               // overflow: "hidden",
               overflowX: "hidden",
@@ -164,21 +192,21 @@ const NewInformation = () => {
             className={isMdScreen ? "" : styles.ScrollBar}
           >
             {filteredDefinitions.map((definition) => (
-              <DefinitionTerm title={definition.title} key={definition.title}>
+              &lt;DefinitionTerm title={definition.title} key={definition.title}>
                 {definition.definition}
-              </DefinitionTerm>
+              &lt;/DefinitionTerm>
             ))}
-          </Box>
-          <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
-            <img
+          &lt;/Box>
+          &lt;Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
+            &lt;img
               src={informationLogo}
               alt="information-logo"
               style={{ opacity: "0.2" }}
             />
-          </Box>
-        </Box>
-      </Box>
-    </Container>
+          &lt;/Box>
+        &lt;/Box>
+      &lt;/Box>
+    &lt;/Container>
   );
 };
 /**
@@ -193,7 +221,7 @@ const DefinitionTerm = ({ title, children }) => {
   const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
-    <Typography
+    &lt;Typography
       component="p"
       gutterBottom
       sx={{
@@ -211,14 +239,14 @@ const DefinitionTerm = ({ title, children }) => {
         boxShadow: isSmScreen ? "" : "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
         transition: "all 0.3s ease-in-out",
-        "&:hover": {
+        "&amp;:hover": {
           backgroundColor: "rgba(255, 255, 255, 1)",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
           transform: "scale(1.05)",
         },
       }}
     >
-      <Typography
+      &lt;Typography
         sx={{
           width: isSmScreen ? "100px" : "27%",
           mr: isSmScreen ? "0" : "1rem",
@@ -227,12 +255,34 @@ const DefinitionTerm = ({ title, children }) => {
         fontFamily="PeydaBold"
       >
         {title}
-      </Typography>
-      <Typography sx={{ width: isSmScreen ? "207px" : "100%" }}>
+      &lt;/Typography>
+      &lt;Typography sx={{ width: isSmScreen ? "207px" : "100%" }}>
         {children}
-      </Typography>
-    </Typography>
+      &lt;/Typography>
+    &lt;/Typography>
   );
 };
 
-export default NewInformation;
+export default Information;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Information.html">Information</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DisorderAccordion">DisorderAccordion</a></li><li><a href="global.html#DrawMeter">DrawMeter</a></li><li><a href="global.html#ISPCompareTable">ISPCompareTable</a></li><li><a href="global.html#ISPTable">ISPTable</a></li><li><a href="global.html#InformationBox">InformationBox</a></li><li><a href="global.html#InternetStatusCard">InternetStatusCard</a></li><li><a href="global.html#InternetStatusTitle">InternetStatusTitle</a></li><li><a href="global.html#NewResult">NewResult</a></li><li><a href="global.html#RawISPData">RawISPData</a></li><li><a href="global.html#RowBox">RowBox</a></li><li><a href="global.html#SpeedBox">SpeedBox</a></li><li><a href="global.html#baseTheme">baseTheme</a></li><li><a href="global.html#createRoute">createRoute</a></li><li><a href="global.html#createTypography">createTypography</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#disorders">disorders</a></li><li><a href="global.html#fadeInAnimation">fadeInAnimation</a></li><li><a href="global.html#gradients">gradients</a></li><li><a href="global.html#lazyLoad">lazyLoad</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#mainRoutes">mainRoutes</a></li><li><a href="global.html#parseNumber">parseNumber</a></li><li><a href="global.html#selectionItems">selectionItems</a></li><li><a href="global.html#useAdjustedBoxHeight">useAdjustedBoxHeight</a></li><li><a href="global.html#useDynamicMP">useDynamicMP</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 15:41:45 GMT+0400 (Gulf Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
