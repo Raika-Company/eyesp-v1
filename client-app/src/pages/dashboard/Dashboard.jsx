@@ -77,28 +77,25 @@ const Dashboard = () => {
 
   return (
     <>
-      <Container maxWidth="xl">
-        <NewLogo />
-        <InternetStatusCard
-          handleClickOpenDialog={handleClickOpenDialog}
-          handleDisturbanceClick={handleDisturbanceClick}
-          province={province}
-          handleProvinceChange={handleProvinceChange}
-          qualityPercentage={78}
-        />
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: isMdScreen ? "row" : "column-reverse",
-            marginTop: mpCardContainers,
-            gap: mpCardContainers,
-            marginBottom: "2rem",
-          }}
-        >
-          <ISPStatistics mpCardContainers={mpCardContainers} />
-          <ISPCompareTable mpCardContainers={mpCardContainers} />
-        </Box>
-      </Container>
+      <InternetStatusCard
+        handleClickOpenDialog={handleClickOpenDialog}
+        handleDisturbanceClick={handleDisturbanceClick}
+        province={province}
+        handleProvinceChange={handleProvinceChange}
+        qualityPercentage={78}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isMdScreen ? "row" : "column-reverse",
+          marginTop: mpCardContainers,
+          gap: mpCardContainers,
+          marginBottom: "2rem",
+        }}
+      >
+        <ISPStatistics mpCardContainers={mpCardContainers} />
+        <ISPCompareTable mpCardContainers={mpCardContainers} />
+      </Box>
       <CustomSnackbar
         open={disturbance}
         message="گزارش شما با موفقیت ارسال شد."

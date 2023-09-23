@@ -150,8 +150,7 @@ const NewOperatorPerformance = () => {
     setRendered(true);
   }, []);
   return (
-    <Container maxWidth="lg" sx={{ minHeight: "100dvh" }}>
-      <NewLogo />
+    <>
       <Box
         sx={{
           mt: "1rem",
@@ -230,7 +229,7 @@ const NewOperatorPerformance = () => {
           ))}
         </Grid>
       </Box>
-    </Container>
+    </>
   );
 };
 

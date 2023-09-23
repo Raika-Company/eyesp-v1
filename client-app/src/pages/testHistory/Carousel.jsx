@@ -1,10 +1,9 @@
-// Carousel.js
 import React, { useState } from 'react';
 import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const Carousel = ({ children, itemsToShow }) => {
+const Carousel = ({ children, itemsToShow, itemsToShowSm }) => {
   const [startIndex, setStartIndex] = useState(0);
 
   const handlePrev = () => {
