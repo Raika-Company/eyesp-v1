@@ -11,6 +11,7 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
+import "./NewOperatorPerformance.css"
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {
@@ -102,7 +103,7 @@ function generateRandomData() {
 }
 const NewOperatorPerformance = () => {
   const theme = useTheme();
-  const [formControlItems, setFormControlItems] = useState("ایرانسل");
+  const [formControlItems, setFormControlItems] = useState("");
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [currentChartData, setCurrentChartData] = useState({});
   const [randomChartData1, setRandomChartData1] = useState([]);
@@ -110,6 +111,7 @@ const NewOperatorPerformance = () => {
   const [randomChartData3, setRandomChartData3] = useState([]);
   const [randomChartData4, setRandomChartData4] = useState([]);
   const [rendered, setRendered] = useState(false);
+
   const handleChange = (event) => {
     setFormControlItems(event.target.value);
     const selectedISPData = ispData.find(
@@ -189,13 +191,10 @@ const NewOperatorPerformance = () => {
                   labelId={`demo-select-small-label-${index}`}
                   id={`demo-select-small-${index}`}
                   label={items}
-                  onChange={handleChange}
                   sx={{
                     borderRadius: "25px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    height: "38px",
                   }}
+                  onChange={handleChange}
                 >
                   <MenuItem disabled>
                     <span>{items}</span>

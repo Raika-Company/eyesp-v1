@@ -36,6 +36,7 @@ import NewLogo from "../../app/common/NewLogo";
  * @returns {React.Element} The rendered React component.
  */
 const NewInformation = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
   const [definitionsData, setDefinitionsData] = useState([]);
@@ -63,6 +64,11 @@ const NewInformation = () => {
     };
     fetchData();
   }, []);
+
+  const filteredDefinitions = definitionsData.filter((definition) =>
+    definition.title.includes(searchQuery)
+  );
+
   // Importing custom LoadingSpinner component for modular structure
   if (loading) {
     return <LoadingSpinner />;
@@ -70,8 +76,9 @@ const NewInformation = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
   return (
-    <Container sx={{ height: "calc(100dvh - 2.5rem)" }}>
+    <Container sx={{ height: "calc(100dvh - 2.5rem)", mb: "4rem" }}>
       <NewLogo />
       <Box
         my="1rem"
@@ -100,6 +107,7 @@ const NewInformation = () => {
             sx={{
               fontSize: isSmScreen ? "1.7rem" : "2rem",
               pt: "1rem",
+              fontWeight: 700,
             }}
           >
             مفاهیم
@@ -125,6 +133,8 @@ const NewInformation = () => {
                 sx={{ mr: 1, flex: 1 }}
                 placeholder="جست و جو"
                 inputProps={{ "aria-label": "جست و جو" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
                 <SearchIcon />
@@ -145,6 +155,7 @@ const NewInformation = () => {
         >
           <Box
             sx={{
+              // overflow: "hidden",
               overflowX: "hidden",
               width: isLgScreen ? "100%" : "60%",
               p: isSmScreen ? "0.5rem" : "1rem",
@@ -152,7 +163,7 @@ const NewInformation = () => {
             }}
             className={isMdScreen ? "" : styles.ScrollBar}
           >
-            {definitionsData.map((definition) => (
+            {filteredDefinitions.map((definition) => (
               <DefinitionTerm title={definition.title} key={definition.title}>
                 {definition.definition}
               </DefinitionTerm>
