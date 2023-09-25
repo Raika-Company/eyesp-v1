@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/speedtest/Result.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/speedtest/Result.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Result.js
+ * This file contains the `Result` component that displays the internet speed test results.
+ */
+
+// React core and hooks
+import { forwardRef, useState, useRef } from "react";
+
+// Third-party libraries or components
+// Import Material-UI components and styles
+import { useLocation, Link } from "react-router-dom";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  Slide,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { Snackbar, SnackbarContent } from "@mui/material";
+
+// Assets
+// Importing images used in the Result component
+import Download from "../../app/assets/image/download.svg";
+import Upload from "../../app/assets/image/upload.svg";
+import Ping from "../../app/assets/image/ping.svg";
+import Globe from "../../app/assets/image/globe.svg";
+import Person from "../../app/assets/image/person.svg";
+import FaceBook from "../../app/assets/image/imgLogoSocialM/Facebook.webp";
+import Twitter from "../../app/assets/image/imgLogoSocialM/twitter.webp";
+import Linkedin from "../../app/assets/image/imgLogoSocialM/linkedin.webp";
+import Telegram from "../../app/assets/image/imgLogoSocialM/Telegram.webp";
+import WhatsApp from "../../app/assets/image/imgLogoSocialM/WhatsApp.webp";
+import Eita from "../../app/assets/image/imgLogoSocialM/eita.webp";
+
+// Local components
+// Importing custom CustomAccordion component for modular structure
+import CustomAccordion from "../speedtest/CustomAccordion";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return &lt;Slide direction="up" ref={ref} {...props} />;
+});
+/**
+ * SpeedBox Component for displaying speed information.
+ *
+ * @param {object} props - Input properties.
+ * @param {string} props.title - Speed title.
+ * @param {string} props.iconSrc - Icon image path.
+ * @param {string} props.altText - Alternate text for the image.
+ * @param {number|null} props.value - Speed value.
+ * @param {string} props.measure - Speed unit.
+ * @param {number} props.opacity - Title opacity.
+ * @returns {JSX.Element}
+ */
+const SpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => (
+  &lt;Box>
+    &lt;Typography
+      variant="h4"
+      sx={{
+        color: "textColor.dark",
+        opacity: 0.3,
+        textAlign: "center",
+        pl: "1.3rem",
+      }}
+    >
+      {title}
+    &lt;/Typography>
+    &lt;Box display="flex" alignItems="center" sx={{ opacity: opacity }}>
+      &lt;Box
+        sx={{
+          display: "flex",
+          ml: "0.5rem",
+          pt: "0.5rem",
+        }}
+      >
+        &lt;Typography variant="h3" sx={{ color: "textColor.dark" }}>
+          {measure}
+        &lt;/Typography>
+
+        &lt;Typography variant="h3" sx={{ color: "textColor.dark" }}>
+          {value !== null ? value : "--"}
+        &lt;/Typography>
+      &lt;/Box>
+      &lt;img src={iconSrc} alt={altText} height="28px" />
+    &lt;/Box>
+  &lt;/Box>
+);
+/**
+ * InformationBox Component for displaying information.
+ *
+ * @param {object} props - Input properties.
+ * @param {string} props.title - Information title.
+ * @param {string} props.value - Information value.
+ * @param {string} props.iconSrc - Icon image path.
+ * @param {string} props.altText - Alternate text for the image.
+ * @param {string} [props.buttonLabel] - Optional button label.
+ * @returns {JSX.Element}
+ */
+const InformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => (
+  &lt;Box display="flex" alignItems="flex-end" flexDirection="row" gap={1}>
+    &lt;img src={iconSrc} alt={altText} height="60px" />
+    &lt;Box display="flex" flexDirection="column" textAlign="right">
+      &lt;Typography component="h6" variant="h6" color="textColor.dark">
+        {title}
+      &lt;/Typography>
+      &lt;Typography component="span" variant="body1" color="textColor.light">
+        {value}
+      &lt;/Typography>
+      {buttonLabel ? &lt;Button>{buttonLabel}&lt;/Button> : null}
+    &lt;/Box>
+  &lt;/Box>
+);
+/**
+ * Result Component
+ *
+ * This component displays the results of the internet speed test, including ping, download speed,
+ * and upload speed. It also provides options for sharing the results and copying the link.
+ *
+ * @returns {React.Element} Rendered Result component.
+ */
+
+const NewResult = () => {
+  //State and variable declarations here
+
+  /**
+   * Snackbar open state.
+   *
+   * State variable to manage the open state of the snackbar.
+   *
+   * @type {boolean}
+   */
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  /**
+   * ShareDialog data.
+   *
+   * An array of social media platforms for sharing the results.
+   *
+   * @type {object[]}
+   * @property {string} name - The name of the social media platform.
+   * @property {string} avatar - The URL of the platform's avatar.
+   */
+  const ShareDialog = [
+    {
+      name: "فیسبوک",
+      avatar: FaceBook,
+    },
+    {
+      name: "توییتر",
+      avatar: Twitter,
+    },
+    {
+      name: "تلگرام",
+      avatar: Telegram,
+    },
+    {
+      name: "واتساپ",
+      avatar: WhatsApp,
+    },
+    {
+      name: "لینکدین",
+      avatar: Linkedin,
+    },
+    {
+      name: "ایتا",
+      avatar: Eita,
+    },
+  ];
+
+  /**
+   * Location data.
+   *
+   * The location object from the React Router.
+   *
+   * @type {object}
+   */
+  const location = useLocation();
+
+  /**
+   * Text reference.
+   *
+   * A reference to the text element used for copying the link.
+   *
+   * @type {object}
+   */
+  const textRef = useRef(null);
+
+  /**
+   * Query parameters.
+   *
+   * Parsed query parameters from the URL.
+   *
+   * @type {object}
+   */
+  const queryParams = new URLSearchParams(location.search);
+
+  /**
+   * Ping value.
+   *
+   * The ping value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
+  const ping = queryParams.get("ping");
+
+  /**
+   * Download value.
+   *
+   * The download speed value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
+  const download = queryParams.get("download");
+
+  /**
+   * Upload value.
+   *
+   * The upload speed value obtained from query parameters.
+   *
+   * @type {string | null}
+   */
+  const upload = queryParams.get("upload");
+
+  /**
+   * Expanded state.
+   *
+   * State variable to manage the expanded state of a component.
+   *
+   * @type {boolean}
+   */
+  const [expanded, setExpanded] = useState(false);
+
+  /**
+   * Dialog open state.
+   *
+   * State variable to manage the open state of a dialog.
+   *
+   * @type {boolean}
+   */
+  const [open, setOpen] = useState(false);
+
+  /**
+   * Handle opening the dialog.
+   *
+   * Function to open the sharing dialog.
+   */
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  /**
+   * Handle closing the dialog.
+   *
+   * Function to close the sharing dialog.
+   */
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  /**
+   * Handle copying the link.
+   *
+   * Function to copy the result link to the clipboard.
+   */
+  const handleCopyLink = () => {
+    if (textRef.current) {
+      navigator.clipboard.writeText(textRef.current.innerText).then(() => {
+        setSnackbarOpen(true);
+      });
+    }
+  };
+
+  /**
+   * Theme.
+   *
+   * Material-UI theme object.
+   *
+   * @type {object}
+   */
+  const theme = useTheme();
+
+  return (
+    &lt;Container maxWidth="xl" sx={{height: "100dvh"}}>
+      &lt;Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        padding="2rem"
+        width="60%"
+        marginTop="18dvh"
+        marginX="auto"
+        alignItems="center"
+        textAlign="center"
+        gap={10}
+        sx={{
+          borderRadius: "1.2rem",
+          border: "1.468px solid rgba(0, 0, 0, 0.10)",
+          background: "transparent",
+          display: { xs: "none", md: "flex" },
+        }} //Main content section
+      >
+        &lt;Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-evenly"
+          width="100%"
+        >
+          &lt;SpeedBox
+            title="پینگ"
+            iconSrc={Ping}
+            altText="ping icon"
+            value={ping}
+            measure="ms"
+            opacity={1}
+            //Display ping, download, and upload speeds
+          />
+          &lt;SpeedBox
+            title="سرعت آپلود"
+            iconSrc={Upload}
+            altText="ping icon"
+            value={upload}
+            measure="Mbps"
+            opacity={1}
+          />
+          &lt;SpeedBox
+            title="سرعت دانلود"
+            iconSrc={Download}
+            altText="ping icon"
+            value={download}
+            measure="Mbps"
+            opacity={1}
+          />
+        &lt;/Box>
+        &lt;Box
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          gap={10}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          &lt;InformationBox
+            title="سرور مقصد"
+            value="تهران - امام"
+            iconSrc={Globe}
+            altText="Globe Icon"
+          />
+          &lt;InformationBox
+            title="همراه اول"
+            value="51.15.57.153"
+            iconSrc={Person}
+            altText="Person Icon"
+          />
+        &lt;/Box>
+      &lt;/Box>
+      &lt;Box
+        gap={4}
+        display="flex"
+        justifyContent="space-evenly"
+        width="55%"
+        marginTop="5dvh"
+        marginX="auto"
+        alignItems="center"
+        textAlign="center"
+        sx={{
+          background: "transparent",
+          display: { xs: "none", md: "flex" },
+        }}
+      >
+        &lt;Button
+          component={Link}
+          to="/new"
+          variant="outlined"
+          sx={{
+            backgroundColor: "primary.main",
+            color: "white",
+            fontSize: "1.8rem",
+            borderRadius: "1.3rem",
+            border: 0,
+            width: "26rem",
+            p: "0.7rem",
+            textAlign: "center",
+            ":hover": {
+              bgcolor: "primary.light",
+              color: "white",
+              border: "none",
+            },
+          }}
+          //Share and retry buttons
+        >
+          تست مجدد
+        &lt;/Button>
+        &lt;Button
+          onClick={handleClickOpen}
+          variant="outlined"
+          sx={{
+            backgroundColor: "secondary.main",
+            color: "white",
+            fontSize: "1.8rem",
+            borderRadius: "1.3rem",
+            border: 0,
+            width: "19rem",
+            p: "0.7rem",
+            ":hover": {
+              bgcolor: "warning.main",
+              color: "white",
+              border: "none",
+            },
+          }}
+        >
+          اشتراک گذاری
+        &lt;/Button>
+      &lt;/Box>
+      &lt;Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        padding="1rem"
+        width="88%"
+        height="38.5dvh"
+        marginTop="5dvh"
+        marginX="auto"
+        alignItems="center"
+        textAlign="center"
+        sx={{
+          borderRadius: "1.2rem",
+          border: "1.468px solid rgba(0, 0, 0, 0.10)",
+          background: "transparent",
+          display: { xs: "flex", md: "none" },
+        }}
+      >
+        &lt;SpeedBox
+          title="پینگ"
+          iconSrc={Ping}
+          altText="ping icon"
+          value={ping}
+          measure="ms"
+          opacity={1}
+        />
+        &lt;SpeedBox
+          title="سرعت آپلود"
+          iconSrc={Upload}
+          altText="ping icon"
+          value={upload}
+          measure="Mbps"
+          opacity={1}
+        />
+        &lt;SpeedBox
+          title="سرعت دانلود"
+          iconSrc={Download}
+          altText="ping icon"
+          value={download}
+          measure="Mbps"
+          opacity={1}
+        />
+      &lt;/Box>
+      &lt;Box
+        display="flex"
+        flexDirection="column"
+        gap={2}
+        justifyContent="space-evenly"
+        width="70%"
+        marginTop="2dvh"
+        marginX="auto"
+        alignItems="center"
+        textAlign="center"
+        sx={{
+          background: "transparent",
+          display: { xs: "flex", md: "none" },
+        }}
+      >
+        &lt;Button
+          component={Link}
+          to="/new"
+          variant="outlined"
+          sx={{
+            backgroundColor: "#126AED",
+            color: "white",
+            fontSize: "1.8rem",
+            borderRadius: "1.625rem",
+            border: 0,
+            p: "1rem",
+            width: "95%",
+            ":hover": {
+              bgcolor: "primary.light",
+              color: "white",
+              border: "none",
+            },
+          }}
+        >
+          تست مجدد
+        &lt;/Button>
+        &lt;Button
+          onClick={handleClickOpen}
+          variant="outlined"
+          sx={{
+            backgroundColor: "#DB7F12",
+            color: "white",
+            fontSize: "1.8rem",
+            borderRadius: "1.625rem",
+            border: 0,
+            p: "1rem",
+            width: "95%",
+            ":hover": {
+              bgcolor: "warning.main",
+              color: "white",
+              border: "none",
+            },
+          }}
+        >
+          اشتراک گذاری
+        &lt;/Button>
+      &lt;/Box>
+      &lt;CustomAccordion
+        expanded={expanded}
+        setExpanded={setExpanded}
+        Person={Person}
+        Globe={Globe}
+        //Custom accordion for small screens
+      />
+      &lt;Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        &lt;List
+          sx={{
+            display: "flex",
+            fontSize: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "auto",
+          }}
+          //List of social media options for share link
+        >
+          {ShareDialog.map((item, index) => (
+            &lt;ListItem key={index}>
+              &lt;ListItemButton
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "50px",
+                }}
+              >
+                &lt;ListItemAvatar
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  &lt;img
+                    src={item.avatar}
+                    alt="LogoSocialMedia"
+                    height="45px"
+                    width="45px"
+                    style={{
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                &lt;/ListItemAvatar>
+                &lt;DialogContentText
+                  sx={{ fontSize: theme.typography.h6, pt: "0.4rem" }}
+                >
+                  {item.name}
+                &lt;/DialogContentText>
+              &lt;/ListItemButton>
+            &lt;/ListItem>
+          ))}
+        &lt;/List>
+        &lt;DialogContent
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0.5em",
+            gap: 1,
+          }}
+        >
+          &lt;Button variant="contained" color="success" onClick={handleCopyLink}>
+            کپی
+          &lt;/Button>
+          &lt;Card sx={{ height: "50px", display: "flex", alignItems: "center" }}>
+            &lt;DialogContentText
+              sx={{
+                fontSize: theme.typography.h6,
+                color: "textColor.main",
+                whiteSpace: "nowrap",
+                overflow: "auto",
+              }}
+              id="alert-dialog-slide-description"
+              ref={textRef}
+              //Speed Test sharing link0660
+            >
+              {`https://eyesp.live/result?ping=${ping}&amp;download=${download}&amp;upload=${upload}`}
+            &lt;/DialogContentText>
+          &lt;/Card>
+        &lt;/DialogContent>
+      &lt;/Dialog>
+      &lt;Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        &lt;Alert severity="success" sx={{ width: "100%" }}>
+          لینک شما با موفقیت کپی شد.
+        &lt;/Alert>
+      &lt;/Snackbar>
+    &lt;/Container>
+  );
+};
+export default NewResult;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Information.html">Information</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DisorderAccordion">DisorderAccordion</a></li><li><a href="global.html#DrawMeter">DrawMeter</a></li><li><a href="global.html#ISPCompareTable">ISPCompareTable</a></li><li><a href="global.html#ISPTable">ISPTable</a></li><li><a href="global.html#InformationBox">InformationBox</a></li><li><a href="global.html#InternetStatusCard">InternetStatusCard</a></li><li><a href="global.html#InternetStatusTitle">InternetStatusTitle</a></li><li><a href="global.html#NewResult">NewResult</a></li><li><a href="global.html#RawISPData">RawISPData</a></li><li><a href="global.html#RowBox">RowBox</a></li><li><a href="global.html#SpeedBox">SpeedBox</a></li><li><a href="global.html#baseTheme">baseTheme</a></li><li><a href="global.html#createRoute">createRoute</a></li><li><a href="global.html#createTypography">createTypography</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#disorders">disorders</a></li><li><a href="global.html#fadeInAnimation">fadeInAnimation</a></li><li><a href="global.html#gradients">gradients</a></li><li><a href="global.html#lazyLoad">lazyLoad</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#mainRoutes">mainRoutes</a></li><li><a href="global.html#parseNumber">parseNumber</a></li><li><a href="global.html#selectionItems">selectionItems</a></li><li><a href="global.html#useAdjustedBoxHeight">useAdjustedBoxHeight</a></li><li><a href="global.html#useDynamicMP">useDynamicMP</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 15:41:45 GMT+0400 (Gulf Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,3 +1,7 @@
+/**
+ * @file Represents the main entry point of the application.
+ */
+
 import { useState, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
@@ -11,6 +15,11 @@ import NewLogo from "./common/NewLogo";
 import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
 
+/**
+ * Main App component rendering the layout and routing structure.
+ *
+ * @returns {JSX.Element} The rendered JSX element.
+ */
 function App() {
   const [openNav, setOpenNav] = useState(false);
 

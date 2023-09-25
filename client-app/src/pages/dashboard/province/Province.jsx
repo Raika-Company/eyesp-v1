@@ -22,12 +22,12 @@ import WestIcon from "@mui/icons-material/West";
 
 // Local component and utility imports
 import { ContainedButton } from "../../../app/common/ContainedButton";
-import NewIranMap from "./../map/NewIranMap";
+import NewIranMap from "../map/NewIranMap";
 import NewLogo from "../../../app/common/NewLogo";
 
 // Assets and data imports
 import frame from "../../../app/assets/image/Frame.svg";
-import provinces from "./../../../../public/data/provinces.json";
+import provinces from "../../../../public/data/provinces.json";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SendReport from "../../../app/common/SendReport";
 import CustomSnackbar from "../../../app/common/CustomeSnackbar";
@@ -57,7 +57,7 @@ const disorders = [
 const radialBackground =
   "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
 
-const NewProvince = () => {
+const Province = () => {
   const navigate = useNavigate();
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
@@ -394,4 +394,4 @@ const NewProvince = () => {
   );
 };
 
-export default NewProvince;
+export default Province;

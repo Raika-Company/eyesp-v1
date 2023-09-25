@@ -1,6 +1,6 @@
 /**
  * Custom Information component for the application.
- * @module NewInformation
+ * @module Information
  * @description This component displays new information with definitions.
  */
 // React core and hooks
@@ -20,7 +20,7 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
-import styles from "./NewInformation.module.css";
+import styles from "./Information.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";
@@ -29,13 +29,13 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import NewLogo from "../../app/common/NewLogo";
+
 /**
  * React component for displaying new information with definitions.
- * @function NewInformation
+ * @function Information
  * @returns {React.Element} The rendered React component.
  */
-const NewInformation = () => {
+const Information = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
   const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
@@ -78,107 +78,103 @@ const NewInformation = () => {
   }
 
   return (
-    <Container sx={{ height: "calc(100dvh - 2.5rem)", mb: "4rem" }}>
-      <NewLogo />
+    <Box
+      my="1rem"
+      overflow="hidden"
+      sx={{
+        height: "auto",
+        padding: isSmScreen ? "0.7rem" : "3rem",
+        borderRadius: "1.2rem",
+        border: "1.468px solid rgba(0, 0, 0, 0.10)",
+        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+        backgroundColor: bgColor,
+      }}
+    >
       <Box
-        my="1rem"
-        overflow="hidden"
         sx={{
-          height: "auto",
-          padding: isSmScreen ? "0.7rem" : "3rem",
-          borderRadius: "1.2rem",
-          border: "1.468px solid rgba(0, 0, 0, 0.10)",
-          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-          backgroundColor: bgColor,
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          component="h2"
+          gutterBottom
+          sx={{
+            fontSize: isSmScreen ? "1.7rem" : "2rem",
+            pt: "1rem",
+            fontWeight: 700,
+          }}
+        >
+          مفاهیم
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: isSmScreen ? 160 : 200,
+              borderRadius: "25px",
+            }}
+          >
+            <InputBase
+              sx={{ mr: 1, flex: 1 }}
+              placeholder="جست و جو"
+              inputProps={{ "aria-label": "جست و جو" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+            <FilterListIcon />
+          </IconButton>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
+            overflowX: "hidden",
+            width: isLgScreen ? "100%" : "60%",
+            p: isSmScreen ? "0.5rem" : "1rem",
+            direction: "ltr",
           }}
+          className={isMdScreen ? "" : styles.ScrollBar}
         >
-          <Typography
-            component="h2"
-            gutterBottom
-            sx={{
-              fontSize: isSmScreen ? "1.7rem" : "2rem",
-              pt: "1rem",
-              fontWeight: 700,
-            }}
-          >
-            مفاهیم
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-            }}
-          >
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: isSmScreen ? 160 : 200,
-                borderRadius: "25px",
-              }}
-            >
-              <InputBase
-                sx={{ mr: 1, flex: 1 }}
-                placeholder="جست و جو"
-                inputProps={{ "aria-label": "جست و جو" }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-            <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
-              <FilterListIcon />
-            </IconButton>
-          </Box>
+          {filteredDefinitions.map((definition) => (
+            <DefinitionTerm title={definition.title} key={definition.title}>
+              {definition.definition}
+            </DefinitionTerm>
+          ))}
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              // overflow: "hidden",
-              overflowX: "hidden",
-              width: isLgScreen ? "100%" : "60%",
-              p: isSmScreen ? "0.5rem" : "1rem",
-              direction: "ltr",
-            }}
-            className={isMdScreen ? "" : styles.ScrollBar}
-          >
-            {filteredDefinitions.map((definition) => (
-              <DefinitionTerm title={definition.title} key={definition.title}>
-                {definition.definition}
-              </DefinitionTerm>
-            ))}
-          </Box>
-          <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
-            <img
-              src={informationLogo}
-              alt="information-logo"
-              style={{ opacity: "0.2" }}
-            />
-          </Box>
+        <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
+          <img
+            src={informationLogo}
+            alt="information-logo"
+            style={{ opacity: "0.2" }}
+          />
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 /**
@@ -235,4 +231,4 @@ const DefinitionTerm = ({ title, children }) => {
   );
 };
 
-export default NewInformation;
+export default Information;
