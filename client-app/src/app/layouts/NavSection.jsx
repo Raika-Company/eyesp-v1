@@ -141,7 +141,7 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
 
   const { key } = useLocation()
   useEffect(() => {
-    setOpenNav(false)
+    !isMdUp && setOpenNav(false)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
