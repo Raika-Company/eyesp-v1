@@ -134,7 +134,6 @@ const SpeedTest = () => {
 
   const handleStart = () => {
     if (window.speedtest.getState() === STATUS_MAP.RUNNING) {
-      // 正在测速中
     } else {
       window.speedtest.onupdate = (data) => {
         const {
