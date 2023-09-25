@@ -9,8 +9,8 @@ const Dashboard = lazy(() =>
 const Information = lazy(() =>
   import("../../pages/information/Information")
 );
-const OperatorPerformance = lazy(() =>
-  import("../../pages/ispPerformance/OperatorPerformance")
+const OperatorCompare = lazy(() =>
+  import("../../pages/ispCompare/OperatorCompare")
 );
 
 const TestHistory = lazy(() =>

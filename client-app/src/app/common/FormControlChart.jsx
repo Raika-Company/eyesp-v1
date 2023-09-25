@@ -16,7 +16,9 @@ import data from "../../../public/data/myISPChartData.json";
 const FormControlChart = () => {
   const [age, setAge] = useState("1400");
   const [chartData, setChartData] = useState(data[0].data);
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const handleChange = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
@@ -33,11 +35,18 @@ const FormControlChart = () => {
   ];
 
   return (
-    <Box sx={{ display: isSmScreen ? "flex" : "none", flexWrap: "wrap" }}>
+    <Box
+      sx={{
+        display: isMdScreen ? "flex" : "none",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems:"center"
+      }}
+    >
       <Typography
         sx={{
-          fontSize: isSmScreen ? "1.4rem" : "1.5rem",
-          mt: isSmScreen ? "0.4rem" : "",
+          fontSize: isMdScreen ? "1.4rem" : "1.5rem",
+          mt: isMdScreen ? "0.9rem" : "",
         }}
         fontFamily="PeydaSemibold"
         color="#2C2C2C"

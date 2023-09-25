@@ -18,7 +18,8 @@ const UserSatisfaction = () => {
   const radialBackground =
     "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
   const [starsValue, setStarsValue] = useState(0);
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [openFeedBackDialog, setOpenFeedBackDialog] = useState(false);
 
   const handleClickOpenFeedbackDialog = () => {
@@ -39,7 +40,7 @@ const UserSatisfaction = () => {
         paddingX="5%"
         sx={{
           background: radialBackground,
-          flexBasis: isSmScreen ? "" : "49.5%",
+          flexBasis: isMdScreen ? "100%" : "49.5%",
           boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
         }}
       >
@@ -92,7 +93,14 @@ const UserSatisfaction = () => {
           </Box>
           <ContainedButton
             onClick={handleClickOpenFeedbackDialog}
-            sx={{ backgroundColor: "#008EDD" }}
+            sx={{
+              backgroundColor: "#008EDD",
+              color: "white",
+              "&:hover": {
+                // backgroundColor: ,
+                color: "#008EDD",
+              },
+            }}
           >
             ثبت بازخورد
           </ContainedButton>

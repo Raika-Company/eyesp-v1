@@ -10,7 +10,6 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import "./OperatorPerformance.css";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {

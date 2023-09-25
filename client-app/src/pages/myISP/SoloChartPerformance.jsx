@@ -19,7 +19,6 @@ import yAxis from "../../app/assets/image/yAxisEmpty.svg";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
-import "../ispPerformance/OperatorPerformance.css";
 import FormControlChart from "../../app/common/FormControlChart";
 
 const SoloChartPerformance = () => {
@@ -30,6 +29,8 @@ const SoloChartPerformance = () => {
     { label: "درصد عملکرد", width: "80%" },
   ];
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const [age, setAge] = useState("1400");
   const [rendered, setRendered] = useState(false);
   const [chartData, setChartData] = useState(data[0].data);
@@ -113,14 +114,14 @@ const SoloChartPerformance = () => {
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
-        pt: isSmScreen ? "1.3rem" : "3.5rem",
+        pt: isMdScreen ? "1.3rem" : "3.5rem",
       }}
     >
       <Typography
         sx={{
-          fontSize: isSmScreen ? "1.4rem" : "1.5rem",
-          mt: isSmScreen ? "0.4rem" : "",
-          display: isSmScreen ? "none" : "flex",
+          fontSize: isMdScreen ? "1.4rem" : "1.5rem",
+          mt: isMdScreen ? "0.4rem" : "",
+          display: isMdScreen ? "none" : "flex",
         }}
         fontFamily="PeydaSemibold"
         color="#2C2C2C"
@@ -131,63 +132,6 @@ const SoloChartPerformance = () => {
 
       <FormControlChart />
 
-      {/* <Box sx={{ display: isSmScreen ? "flex" : "none", flexWrap: "wrap" }}>
-        <Typography
-          sx={{
-            fontSize: isSmScreen ? "1.4rem" : "1.5rem",
-            mt: isSmScreen ? "0.4rem" : "",
-          }}
-          fontFamily="PeydaSemibold"
-          color="#2C2C2C"
-          gutterBottom
-        >
-          نمودار عملکرد اپراتور
-        </Typography>
-        <Button
-          sx={{ color: "#008EDD", fontSize: "1rem" }}
-          variant="text"
-          component={Link}
-          to="/operator-performance"
-        >
-          سایر اپراتورها
-          <img
-            style={{ marginRight: "0.4rem" }}
-            src={leftArrow}
-            alt="leftArrow"
-          />
-        </Button>
-        <Box sx={{ display: "flex", pt: "0.5rem" }}>
-          {FormControlItems.map((items, index) => (
-            <FormControl
-              sx={{
-                m: "0.4rem",
-                width: 150,
-                borderRadius: "25px",
-              }}
-              size="small"
-            >
-              <InputLabel id={`demo-select-small-label-${index}`}>
-                {items}
-              </InputLabel>
-              <Select
-                labelId={`demo-select-small-label-${index}`}
-                id={`demo-select-small-${index}`}
-                label={items}
-                sx={{
-                  borderRadius: "25px",
-                }}
-                onChange={handleChange}
-              >
-                {dataChart[index].map((menuItem, menuItemIndex) => (
-                  <MenuItem key={menuItemIndex} value={menuItem}>
-                    {menuItem}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ))}
-        </Box>
-      </Box> */}
       <Grid container sx={{ p: "1rem" }}>
         <Grid item xs={12} md={9}>
           <Box display="flex">
@@ -246,7 +190,7 @@ const SoloChartPerformance = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid sx={{ display: isSmScreen ? "none" : "" }} item xs={12} md={3}>
+        <Grid sx={{ display: isMdScreen ? "none" : "" }} item xs={12} md={3}>
           <Box
             display={"flex"}
             flexDirection={"column"}
