@@ -2,8 +2,8 @@
  * @file Represents the main entry point of the application.
  */
 
-import { useState, Suspense } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, Container, CssBaseline, useMediaQuery } from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
@@ -47,6 +47,7 @@ function App() {
   const currentThemeMode = theme === lightTheme ? "light" : "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -79,13 +80,13 @@ function App() {
                         startIndex={0}
                         endIndex={2}
                         openNav={openNav}
-                        toggleOpenMenu={toggleOpenMenu}
+                        setOpenNav={setOpenNav}
                       />
                       <NavSection
                         startIndex={2}
                         endIndex={undefined}
                         openNav={openNav}
-                        toggleOpenMenu={toggleOpenMenu}
+                        setOpenNav={setOpenNav}
                       />
                     </Box>
                     <Box flex={1}>

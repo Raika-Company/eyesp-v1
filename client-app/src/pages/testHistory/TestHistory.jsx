@@ -75,6 +75,7 @@ const NewTestHistory = () => {
     older: [],
   });
 
+
   const updateTestHistory = useCallback(() => {
     const existingResults = JSON.parse(
       localStorage.getItem(TEST_RESULTS) || "[]"

@@ -1,5 +1,5 @@
 // NavSection.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/system";
 import {
   IconButton,
@@ -81,7 +81,7 @@ const NAV_ITEMS = [
 const iconColor = (path, location) =>
   location.pathname === path ? "#00A3FF" : "inherit";
 
-const NavItem = ({ item, openNav, toggleOpenMenu, toggleNavState, location }) => {
+const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -100,7 +100,7 @@ const NavItem = ({ item, openNav, toggleOpenMenu, toggleNavState, location }) =>
       transition: 'all .2s linear'
     }}
     onClick={() => {
-      if (isMdDown) toggleOpenMenu()
+      if (isMdDown) setOpenNav(openNav => !openNav)
       toggleNavState(item.path)
     }}
   >
@@ -129,7 +129,7 @@ const NavItem = ({ item, openNav, toggleOpenMenu, toggleNavState, location }) =>
   </Box>)
 };
 
-const NavSection = ({ startIndex, toggleOpenMenu, endIndex, openNav }) => {
+const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
   const history = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -138,6 +138,13 @@ const NavSection = ({ startIndex, toggleOpenMenu, endIndex, openNav }) => {
   const toggleNavState = (path) => {
     history(path);
   };
+
+  const { key } = useLocation()
+  useEffect(() => {
+    setOpenNav(false)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
 
   const isVisible = openNav || isMdUp;
 
@@ -158,7 +165,7 @@ const NavSection = ({ startIndex, toggleOpenMenu, endIndex, openNav }) => {
           key={item.label}
           openNav={openNav}
           toggleNavState={toggleNavState}
-          toggleOpenMenu={toggleOpenMenu}
+          setOpenNav={setOpenNav}
           location={location}
         />
       ))}
