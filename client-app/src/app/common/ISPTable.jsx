@@ -36,7 +36,6 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
     textAlign: "center",
     fontSize: "1.25rem",
     fontFamily: "PeydaLight",
-
     color: "#676767",
   },
 }));
@@ -71,7 +70,7 @@ const ISPTable = ({ ISPdata, isDetail }) => {
     >
       {isDetail ? (
         <>
-          <RowBox sx={{ width: "98.5%" }}>
+          <RowBox sx={{ width: "98%" }}>
             <Typography>رتبه</Typography>
             <Typography>نام</Typography>
             <Box
