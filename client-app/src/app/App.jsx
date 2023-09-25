@@ -70,8 +70,8 @@ function App() {
                       isMdUp
                         ? mpCardContainers
                         : openNav
-                        ? mpCardContainers
-                        : "0"
+                          ? mpCardContainers
+                          : "0"
                     }
                   >
                     <Box>
@@ -79,11 +79,13 @@ function App() {
                         startIndex={0}
                         endIndex={2}
                         openNav={openNav}
+                        toggleOpenMenu={toggleOpenMenu}
                       />
                       <NavSection
                         startIndex={2}
                         endIndex={undefined}
                         openNav={openNav}
+                        toggleOpenMenu={toggleOpenMenu}
                       />
                     </Box>
                     <Box flex={1}>

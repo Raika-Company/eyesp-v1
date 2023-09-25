@@ -63,16 +63,21 @@ function DrawMeter({
     const startAngle = -Math.PI * 1.2;
     const endAngle = Math.PI * 0.2;
 
+
+    const startTime = 0;
+    const duration = 100;
+
     // Drawing the trapezoid hand (pointer)
+    var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.9;
+    var pointerWidthTop = 0; // The triangle's top is a point, so width is 0
+    var pointerWidthBottom = 15 * sizScale * 1.5;
+    var smallTriangleHeight = pointerWidthBottom / 2; // Height of the small triangle at the base
+
     function drawPointer(angle) {
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
       ctx.rotate(angle);
 
-      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.9;
-      var pointerWidthTop = 0; // The triangle's top is a point, so width is 0
-      var pointerWidthBottom = 15 * sizScale * 1.5;
-      var smallTriangleHeight = pointerWidthBottom / 2; // Height of the small triangle at the base
 
       ctx.beginPath();
 

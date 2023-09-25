@@ -81,8 +81,11 @@ const NAV_ITEMS = [
 const iconColor = (path, location) =>
   location.pathname === path ? "#00A3FF" : "inherit";
 
-const NavItem = ({ item, openNav, toggleNavState, location }) => (
-  <Box
+const NavItem = ({ item, openNav, toggleOpenMenu, toggleNavState, location }) => {
+  const theme = useTheme();
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'))
+
+  return (<Box
     key={item.label}
     sx={{
       display: "flex",
@@ -96,7 +99,10 @@ const NavItem = ({ item, openNav, toggleNavState, location }) => (
       },
       transition: 'all .2s linear'
     }}
-    onClick={() => toggleNavState(item.path)}
+    onClick={() => {
+      if (isMdDown) toggleOpenMenu()
+      toggleNavState(item.path)
+    }}
   >
     <IconButton sx={{
       '&:hover': {
@@ -120,10 +126,10 @@ const NavItem = ({ item, openNav, toggleNavState, location }) => (
         {item.label}
       </Typography>
     )}
-  </Box>
-);
+  </Box>)
+};
 
-const NavSection = ({ startIndex, endIndex, openNav }) => {
+const NavSection = ({ startIndex, toggleOpenMenu, endIndex, openNav }) => {
   const history = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -152,6 +158,7 @@ const NavSection = ({ startIndex, endIndex, openNav }) => {
           key={item.label}
           openNav={openNav}
           toggleNavState={toggleNavState}
+          toggleOpenMenu={toggleOpenMenu}
           location={location}
         />
       ))}

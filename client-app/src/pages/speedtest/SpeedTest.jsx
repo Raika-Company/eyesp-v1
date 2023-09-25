@@ -15,7 +15,7 @@ import uploadIcon from "../../app/assets/image/uploadIcon.svg";
 import downloadIcon from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
 import DrawMeter from "./DrawMeter";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
