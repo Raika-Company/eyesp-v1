@@ -49,7 +49,7 @@ const CategorySection = ({ title, category }) => {
 
   return (
     <>
-      <Typography fontFamily="1.5rem" fontWeight="PeydaLight" mt={3}>
+      <Typography fontFamily="1.5rem" fontWeight="PeydaLight" mt={3} mb={1}>
         {title}
       </Typography>
       <Carousel itemsToShow={4} itemsToShowSm={1}>
