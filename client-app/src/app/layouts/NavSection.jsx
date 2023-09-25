@@ -5,7 +5,6 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-  ThemeProvider,
   useTheme,
 } from "@mui/material";
 import {
@@ -15,8 +14,8 @@ import {
   InfoOutlined as InfoOutlinedIcon,
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
-import isp from "../../app/assets/image/isp.svg";
 import { useLocation, useNavigate } from "react-router-dom";
+import Logo from "./logo";
 
 const NAV_ITEMS = [
   {
@@ -52,18 +51,7 @@ const NAV_ITEMS = [
   {
     label: "اپراتور من",
     icon: (color) => (
-      <img
-        style={{
-          width: "24px",
-          height: "24px",
-          cursor: "pointer",
-          userSelect: "none",
-          objectFit: "cover",
-          color: color,
-        }}
-        src={isp}
-        alt="Company-logo"
-      />
+      <Logo color={color} />
     ),
     path: "/my-isp",
     toggle: "isMyOperator",
@@ -101,9 +89,20 @@ const NavItem = ({ item, openNav, toggleNavState, location }) => (
       justifyContent: "flex-start",
       alignItems: "center",
       margin: "10px 0",
+      borderRadius: '1rem',
+      padding: '0 .5rem',
+      '&:hover': {
+        background: '#f5f5f5',
+      },
+      transition: 'all .2s linear'
     }}
+    onClick={() => toggleNavState(item.path)}
   >
-    <IconButton onClick={() => toggleNavState(item.path)}>
+    <IconButton sx={{
+      '&:hover': {
+        background: 'none'
+      }
+    }} >
       {item.icon(iconColor(item.path, location))}
     </IconButton>
     {openNav && (
@@ -115,6 +114,7 @@ const NavItem = ({ item, openNav, toggleNavState, location }) => (
           opacity: openNav ? 1 : 0,
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
+          cursor: 'pointer'
         }}
       >
         {item.label}
