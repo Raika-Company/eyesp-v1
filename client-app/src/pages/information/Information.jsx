@@ -204,6 +204,7 @@ const DefinitionTerm = ({ title, children }) => {
           : "rgba(255, 255, 255, 0.8)",
         borderRadius: isSmScreen ? "" : "32px",
         py: "1em",
+        px: "1em",
         boxShadow: isSmScreen ? "" : "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
         transition: "all 0.3s ease-in-out",

@@ -1,8 +1,7 @@
-import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
@@ -10,6 +9,7 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {
@@ -184,13 +184,10 @@ const OperatorCompare = () => {
                 <InputLabel id={`demo-select-small-label-${index}`}>
                   {items}
                 </InputLabel>
-                <Select
+                <ContainedSelect
                   labelId={`demo-select-small-label-${index}`}
                   id={`demo-select-small-${index}`}
                   label={items}
-                  sx={{
-                    borderRadius: "25px",
-                  }}
                   onChange={handleChange}
                 >
                   <MenuItem disabled>
@@ -201,7 +198,7 @@ const OperatorCompare = () => {
                       {menuItem}
                     </MenuItem>
                   ))}
-                </Select>
+                </ContainedSelect>
               </FormControl>
             ))}
           </Box>
