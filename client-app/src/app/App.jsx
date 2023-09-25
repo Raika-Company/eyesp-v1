@@ -75,7 +75,7 @@ function App() {
                           : "0"
                     }
                   >
-                    <Box>
+                    <Box flexShrink={0}>
                       <NavSection
                         startIndex={0}
                         endIndex={2}
