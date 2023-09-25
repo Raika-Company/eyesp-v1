@@ -36,6 +36,7 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
     textAlign: "center",
     fontSize: "1.25rem",
     fontFamily: "PeydaLight",
+
     color: "#676767",
   },
 }));
@@ -58,7 +59,7 @@ const gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const ISPTable = ({ ISPdata }) => {
+const ISPTable = ({ ISPdata, isDetail }) => {
   return (
     <Box
       sx={{
@@ -66,41 +67,115 @@ const ISPTable = ({ ISPdata }) => {
         boxShadow: 0,
         marginBottom: "1rem",
         overflow: "hidden",
-        maxWidth: "700px",
       }}
     >
-      <RowBox>
-        <Typography>رتبه</Typography>
-        <Typography>نام</Typography>
-        <Typography>
-          <Typography>%</Typography>اختلال
-        </Typography>
-        <Typography>
-          <Typography>(ms)</Typography>پینگ
-        </Typography>
-        <Typography>
-          <Typography>(mb/s)</Typography>سرعت
-        </Typography>
-        <Typography>جزئیات</Typography>
-      </RowBox>
+      {isDetail ? (
+        <>
+          <RowBox sx={{ width: "98.5%" }}>
+            <Typography>رتبه</Typography>
+            <Typography>نام</Typography>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+            >
+              <Typography>(mb/s)</Typography>
+              <Typography>سرعت میانگین دانلود </Typography>
+            </Box>
 
-      {ISPdata.map((Items, index) => (
-        <RowBox
-          key={Items.rank}
-          delay={index * 0.2}
-          gradient={gradients[index >= 3 ? 3 : index]}
-          marginTop="1rem"
-        >
-          <Typography>{index + 1}</Typography>
-          <Typography>{Items.ISPname}</Typography>
-          <Typography sx={{ color: "primary" }}>{Items.disturbance}</Typography>
-          <Typography>{Items.pings}</Typography>
-          <Typography>{Items.speed}</Typography>
-          <IconButton aria-label={`more info about ${Items.ISPname}`}>
-            <WestIcon />
-          </IconButton>
-        </RowBox>
-      ))}
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+            >
+              <Typography>(mb/s)</Typography>
+              <Typography>سرعت میانگین آپلود </Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+            >
+              <Typography>(mb/s)</Typography>
+              <Typography>پینگ</Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+            >
+              <Typography>(mb/s)</Typography>
+              <Typography>پکت لاس</Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+            >
+              <Typography>(mb/s)</Typography>
+              <Typography>عملکرد</Typography>
+            </Box>
+            <Typography>جزئیات</Typography>
+          </RowBox>
+          {ISPdata.map((Items, index) => (
+            <RowBox
+              key={Items.rank}
+              delay={index * 0.2}
+              gradient={gradients[index >= 3 ? 3 : index]}
+              marginTop="1rem"
+            >
+              <Typography>{index + 1}</Typography>
+              <Typography>{Items.ISPname}</Typography>
+              <Typography sx={{ color: "primary" }}>
+                {Items.disturbance}
+              </Typography>
+              <Typography>{Items.pings}</Typography>
+              <Typography>{Items.pings}</Typography>
+              <Typography>{Items.pings}</Typography>
+              <Typography>{Items.speed}</Typography>
+              <IconButton aria-label={`more info about ${Items.ISPname}`}>
+                <WestIcon />
+              </IconButton>
+            </RowBox>
+          ))}
+        </>
+      ) : (
+        <>
+          <RowBox>
+            <Typography>رتبه</Typography>
+            <Typography>نام</Typography>
+            <Typography>
+              <Typography>%</Typography>اختلال
+            </Typography>
+            <Typography>
+              <Typography>(ms)</Typography>پینگ
+            </Typography>
+            <Typography>
+              <Typography>(mb/s)</Typography>سرعت
+            </Typography>
+            <Typography>جزئیات</Typography>
+          </RowBox>
+          {ISPdata.map((Items, index) => (
+            <RowBox
+              key={Items.rank}
+              delay={index * 0.2}
+              gradient={gradients[index >= 3 ? 3 : index]}
+              marginTop="1rem"
+            >
+              <Typography>{index + 1}</Typography>
+              <Typography>{Items.ISPname}</Typography>
+              <Typography sx={{ color: "primary" }}>
+                {Items.disturbance}
+              </Typography>
+              <Typography>{Items.pings}</Typography>
+              <Typography>{Items.speed}</Typography>
+              <IconButton aria-label={`more info about ${Items.ISPname}`}>
+                <WestIcon />
+              </IconButton>
+            </RowBox>
+          ))}
+        </>
+      )}
     </Box>
   );
 };
