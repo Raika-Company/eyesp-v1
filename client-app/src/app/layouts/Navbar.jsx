@@ -1,16 +1,10 @@
 // Navbar.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { Menu as MenuIcon } from "@mui/icons-material";
 
 const Navbar = ({ toggleOpenMenu, openNav }) => {
-  const [isTypographyVisible, setIsTypographyVisible] = useState(false);
-
-  useEffect(() => {
-    setIsTypographyVisible(openNav);
-  }, [openNav]);
-
   return (
     <Box
       padding="0.75rem"
