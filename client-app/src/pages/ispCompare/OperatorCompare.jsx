@@ -1,6 +1,5 @@
 import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
-import NewLogo from "../../app/common/NewLogo";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -11,7 +10,7 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import "./OperatorPerformance.css"
+import "./OperatorPerformance.css";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {
@@ -101,7 +100,7 @@ function generateRandomData() {
   }
   return data;
 }
-const OperatorPerformance = () => {
+const OperatorCompare = () => {
   const theme = useTheme();
   const [formControlItems, setFormControlItems] = useState("");
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
@@ -233,4 +232,4 @@ const OperatorPerformance = () => {
   );
 };
 
-export default OperatorPerformance;
+export default OperatorCompare;

@@ -10,7 +10,7 @@ const ViewDetailsButton = ({ target }) => {
       fontSize="1rem"
       variant="text"
       sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}
-      endIcon={<WestIcon sx={{ marginRight: "0.31rem" }} />}
+      endIcon={<WestIcon sx={{ marginRight: "1rem" }} />}
     >
       مشاهده جزئیات
     </Button>

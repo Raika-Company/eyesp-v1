@@ -24,17 +24,6 @@ const baseTheme = {
   typography: {
     h1: createTypography("clamp(1.5rem, 2.5rem + 0.0781vw, 4rem)", "PeydaBold"),
     h2: createTypography("clamp(1.125rem, 1.875rem + 0.0586vw, 3rem)", "PeydaBold"),
-    // h3: createTypography("clamp(1.125rem, 1.625rem + 0.0469vw, 2.5rem)", "PeydaBold"),
-    // h4: createTypography("clamp(1rem, 1.5rem + 0.0391vw, 1.875rem)", "PeydaBold"),
-    // h5: createTypography("clamp(1rem, 1.5rem + 0.0313vw, 1.875rem)", "PeydaSemibold"),
-    // h6: createTypography("clamp(1rem, 1.375rem + 0.026vw, 1.5rem)", "PeydaSemibold"),
-    // body1: createTypography("clamp(1rem, 1.375rem + 0.026vw, 1.5rem)", "PeydaRegular"),
-    // body2: createTypography("clamp(0.9rem, 1.3rem + 0.0234vw, 1.2rem)", "Peyda"),
-    // subtitle1: createTypography("clamp(0.8rem, 1.1rem + 0.0156vw, 1rem)", "Peyda"),
-    // subtitle2: createTypography("clamp(0.81rem, 1.1rem + 0.0156vw, 1rem)", "PeydaLight"),
-
-    // h1: createTypography("clamp(1.5rem, 1.5rem + 0.0473vw, 4rem)", "PeydaBold"),
-    // h2: createTypography("clamp(1.125rem, 1.125rem + 0.0356vw, 3rem)", "PeydaBold"),
     h3: createTypography("clamp(1.125rem, 1.125rem + 0.0265vw, 2.5rem)", "PeydaBold"),
     h4: createTypography("clamp(1rem, 1rem + 0.0209vw, 1.875rem)", "PeydaBold"),
     h5: createTypography("clamp(1rem, 1rem + 0.0176vw, 1.875rem)", "PeydaSemibold"),
@@ -44,9 +33,6 @@ const baseTheme = {
     subtitle1: createTypography("clamp(0.8rem, 0.8rem + 0.0076vw, 1rem)", "Peyda"),
     subtitle2: createTypography("clamp(0.81rem, 0.81rem + 0.0073vw, 1rem)", "PeydaLight"),
     smallText: createTypography("clamp(0.75rem, 0.75rem + 0.090vw, 1rem)", "PeydaSemibold"),
-
-
-
 
     button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)", "PeydaSemibold"),
     caption: createTypography("1.65rem"),

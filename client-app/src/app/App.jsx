@@ -57,7 +57,7 @@ function App() {
               path="/*"
               element={
                 <Container maxWidth="xl" sx={{ overflow: "hidden" }}>
-                  <Box display="flex" justifyContent="space-between">
+                  <Box display="flex" justifyContent="space-between" marginBottom="1rem">
                     <NewNavbar
                       toggleOpenMenu={toggleOpenMenu}
                       openNav={openNav}
