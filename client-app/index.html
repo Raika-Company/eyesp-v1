@@ -25,19 +25,33 @@
   <meta property="og:title" content="Rayka Speed Test">
   <meta property="og:description" content="Test your internet speed with Rayka. Get accurate and reliable speed measurements.">
   <meta property="og:image" content="social-image.png"> <!-- Consider adding a representative image for your website -->
-  <meta property="og:url" content="http://localhost:5173/">
+  <meta property="og:url" content="https://eyesp.live">
   
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Rayka Speed Test">
   <meta name="twitter:description" content="Test your internet speed with Rayka. Get accurate and reliable speed measurements.">
   <meta name="twitter:image" content="social-image.png">
-
+  <script type="text/javascript" src="/speedtest.js"></script>
+  <script>
+    const s = new Speedtest() //create speedtest object
+    const server = {
+      name: 'demo',
+      server: 'https://server1.eyesp.live',
+      dlURL: 'download/test',
+      ulURL: 'upload/server1',
+      pingURL: 'empty',
+      getIpURL: '',
+    }
+    s.setSelectedServer(server)
+    window.speedtest = s
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script type="module" src="/speedtest.js"></script>
 </body>
 
 </html>
