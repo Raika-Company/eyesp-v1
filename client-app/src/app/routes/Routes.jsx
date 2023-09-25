@@ -1,28 +1,18 @@
 import React, { lazy } from "react";
 
-const SpeedTest = lazy(() =>
-  import("../../pages/Speedtest/SpeedTest")
-);
+const SpeedTest = lazy(() => import("../../pages/Speedtest/SpeedTest"));
 
-const Dashboard = lazy(() =>
-  import("../../pages/dashboard/Dashboard")
-);
-const Informat\ion = lazy(() =>
-  import("../../pages/information/Information")
-);
+const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
+const Information = lazy(() => import("../../pages/information/Information"));
 const OperatorPerformance = lazy(() =>
   import("../../pages/ispPerformance/OperatorPerformance")
 );
 
-const TestHistory = lazy(() =>
-  import("../../pages/testHistory/TestHistory")
-);
+const TestHistory = lazy(() => import("../../pages/testHistory/TestHistory"));
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
-const Province = lazy(() =>
-  import("../../pages/dashboard/province/Province")
-);
+const Province = lazy(() => import("../../pages/dashboard/province/Province"));
 
 export const mainRoutes = [
   {
