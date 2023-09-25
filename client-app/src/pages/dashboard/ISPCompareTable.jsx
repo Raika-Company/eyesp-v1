@@ -7,7 +7,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import ISPTable from "./ISPTable";
+import ISPTable from "../../app/common/ISPTable";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 
 /**

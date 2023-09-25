@@ -167,8 +167,7 @@ const MyISP = () => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <NewLogo />
+    <>
       <Box display="flex" gap="1rem">
         <Box
           component={Paper}
@@ -540,11 +539,7 @@ const MyISP = () => {
                 </Select>
               </FormControl>
               <Box display={"flex"} justifyContent={"center"} gap={2}>
-                <Button
-                  variant="text"
-                  component={Link}
-                  to="/operator-performance"
-                >
+                <Button variant="text" component={Link} to="/operator-compare">
                   سایر اپراتورها
                 </Button>
                 <img src={leftArrow} alt="leftArrow" />
@@ -596,7 +591,7 @@ const MyISP = () => {
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
       />
-    </Container>
+    </>
   );
 };
 
