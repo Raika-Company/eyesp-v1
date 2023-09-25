@@ -138,7 +138,7 @@ const NavSection = ({ startIndex, endIndex, openNav }) => {
 
   return (
     <Box
-      display="flex"
+      display={isVisible ? "flex" : "none"}
       flexDirection="column"
       alignItems="flex-start"
       borderRadius="1.96875rem"

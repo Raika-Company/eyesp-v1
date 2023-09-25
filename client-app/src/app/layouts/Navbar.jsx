@@ -17,7 +17,6 @@ const Navbar = ({ toggleOpenMenu, openNav }) => {
       backgroundColor="white"
       borderRadius="50%"
       marginTop="2.3rem"
-      
     >
       <IconButton onClick={toggleOpenMenu}>
         <MenuIcon />
