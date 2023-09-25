@@ -85,7 +85,7 @@ const MyISP = () => {
   };
 
   const activeButtonStyle = {
-    backgroundColor: "#008EDD",
+    backgroundColor: "#259FDA", // Set background color here
     color: "white",
     borderRadius: "2rem",
     border: "none",
@@ -167,8 +167,7 @@ const MyISP = () => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <NewLogo />
+    <>
       <Box display="flex" gap="1rem">
         <Box
           component={Paper}
@@ -287,10 +286,12 @@ const MyISP = () => {
           </Box>
           <Box marginTop="2.875rem">
             <ContainedButton
-              color="warning"
               variant="contained"
               sx={{ fontSize: "1rem" }}
               onClick={handleClickOpenDialog}
+              bgColor="#FF8A35"
+              bgHover="white"
+              txtHover="#FF8A35"
             >
               گزارش اختلال
             </ContainedButton>
@@ -366,10 +367,18 @@ const MyISP = () => {
                 10423 نظر
               </Typography>
             </Box>
+
             <ContainedButton
               onClick={handleClickOpenFeedbackDialog}
-              sx={{ backgroundColor: "#008EDD" }}
+              variant="contained"
+              bgColor=" #259FDA"
+              bgHover="white"
+              txtHover=" #259FDA"
+              sx={{
+                fontSize: "1rem",
+              }}
             >
+              {" "}
               ثبت بازخورد
             </ContainedButton>
           </Box>
@@ -530,11 +539,7 @@ const MyISP = () => {
                 </Select>
               </FormControl>
               <Box display={"flex"} justifyContent={"center"} gap={2}>
-                <Button
-                  variant="text"
-                  component={Link}
-                  to="/operator-performance"
-                >
+                <Button variant="text" component={Link} to="/operator-compare">
                   سایر اپراتورها
                 </Button>
                 <img src={leftArrow} alt="leftArrow" />
@@ -586,7 +591,7 @@ const MyISP = () => {
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
       />
-    </Container>
+    </>
   );
 };
 

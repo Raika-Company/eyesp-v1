@@ -394,7 +394,12 @@ const SpeedTest = () => {
               gap: "5px",
             }}
           >
-            <Button component={Link} to="/history" variant="text">
+            <Button
+              component={Link}
+              to="/history"
+              variant="text"
+              sx={{ color: "#259FDA" }}
+            >
               مشاهده جزوئیات
             </Button>
             <img src={leftArrow} alt="leftArrow" />
@@ -509,7 +514,14 @@ const SpeedTest = () => {
               alignItems: "center",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                width: "23%",
+              }}
+            >
               <Box
                 sx={{
                   display: "flex",

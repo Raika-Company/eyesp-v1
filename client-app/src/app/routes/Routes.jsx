@@ -19,9 +19,7 @@ const TestHistory = lazy(() =>
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
-const Province = lazy(() =>
-  import("../../pages/dashboard/province/Province")
-);
+const Province = lazy(() => import("../../pages/dashboard/province/Province"));
 
 export const mainRoutes = [
   {
@@ -78,9 +76,9 @@ export const mainRoutes = [
     robots: "index, follow",
   },
   {
-    path: "/operator-performance",
-    element: <OperatorPerformance />,
-    title: "Operator Performance | TIC Radar",
+    path: "/operator-compare",
+    element: <OperatorCompare />,
+    title: "Operator compare | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
     robots: "index, follow",
