@@ -7,7 +7,7 @@ const SpeedTest = lazy(() =>
 const Dashboard = lazy(() =>
   import("../../pages/dashboard/Dashboard")
 );
-const Information = lazy(() =>
+const Informat\ion = lazy(() =>
   import("../../pages/information/Information")
 );
 const OperatorPerformance = lazy(() =>
