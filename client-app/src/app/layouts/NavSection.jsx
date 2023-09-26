@@ -72,7 +72,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/operator-compare  ",
+    path: "/operator-compare",
     toggle: "isInformation",
   },
 ];
@@ -119,7 +119,6 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
           cursor: 'pointer',
-          cursor: 'pointer'
         }}
       >
         {item.label}
@@ -151,7 +150,6 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
     <Box
       display={isVisible ? "flex" : "none"}
       flexDirection="column"
-      alignItems="center"
       borderRadius="1.96875rem"
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
