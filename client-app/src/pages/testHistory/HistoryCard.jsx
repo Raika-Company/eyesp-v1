@@ -18,7 +18,7 @@ const ResultSection = ({ icon, label, value, unit }) => (
   </Box>
 );
 
-const HistoryCard = ({date, time, testDuration, testType, server, ping, download, upload, ip}) => {
+const HistoryCard = ({ date, time, testDuration, testType, server, ping, download, upload, ip }) => {
 
   return (
     <Box width="15.8125rem" padding="1.45rem" borderRadius="2rem" backgroundColor="#FFF" boxShadow="0px 4px 40px 0px rgba(0, 0, 0, 0.20)">
@@ -28,7 +28,7 @@ const HistoryCard = ({date, time, testDuration, testType, server, ping, download
       <InfoSection label="نوع تست" value={testType} />
       <InfoSection label="سرور" value={server} />
       <InfoSection label="آی پی" value={ip} />
-      <Box width="100%" paddingX="1.5rem" paddingY="0.6rem" display="flex" justifyContent="center" alignItems="center" gap="2.5rem" borderRadius="2rem" sx={{background: "radial-gradient(434.9% 131.07% at 7.52% 0%, rgba(244, 249, 255, 0.50) 0%, rgba(169, 187, 207, 0.35) 100%)"}}>
+      <Box width="100%" paddingX="1.5rem" paddingY="0.6rem" marginTop={1} display="flex" justifyContent="center" alignItems="center" gap="2.5rem" borderRadius="2rem" sx={{ background: "radial-gradient(434.9% 131.07% at 7.52% 0%, rgba(244, 249, 255, 0.50) 0%, rgba(169, 187, 207, 0.35) 100%)" }}>
         <ResultSection icon={downloadIcon} label="دانلود" value={download} unit="mb/s" />
         <ResultSection icon={uploadIcon} label="آپلود" value={upload} unit="mb/s" />
         {/* <ResultSection icon={clockIcon} label="پینگ" value={ping} unit="(ms)" /> */}
