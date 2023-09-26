@@ -98,9 +98,9 @@ function DrawMeter({
 
     function normalizeMbps(mbps) {
       if (mbps <= 10) {
-        return (mbps / 20); 
+        return (mbps / 20);
       }
-      return 0.55 + (mbps - 10) / 220; 
+      return 0.55 + (mbps - 10) / 220;
     }
 
     var normalizedMbps = normalizeMbps(mbps);

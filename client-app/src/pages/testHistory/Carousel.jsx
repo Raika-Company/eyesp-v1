@@ -20,19 +20,25 @@ const Carousel = ({ children, itemsToShow, itemsToShowSm }) => {
 
   return (
     <Box position="relative" width="100%">
-      <Box position="absolute" top="50%" left="0">
+      <Box position="absolute" top="50%" sx={{
+        transform: 'translateY(-50%)'
+      }} left={isMD ? '-3rem' : '-2rem'}>
         <IconButton onClick={handlePrev} disabled={startIndex === 0}>
           <ArrowBackIosIcon />
         </IconButton>
       </Box>
-      <Box display="flex" justifyContent="space-around">
+      <Box display="flex" justifyContent={'center'} gap={3}>
         {React.Children.map(children, (child, index) => (
           <Box display={index >= startIndex && index < startIndex + itemsToShowAdaptive ? 'block' : 'none'} key={index}>
             {child}
           </Box>
         ))}
       </Box>
-      <Box position="absolute" top="50%" right="0">
+      <Box position="absolute"
+        sx={{
+          transform: 'translateY(-50%)'
+        }}
+        top="50%" right={isMD ? '-3rem' : '-2rem'}>
         <IconButton onClick={handleNext} disabled={startIndex + itemsToShow >= children.length}>
           <ArrowForwardIosIcon />
         </IconButton>

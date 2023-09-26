@@ -1,0 +1,23 @@
+import {
+	SvgIcon,
+} from "@mui/material";
+
+const Logo = ({ color }) => {
+	return (
+		<SvgIcon>
+			<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="24.000000pt" height="24.000000pt" viewBox="0 0 45.000000 42.000000" preserveAspectRatio="xMidYMid meet">
+				<g transform="translate(0.000000,42.000000) scale(0.100000,-0.100000)" fill={color} stroke="none">
+					<path d="M154 386 c-17 -27 -17 -29 1 -63 l19 -35 -28 -49 -27 -49 35 0 c31 0
+38 5 61 43 14 24 25 50 25 58 0 8 -16 38 -34 68 l-34 54 -18 -27z" />
+					<path d="M267 199 c-17 -31 -17 -32 11 -78 l29 -46 67 -3 67 -3 -16 31 c-13
+#f5f5f524 -22 30 -49 30 -29 0 -36 6 -60 50 -15 28 -28 50 -29 50 -1 0 -10 -14 -20
+-31z" />
+					<path d="M42 70 l-33 -60 35 0 c29 0 38 5 51 30 15 28 19 30 76 30 l60 0 -18
+30 c-16 28 -21 30 -78 30 l-60 0 -33 -60z" />
+				</g>
+			</svg>
+		</SvgIcon>
+	)
+}
+
+export default Logo;

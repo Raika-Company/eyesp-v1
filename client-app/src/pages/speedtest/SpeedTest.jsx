@@ -11,7 +11,7 @@ import uploadIcon from "../../app/assets/image/uploadIcon.svg";
 import downloadIcon from "../../app/assets/image/downloadIcon.svg";
 import pingIcon from "../../app/assets/image/clockIcon.svg";
 import DrawMeter from "./DrawMeter";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
@@ -340,7 +340,7 @@ const SpeedTest = () => {
             marginX: "auto",
             height: "20%",
             backgroundColor: "#FFF",
-            marginBottom: "1rem"
+            marginBottom: "1rem"    
           }}
         >
           <Box display="flex" justifyContent="space-evenly" width="100%">
