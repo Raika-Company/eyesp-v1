@@ -11,6 +11,9 @@ const Information = lazy(() =>
 const OperatorCompare = lazy(() =>
   import("../../pages/ispCompare/OperatorCompare")
 );
+const ISPPerformance = lazy(() =>
+  import("../../pages/ispPerformance/ISPPerformance")
+);
 
 const TestHistory = lazy(() =>
   import("../../pages/testHistory/TestHistory")
@@ -68,6 +71,14 @@ export const mainRoutes = [
     path: "/operator-compare",
     element: <OperatorCompare />,
     title: "Operator compare | TIC Radar",
+    description: "Review all your past internet speed tests in one place.",
+    keywords: "test history, speed results, past tests",
+    robots: "index, follow",
+  },
+  {
+    path: "/isp-performance",
+    element: <ISPPerformance />,
+    title: "isp performance | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
     robots: "index, follow",
