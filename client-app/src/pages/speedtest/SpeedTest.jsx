@@ -7,9 +7,6 @@ import {
   useTheme,
   keyframes,
 } from "@mui/material";
-import uploadIcon from "../../app/assets/image/uploadIcon.svg";
-import downloadIcon from "../../app/assets/image/downloadIcon.svg";
-import pingIcon from "../../app/assets/image/clockIcon.svg";
 import DrawMeter from "./DrawMeter";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
@@ -24,8 +21,7 @@ import CardContainer from "../../app/common/CardContainer";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import InfoBox from "./InfoBox";
-import ViewDetailsButton from "../../app/common/ViewDetailsButton";
+import FloatingResult from "./FloatingResult";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -35,10 +31,6 @@ const fadeIn = keyframes`
 const mbpsToAmount = (s) => {
   return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
 };
-
-const renderInfoBox = (isColumn, iconSrc, title, value) => (
-  <InfoBox isColumn={isColumn} iconSrc={iconSrc} title={title} value={value} />
-);
 
 const AddressAndServer = () => (
   <Box>
@@ -312,51 +304,7 @@ const SpeedTest = () => {
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
             <Typography marginLeft="1rem">نوع تست</Typography>
           </Box>
-          <Typography sx={{ display: { md: "none" } }}>
-            برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
-          </Typography>
-          <Box
-            justifyContent="space-evenly"
-            width="100%"
-            sx={{ display: { xs: "flex", md: "none" } }}
-          >
-            {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
-            {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
-            {renderInfoBox(true, pingIcon, "پینگ", latency)}
-          </Box>
-        </Box>
-        <Box
-          borderRadius="2rem"
-          sx={{
-            display: { xs: "none", md: "flex" },
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
-            position: "absolute",
-            bottom: "-10%",
-            left: "10%",
-            width: "80%",
-            marginX: "auto",
-            height: "20%",
-            backgroundColor: "#FFF",
-            marginBottom: "1rem",
-            border: '1px solid #FFF',
-            background: 'rgba(255, 255, 255, 0.80)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          <Box display="flex" justifyContent="space-evenly" width="100%">
-            {renderInfoBox(false, downloadIcon, "سرعت دانلود", download)}
-            {renderInfoBox(false, uploadIcon, "سرعت آپلود", upload)}
-            {renderInfoBox(false, pingIcon, "پینگ", latency)}
-          </Box>
-          <Typography>
-            برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
-          </Typography>
-          <Box alignSelf="flex-end" marginLeft="2rem">
-            <ViewDetailsButton target="/history" />
-          </Box>
+          <FloatingResult download={download} upload={upload} latency={latency} />
         </Box>
       </CardContainer >
       <ShowResult

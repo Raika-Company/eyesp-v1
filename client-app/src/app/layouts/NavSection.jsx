@@ -154,7 +154,7 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
     <Box
       display={isVisible ? "flex" : "none"}
       flexDirection="column"
-      alignItems="flex-start"
+      alignItems="center"
       borderRadius="1.96875rem"
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
