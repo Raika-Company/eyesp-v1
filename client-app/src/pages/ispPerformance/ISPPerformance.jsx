@@ -17,13 +17,25 @@ import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
  */
 const RawISPData = [
-  { rank: "#1", ISPname: "زیتل", disturbance: "1", pings: "49", speed: "28" },
+  {
+    rank: "#1",
+    ISPname: "زیتل",
+    disturbance: "1",
+    pings: "49",
+    speed: "28",
+    packet: "12",
+    performance: "23",
+    upload: "24",
+  },
   {
     rank: "#2",
     ISPname: "همراه اول",
     disturbance: "3",
     pings: "51",
     speed: "23",
+    packet: "12",
+    performance: "23",
+    upload: "24",
   },
   {
     rank: "#3",
@@ -31,23 +43,59 @@ const RawISPData = [
     disturbance: "3",
     pings: "52",
     speed: "21",
+    packet: "17",
+    performance: "13",
+    upload: "20",
   },
-  { rank: "#4", ISPname: "رایتل", disturbance: "4", pings: "59", speed: "19" },
-  { rank: "#5", ISPname: "شاتل", disturbance: "6", pings: "61", speed: "18" },
+  {
+    rank: "#4",
+    ISPname: "رایتل",
+    disturbance: "4",
+    pings: "59",
+    speed: "19",
+    packet: "22",
+    performance: "13",
+    upload: "20",
+  },
+  {
+    rank: "#5",
+    ISPname: "شاتل",
+    disturbance: "6",
+    pings: "61",
+    speed: "18",
+    packet: "8",
+    performance: "13",
+    upload: "20",
+  },
   {
     rank: "#6",
     ISPname: "مخابرات",
     disturbance: "8",
     pings: "61",
     speed: "16",
+    packet: "25",
+    performance: "12",
+    upload: "20",
   },
-  { rank: "#7", ISPname: "آسیاتک", disturbance: "9", pings: "64", speed: "14" },
+  {
+    rank: "#7",
+    ISPname: "آسیاتک",
+    disturbance: "9",
+    pings: "64",
+    speed: "14",
+    packet: "12",
+    performance: "23",
+    upload: "24",
+  },
   {
     rank: "#8",
     ISPname: "های وب",
     disturbance: "11",
     pings: "53",
     speed: "19",
+    packet: "23",
+    performance: "20",
+    upload: "14",
   },
 ];
 
@@ -88,7 +136,7 @@ const ISPPerformance = (props) => {
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
   const [province, setSortProvince] = useState("انتخاب کنید");
   const [provinceData, setProvinceData] = useState(ProvincesCompare);
-  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("انتخاب کنید");
 
   const [visibleRows, setVisibleRows] = useState(6);
 
@@ -111,7 +159,7 @@ const ISPPerformance = (props) => {
     []
   );
   const handleProvinceChange = (e) => {
-    setSelectedProvince(e.target.value);
+    setSelectedProvince((prevState) => e.target.value);
     console.log("Selected Province:", e.target.value);
   };
 
@@ -134,77 +182,93 @@ const ISPPerformance = (props) => {
   return (
     <CardContainer
       sx={{
-        flex: 1,
         paddingX: mpCardContainers,
         paddingY: "1.75rem",
-        width: "100%",
       }}
     >
       <Box
         sx={{
           display: "flex",
+          flexDirection: isSmScreen ? "column" : "row",
           justifyContent: isSmScreen ? "center" : "space-between",
           flexWrap: "wrap",
           marginBottom: "1.4rem",
+          width: "100%",
+          gap: "1rem",
         }}
       >
         <Typography
           color="#2C2C2C"
           fontSize="1.5rem"
           fontFamily="PeydaSemiBold"
+          textAlign={isSmScreen ? "center" : "left"}
         >
           رتبه بندی ISPها
         </Typography>
-        <Box display={"flex"} alignItems={"center"}>
-          <Typography>استان مورد نظر:</Typography>
-          <Select
-            labelId="change-province-label"
-            id="change-province"
-            value={province}
-            onChange={handleProvinceChange}
-            displayEmpty
-            sx={{
-              borderRadius: "1.25rem",
-              marginLeft: "max(10rem, 2vw)",
-              marginRight: "0.5rem",
-            }}
-            renderValue={(selectedValue) =>
-              selectedValue ? selectedValue : "انتخاب کنید"
-            }
-          >
-            {provinceData.map((provinceItem) => (
-              <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                {provinceItem.name}
-              </MenuItem>
-            ))}
-          </Select>
-          <Typography> چینش براساس:</Typography>
+        <Box
+          display={"flex"}
+          flexDirection={isSmScreen ? "column" : "row"}
+          alignItems={"center"}
+          gap={2}
+        >
+          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+            <Typography>استان مورد نظر:</Typography>
+            <Select
+              labelId="change-province-label"
+              id="change-province"
+              value={selectedProvince}
+              onChange={handleProvinceChange}
+              displayEmpty
+              sx={{
+                borderRadius: "1.25rem",
+                marginLeft: "max(1rem, 5vw)",
+                marginRight: "0.5rem",
+              }}
+              renderValue={(selectedValue) =>
+                selectedValue ? selectedValue : "انتخاب کنید"
+              }
+            >
+              {provinceData.map((provinceItem) => (
+                <MenuItem key={provinceItem.name} value={provinceItem.name}>
+                  {provinceItem.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+            <Typography> چینش براساس:</Typography>
 
-          <Select
-            value={sortCriteria}
-            onChange={(e) => setSortCriteria(e.target.value)}
-            variant="outlined"
-            color="primary"
-            sx={{
-              marginRight: "0.5rem",
-              color: "#676767",
-              borderRadius: "1.25rem",
-              float: "left",
-            }}
-          >
-            {selectionItems.map((item) => (
-              <MenuItem
-                key={item}
-                sx={{ color: "textColor.light" }}
-                value={item}
-              >
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
+            <Select
+              value={sortCriteria}
+              onChange={(e) => setSortCriteria(e.target.value)}
+              variant="outlined"
+              color="primary"
+              sx={{
+                marginRight: "0.5rem",
+                color: "#676767",
+                borderRadius: "1.25rem",
+                float: "left",
+              }}
+            >
+              {selectionItems.map((item) => (
+                <MenuItem
+                  key={item}
+                  sx={{ color: "textColor.light" }}
+                  value={item}
+                >
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
         </Box>
       </Box>
-      <ISPTable isDetail={true} ISPdata={sortedISPData.slice(0, visibleRows)} />
+      <Box>
+        <ISPTable
+          isDetail={true}
+          ISPdata={sortedISPData.slice(0, visibleRows)}
+        />
+      </Box>
     </CardContainer>
   );
 };
