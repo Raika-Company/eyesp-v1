@@ -21,7 +21,6 @@ const FormControlChart = () => {
   ];
   const [age, setAge] = useState("1400");
   const [chartData, setChartData] = useState(data[0].data);
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const handleChange = (event) => {

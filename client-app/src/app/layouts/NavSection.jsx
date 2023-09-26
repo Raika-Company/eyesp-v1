@@ -11,7 +11,6 @@ import {
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./logo";
-
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
@@ -66,7 +65,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/operator-compare  ",
+    path: "/operator-compare",
     toggle: "isInformation",
   },
 ];
@@ -78,41 +77,30 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
 
-  return (<Box
-    key={item.label}
-    sx={{
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      margin: "10px 0",
-      borderRadius: '1rem',
-      '&:hover': {
-        background: '#f5f5f5',
-      },
-      transition: 'all .2s linear'
-    }}
-    onClick={() => {
-      if (isMdDown) setOpenNav(openNav => !openNav)
-      toggleNavState(item.path)
-    }}
-  >
-    <IconButton sx={{
-      '&:hover': {
-        background: 'none'
-      }
-    }} >
-      {item.icon(iconColor(item.path, location))}
-    </IconButton>
-    {openNav && (
-      <Typography
-        component="span"
-        variant="h6"
+  return (
+    <Box
+      key={item.label}
+      sx={{
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        margin: "10px 0",
+        borderRadius: "1rem",
+        "&:hover": {
+          background: "#f5f5f5",
+        },
+        transition: "all .2s linear",
+      }}
+      onClick={() => {
+        if (isMdDown) setOpenNav((openNav) => !openNav);
+        toggleNavState(item.path);
+      }}
+    >
+      <IconButton
         sx={{
-          visibility: openNav ? "visible" : "hidden",
-          opacity: openNav ? 1 : 0,
-          transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
-          color: iconColor(item.path, location),
-          cursor: 'pointer'
+          "&:hover": {
+            background: "none",
+          },
         }}
       >
         {item.icon(iconColor(item.path, location))}
@@ -159,7 +147,6 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
     <Box
       display={isVisible ? "flex" : "none"}
       flexDirection="column"
-      alignItems="flex-start"
       borderRadius="1.96875rem"
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
