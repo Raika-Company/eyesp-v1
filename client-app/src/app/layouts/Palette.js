@@ -2,41 +2,58 @@ import {
   createTheme
 } from "@mui/material";
 
-/**
- * Create typography style with given font size and weight.
- *
- * @function
- * @param {string} fontSize - The font size.
- * @param {string} fontFamily - The font family.
- * @returns {Object} A typography style object.
- */
-const createTypography = (fontSize, fontFamily,) => ({
-  fontSize: fontSize,
-  fontFamily: fontFamily,
+var theme = createTheme();
 
+const commonTypography = (fontSize, fontSizeMd) => ({
+  fontSize,
+  [theme.breakpoints.up('md')]: {
+    fontSize: fontSizeMd,
+  },
 });
 
 /**
  * Base theme configuration.
  * @type {Object}
  */
-const baseTheme = {
+const baseTheme = createTheme({
   typography: {
-    h1: createTypography("clamp(1.5rem, 2.5rem + 0.0781vw, 4rem)", "PeydaBold"),
-    h2: createTypography("clamp(1.125rem, 1.875rem + 0.0586vw, 3rem)", "PeydaBold"),
-    h3: createTypography("clamp(1.125rem, 1.125rem + 0.0265vw, 2.5rem)", "PeydaBold"),
-    h4: createTypography("clamp(1rem, 1rem + 0.0209vw, 1.875rem)", "PeydaBold"),
-    h5: createTypography("clamp(1rem, 1rem + 0.0176vw, 1.875rem)", "PeydaSemibold"),
-    h6: createTypography("clamp(1rem, 1rem + 0.0152vw, 1.5rem)", "PeydaSemibold"),
-    body1: createTypography("clamp(1rem, 1rem + 0.0129vw, 1.5rem)", "PeydaRegular"),
-    body2: createTypography("clamp(0.9rem, 0.9rem + 0.0115vw, 1.2rem)", "Peyda"),
-    subtitle1: createTypography("clamp(0.8rem, 0.8rem + 0.0076vw, 1rem)", "Peyda"),
-    subtitle2: createTypography("clamp(0.81rem, 0.81rem + 0.0073vw, 1rem)", "PeydaLight"),
-    smallText: createTypography("clamp(0.75rem, 0.75rem + 0.090vw, 1rem)", "PeydaSemibold"),
-
-    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)", "PeydaSemibold"),
-    caption: createTypography("1.65rem"),
-    overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)"),
+    ...['h1', 'h2'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('18px', '24px'),
+        fontFamily: "PeydaSemiBold",
+      };
+      return acc;
+    }, {}),
+    ...['h3', 'h4'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('14px', '20px'),
+        fontFamily: variant === 'h3' ? "PeydaRegular" : "PeydaSemiBold",
+      };
+      return acc;
+    }, {}),
+    ...['h5', 'h6', 'body1', 'body2', 'button'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('14px', '16px'),
+        fontFamily: "Peyda",
+      };
+      return acc;
+    }, {}),
+    subtitle1: {
+      fontSize: '14px',
+      fontFamily: "PeydaRegular",
+    },
+    subtitle2: {
+      fontSize: '14px',
+      fontFamily: "PeydaLight",
+    },
+    mainDigits: {
+      ...commonTypography('24px', '40px'),
+      fontFamily: "PeydaSemiBold",
+    },
+    chartTitle: {
+      ...commonTypography('16px', '20px'),
+      fontFamily: "PeydaLight",
+    },
     fontFamily: "Peyda",
   },
   components: {
@@ -82,13 +99,8 @@ const baseTheme = {
         },
       }
     },
-    MuiTableCell: {
-      styleOverrides: {
-        root: createTypography("1.65rem", 600),
-      },
-    },
   },
-};
+});
 
 
 /**
@@ -102,48 +114,31 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
+      main: "#008EDD",
     },
     secondary: {
-      main: "#DB7F12",
-      dark: "#6c6c6c",
-      light: "#afafaf"
+      main: "#D5E3F1",
     },
     error: {
-      main: "#EE0B0B",
-      dark: "#a60707",
-      light: "#a60707",
+      main: "#FF8A35",
     },
     warning: {
-      main: "#FF630B",
-      dark: "#FF630B",
-      light: "#ff823b"
+      main: "#FCD2B3",
     },
     info: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
+      main: "#C4E9FE",
     },
     success: {
-      main: "#14A784",
-      dark: "#0e745c",
-      light: "#0e745c"
+      main: "#CAE4C4",
     },
-    border: {
-      main: "#E3E3E6",
-      dark: "#9e9ea1",
-      light: "#e8e8eb"
-    },
-    textColor: {
-      main: "#A4A4A4",
-      light: "#b6b6b8",
-      dark: "#5E5E5E",
-      subTitle: "#dcdcdc"
+    text: {
+      main: "#676767",
+      textBlack: "#2C2C2C",
+      textInfo: "#3E6389",
+      subTitle: "#878787"
     },
     background: {
-      default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
+      default: "#E8F1F9",
     },
   },
 });
@@ -159,53 +154,31 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
+      main: "#005A99",
     },
     secondary: {
-      main: "#f8a665",
-      dark: "#bfbfbf",
-      light: "#e0e0e0"
+      main: "#1A2D3A"
     },
     error: {
-      main: "#f77676",
-      dark: "#d36565",
-      light: "#d36565"
+      main: "#FF5A00",
     },
     warning: {
-      main: "#FF8E4D",
-      dark: "#FF8E4D",
-      light: "#ffa56d"
+      main: "#FFA341",
     },
     info: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
+      main: "#86BBD8",
     },
     success: {
-      main: "#4ecdab",
-      dark: "#3fb391",
-      light: "#3fb391"
-    },
-    border: {
-      main: "#9e9ea1",
-      dark: "#6b6b6e",
-      light: "#b4b4b8"
-    },
-    background: {
-      default: "#181D23",
-    },
-    textColor: {
-      main: "#b6b6b8",
-      light: "#b6b6b8",
-      dark: "#5E5E5E",
-      subTitle: "#5E5E5E"
-
+      main: "#83A673",
     },
     text: {
-      primary: "#FFF",
-      secondary: "#BBB",
+      main: "#C0C0C0",
+      textBlack: "#E0E0E0",
+      textInfo: "#9EB5C1",
+      subTitle: "#A0A0A0" 
+    },
+    background: {
+      default: "#121212",
     },
   },
 });

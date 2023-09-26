@@ -58,17 +58,15 @@ const disorders = [
 const InternetStatusTitle = () => (
   <React.Fragment>
     <Typography
-      fontFamily="PeydaSemibold"
-      fontSize="1.5rem"
-      color="#2C2C2C"
+      variant="h1"
+      color="text.textBlack"
       gutterBottom
     >
       وضعیت اینترنت
     </Typography>
     <Typography
-      fontFamily="PeydaLight"
-      fontSize="1.5rem"
-      color="#676767"
+      variant="h3"
+      color="text.main"
       gutterBottom
     >
       سراسر کشور
@@ -101,10 +99,10 @@ const DisorderAccordion = ({ title, detail }) => (
       aria-controls="panel1a-content"
       id="panel1a-header"
     >
-      <Typography>{title}</Typography>
+      <Typography variant="h6" color="text">{title}</Typography>
     </AccordionSummary>
     <AccordionDetails>
-      <Typography>{detail}</Typography>
+      <Typography variant="h6" color="text">{detail}</Typography>
     </AccordionDetails>
   </Accordion>
 );
@@ -202,9 +200,8 @@ const InternetStatusCard = (props) => {
               sx={{ left: `${fillPercentage - 3}%` }}
             >
               <Typography
-                fontSize="1.5rem"
-                fontFamily="PeydaSemiBold"
-                color="#008EDD"
+                variant="h1"
+                color="primary"
               >{`${fillPercentage}%`}</Typography>
               <SvgIcon>
                 <svg
@@ -235,7 +232,7 @@ const InternetStatusCard = (props) => {
             fontFamily="PeydaLight"
             sx={{ color: "#676767" }}
           >
-            وضعیت:{" "}
+            وضعیت:
             <Typography
               component="span"
               fontFamily="PeydaSemiBold"
