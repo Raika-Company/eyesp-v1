@@ -228,9 +228,8 @@ const InternetStatusCard = (props) => {
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography
-            fontSize="1rem"
-            fontFamily="PeydaLight"
-            sx={{ color: "#676767" }}
+            variant="h5"
+            color="text.main"
           >
             وضعیت:
             <Typography
