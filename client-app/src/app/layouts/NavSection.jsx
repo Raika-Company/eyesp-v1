@@ -17,6 +17,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./logo";
 
+import "./Navbar.css";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
@@ -73,7 +74,7 @@ const NAV_ITEMS = [
         sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
-    path: "/operator-performance",
+    path: "/operator-compare  ",
     toggle: "isInformation",
   },
 ];
@@ -120,7 +121,8 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
           opacity: openNav ? 1 : 0,
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
-          cursor: 'pointer'
+          cursor: 'pointer',
+          width: "120px",
         }}
       >
         {item.label}
@@ -158,6 +160,8 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       backgroundColor="white"
       alignSelf="stretch"
+      sx={{ fontSize: "0.9rem", ml: isVisible ? "0em" : "1.2em" }}
+      className={openNav ? "navbox open" : "navbox"}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (
         <NavItem

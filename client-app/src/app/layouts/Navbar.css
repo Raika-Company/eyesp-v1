@@ -1,0 +1,11 @@
+/* Navbar.css */
+
+.navbox {
+    width: 65px;
+
+    transition: width 0.4s ease;
+}
+
+.navbox.open {
+    width: 190px;
+}

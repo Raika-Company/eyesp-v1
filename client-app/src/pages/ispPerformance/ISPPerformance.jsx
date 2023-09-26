@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
+import useDynamicMP from "../../app/hooks/useDynamicMP";
+import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
 
 /**
  * Raw data for the ISPs for comparison.
@@ -79,10 +81,15 @@ const parseNumber = (str) => {
  * @param {number} props.mpCardContainers - Padding value.
  * @returns {JSX.Element} The rendered component.
  */
-const ISPCompareTable = ({ mpCardContainers }) => {
+const ISPPerformance = (props) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
+  const [province, setSortProvince] = useState("انتخاب کنید");
+  const [provinceData, setProvinceData] = useState(ProvincesCompare);
+  const [selectedProvince, setSelectedProvince] = useState("");
+
   const [visibleRows, setVisibleRows] = useState(6);
 
   const sortFunctions = useMemo(
@@ -103,22 +110,35 @@ const ISPCompareTable = ({ mpCardContainers }) => {
     }),
     []
   );
+  const handleProvinceChange = (e) => {
+    setSelectedProvince(e.target.value);
+    console.log("Selected Province:", e.target.value);
+  };
 
   const sortedISPData = useMemo(() => {
+    // Find the ISPs associated with the selected province
+    let provinceISPs = ProvincesCompare.find(
+      (p) => p.name === selectedProvince
+    )?.ISPs;
+
+    // If there are no ISPs for the selected province or if no province is selected, fall back to RawISPData
+    let dataToSort = provinceISPs || RawISPData;
+
     const sortFunction = sortFunctions[sortCriteria];
     if (sortFunction) {
-      return [...RawISPData].sort(sortFunction);
+      return [...dataToSort].sort(sortFunction);
     }
-    return RawISPData;
-  }, [sortCriteria]);
-
-  const handleShowMore = () => {
-    setVisibleRows((prev) => prev + 2);
-  };
+    return dataToSort;
+  }, [sortCriteria, selectedProvince]);
 
   return (
     <CardContainer
-      sx={{ flex: 1, paddingX: mpCardContainers, paddingY: "1.75rem" }}
+      sx={{
+        flex: 1,
+        paddingX: mpCardContainers,
+        paddingY: "1.75rem",
+        width: "100%",
+      }}
     >
       <Box
         sx={{
@@ -135,44 +155,58 @@ const ISPCompareTable = ({ mpCardContainers }) => {
         >
           رتبه بندی ISPها
         </Typography>
-        <ViewDetailsButton target="/isp-performance" />
+        <Box display={"flex"} alignItems={"center"}>
+          <Typography>استان مورد نظر:</Typography>
+          <Select
+            labelId="change-province-label"
+            id="change-province"
+            value={province}
+            onChange={handleProvinceChange}
+            displayEmpty
+            sx={{
+              borderRadius: "1.25rem",
+              marginLeft: "max(10rem, 2vw)",
+              marginRight: "0.5rem",
+            }}
+            renderValue={(selectedValue) =>
+              selectedValue ? selectedValue : "انتخاب کنید"
+            }
+          >
+            {provinceData.map((provinceItem) => (
+              <MenuItem key={provinceItem.name} value={provinceItem.name}>
+                {provinceItem.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <Typography> چینش براساس:</Typography>
+
+          <Select
+            value={sortCriteria}
+            onChange={(e) => setSortCriteria(e.target.value)}
+            variant="outlined"
+            color="primary"
+            sx={{
+              marginRight: "0.5rem",
+              color: "#676767",
+              borderRadius: "1.25rem",
+              float: "left",
+            }}
+          >
+            {selectionItems.map((item) => (
+              <MenuItem
+                key={item}
+                sx={{ color: "textColor.light" }}
+                value={item}
+              >
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
       </Box>
-      <ISPTable ISPdata={sortedISPData.slice(0, visibleRows)} />
-      {visibleRows < RawISPData.length && (
-        <Typography
-          variant="body1"
-          sx={{
-            color: "textColor.main",
-            textAlign: "center",
-            marginY: "1rem",
-            cursor: "pointer",
-            width: "100%",
-          }}
-          onClick={handleShowMore}
-        >
-          -- مشاهده بیشتر --
-        </Typography>
-      )}
-      <Select
-        value={sortCriteria}
-        onChange={(e) => setSortCriteria(e.target.value)}
-        variant="outlined"
-        color="primary"
-        sx={{
-          marginRight: "0.5rem",
-          color: "#676767",
-          borderRadius: "1.25rem",
-          float: "left",
-        }}
-      >
-        {selectionItems.map((item) => (
-          <MenuItem key={item} sx={{ color: "textColor.light" }} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </Select>
+      <ISPTable isDetail={true} ISPdata={sortedISPData.slice(0, visibleRows)} />
     </CardContainer>
   );
 };
 
-export default ISPCompareTable;
+export default ISPPerformance;

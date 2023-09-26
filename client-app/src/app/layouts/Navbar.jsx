@@ -3,7 +3,7 @@ import React from "react";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { Menu as MenuIcon } from "@mui/icons-material";
-
+import "./Navbar.css";
 const Navbar = ({ toggleOpenMenu, openNav }) => {
   return (
     <Box

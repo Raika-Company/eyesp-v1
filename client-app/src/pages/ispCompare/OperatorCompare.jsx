@@ -1,9 +1,7 @@
-import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
-import NewLogo from "../../app/common/NewLogo";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
@@ -11,7 +9,7 @@ import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import "./OperatorPerformance.css"
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ rendered, title, data }) {
@@ -101,7 +99,7 @@ function generateRandomData() {
   }
   return data;
 }
-const OperatorPerformance = () => {
+const OperatorCompare = () => {
   const theme = useTheme();
   const [formControlItems, setFormControlItems] = useState("");
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
@@ -186,13 +184,10 @@ const OperatorPerformance = () => {
                 <InputLabel id={`demo-select-small-label-${index}`}>
                   {items}
                 </InputLabel>
-                <Select
+                <ContainedSelect
                   labelId={`demo-select-small-label-${index}`}
                   id={`demo-select-small-${index}`}
                   label={items}
-                  sx={{
-                    borderRadius: "25px",
-                  }}
                   onChange={handleChange}
                 >
                   <MenuItem disabled>
@@ -203,7 +198,7 @@ const OperatorPerformance = () => {
                       {menuItem}
                     </MenuItem>
                   ))}
-                </Select>
+                </ContainedSelect>
               </FormControl>
             ))}
           </Box>
@@ -233,4 +228,4 @@ const OperatorPerformance = () => {
   );
 };
 
-export default OperatorPerformance;
+export default OperatorCompare;

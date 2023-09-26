@@ -1,14 +1,23 @@
 import React, { lazy } from "react";
 
-const SpeedTest = lazy(() => import("../../pages/Speedtest/SpeedTest"));
+import SpeedTest from "../../pages/speedtest/SpeedTest";
 
-const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
-const Information = lazy(() => import("../../pages/information/Information"));
-const OperatorPerformance = lazy(() =>
-  import("../../pages/ispPerformance/OperatorPerformance")
+const Dashboard = lazy(() =>
+  import("../../pages/dashboard/Dashboard")
+);
+const Information = lazy(() =>
+  import("../../pages/information/Information")
+);
+const OperatorCompare = lazy(() =>
+  import("../../pages/ispCompare/OperatorCompare")
+);
+const ISPPerformance = lazy(() =>
+  import("../../pages/ispPerformance/ISPPerformance")
 );
 
-const TestHistory = lazy(() => import("../../pages/testHistory/TestHistory"));
+const TestHistory = lazy(() =>
+  import("../../pages/testHistory/TestHistory")
+);
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
@@ -59,9 +68,17 @@ export const mainRoutes = [
     robots: "index, follow",
   },
   {
-    path: "/operator-performance",
-    element: <OperatorPerformance />,
-    title: "Operator Performance | TIC Radar",
+    path: "/operator-compare",
+    element: <OperatorCompare />,
+    title: "Operator compare | TIC Radar",
+    description: "Review all your past internet speed tests in one place.",
+    keywords: "test history, speed results, past tests",
+    robots: "index, follow",
+  },
+  {
+    path: "/isp-performance",
+    element: <ISPPerformance />,
+    title: "isp performance | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
     robots: "index, follow",
