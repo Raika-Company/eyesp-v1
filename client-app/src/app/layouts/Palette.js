@@ -114,48 +114,31 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
+      main: "#008EDD",
     },
     secondary: {
-      main: "#DB7F12",
-      dark: "#6c6c6c",
-      light: "#afafaf"
+      main: "#D5E3F1",
     },
     error: {
-      main: "#EE0B0B",
-      dark: "#a60707",
-      light: "#a60707",
+      main: "#FF8A35",
     },
     warning: {
-      main: "#FF630B",
-      dark: "#FF630B",
-      light: "#ff823b"
+      main: "#FCD2B3",
     },
     info: {
-      main: "#126AED",
-      dark: "#0C4AA5",
-      light: "#4187f0"
+      main: "#C4E9FE",
     },
     success: {
-      main: "#14A784",
-      dark: "#0e745c",
-      light: "#0e745c"
+      main: "#CAE4C4",
     },
-    border: {
-      main: "#E3E3E6",
-      dark: "#9e9ea1",
-      light: "#e8e8eb"
-    },
-    textColor: {
-      main: "#A4A4A4",
-      light: "#b6b6b8",
-      dark: "#5E5E5E",
-      subTitle: "#dcdcdc"
+    text: {
+      main: "#676767",
+      textBlack: "#2C2C2C",
+      textInfo: "#3E6389",
+      subTitle: "#878787"
     },
     background: {
-      default: "linear-gradient(195deg, #FCFCFF 24.09%, #EBEBEB 100%)",
+      default: "#E8F1F9",
     },
   },
 });
@@ -171,53 +154,31 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
+      main: "#005A99",
     },
     secondary: {
-      main: "#f8a665",
-      dark: "#bfbfbf",
-      light: "#e0e0e0"
+      main: "#1A2D3A"
     },
     error: {
-      main: "#f77676",
-      dark: "#d36565",
-      light: "#d36565"
+      main: "#FF5A00",
     },
     warning: {
-      main: "#FF8E4D",
-      dark: "#FF8E4D",
-      light: "#ffa56d"
+      main: "#FFA341",
     },
     info: {
-      main: "#6798f8",
-      dark: "#527bcd",
-      light: "#8bb2fa"
+      main: "#86BBD8",
     },
     success: {
-      main: "#4ecdab",
-      dark: "#3fb391",
-      light: "#3fb391"
-    },
-    border: {
-      main: "#9e9ea1",
-      dark: "#6b6b6e",
-      light: "#b4b4b8"
-    },
-    background: {
-      default: "#181D23",
-    },
-    textColor: {
-      main: "#b6b6b8",
-      light: "#b6b6b8",
-      dark: "#5E5E5E",
-      subTitle: "#5E5E5E"
-
+      main: "#83A673",
     },
     text: {
-      primary: "#FFF",
-      secondary: "#BBB",
+      main: "#C0C0C0",
+      textBlack: "#E0E0E0",
+      textInfo: "#9EB5C1",
+      subTitle: "#A0A0A0" 
+    },
+    background: {
+      default: "#121212",
     },
   },
 });
