@@ -1,12 +1,7 @@
 // NavSection.js
 import React, { useEffect } from "react";
 import { Box } from "@mui/system";
-import {
-  IconButton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
   Home as HomeIcon,
   Speed as SpeedIcon,
@@ -50,9 +45,7 @@ const NAV_ITEMS = [
   },
   {
     label: "اپراتور من",
-    icon: (color) => (
-      <Logo color={color} />
-    ),
+    icon: (color) => <Logo color={color} />,
     path: "/my-isp",
     toggle: "isMyOperator",
   },
@@ -83,54 +76,54 @@ const iconColor = (path, location) =>
 
 const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
   const theme = useTheme();
-  const isMdDown = useMediaQuery(theme.breakpoints.down('md'))
+  const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
 
-  return (<Box
-    key={item.label}
-    sx={{
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      margin: "10px 0",
-      borderRadius: '1rem',
-      padding: '0 .5rem',
-      '&:hover': {
-        background: '#f5f5f5',
-      },
-      transition: 'all .2s linear'
-    }}
-    onClick={() => {
-      if (isMdDown) setOpenNav(openNav => !openNav)
-      toggleNavState(item.path)
-    }}
-  >
-    <IconButton sx={{
-      '&:hover': {
-        background: 'none'
-      }
-    }} >
-      {item.icon(iconColor(item.path, location))}
-    </IconButton>
-    {openNav && (
-      <Typography
-        component="span"
-        variant="h6"
+  return (
+    <Box
+      key={item.label}
+      sx={{
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        margin: "10px 0",
+        borderRadius: "1rem",
+        padding: "0 .5rem",
+        "&:hover": {
+          background: "#f5f5f5",
+        },
+        transition: "all .2s linear",
+      }}
+      onClick={() => {
+        if (isMdDown) setOpenNav((openNav) => !openNav);
+        toggleNavState(item.path);
+      }}
+    >
+      <IconButton
         sx={{
-          visibility: openNav ? "visible" : "hidden",
-          opacity: openNav ? 1 : 0,
-          transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
-          color: iconColor(item.path, location),
-<<<<<<< HEAD
-          width: "120px",
-=======
-          cursor: 'pointer'
->>>>>>> 900a9179f6856b4f431af93c1eec5856f82311f2
+          "&:hover": {
+            background: "none",
+          },
         }}
       >
-        {item.label}
-      </Typography>
-    )}
-  </Box>)
+        {item.icon(iconColor(item.path, location))}
+      </IconButton>
+      {openNav && (
+        <Typography
+          component="span"
+          variant="h6"
+          sx={{
+            visibility: openNav ? "visible" : "hidden",
+            opacity: openNav ? 1 : 0,
+            transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
+            color: iconColor(item.path, location),
+            cursor: "pointer",
+          }}
+        >
+          {item.label}
+        </Typography>
+      )}
+    </Box>
+  );
 };
 
 const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
@@ -143,12 +136,12 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
     history(path);
   };
 
-  const { key } = useLocation()
+  const { key } = useLocation();
   useEffect(() => {
-    !isMdUp && setOpenNav(false)
+    !isMdUp && setOpenNav(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key]);
 
   const isVisible = openNav || isMdUp;
 

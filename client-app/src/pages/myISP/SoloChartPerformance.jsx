@@ -20,8 +20,11 @@ import leftArrow from "../../app/assets/image/leftArrow.svg";
 import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 
 const SoloChartPerformance = () => {
+  const radialBackground =
+    "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
   const buttons = [
     { label: "سرعت دانلود", width: "80%" },
     { label: "سرعت آپلود", width: "80%" },
@@ -30,13 +33,12 @@ const SoloChartPerformance = () => {
   ];
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [age, setAge] = useState("1400");
   const [rendered, setRendered] = useState(false);
   const [chartData, setChartData] = useState(data[0].data);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
-  const radialBackground =
-    "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
 
   const handleButtonClick = (index) => {
     setClickedButtonIndex(index);
@@ -114,14 +116,14 @@ const SoloChartPerformance = () => {
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
-        pt: isMdScreen ? "1.3rem" : "3.5rem",
+        pt: isLgScreen ? "1.3rem" : "3.5rem",
       }}
     >
       <Typography
         sx={{
-          fontSize: isMdScreen ? "1.4rem" : "1.5rem",
-          mt: isMdScreen ? "0.4rem" : "",
-          display: isMdScreen ? "none" : "flex",
+          fontSize: isLgScreen ? "1.4rem" : "1.5rem",
+          mt: isLgScreen ? "0.4rem" : "",
+          display: isLgScreen ? "none" : "flex",
         }}
         fontFamily="PeydaSemibold"
         color="#2C2C2C"
@@ -190,7 +192,7 @@ const SoloChartPerformance = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid sx={{ display: isMdScreen ? "none" : "" }} item xs={12} md={3}>
+        <Grid sx={{ display: isLgScreen ? "none" : "" }} item xs={12} md={3}>
           <Box
             display={"flex"}
             flexDirection={"column"}
@@ -219,18 +221,18 @@ const SoloChartPerformance = () => {
             </ButtonGroup>
             <Typography>سال:</Typography>
             <FormControl sx={{ width: "50%" }}>
-              <InputLabel id="demo-simple-select-label">سال</InputLabel>
-              <Select
+              <ContainedSelect
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={age}
                 label="سال"
                 onChange={handleChange}
+                displayEmpty
               >
                 <MenuItem value="1400">1400</MenuItem>
                 <MenuItem value="1401">1401</MenuItem>
                 <MenuItem value="1402">1402</MenuItem>
-              </Select>
+              </ContainedSelect>
             </FormControl>
             <Box display={"flex"} justifyContent={"center"} gap={2}>
               <Button
