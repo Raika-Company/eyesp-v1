@@ -340,7 +340,7 @@ const SpeedTest = () => {
             marginX: "auto",
             height: "20%",
             backgroundColor: "#FFF",
-            marginBottom: "1rem"
+            marginBottom: "1rem"    
           }}
         >
           <Box display="flex" justifyContent="space-evenly" width="100%">

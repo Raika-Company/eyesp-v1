@@ -15,12 +15,8 @@ import {
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import "./Navbar.css";
-=======
 import Logo from "./logo";
 
->>>>>>> 900a9179f6856b4f431af93c1eec5856f82311f2
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
