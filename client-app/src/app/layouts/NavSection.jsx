@@ -78,31 +78,41 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
 
-  return (
-    <Box
-      key={item.label}
-      sx={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        margin: "10px 0",
-        borderRadius: "1rem",
-        padding: "0 .5rem",
-        "&:hover": {
-          background: "#f5f5f5",
-        },
-        transition: "all .2s linear",
-      }}
-      onClick={() => {
-        if (isMdDown) setOpenNav((openNav) => !openNav);
-        toggleNavState(item.path);
-      }}
-    >
-      <IconButton
+  return (<Box
+    key={item.label}
+    sx={{
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      margin: "10px 0",
+      borderRadius: '1rem',
+      '&:hover': {
+        background: '#f5f5f5',
+      },
+      transition: 'all .2s linear'
+    }}
+    onClick={() => {
+      if (isMdDown) setOpenNav(openNav => !openNav)
+      toggleNavState(item.path)
+    }}
+  >
+    <IconButton sx={{
+      '&:hover': {
+        background: 'none'
+      }
+    }} >
+      {item.icon(iconColor(item.path, location))}
+    </IconButton>
+    {openNav && (
+      <Typography
+        component="span"
+        variant="h6"
         sx={{
-          "&:hover": {
-            background: "none",
-          },
+          visibility: openNav ? "visible" : "hidden",
+          opacity: openNav ? 1 : 0,
+          transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
+          color: iconColor(item.path, location),
+          cursor: 'pointer'
         }}
       >
         {item.icon(iconColor(item.path, location))}
@@ -154,9 +164,7 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       backgroundColor="white"
-      alignSelf="stretch"
-      sx={{ fontSize: "0.9rem", ml: isVisible ? "0em" : "1.2em" }}
-      className={openNav ? "navbox open" : "navbox"}
+      sx={{ fontSize: "0.9rem" }}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (
         <NavItem

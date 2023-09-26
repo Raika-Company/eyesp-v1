@@ -65,12 +65,11 @@ const ISPTable = ({ ISPdata, isDetail }) => {
         backgroundColor: "transparent",
         boxShadow: 0,
         marginBottom: "1rem",
-        overflow: "hidden",
       }}
     >
       {isDetail ? (
         <>
-          <RowBox sx={{ width: "98%" }}>
+          <RowBox>
             <Typography>رتبه</Typography>
             <Typography>نام</Typography>
             <Box
@@ -128,10 +127,10 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               <Typography sx={{ color: "primary" }}>
                 {Items.disturbance}
               </Typography>
+              <Typography>{Items.upload}</Typography>
               <Typography>{Items.pings}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.speed}</Typography>
+              <Typography>{Items.packet}</Typography>
+              <Typography>{Items.performance}</Typography>
               <IconButton aria-label={`more info about ${Items.ISPname}`}>
                 <WestIcon />
               </IconButton>
