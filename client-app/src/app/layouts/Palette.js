@@ -17,42 +17,90 @@ const commonTypography = (fontSize, fontSizeMd) => ({
  */
 const baseTheme = createTheme({
   typography: {
-    ...['h1', 'h2'].reduce((acc, variant) => {
-      acc[variant] = {
-        ...commonTypography('18px', '24px'),
-        fontFamily: "PeydaSemiBold",
-      };
-      return acc;
-    }, {}),
-    ...['h3', 'h4'].reduce((acc, variant) => {
-      acc[variant] = {
-        ...commonTypography('14px', '20px'),
-        fontFamily: variant === 'h3' ? "PeydaRegular" : "PeydaSemiBold",
-      };
-      return acc;
-    }, {}),
-    ...['h5', 'h6', 'body1', 'body2', 'button'].reduce((acc, variant) => {
-      acc[variant] = {
-        ...commonTypography('14px', '16px'),
-        fontFamily: "Peyda",
-      };
-      return acc;
-    }, {}),
+    h1: {
+      fontSize: '18px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '24px',
+      },
+      fontFamily: "PeydaSemiBold"
+    },
+    h2: {
+      fontSize: '18px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '24px',
+      },
+      fontFamily: "PeydaLight"
+    },
+    h3: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '20px',
+      },
+      fontFamily: "PeydaRegular"
+    },
+    h4: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '20px',
+      },
+      fontFamily: "PeydaSemiBold"
+    },
+    h5: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
+      fontFamily: "PeydaLight"
+    },
+    h6: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
+      fontFamily: "PeydaRegular"
+    },
+    body1: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
+      fontFamily: "Peyda"
+    },
+    body2: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
+      fontFamily: "Peyda"
+    },
     subtitle1: {
       fontSize: '14px',
-      fontFamily: "PeydaRegular",
+      fontFamily: "PeydaRegular"
     },
     subtitle2: {
       fontSize: '14px',
-      fontFamily: "PeydaLight",
+      fontFamily: "PeydaLight"
+    },
+    button: {
+      fontSize: '14px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
+      fontFamily: "PeydaSemiBold"
     },
     mainDigits: {
-      ...commonTypography('24px', '40px'),
-      fontFamily: "PeydaSemiBold",
+      fontSize: '24px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '40px',
+      },
+      fontFamily: "PeydaSemiBold"
     },
     chartTitle: {
-      ...commonTypography('16px', '20px'),
-      fontFamily: "PeydaLight",
+      fontSize: '16px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '20px',
+      },
+      fontFamily: "PeydaLight"
     },
     fontFamily: "Peyda",
   },
@@ -175,7 +223,7 @@ export const darkTheme = createTheme({
       main: "#C0C0C0",
       textBlack: "#E0E0E0",
       textInfo: "#9EB5C1",
-      subTitle: "#A0A0A0" 
+      subTitle: "#A0A0A0"
     },
     background: {
       default: "#121212",
