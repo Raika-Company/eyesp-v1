@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Typography } from "@mui/material";
 
 const InfoBox = ({ iconSrc, title, value, isColumn }) => (
@@ -13,11 +12,5 @@ const InfoBox = ({ iconSrc, title, value, isColumn }) => (
     </Typography>
   </Box>
 );
-
-InfoBox.propTypes = {
-  iconSrc: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-};
 
 export default InfoBox;
