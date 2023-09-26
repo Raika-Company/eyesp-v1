@@ -99,15 +99,7 @@ const Information = () => {
           alignItems: "center",
         }}
       >
-        <Typography
-          component="h2"
-          gutterBottom
-          sx={{
-            fontSize: isSmScreen ? "1.7rem" : "2rem",
-            pt: "1rem",
-            fontWeight: 700,
-          }}
-        >
+        <Typography component="h2" gutterBottom variant="h1">
           مفاهیم
         </Typography>
         <Box
@@ -196,7 +188,6 @@ const DefinitionTerm = ({ title, children }) => {
         borderBottom: isSmScreen ? "1px solid #E2E4E7" : "none",
         display: "flex",
         justifyContent: "space-between",
-        fontSize: "1.1rem",
         backgroundColor: isSmScreen
           ? "transparent"
           : theme.palette.mode === "dark"
@@ -216,16 +207,16 @@ const DefinitionTerm = ({ title, children }) => {
       }}
     >
       <Typography
+        variant="h4"
         sx={{
           width: isSmScreen ? "100px" : "27%",
           mr: isSmScreen ? "0" : "1rem",
         }}
         component="span"
-        fontFamily="PeydaBold"
       >
         {title}
       </Typography>
-      <Typography sx={{ width: isSmScreen ? "207px" : "100%" }}>
+      <Typography variant="h5" sx={{ width: isSmScreen ? "207px" : "100%" }}>
         {children}
       </Typography>
     </Typography>
