@@ -2,41 +2,58 @@ import {
   createTheme
 } from "@mui/material";
 
-/**
- * Create typography style with given font size and weight.
- *
- * @function
- * @param {string} fontSize - The font size.
- * @param {string} fontFamily - The font family.
- * @returns {Object} A typography style object.
- */
-const createTypography = (fontSize, fontFamily,) => ({
-  fontSize: fontSize,
-  fontFamily: fontFamily,
+var theme = createTheme();
 
+const commonTypography = (fontSize, fontSizeMd) => ({
+  fontSize,
+  [theme.breakpoints.up('md')]: {
+    fontSize: fontSizeMd,
+  },
 });
 
 /**
  * Base theme configuration.
  * @type {Object}
  */
-const baseTheme = {
+const baseTheme = createTheme({
   typography: {
-    h1: createTypography("clamp(1.5rem, 2.5rem + 0.0781vw, 4rem)", "PeydaBold"),
-    h2: createTypography("clamp(1.125rem, 1.875rem + 0.0586vw, 3rem)", "PeydaBold"),
-    h3: createTypography("clamp(1.125rem, 1.125rem + 0.0265vw, 2.5rem)", "PeydaBold"),
-    h4: createTypography("clamp(1rem, 1rem + 0.0209vw, 1.875rem)", "PeydaBold"),
-    h5: createTypography("clamp(1rem, 1rem + 0.0176vw, 1.875rem)", "PeydaSemibold"),
-    h6: createTypography("clamp(1rem, 1rem + 0.0152vw, 1.5rem)", "PeydaSemibold"),
-    body1: createTypography("clamp(1rem, 1rem + 0.0129vw, 1.5rem)", "PeydaRegular"),
-    body2: createTypography("clamp(0.9rem, 0.9rem + 0.0115vw, 1.2rem)", "Peyda"),
-    subtitle1: createTypography("clamp(0.8rem, 0.8rem + 0.0076vw, 1rem)", "Peyda"),
-    subtitle2: createTypography("clamp(0.81rem, 0.81rem + 0.0073vw, 1rem)", "PeydaLight"),
-    smallText: createTypography("clamp(0.75rem, 0.75rem + 0.090vw, 1rem)", "PeydaSemibold"),
-
-    button: createTypography("clamp(0.6rem,0.6rem + 3vw, 1.1rem)", "PeydaSemibold"),
-    caption: createTypography("1.65rem"),
-    overline: createTypography("clamp(1rem,1rem + 3vw,0.5rem)"),
+    ...['h1', 'h2'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('18px', '24px'),
+        fontFamily: "PeydaSemiBold",
+      };
+      return acc;
+    }, {}),
+    ...['h3', 'h4'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('14px', '20px'),
+        fontFamily: variant === 'h3' ? "PeydaRegular" : "PeydaSemiBold",
+      };
+      return acc;
+    }, {}),
+    ...['h5', 'h6', 'body1', 'body2', 'button'].reduce((acc, variant) => {
+      acc[variant] = {
+        ...commonTypography('14px', '16px'),
+        fontFamily: "Peyda",
+      };
+      return acc;
+    }, {}),
+    subtitle1: {
+      fontSize: '14px',
+      fontFamily: "PeydaRegular",
+    },
+    subtitle2: {
+      fontSize: '14px',
+      fontFamily: "PeydaLight",
+    },
+    mainDigits: {
+      ...commonTypography('24px', '40px'),
+      fontFamily: "PeydaSemiBold",
+    },
+    chartTitle: {
+      ...commonTypography('16px', '20px'),
+      fontFamily: "PeydaLight",
+    },
     fontFamily: "Peyda",
   },
   components: {
@@ -82,13 +99,8 @@ const baseTheme = {
         },
       }
     },
-    MuiTableCell: {
-      styleOverrides: {
-        root: createTypography("1.65rem", 600),
-      },
-    },
   },
-};
+});
 
 
 /**
