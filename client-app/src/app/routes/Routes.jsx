@@ -1,9 +1,13 @@
 import React, { lazy } from "react";
 
-const SpeedTest = lazy(() => import("../../pages/Speedtest/SpeedTest"));
+import SpeedTest from "../../pages/speedtest/SpeedTest";
 
-const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
-const Information = lazy(() => import("../../pages/information/Information"));
+const Dashboard = lazy(() =>
+  import("../../pages/dashboard/Dashboard")
+);
+const Information = lazy(() =>
+  import("../../pages/information/Information")
+);
 const OperatorCompare = lazy(() =>
   import("../../pages/ispCompare/OperatorCompare")
 );
@@ -11,7 +15,9 @@ const ISPPerformance = lazy(() =>
   import("../../pages/ispPerformance/ISPPerformance")
 );
 
-const TestHistory = lazy(() => import("../../pages/testHistory/TestHistory"));
+const TestHistory = lazy(() =>
+  import("../../pages/testHistory/TestHistory")
+);
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 

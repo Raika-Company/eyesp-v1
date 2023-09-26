@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import isp from "../../app/assets/image/isp.svg";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./Navbar.css";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
@@ -115,6 +115,7 @@ const NavItem = ({ item, openNav, toggleNavState, location }) => (
           opacity: openNav ? 1 : 0,
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
+          width: "120px",
         }}
       >
         {item.label}
@@ -145,6 +146,8 @@ const NavSection = ({ startIndex, endIndex, openNav }) => {
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       backgroundColor="white"
       alignSelf="stretch"
+      sx={{ fontSize: "0.9rem", ml: isVisible ? "0em" : "1.2em" }}
+      className={openNav ? "navbox open" : "navbox"}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (
         <NavItem
