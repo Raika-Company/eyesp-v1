@@ -93,7 +93,6 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
       alignItems: "center",
       margin: "10px 0",
       borderRadius: '1rem',
-      padding: '0 .5rem',
       '&:hover': {
         background: '#f5f5f5',
       },
@@ -120,11 +119,7 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
           opacity: openNav ? 1 : 0,
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
-<<<<<<< HEAD
-          width: "120px",
-=======
           cursor: 'pointer'
->>>>>>> 900a9179f6856b4f431af93c1eec5856f82311f2
         }}
       >
         {item.label}
@@ -161,9 +156,7 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       backgroundColor="white"
-      alignSelf="stretch"
-      sx={{ fontSize: "0.9rem", ml: isVisible ? "0em" : "1.2em" }}
-      className={openNav ? "navbox open" : "navbox"}
+      sx={{ fontSize: "0.9rem" }}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (
         <NavItem
