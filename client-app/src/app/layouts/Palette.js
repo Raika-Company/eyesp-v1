@@ -183,7 +183,8 @@ export const lightTheme = createTheme({
       main: "#676767",
       textBlack: "#2C2C2C",
       textInfo: "#3E6389",
-      subTitle: "#878787"
+      subTitle: "#878787",
+      chartTitleColor: "#7D93AA"
     },
     background: {
       default: "#E8F1F9",

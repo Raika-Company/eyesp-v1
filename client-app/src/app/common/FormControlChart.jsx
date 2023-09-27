@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   FormControl,
-  InputLabel,
   MenuItem,
   Typography,
   useMediaQuery,
@@ -43,19 +42,19 @@ const FormControlChart = () => {
       }}
     >
       <Typography
+        variant="h1"
+        color="text.textBlack"
+        gutterBottom
         sx={{
-          fontSize: isLgScreen ? "1.4rem" : "1.5rem",
-          mt: isLgScreen ? "0.9rem" : "",
+          mt: isLgScreen ? "0.9rem" : "0",
         }}
         fontFamily="PeydaSemibold"
-        color="#2C2C2C"
-        gutterBottom
       >
         نمودار عملکرد اپراتور
       </Typography>
       <Button
-        sx={{ color: "#008EDD", fontSize: "1rem" }}
-        variant="text"
+        sx={{ color: "primary.main" }}
+        variant="button"
         component={Link}
         to="/operator-compare"
       >

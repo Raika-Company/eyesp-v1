@@ -50,7 +50,7 @@ const CategorySection = ({ title, category }) => {
 
   return (
     <>
-      <Typography fontFamily="1.5rem" fontWeight="PeydaLight" mt={3} mb={1}>
+      <Typography color="text.textBlack" variant="h2" mt={3} mb={1}>
         {title}
       </Typography>
       <Carousel itemsToShow={4} itemsToShowSm={1}>
@@ -79,7 +79,6 @@ const NewTestHistory = () => {
     lastMonth: [],
     older: [],
   });
-
 
   const updateTestHistory = useCallback(() => {
     const existingResults = JSON.parse(
@@ -119,12 +118,7 @@ const NewTestHistory = () => {
           justifyContent: "space-between",
         }}
       >
-        <Typography
-          fontFamily="PeydaSemibold"
-          fontSize="1.5rem"
-          color="#2C2C2C"
-          gutterBottom
-        >
+        <Typography variant="h1" color="text.textBlack" gutterBottom>
           تست های گذشته
         </Typography>
         <Box display="flex" alignItems="center" gap="1.19rem">
@@ -155,10 +149,10 @@ const NewTestHistory = () => {
           </Button> */}
           {isMD ? (
             <>
-              <Typography fontFamily="PeydaRegular" fontSize="1rem">
+              <Typography variant="h6" color="text.textBlack">
                 آدرس IP :
               </Typography>
-              <Typography fontFamily="PeydaRegular" fontSize="1rem">
+              <Typography variant="h6" color="text.textBlack">
                 192.168.0.129
               </Typography>
             </>
@@ -170,11 +164,7 @@ const NewTestHistory = () => {
       {isMD ? (
         <></>
       ) : (
-        <Typography
-          fontFamily="PeydaRegular"
-          fontSize="1rem"
-          marginTop="0.88rem"
-        >
+        <Typography variant="h6" color="text.textBlack" marginTop="0.88rem">
           آدرس IP: 192.168.0.129
         </Typography>
       )}
