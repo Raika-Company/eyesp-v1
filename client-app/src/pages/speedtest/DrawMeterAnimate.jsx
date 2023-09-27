@@ -27,6 +27,7 @@ import React, { useRef, useEffect, useState } from "react";
  * @returns {React.Element} Rendered DrawMeter component.
  */
 
+// test debouncing for making the start and end of the test animated
 const LOWER_BOUND = 0.035
 const UPPER_BOUND = 0.82
 
@@ -128,6 +129,7 @@ function DrawMeterAnimate({
 
     let startTime = null;
 
+    // Animate start of test
     function drawPointerStartAnimate(time) {
       if (!startTime) startTime = time || performance.now()
 
@@ -144,13 +146,12 @@ function DrawMeterAnimate({
       }
     }
 
+    // Animate end of test
     function drawPointerEndAnimate(time) {
       if (!startTime) startTime = time || performance.now()
 
-
       const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 800)), 0);
       const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(savedStatusPoint) * deltaTime) + 0.2
-
 
       if (deltaTime <= 0) {
         startTime = null
@@ -161,14 +162,19 @@ function DrawMeterAnimate({
       }
     }
 
+    // Start of test
     if ((progress <= LOWER_BOUND) && (testState === 1 || testState === 3)) {
       setSavedStatusPoint(mbps)
       drawPointerStartAnimate()
-    } else if ((progress >= UPPER_BOUND && !isEndAnimationStarted)) {
+    }
+    // End of test
+    else if ((progress >= UPPER_BOUND && !isEndAnimationStarted)) {
       setIsEndAnimationStarted(true)
       setSavedStatusPoint(mbps)
       drawPointerEndAnimate()
-    } else {
+    }
+    // Test
+    else {
       drawPointer(nextPointerAngle)
     }
 
