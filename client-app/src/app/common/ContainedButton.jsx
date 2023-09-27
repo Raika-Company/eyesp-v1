@@ -1,12 +1,13 @@
 import { Button, styled } from "@mui/material";
 
 const ContainedButton = styled(Button)(
-  ({ theme, bgColor, bgHover, txtHover }) => ({
+  ({ theme, bgColor, txtColor, bgHover, txtHover }) => ({
     boxShadow: "none",
     borderRadius: "1.3125rem",
     paddingInline: "2em",
     backgroundColor: bgColor,
     borderColor: bgColor,
+    color: txtColor,
     border: "2px solid transparent",
     "&:hover": {
       backgroundColor: bgHover,

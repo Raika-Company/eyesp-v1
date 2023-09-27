@@ -63,7 +63,7 @@ const SpeedTest = () => {
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
   const [status, setStatus] = useState(2);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [isTestEnds, setIsTestEnds] = useState(false);
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [socket, setSocket] = useState(null);
   const [latency, setLatency] = useState(0);
@@ -189,8 +189,8 @@ const SpeedTest = () => {
           );
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
-          setIsGoButtonVisible(true);
-          setOpenDialog(true);
+          // setIsGoButtonVisible(true);
+          setIsTestEnds(true);
         }
       };
       window.speedtest.onend = () => {
@@ -202,7 +202,7 @@ const SpeedTest = () => {
   };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false);
+    setIsTestEnds(false);
   };
 
   return (
@@ -313,16 +313,9 @@ const SpeedTest = () => {
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
             <Typography marginLeft="1rem">نوع تست</Typography>
           </Box>
-          <FloatingResult download={download} upload={upload} latency={latency} />
+          <FloatingResult download={download} upload={upload} latency={latency} isTestEnds={isTestEnds} />
         </Box>
       </CardContainer >
-      <ShowResult
-        openDialog={openDialog}
-        handleCloseDialog={handleCloseDialog}
-        ping={latency}
-        download={download}
-        upload={upload}
-      />
     </>
   );
 };

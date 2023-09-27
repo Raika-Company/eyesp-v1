@@ -98,8 +98,6 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
     >
       <IconButton
         sx={{
-          visibility: openNav ? "visible" : "hidden",
-          opacity: openNav ? 1 : 0,
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
           cursor: 'pointer',
