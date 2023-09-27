@@ -22,6 +22,7 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
+import DrawMeterAnimate from "./DrawMeterAnimate";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -69,6 +70,7 @@ const SpeedTest = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [upload, setUpload] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [testStateNumber, setTestStateNumber] = useState(0)
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
   const [selectedServerURL, setSelectedServerURL] = useState(
@@ -127,10 +129,12 @@ const SpeedTest = () => {
           ulStatus,
           pingStatus,
           jitterStatus,
+          testState
         } = data;
+        setTestStateNumber(testState)
         if (isDl && flag) {
           setDownload(dlStatus);
-          setDownloadProgress(dlStatus);
+          setDownloadProgress(dlProgress);
           if (dlProgress == 1) {
             setIsDl(false);
             flag = false;
@@ -283,7 +287,7 @@ const SpeedTest = () => {
                     zIndex: 2,
                   }}
                 >
-                  <DrawMeter
+                  <DrawMeterAnimate
                     bk={
                       /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                         ? "#45628A"
@@ -291,9 +295,9 @@ const SpeedTest = () => {
                     }
                     fg={"#1B70EE1C"}
                     progress={isDl ? downloadProgress : uploadProgress}
-                    prog={isDl ? downloadProgress : uploadProgress}
                     mbps={isDl ? download : upload}
                     isDl={isDl}
+                    testState={testStateNumber}
                     theme="light"
                   />
                 </div>

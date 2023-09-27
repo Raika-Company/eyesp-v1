@@ -2,7 +2,7 @@ import uploadIcon from "../../app/assets/image/uploadIcon.svg";
 import downloadIcon from "../../app/assets/image/downloadIcon.svg";
 import pingIcon from "../../app/assets/image/clockIcon.svg";
 
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 

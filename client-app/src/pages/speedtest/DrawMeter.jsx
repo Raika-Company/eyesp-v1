@@ -35,6 +35,7 @@ function DrawMeter({
   mbps = 0.0001,
   isDl,
   theme,
+  testState
 }) {
   const canvasRef = useRef(null);
 
