@@ -250,7 +250,7 @@ const ISPPerformance = () => {
             alignItems={"center"}
             width={"100%"}
           >
-            <Typography> چینش براساس:</Typography>
+            <Typography whiteSpace={"nowrap"}> چینش براساس:</Typography>
 
             <Select
               value={sortCriteria}
