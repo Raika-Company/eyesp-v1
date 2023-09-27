@@ -7,7 +7,6 @@ import {
   useTheme,
   keyframes,
 } from "@mui/material";
-import DrawMeter from "./DrawMeter";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
@@ -19,10 +18,12 @@ import { STATUS_MAP } from "./constant";
 import io from "socket.io-client";
 import CardContainer from "../../app/common/CardContainer";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
+import useFetchServers from "../../app/utils/useFetchServers";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
+import axios from "axios";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -73,17 +74,28 @@ const SpeedTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0)
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const [selectedServerURL, setSelectedServerURL] = useState(
-    "https://server1.eyesp.live"
-  );
-  const PING_TIMES = 10;
+  const { isFetchingServers, selectBestServer } = useFetchServers();
+  const [selectedServerURL, setSelectedServerURL] = useState("https://server1.eyesp.live/");
 
   useEffect(() => {
-    fetch("https://server1.eyesp.live/get-ip")
-      .then((res) => res.json())
-      .then((data) => setClientIp(data.ip))
+    axios.get("https://server1.eyesp.live/get-ip")
+      .then((res) => setClientIp(res.data.ip))
       .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
+
+  // useEffect(() => {
+  //   if (selectedServerURL) return;
+
+  //   if (!isFetchingServers) {
+  //     selectBestServer().then(url => {
+  //       if (url) {
+  //         setSelectedServerURL(url);
+  //       }
+  //     });
+  //   }
+  // }, [isFetchingServers, selectBestServer, selectedServerURL]);
+
+  const PING_TIMES = 10;
 
   useEffect(() => {
     const s = socket || io(selectedServerURL);
@@ -207,8 +219,7 @@ const SpeedTest = () => {
       >
         <Box display="flex" justifyContent="space-between">
           <Typography
-            fontFamily="PeydaSemibold"
-            fontSize="1.5rem"
+            variant="h1"
             color="#2C2C2C"
             gutterBottom
           >
@@ -263,20 +274,14 @@ const SpeedTest = () => {
                   alignItems: "center",
                   position: "relative",
                   animation: `${fadeIn} 1s ease-in-out`,
-                  [theme.breakpoints.between("xs", "sm")]: {
-                    width: "100%",
-                  },
-                  [theme.breakpoints.up("md")]: {
-                    width: "80%",
-                  },
-                  height: "clamp(10rem,10rem + 10vmin,16rem)",
-                  width: "clamp(10rem,10rem + 10vmin,16rem)",
+                  height: "100%",
+                  width: "100%",
                 }}
               >
                 <img
                   src={elipse}
                   alt="speed-meter"
-                  style={{ maxWidth: "100%", height: "auto", zIndex: 1 }}
+                  style={{ maxWidth: "100%", height: "100%", zIndex: 1 }}
                 />
                 <div
                   style={{

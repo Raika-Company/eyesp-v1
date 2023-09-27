@@ -6,9 +6,7 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 
 const MyISP = () => {
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-
 
   return (
     <>

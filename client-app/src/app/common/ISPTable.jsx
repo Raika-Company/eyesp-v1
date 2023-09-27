@@ -1,5 +1,12 @@
 import React, { memo } from "react";
-import { styled, keyframes, IconButton, Box, Typography } from "@mui/material";
+import {
+  styled,
+  keyframes,
+  IconButton,
+  Box,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 
 /**
@@ -59,18 +66,20 @@ const gradients = [
  * @returns {JSX.Element}
  */
 const ISPTable = ({ ISPdata, isDetail }) => {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <Box
       sx={{
         backgroundColor: "transparent",
         boxShadow: 0,
         marginBottom: "1rem",
-        overflow: "hidden",
+        width: isMdScreen ? "19em" : "100%",
       }}
     >
       {isDetail ? (
         <>
-          <RowBox sx={{ width: "98%" }}>
+          <RowBox sx={{ width: "80em" }}>
             <Typography>رتبه</Typography>
             <Typography>نام</Typography>
             <Box
@@ -118,6 +127,7 @@ const ISPTable = ({ ISPdata, isDetail }) => {
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
+              sx={{ width: "80em" }}
               key={Items.rank}
               delay={index * 0.2}
               gradient={gradients[index >= 3 ? 3 : index]}
@@ -128,10 +138,10 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               <Typography sx={{ color: "primary" }}>
                 {Items.disturbance}
               </Typography>
+              <Typography>{Items.upload}</Typography>
               <Typography>{Items.pings}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.speed}</Typography>
+              <Typography>{Items.packet}</Typography>
+              <Typography>{Items.performance}</Typography>
               <IconButton aria-label={`more info about ${Items.ISPname}`}>
                 <WestIcon />
               </IconButton>

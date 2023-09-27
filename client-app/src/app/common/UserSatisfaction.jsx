@@ -18,7 +18,7 @@ const UserSatisfaction = () => {
   const radialBackground =
     "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
   const [starsValue, setStarsValue] = useState(0);
-  
+
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [openFeedBackDialog, setOpenFeedBackDialog] = useState(false);
 
@@ -96,11 +96,10 @@ const UserSatisfaction = () => {
             sx={{
               backgroundColor: "#008EDD",
               color: "white",
-              "&:hover": {
-                // backgroundColor: ,
-                color: "#008EDD",
-              },
             }}
+            bgColor="#008EDD"
+            bgHover="white"
+            txtHover="#008EDD"
           >
             ثبت بازخورد
           </ContainedButton>

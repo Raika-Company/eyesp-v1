@@ -5,19 +5,23 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Select,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import data from "../../../public/data/myISPChartData.json";
+import { ContainedSelect } from "./ContainedSelect";
 
 const FormControlChart = () => {
+  const FormControlItems = ["سرعت دانلود", "سال"];
+  const dataChart = [
+    ["سرعت آپلود", "سرعت دانلود", "پینگ", "درصد عملکرد"],
+    ["1402", "1401", "1400"],
+  ];
   const [age, setAge] = useState("1400");
   const [chartData, setChartData] = useState(data[0].data);
-
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const handleChange = (event) => {
     const selectedYear = event.target.value;
@@ -28,25 +32,20 @@ const FormControlChart = () => {
       setChartData(yearData.data);
     }
   };
-  const FormControlItems = ["سرعت دانلود", "سال"];
-  const dataChart = [
-    ["سالیانه", "ماهیانه", "هفتگی"],
-    ["1402", "1401", "1400"],
-  ];
 
   return (
     <Box
       sx={{
-        display: isMdScreen ? "flex" : "none",
+        display: isLgScreen ? "flex" : "none",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        alignItems:"center"
+        alignItems: "center",
       }}
     >
       <Typography
         sx={{
-          fontSize: isMdScreen ? "1.4rem" : "1.5rem",
-          mt: isMdScreen ? "0.9rem" : "",
+          fontSize: isLgScreen ? "1.4rem" : "1.5rem",
+          mt: isLgScreen ? "0.9rem" : "",
         }}
         fontFamily="PeydaSemibold"
         color="#2C2C2C"
@@ -58,7 +57,7 @@ const FormControlChart = () => {
         sx={{ color: "#008EDD", fontSize: "1rem" }}
         variant="text"
         component={Link}
-        to="/operator-performance"
+        to="/operator-compare"
       >
         سایر اپراتورها
         <img
@@ -77,24 +76,25 @@ const FormControlChart = () => {
             }}
             size="small"
           >
-            <InputLabel id={`demo-select-small-label-${index}`}>
-              {items}
-            </InputLabel>
-            <Select
+            <ContainedSelect
               labelId={`demo-select-small-label-${index}`}
               id={`demo-select-small-${index}`}
               label={items}
+              displayEmpty
               sx={{
                 borderRadius: "25px",
               }}
               onChange={handleChange}
             >
+              <MenuItem disabled>
+                <span>{items}</span>
+              </MenuItem>
               {dataChart[index].map((menuItem, menuItemIndex) => (
                 <MenuItem key={menuItemIndex} value={menuItem}>
                   {menuItem}
                 </MenuItem>
               ))}
-            </Select>
+            </ContainedSelect>
           </FormControl>
         ))}
       </Box>

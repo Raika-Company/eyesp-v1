@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 
 /**
  * Raw data for the ISPs for comparison.
@@ -153,16 +154,15 @@ const ISPCompareTable = ({ mpCardContainers }) => {
           -- مشاهده بیشتر --
         </Typography>
       )}
-      <Select
+      <ContainedSelect
         value={sortCriteria}
         onChange={(e) => setSortCriteria(e.target.value)}
         variant="outlined"
-        color="primary"
         sx={{
           marginRight: "0.5rem",
           color: "#676767",
-          borderRadius: "1.25rem",
           float: "left",
+          paddingLeft: "2rem",
         }}
       >
         {selectionItems.map((item) => (
@@ -170,7 +170,7 @@ const ISPCompareTable = ({ mpCardContainers }) => {
             {item}
           </MenuItem>
         ))}
-      </Select>
+      </ContainedSelect>
     </CardContainer>
   );
 };
