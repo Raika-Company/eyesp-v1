@@ -68,6 +68,13 @@ const gradients = [
 const ISPTable = ({ ISPdata, isDetail }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const rowsHead = [
+    { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
+    { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
+    { unit: "(m/s)", label: "پینگ" },
+    { unit: "(m/s)", label: "پکت لاس" },
+    { unit: "(%)", label: "عملکرد" },
+  ];
   return (
     <Box
       sx={{
@@ -80,50 +87,22 @@ const ISPTable = ({ ISPdata, isDetail }) => {
       {isDetail ? (
         <>
           <RowBox sx={{ width: "80em" }}>
-            <Typography>رتبه</Typography>
-            <Typography>نام</Typography>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین دانلود </Typography>
-            </Box>
-
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین آپلود </Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پینگ</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پکت لاس</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>عملکرد</Typography>
-            </Box>
-            <Typography>جزئیات</Typography>
+            <Typography variant="h4">رتبه</Typography>
+            <Typography variant="h4">نام</Typography>
+            {rowsHead.map((row) => {
+              return (
+                <Box
+                  key={row.label}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                >
+                  <Typography variant="h6">{row.unit}</Typography>
+                  <Typography variant="h4">{row.label}</Typography>
+                </Box>
+              );
+            })}
+            <Typography variant="h4">جزئیات</Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
@@ -133,15 +112,15 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               gradient={gradients[index >= 3 ? 3 : index]}
               marginTop="1rem"
             >
-              <Typography>{index + 1}</Typography>
-              <Typography>{Items.ISPname}</Typography>
-              <Typography sx={{ color: "primary" }}>
+              <Typography variant="h5">{index + 1}</Typography>
+              <Typography variant="h5">{Items.ISPname}</Typography>
+              <Typography variant="h5" sx={{ color: "primary" }}>
                 {Items.disturbance}
               </Typography>
-              <Typography>{Items.upload}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.packet}</Typography>
-              <Typography>{Items.performance}</Typography>
+              <Typography variant="h5">{Items.upload}</Typography>
+              <Typography variant="h5">{Items.pings}</Typography>
+              <Typography variant="h5">{Items.packet}</Typography>
+              <Typography variant="h5">{Items.performance}</Typography>
               <IconButton aria-label={`more info about ${Items.ISPname}`}>
                 <WestIcon />
               </IconButton>
@@ -188,5 +167,4 @@ const ISPTable = ({ ISPdata, isDetail }) => {
     </Box>
   );
 };
-
 export default memo(ISPTable);

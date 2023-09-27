@@ -13,6 +13,7 @@ import {
   useMediaQuery,
   MenuItem,
   SvgIcon,
+  keyframes
 } from "@mui/material";
 
 // MUI Icons
@@ -105,52 +106,19 @@ const Province = () => {
     setOpenDialog(false);
   };
 
-  const [fillPercentage, setFillPercentage] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(true);
-
-  const targetPercentage = provinceQuality;
-  const duration = 3000;
-  const startTime = useRef(Date.now());
-
-  const cubicEaseOut = (t, b, c, d) => {
-    t /= d;
-    t--;
-    return c * (t * t * t + 1) + b;
-  };
-
-  const updateFillPercentage = () => {
-    const currentTime = Date.now() - startTime.current;
-    if (currentTime >= duration) {
-      clearInterval(intervalId.current);
-      setIsAnimating(false);
-      setFillPercentage(targetPercentage);
-    } else {
-      const newPercentage = cubicEaseOut(
-        currentTime,
-        0,
-        targetPercentage,
-        duration
-      );
-      setFillPercentage(Math.round(newPercentage));
-    }
-  };
-
-  const intervalId = useRef(null);
-
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    if (isAnimating) {
-      intervalId.current = setInterval(updateFillPercentage, 50);
-    }
-    return () => {
-      clearInterval(intervalId.current);
-    };
-  }, [isAnimating]);
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  useEffect(() => {
-    setIsAnimating(true);
-    setFillPercentage(0);
-    startTime.current = Date.now();
-  }, [provinceQuality]);
+  const fill = keyframes`
+  to {
+    width: ${provinceQuality}%;
+  }
+`;
 
   return (
     <Box width="100%">
@@ -189,6 +157,36 @@ const Province = () => {
             </Typography>
           </Typography>
           <Box display="flex" flexDirection="column" marginTop="5.75rem">
+            <Typography
+              variant="h1"
+              color="primary"
+              sx={{
+                marginRight: `${100 - provinceQuality - 2.6}%`,
+                opacity: visible ? 1 : 0,
+                transition: "opacity 2s",
+              }}
+            >{`${provinceQuality}%`}</Typography>
+            <SvgIcon
+              sx={{
+                opacity: visible ? 1 : 0,
+                transition: "opacity 2s",
+                marginRight: `${100 - provinceQuality - 1.5}%`,
+                marginBottom: "0.25rem",
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="38"
+                viewBox="0 1 14 29"
+                fill="none"
+              >
+                <path
+                  d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                  fill="#008EDD"
+                />
+              </svg>
+            </SvgIcon>
             <Box
               position="relative"
               height="0.875rem"
@@ -198,39 +196,13 @@ const Province = () => {
               sx={{ direction: "ltr" }}
             >
               <Box
-                position="absolute"
-                top="-4rem"
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                transition="left 5s cubic-bezier(0.23, 1, 0.32, 1)"
-                sx={{ left: `${fillPercentage - 3}%` }}
-              >
-                <Typography
-                  fontSize="1.5rem"
-                  fontFamily="PeydaSemiBold"
-                  color="#008EDD"
-                >{`${fillPercentage}%`}</Typography>
-                <SvgIcon>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="38"
-                    viewBox="0 0 18 38"
-                    fill="none"
-                  >
-                    <path
-                      d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
-                      fill="#008EDD"
-                    />
-                  </svg>
-                </SvgIcon>
-              </Box>
-              <Box
                 height="100%"
-                width={`${fillPercentage}%`}
+                width={provinceQuality}
                 backgroundColor="#008EDD"
                 borderRadius="0.65625rem"
+                sx={{
+                  animation: `${fill} 3s cubic-bezier(0.23, 1, 0.32, 1) forwards`,
+                }}
               ></Box>
             </Box>
           </Box>

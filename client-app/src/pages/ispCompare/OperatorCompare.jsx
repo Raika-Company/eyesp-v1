@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import yAxis from "../../app/assets/image/yAxis.svg";
 import axios from "axios";
-import InputLabel from "@mui/material/InputLabel";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
 
@@ -17,7 +16,7 @@ function GridItem({ rendered, title, data }) {
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
         <Box>
-          <Typography variant="h6" gutterBottom>
+          <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
           <Box
@@ -168,7 +167,7 @@ const OperatorCompare = () => {
             justifyContent: "space-evenly",
           }}
         >
-          <Typography fontSize="1.5rem" fontWeight={700}>
+          <Typography color="text.textBlack" variant="h1">
             نمودار عملکرد اپراتور
           </Typography>
           <Box>
@@ -189,10 +188,14 @@ const OperatorCompare = () => {
                   displayEmpty
                 >
                   <MenuItem disabled>
-                    <span>{items}</span>
+                    <span style={{ color: "#676767" }}>{items}</span>
                   </MenuItem>
                   {data[index].map((menuItem, menuItemIndex) => (
-                    <MenuItem key={menuItemIndex} value={menuItem}>
+                    <MenuItem
+                      sx={{ color: "text.main" }}
+                      key={menuItemIndex}
+                      value={menuItem}
+                    >
                       {menuItem}
                     </MenuItem>
                   ))}
