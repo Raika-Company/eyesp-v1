@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import logo from "../../app/assets/image/newLogo.svg";
+import Logo from "../layouts/logo";
 
 const NewLogo = () => {
   const navigate = useNavigate();
@@ -22,14 +23,14 @@ const NewLogo = () => {
       sx={{
         background:
           "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)",
-        cursor: "pointer"
+        cursor: "pointer",
       }}
     >
       <Typography fontFamily="TrenchThin" fontSize="1.5rem">
         EYESP.LIVE
       </Typography>
 
-      <img style={{ width: "36px", height: "36px" }} src={logo} alt="logo" />
+      <Logo />
     </Box>
   );
 };
