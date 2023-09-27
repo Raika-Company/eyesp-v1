@@ -8,96 +8,18 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
-import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
-
+import RawISPData from "./../../../public/data/RowISPData.json";
 /**
  * Raw data for the ISPs for comparison.
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
  */
-const RawISPData = [
-  {
-    rank: "#1",
-    ISPname: "زیتل",
-    disturbance: "1",
-    pings: "49",
-    speed: "28",
-    packet: "12",
-    performance: "23",
-    upload: "24",
-  },
-  {
-    rank: "#2",
-    ISPname: "همراه اول",
-    disturbance: "3",
-    pings: "51",
-    speed: "23",
-    packet: "12",
-    performance: "23",
-    upload: "24",
-  },
-  {
-    rank: "#3",
-    ISPname: "ایرانسل",
-    disturbance: "3",
-    pings: "52",
-    speed: "21",
-    packet: "17",
-    performance: "13",
-    upload: "20",
-  },
-  {
-    rank: "#4",
-    ISPname: "رایتل",
-    disturbance: "4",
-    pings: "59",
-    speed: "19",
-    packet: "22",
-    performance: "13",
-    upload: "20",
-  },
-  {
-    rank: "#5",
-    ISPname: "شاتل",
-    disturbance: "6",
-    pings: "61",
-    speed: "18",
-    packet: "8",
-    performance: "13",
-    upload: "20",
-  },
-  {
-    rank: "#6",
-    ISPname: "مخابرات",
-    disturbance: "8",
-    pings: "61",
-    speed: "16",
-    packet: "25",
-    performance: "12",
-    upload: "20",
-  },
-  {
-    rank: "#7",
-    ISPname: "آسیاتک",
-    disturbance: "9",
-    pings: "64",
-    speed: "14",
-    packet: "12",
-    performance: "23",
-    upload: "24",
-  },
-  {
-    rank: "#8",
-    ISPname: "های وب",
-    disturbance: "11",
-    pings: "53",
-    speed: "19",
-    packet: "23",
-    performance: "20",
-    upload: "14",
-  },
-];
+
+/**
+ * Raw data representing various ISPs and their performance metrics.
+ * @type {Array.<Object>}
+ */
 
 /**
  * Selection items for sorting the ISP data.
@@ -277,7 +199,14 @@ const ISPPerformance = () => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ overflowX: isMdScreen ? "scroll" : "hidden" }}>
+      <Box
+        sx={{
+          overflowX: isMdScreen ? "scroll" : "hidden",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <ISPTable
           isDetail={true}
           ISPdata={sortedISPData.slice(0, visibleRows)}

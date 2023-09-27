@@ -10,7 +10,7 @@ import {
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
-import Logo from "./logo";
+import ISP from "./ISP";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
@@ -44,7 +44,7 @@ const NAV_ITEMS = [
   },
   {
     label: "اپراتور من",
-    icon: (color) => <Logo color={color} />,
+    icon: (color) => <ISP color={color} />,
     path: "/my-isp",
     toggle: "isMyOperator",
   },
