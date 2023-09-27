@@ -75,20 +75,10 @@ const MyService = () => {
           boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
         }}
       >
-        <Typography
-          fontFamily="PeydaSemibold"
-          fontSize="1.5rem"
-          color="#2C2C2C"
-          gutterBottom
-        >
+        <Typography variant="h1" color="text.textBlack" gutterBottom>
           سرویس من
         </Typography>
-        <Typography
-          fontFamily="PeydaLight"
-          fontSize="1.5rem"
-          color="#676767"
-          gutterBottom
-        >
+        <Typography variant="h2" color="text.main" gutterBottom>
           ایرانسل
         </Typography>
         <img
@@ -111,42 +101,24 @@ const MyService = () => {
           ></Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <Typography
-            fontSize="1rem"
-            fontFamily="PeydaLight"
-            sx={{ color: "#676767" }}
-          >
+          <Typography variant="h5" color="text.main">
             وضعیت:{" "}
-            <Typography
-              component="span"
-              fontFamily="PeydaSemiBold"
-              fontSize="1.5rem"
-              sx={{ color: "#008EDD" }}
-            >
+            <Typography component="span" variant="h3" color="primary.main">
               مطلوب
             </Typography>
           </Typography>
-          <Typography
-            fontSize="1rem"
-            fontFamily="PeydaLight"
-            sx={{ color: "#676767" }}
-          >
+          <Typography variant="h5" color="text.main">
             عملکرد کلی
           </Typography>
         </Box>
         <Typography
-          fontFamily="PeydaRegular"
-          fontSize="1.25rem"
-          color="#676767"
+          variant="h3"
+          color="text.main"
           marginTop="2.875rem"
           gutterBottom
         >
           اختلالات موجود (
-          <Typography
-            component="span"
-            fontFamily="PeydaSemiBold"
-            fontSize="1.25rem"
-          >
+          <Typography component="span" variant="h4" color="text.main">
             3 مورد
           </Typography>
           )
@@ -171,7 +143,9 @@ const MyService = () => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography>{disorder.title}</Typography>
+                <Typography variant="h6" color="text.main">
+                  {disorder.title}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>{disorder.detail}</Typography>
@@ -191,11 +165,9 @@ const MyService = () => {
             گزارش اختلال
           </ContainedButton>
           <Button
-            fontSize="1rem"
-            variant="text"
+            variant="h6"
             sx={{
-              color: "#676767",
-              fontFamily: "PeydaRegular",
+              color: "text.main",
               marginRight: "min(1.94rem, 2vw)",
             }}
             onClick={handleDisturbanceClick}

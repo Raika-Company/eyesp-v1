@@ -44,12 +44,7 @@ const UserSatisfaction = () => {
           boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
         }}
       >
-        <Typography
-          fontFamily="PeydaSemibold"
-          fontSize="1.5rem"
-          color="#2C2C2C"
-          gutterBottom
-        >
+        <Typography variant="h1" color="text.textBlack" gutterBottom>
           عملکرد اپراتور
         </Typography>
         <Box
@@ -60,9 +55,8 @@ const UserSatisfaction = () => {
           gap="0.625rem"
         >
           <Typography
-            fontFamily="PeydaRegular"
-            fontSize="1.25rem"
-            color="#676767"
+            variant="h3"
+            color="text.main"
             marginTop="2.875rem"
             gutterBottom
           >
@@ -76,22 +70,15 @@ const UserSatisfaction = () => {
             sx={{ direction: "ltr" }}
           />
           <Box display="flex" justifyContent="center" gap="2rem">
-            <Typography
-              fontFamily="PeydaRegular"
-              fontSize="1rem"
-              sx={{ color: "#676767" }}
-            >
+            <Typography variant="h6" color="text.main">
               (2.5)
             </Typography>
-            <Typography
-              fontFamily="PeydaRegular"
-              fontSize="1rem"
-              sx={{ color: "#676767" }}
-            >
+            <Typography variant="h6" color="text.main">
               10423 نظر
             </Typography>
           </Box>
           <ContainedButton
+            variant="button"
             onClick={handleClickOpenFeedbackDialog}
             sx={{
               backgroundColor: "#008EDD",
@@ -152,22 +139,23 @@ const UserSatisfaction = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="text"
-            color="success"
-            autoFocus
+          <Typography
+            variant="button"
+            color="success.main"
             onClick={handleCloseFeedbackDialog}
+            sx={{ cursor: "pointer" }}
           >
             ثبت بازخورد
-          </Button>
-          <Button
-            variant="text"
-            color="error"
+          </Typography>
+          <Typography
+            variant="button"
+            color="error.main"
             autoFocus
             onClick={handleCloseFeedbackDialog}
+            sx={{ cursor: "pointer" }}
           >
             لغو
-          </Button>
+          </Typography>
         </DialogActions>
       </Dialog>
     </>
