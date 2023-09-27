@@ -28,8 +28,8 @@ import React, { useRef, useEffect, useState } from "react";
  */
 
 // test debouncing for making the start and end of the test animated
-const LOWER_BOUND = 0.035
-const UPPER_BOUND = 0.82
+const LOWER_BOUND = 0.03
+const UPPER_BOUND = 0.90
 
 function DrawMeterAnimate({
   amount,
@@ -41,14 +41,10 @@ function DrawMeterAnimate({
   theme,
   testState
 }) {
-  const [savedStatusPoint, setSavedStatusPoint] = useState(null);
   const [isEndAnimationStarted, setIsEndAnimationStarted] = useState(false)
   const canvasRef = useRef(null);
 
 
-  useEffect(() => {
-    setSavedStatusPoint(0)
-  }, [testState])
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -77,7 +73,7 @@ function DrawMeterAnimate({
 
     // Drawing the trapezoid hand (pointer)
     function drawPointer(angle) {
-      if ((progress <= LOWER_BOUND || progress >= UPPER_BOUND) && (testState === 1 || testState === 3)) ctx.clearRect(0, 0, canvas.width, canvas.height)
+      if ((progress <= LOWER_BOUND || progress >= UPPER_BOUND)) ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
@@ -122,7 +118,7 @@ function DrawMeterAnimate({
       -startAngle + (endAngle - startAngle) * (normalizedMbps) + 0.2;
 
     const getNextPoint = () =>
-      -startAngle + (endAngle - startAngle) * (normalizeMbps(savedStatusPoint)) + 0.2;
+      -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps)) + 0.2;
 
 
     const DURATION = 1500;
@@ -134,7 +130,7 @@ function DrawMeterAnimate({
       if (!startTime) startTime = time || performance.now()
 
       const deltaTime = (time - startTime) / DURATION
-      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(savedStatusPoint) * deltaTime) + 0.2
+      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) + 0.2
 
 
       if (deltaTime >= 1) {
@@ -150,12 +146,12 @@ function DrawMeterAnimate({
     function drawPointerEndAnimate(time) {
       if (!startTime) startTime = time || performance.now()
 
-      const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 800)), 0);
-      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(savedStatusPoint) * deltaTime) + 0.2
+      const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 200)), 0);
+      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) + 0.2
 
       if (deltaTime <= 0) {
         startTime = null
-        drawPointer(0)
+        drawPointer(-startAngle + .2)
       } else {
         drawPointer(currentPointerAngle)
         requestAnimationFrame(drawPointerEndAnimate)
@@ -164,13 +160,11 @@ function DrawMeterAnimate({
 
     // Start of test
     if ((progress <= LOWER_BOUND) && (testState === 1 || testState === 3)) {
-      setSavedStatusPoint(mbps)
       drawPointerStartAnimate()
     }
     // End of test
     else if ((progress >= UPPER_BOUND && !isEndAnimationStarted)) {
       setIsEndAnimationStarted(true)
-      setSavedStatusPoint(mbps)
       drawPointerEndAnimate()
     }
     // Test
@@ -178,8 +172,7 @@ function DrawMeterAnimate({
       drawPointer(nextPointerAngle)
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mbps, isDl, theme, progress, testState, savedStatusPoint]);
+  }, [mbps, isDl, theme, progress, testState, isEndAnimationStarted]);
 
   return (
     <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
