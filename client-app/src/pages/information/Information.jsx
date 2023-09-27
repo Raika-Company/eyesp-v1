@@ -99,7 +99,12 @@ const Information = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h2" gutterBottom variant="h1">
+        <Typography
+          component="h2"
+          gutterBottom
+          variant="h1"
+          color="text.textBlack"
+        >
           مفاهیم
         </Typography>
         <Box
@@ -208,6 +213,7 @@ const DefinitionTerm = ({ title, children }) => {
     >
       <Typography
         variant="h4"
+        color="text.textBlack"
         sx={{
           width: isSmScreen ? "100px" : "27%",
           mr: isSmScreen ? "0" : "1rem",
@@ -216,7 +222,11 @@ const DefinitionTerm = ({ title, children }) => {
       >
         {title}
       </Typography>
-      <Typography variant="h5" sx={{ width: isSmScreen ? "207px" : "100%" }}>
+      <Typography
+        variant="h5"
+        color="text.textBlack"
+        sx={{ width: isSmScreen ? "207px" : "100%" }}
+      >
         {children}
       </Typography>
     </Typography>

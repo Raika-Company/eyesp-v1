@@ -31,8 +31,7 @@ const SoloChartPerformance = () => {
     { label: "پینگ", width: "80%" },
     { label: "درصد عملکرد", width: "80%" },
   ];
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const [age, setAge] = useState("1400");
@@ -120,14 +119,13 @@ const SoloChartPerformance = () => {
       }}
     >
       <Typography
+        variant="h1"
+        color="text.textBlack"
+        gutterBottom
         sx={{
-          fontSize: isLgScreen ? "1.4rem" : "1.5rem",
           mt: isLgScreen ? "0.4rem" : "",
           display: isLgScreen ? "none" : "flex",
         }}
-        fontFamily="PeydaSemibold"
-        color="#2C2C2C"
-        gutterBottom
       >
         نمودار عملکرد اپراتور
       </Typography>
@@ -185,7 +183,9 @@ const SoloChartPerformance = () => {
             <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
           </Box>
           <Box display={"flex"} flexDirection={"column"} mr={1}>
-            <Typography>{getChartLabel()}</Typography>
+            <Typography variant="h3" color="text.main">
+              {getChartLabel()}
+            </Typography>
             <img src={yAxis} alt="yAxis" style={{ height: "100%" }} />
           </Box>
         </Box>
@@ -219,8 +219,13 @@ const SoloChartPerformance = () => {
               </Button>
             ))}
           </ButtonGroup>
-          <FormControl sx={{ width: "50%" }}>
-            <Typography textAlign="center" mb="0.7rem">
+          <FormControl sx={{ width: "70%" }}>
+            <Typography
+              variant="h3"
+              color="text.main"
+              textAlign="center"
+              mb="0.7rem"
+            >
               سال:
             </Typography>
             <ContainedSelect
@@ -236,11 +241,11 @@ const SoloChartPerformance = () => {
               <MenuItem value="1402">1402</MenuItem>
             </ContainedSelect>
           </FormControl>
-          <Box display={"flex"} justifyContent={"center"} gap={2}>
-            <Button variant="text" component={Link} to="/isp-performance">
+          <Box display={"flex"} justifyContent={"space-between"}>
+            <Button variant="text" component={Link} to="/operator-performance">
               سایر اپراتورها
+              <img src={leftArrow} alt="leftArrow" />
             </Button>
-            <img src={leftArrow} alt="leftArrow" />
           </Box>
         </Box>
       </Box>

@@ -122,6 +122,7 @@ const ISPPerformance = () => {
         }}
       >
         <Typography
+          variant="h1"
           color="#2C2C2C"
           fontSize="1.5rem"
           fontFamily="PeydaSemiBold"
@@ -141,7 +142,7 @@ const ISPPerformance = () => {
             alignItems={"center"}
             width={"100%"}
           >
-            <Typography sx={{ whiteSpace: "nowrap" }}>
+            <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
               استان مورد نظر:
             </Typography>
             <Select
@@ -172,7 +173,10 @@ const ISPPerformance = () => {
             alignItems={"center"}
             width={"100%"}
           >
-            <Typography whiteSpace={"nowrap"}> چینش براساس:</Typography>
+            <Typography variant="h4" whiteSpace={"nowrap"}>
+              {" "}
+              چینش براساس:
+            </Typography>
 
             <Select
               value={sortCriteria}

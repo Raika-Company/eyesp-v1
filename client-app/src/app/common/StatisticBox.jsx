@@ -10,11 +10,7 @@ const StatisticBox = ({ background, title, unit, value }) => (
       padding: "1rem",
     }}
   >
-    <Typography
-      color="#676767"
-      fontSize="1.25rem"
-      fontFamily="PeydaRegular"
-    >
+    <Typography color="text.main" variant="h3">
       {title}:
     </Typography>
     <Box
@@ -27,22 +23,10 @@ const StatisticBox = ({ background, title, unit, value }) => (
         alignItems: "baseline",
       }}
     >
-      <Typography
-        color="#676767"
-        fontSize="2rem"
-        fontFamily="PeydaLight"
-        fontWeight="300"
-        component="span"
-      >
+      <Typography variant="h2" color="text.main" component="span">
         {value}
       </Typography>
-      <Typography
-        color="#676767"
-        fontFamily="PeydaRegular"
-        fontSize="1.25rem"
-        component="span"
-        mr={1} 
-      >
+      <Typography variant="h5" color="text.main" component="span" mr={1}>
         {unit}
       </Typography>
     </Box>

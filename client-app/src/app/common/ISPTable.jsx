@@ -87,8 +87,8 @@ const ISPTable = ({ ISPdata, isDetail }) => {
       {isDetail ? (
         <>
           <RowBox sx={{ width: "80em" }}>
-            <Typography>رتبه</Typography>
-            <Typography>نام</Typography>
+            <Typography variant="h4">رتبه</Typography>
+            <Typography variant="h4">نام</Typography>
             {rowsHead.map((row) => {
               return (
                 <Box
@@ -97,12 +97,12 @@ const ISPTable = ({ ISPdata, isDetail }) => {
                   flexDirection={"column"}
                   justifyContent={"center"}
                 >
-                  <Typography>{row.unit}</Typography>
-                  <Typography>{row.label}</Typography>
+                  <Typography variant="h6">{row.unit}</Typography>
+                  <Typography variant="h4">{row.label}</Typography>
                 </Box>
               );
             })}
-            <Typography>جزئیات</Typography>
+            <Typography variant="h4">جزئیات</Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
@@ -112,15 +112,15 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               gradient={gradients[index >= 3 ? 3 : index]}
               marginTop="1rem"
             >
-              <Typography>{index + 1}</Typography>
-              <Typography>{Items.ISPname}</Typography>
-              <Typography sx={{ color: "primary" }}>
+              <Typography variant="h5">{index + 1}</Typography>
+              <Typography variant="h5">{Items.ISPname}</Typography>
+              <Typography variant="h5" sx={{ color: "primary" }}>
                 {Items.disturbance}
               </Typography>
-              <Typography>{Items.upload}</Typography>
-              <Typography>{Items.pings}</Typography>
-              <Typography>{Items.packet}</Typography>
-              <Typography>{Items.performance}</Typography>
+              <Typography variant="h5">{Items.upload}</Typography>
+              <Typography variant="h5">{Items.pings}</Typography>
+              <Typography variant="h5">{Items.packet}</Typography>
+              <Typography variant="h5">{Items.performance}</Typography>
               <IconButton aria-label={`more info about ${Items.ISPname}`}>
                 <WestIcon />
               </IconButton>
