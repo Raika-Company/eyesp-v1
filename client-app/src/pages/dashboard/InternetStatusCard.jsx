@@ -1,5 +1,5 @@
 // External Libraries
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -27,7 +27,6 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 
 // Data & Assets
 import provinces from "./../../../public/data/provinces.json";
-import frame from "../../app/assets/image/frame.svg";
 
 /**
  * Sample disorder data.
@@ -57,18 +56,10 @@ const disorders = [
  */
 const InternetStatusTitle = () => (
   <React.Fragment>
-    <Typography
-      variant="h1"
-      color="text.textBlack"
-      gutterBottom
-    >
+    <Typography variant="h1" color="text.textBlack" gutterBottom>
       وضعیت اینترنت
     </Typography>
-    <Typography
-      variant="h3"
-      color="text.main"
-      gutterBottom
-    >
+    <Typography variant="h2" color="text.main" gutterBottom>
       سراسر کشور
     </Typography>
   </React.Fragment>
@@ -99,10 +90,14 @@ const DisorderAccordion = ({ title, detail }) => (
       aria-controls="panel1a-content"
       id="panel1a-header"
     >
-      <Typography variant="h6" color="text">{title}</Typography>
+      <Typography variant="h6" color="text.main">
+        {title}
+      </Typography>
     </AccordionSummary>
     <AccordionDetails>
-      <Typography variant="h6" color="text">{detail}</Typography>
+      <Typography variant="h6" color="text.main">
+        {detail}
+      </Typography>
     </AccordionDetails>
   </Accordion>
 );
@@ -128,46 +123,19 @@ const InternetStatusCard = (props) => {
   const paddingMainBox = useDynamicMP(390, 1440, 1.81, 4);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
-  const [fillPercentage, setFillPercentage] = React.useState(0);
-  const [isAnimating, setIsAnimating] = React.useState(true);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const targetPercentage = qualityPercentage;
-  const duration = 3000;
-  const startTime = React.useRef(Date.now());
-
-  const cubicEaseOut = (t, b, c, d) => {
-    t /= d;
-    t--;
-    return c * (t * t * t + 1) + b;
-  };
-
-  const updateFillPercentage = () => {
-    const currentTime = Date.now() - startTime.current;
-    if (currentTime >= duration) {
-      clearInterval(intervalId.current);
-      setIsAnimating(false);
-      setFillPercentage(targetPercentage);
-    } else {
-      const newPercentage = cubicEaseOut(
-        currentTime,
-        0,
-        targetPercentage,
-        duration
-      );
-      setFillPercentage(Math.round(newPercentage));
-    }
-  };
-
-  const intervalId = React.useRef(null);
-
-  React.useEffect(() => {
-    if (isAnimating) {
-      intervalId.current = setInterval(updateFillPercentage, 50);
-    }
-    return () => {
-      clearInterval(intervalId.current);
-    };
-  }, [isAnimating]);
+  const fill = keyframes`
+  to {
+    width: ${qualityPercentage}%;
+  }
+`;
 
   return (
     <CardContainer
@@ -182,6 +150,37 @@ const InternetStatusCard = (props) => {
       <Box flex={1}>
         <InternetStatusTitle />
         <Box display="flex" flexDirection="column" marginTop="5.75rem">
+          <Typography
+            variant="h1"
+            color="primary"
+            sx={{
+              marginRight: `${100 - qualityPercentage - 2.6}%`,
+              opacity: visible ? 1 : 0,
+              transition: "opacity 2s",
+            }}
+          >{`${qualityPercentage}%`}</Typography>
+
+          <SvgIcon
+            sx={{
+              opacity: visible ? 1 : 0,
+              transition: "opacity 2s",
+              marginRight: `${100 - qualityPercentage - 1.5}%`,
+              marginBottom: "0.25rem",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="38"
+              viewBox="0 1 14 29"
+              fill="none"
+            >
+              <path
+                d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                fill="#008EDD"
+              />
+            </svg>
+          </SvgIcon>
           <Box
             position="relative"
             height="0.875rem"
@@ -191,47 +190,23 @@ const InternetStatusCard = (props) => {
             sx={{ direction: "ltr" }}
           >
             <Box
-              position="absolute"
-              top="-4rem"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              transition="left 5s cubic-bezier(0.23, 1, 0.32, 1)"
-              sx={{ left: `${fillPercentage - 3}%` }}
-            >
-              <Typography
-                variant="h1"
-                color="primary"
-              >{`${fillPercentage}%`}</Typography>
-              <SvgIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="38"
-                  viewBox="0 0 18 38"
-                  fill="none"
-                >
-                  <path
-                    d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
-                    fill="#008EDD"
-                  />
-                </svg>
-              </SvgIcon>
-            </Box>
-            <Box
               height="100%"
-              width={`${fillPercentage}%`}
+              width={qualityPercentage}
               backgroundColor="#008EDD"
               borderRadius="0.65625rem"
+              sx={{
+                animation: `${fill} 3s cubic-bezier(0.23, 1, 0.32, 1) forwards`,
+              }}
             ></Box>
           </Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography
-            variant="h5"
-            color="text.main"
+            fontSize="1rem"
+            fontFamily="PeydaLight"
+            sx={{ color: "#676767" }}
           >
-            وضعیت:
+            وضعیت:{" "}
             <Typography
               component="span"
               fontFamily="PeydaSemiBold"
