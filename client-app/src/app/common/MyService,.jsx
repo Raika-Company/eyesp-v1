@@ -181,8 +181,10 @@ const MyService = () => {
         </Box>
         <Box marginTop="2.875rem">
           <ContainedButton
-            color="warning"
             variant="contained"
+            bgColor="#FF8A35"
+            bgHover="white"
+            txtHover="#FF8A35"
             sx={{ fontSize: "1rem" }}
             onClick={handleClickOpenDialog}
           >

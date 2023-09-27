@@ -11,7 +11,6 @@ import {
   Container,
   Typography,
   useMediaQuery,
-  Select,
   MenuItem,
   SvgIcon,
 } from "@mui/material";
@@ -35,6 +34,7 @@ import ISPStatistics from "../ISPStatistics";
 import ISPCompareTable from "../ISPCompareTable";
 import useDynamicMP from "../../../app/hooks/useDynamicMP";
 import CardContainer from "../../../app/common/CardContainer";
+import { ContainedSelect } from "../../../app/common/ContainedSelect";
 
 const disorders = [
   {
@@ -306,6 +306,9 @@ const Province = () => {
           <Box marginTop="2.875rem">
             <ContainedButton
               variant="contained"
+              bgColor="#FF8A35"
+              bgHover="white"
+              txtHover="#FF8A35"
               sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
               onClick={handleClickOpenDialog}
             >
@@ -345,28 +348,32 @@ const Province = () => {
               gap="1rem"
             >
               <Typography>استان مورد نظر:</Typography>
-              <Select
+              <ContainedSelect
                 labelId="change-province-label"
                 id="change-province"
                 label={provinceName}
                 value={provinceName}
                 onChange={handleProvinceChange}
-                sx={{ borderRadius: "1.25rem" }}
+                sx={{ borderRadius: "1.25rem", pl: "2rem" }}
+                displayEmpty
               >
                 {provinces.map((provinceItem) => (
                   <MenuItem key={provinceItem.name} value={provinceItem.name}>
                     {provinceItem.name}
                   </MenuItem>
                 ))}
-              </Select>
+              </ContainedSelect>
             </Box>
             <Button
               component={Link}
               to="/dashboard"
               fontSize="1rem"
               variant="text"
-              sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}
-              endIcon={<WestIcon />}
+              sx={{
+                color: "#008EDD",
+                fontFamily: "PeydaRegular",
+              }}
+              endIcon={<WestIcon sx={{ mr: "0.7rem" }} />}
             >
               وضعیت کل کشور
             </Button>
