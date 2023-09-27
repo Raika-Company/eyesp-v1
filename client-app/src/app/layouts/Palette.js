@@ -102,7 +102,20 @@ const baseTheme = createTheme({
       },
       fontFamily: "PeydaLight"
     },
-    fontFamily: "Peyda",
+    logo: {
+      fontSize: "20px",
+      [theme.breakpoints.up('md')]: {
+        fontSize: '24px',
+      },
+      fontFamily: "TrenchThin"
+    },
+    start: {
+      fontSize: "1.5rem",
+      [theme.breakpoints.up('md')]: {
+        fontSize: '1.75rem',
+      },
+      fontFamily: "PeydaRegular"
+    }
   },
   components: {
     MuiInputLabel: {
@@ -183,7 +196,8 @@ export const lightTheme = createTheme({
       main: "#676767",
       textBlack: "#2C2C2C",
       textInfo: "#3E6389",
-      subTitle: "#878787"
+      subTitle: "#878787",
+      subHeading: "#454545"
     },
     background: {
       default: "#E8F1F9",

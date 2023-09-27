@@ -316,7 +316,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                 p: "0.7rem",
                 textAlign: "center",
                 ":hover": {
-                  bgcolor: "primary.light",
+                  backgroundColor: "primary.light",
                   color: "white",
                   border: "none",
                 },
@@ -409,7 +409,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                 p: "1rem",
                 width: "95%",
                 ":hover": {
-                  bgcolor: "primary.light",
+                  backgroundColor: "primary.light",
                   color: "white",
                   border: "none",
                 },
@@ -425,7 +425,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                 fontSize: "1.8rem",
                 width: "95%",
                 ":hover": {
-                  bgcolor: "warning.main",
+                  backgroundColor: "warning.main",
                   color: "white",
                   border: "none",
                 },

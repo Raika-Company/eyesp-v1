@@ -2,7 +2,7 @@ import { SvgIcon } from "@mui/material";
 
 const Logo = () => {
   return (
-    <SvgIcon viewBox="0 0 468.44 468.44" fontSize="large">
+    <SvgIcon viewBox="0 0 468.44 468.44" sx={{width: "32px", height: "32px"}}>
       <defs>
         <linearGradient id="linear-gradient" y1="234.22" x2="468.44" y2="234.22" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#1c75bc" />

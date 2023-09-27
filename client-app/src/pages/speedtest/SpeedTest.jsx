@@ -28,6 +28,7 @@ import SwitchBtn from "../../app/common/SwitchBtn";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -42,23 +43,22 @@ const renderInfoBox = (isColumn, iconSrc, title, value) => (
   <InfoBox isColumn={isColumn} iconSrc={iconSrc} title={title} value={value} />
 );
 
-const AddressAndServer = () => (
+const AddressAndServer = ({ip}) => (
   <Box>
     {["آدرس", "سرور"].map((text, index) => (
       <Typography
         key={index}
-        color="#676767"
-        fontSize="1.25rem"
-        fontFamily="PeydaSemiBold"
+        variant="h4"
+        color="text"
       >
         {text}:
         <Typography
           component="span"
-          fontSize="1rem"
-          fontFamily="PeydaLight"
+          variant="h5"
+          color="text"
           marginX="0.5rem"
         >
-          {text === "آدرس" ? "129.86.45.122" : "تهران - زیرساخت"}
+          {text === "آدرس" ? ip : "تهران - زیرساخت"}
         </Typography>
       </Typography>
     ))}
@@ -225,15 +225,17 @@ const SpeedTest = () => {
         <Box display="flex" justifyContent="space-between">
           <Typography
             variant="h1"
-            color="#2C2C2C"
+            color=""
             gutterBottom
           >
-            وضعیت اینترنت
+            تست اینترنت
           </Typography>
           <Button
-            fontSize="1.25rem"
-            fontFamily="PeydaRegular"
-            startIcon={<HistoryIcon />}
+            component={Link}
+            to="/history"
+            variant="h3"
+            color="text.subHeading"
+            startIcon={<HistoryIcon sx={{mx: "0.5rem"}}/>}
           >
             تست های گذشته
           </Button>
@@ -244,8 +246,9 @@ const SpeedTest = () => {
           justifyContent="space-evenly"
           alignItems="center"
           height="100%"
+          paddingBottom="10%"
         >
-          <AddressAndServer />
+          <AddressAndServer ip={clientIp} />
           <Box
             width={isMdScreen ? "25vmin" : "55vmin"}
             height={isMdScreen ? "25vmin" : "55vmin"}
@@ -265,8 +268,7 @@ const SpeedTest = () => {
               >
                 <Typography
                   color="#000"
-                  fontSize="1.75rem"
-                  fontFamily="PeydaRegular"
+                  variant="start"
                 >
                   شروع
                 </Typography>
@@ -316,9 +318,9 @@ const SpeedTest = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
-            <Typography marginLeft="1rem">نوع تست</Typography>
+            <Typography variant="h5" color="text" marginLeft="1rem">نوع تست</Typography>
           </Box>
-          <Typography sx={{ display: { md: "none" } }}>
+          <Typography variant="h6" color="text" sx={{ display: { md: "none" } }}>
             برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
           </Typography>
           <Box
@@ -354,7 +356,7 @@ const SpeedTest = () => {
             {renderInfoBox(false, uploadIcon, "سرعت آپلود", upload)}
             {renderInfoBox(false, pingIcon, "پینگ", latency)}
           </Box>
-          <Typography>
+          <Typography variant="h6" color="text">
             برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
           </Typography>
           <Box alignSelf="flex-end" marginLeft="2rem">

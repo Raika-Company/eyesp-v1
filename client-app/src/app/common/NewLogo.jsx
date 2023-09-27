@@ -16,6 +16,7 @@ const NewLogo = () => {
       display="flex"
       width="12.5625rem"
       justifyContent="space-evenly"
+      alignItems="center"
       paddingY="0.75rem"
       borderRadius="2rem"
       marginTop="2.5rem"
@@ -26,7 +27,7 @@ const NewLogo = () => {
         cursor: "pointer",
       }}
     >
-      <Typography fontFamily="TrenchThin" fontSize="1.5rem">
+      <Typography variant="logo">
         EYESP.LIVE
       </Typography>
 

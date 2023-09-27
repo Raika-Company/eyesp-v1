@@ -393,7 +393,7 @@ const NewResult = () => {
             p: "0.7rem",
             textAlign: "center",
             ":hover": {
-              bgcolor: "primary.light",
+              backgroundColor: "primary.light",
               color: "white",
               border: "none",
             },
@@ -414,7 +414,7 @@ const NewResult = () => {
             width: "19rem",
             p: "0.7rem",
             ":hover": {
-              bgcolor: "warning.main",
+              backgroundColor: "warning.main",
               color: "white",
               border: "none",
             },
@@ -494,7 +494,7 @@ const NewResult = () => {
             p: "1rem",
             width: "95%",
             ":hover": {
-              bgcolor: "primary.light",
+              backgroundColor: "primary.light",
               color: "white",
               border: "none",
             },
@@ -514,7 +514,7 @@ const NewResult = () => {
             p: "1rem",
             width: "95%",
             ":hover": {
-              bgcolor: "warning.main",
+              backgroundColor: "warning.main",
               color: "white",
               border: "none",
             },
