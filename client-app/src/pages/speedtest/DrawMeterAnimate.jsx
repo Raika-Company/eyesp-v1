@@ -28,7 +28,7 @@ import React, { useRef, useEffect, useState } from "react";
  */
 
 const LOWER_BOUND = 0.035
-const UPPER_BOUND = 0.80
+const UPPER_BOUND = 0.82
 
 function DrawMeterAnimate({
   amount,
@@ -148,8 +148,8 @@ function DrawMeterAnimate({
       if (!startTime) startTime = time || performance.now()
 
 
-      const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 600)), 0);
-      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) + 0.2
+      const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 800)), 0);
+      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(savedStatusPoint) * deltaTime) + 0.2
 
 
       if (deltaTime <= 0) {
