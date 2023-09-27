@@ -7,10 +7,6 @@ import {
   useTheme,
   keyframes,
 } from "@mui/material";
-import uploadIcon from "../../app/assets/image/uploadIcon.svg";
-import downloadIcon from "../../app/assets/image/downloadIcon.svg";
-import pingIcon from "../../app/assets/image/clockIcon.svg";
-import DrawMeter from "./DrawMeter";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
@@ -25,8 +21,8 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 import useFetchServers from "../../app/utils/useFetchServers";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import InfoBox from "./InfoBox";
-import ViewDetailsButton from "../../app/common/ViewDetailsButton";
+import FloatingResult from "./FloatingResult";
+import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -71,7 +67,7 @@ const SpeedTest = () => {
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
   const [status, setStatus] = useState(2);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [isTestEnds, setIsTestEnds] = useState(false);
   const [isGoButtonVisible, setIsGoButtonVisible] = useState(true);
   const [socket, setSocket] = useState(null);
   const [latency, setLatency] = useState(0);
@@ -79,6 +75,7 @@ const SpeedTest = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [upload, setUpload] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [testStateNumber, setTestStateNumber] = useState(0)
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
   const { isFetchingServers, selectBestServer } = useFetchServers();
@@ -92,7 +89,7 @@ const SpeedTest = () => {
 
   // useEffect(() => {
   //   if (selectedServerURL) return;
-    
+
   //   if (!isFetchingServers) {
   //     selectBestServer().then(url => {
   //       if (url) {
@@ -148,10 +145,12 @@ const SpeedTest = () => {
           ulStatus,
           pingStatus,
           jitterStatus,
+          testState
         } = data;
+        setTestStateNumber(testState)
         if (isDl && flag) {
           setDownload(dlStatus);
-          setDownloadProgress(dlStatus);
+          setDownloadProgress(dlProgress);
           if (dlProgress == 1) {
             setIsDl(false);
             flag = false;
@@ -194,8 +193,8 @@ const SpeedTest = () => {
           );
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
-          setIsGoButtonVisible(true);
-          setOpenDialog(true);
+          // setIsGoButtonVisible(true);
+          setIsTestEnds(true);
         }
       };
       window.speedtest.onend = () => {
@@ -207,7 +206,7 @@ const SpeedTest = () => {
   };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false);
+    setIsTestEnds(false);
   };
 
   return (
@@ -299,7 +298,7 @@ const SpeedTest = () => {
                     zIndex: 2,
                   }}
                 >
-                  <DrawMeter
+                  <DrawMeterAnimate
                     bk={
                       /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                         ? "#45628A"
@@ -307,9 +306,9 @@ const SpeedTest = () => {
                     }
                     fg={"#1B70EE1C"}
                     progress={isDl ? downloadProgress : uploadProgress}
-                    prog={isDl ? downloadProgress : uploadProgress}
                     mbps={isDl ? download : upload}
                     isDl={isDl}
+                    testState={testStateNumber}
                     theme="light"
                   />
                 </div>
@@ -320,57 +319,10 @@ const SpeedTest = () => {
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
             <Typography variant="h5" color="text" marginLeft="1rem">نوع تست</Typography>
           </Box>
-          <Typography variant="h6" color="text" sx={{ display: { md: "none" } }}>
-            برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
-          </Typography>
-          <Box
-            justifyContent="space-evenly"
-            width="100%"
-            sx={{ display: { xs: "flex", md: "none" } }}
-          >
-            {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
-            {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
-            {renderInfoBox(true, pingIcon, "پینگ", latency)}
-          </Box>
+
+          <FloatingResult download={download} upload={upload} latency={latency} isTestEnds={isTestEnds} />
         </Box>
-        <Box
-          borderRadius="2rem"
-          sx={{
-            display: { xs: "none", md: "flex" },
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
-            position: "absolute",
-            bottom: "-10%",
-            left: "10%",
-            width: "80%",
-            marginX: "auto",
-            height: "20%",
-            backgroundColor: "#FFF",
-            marginBottom: "1rem",
-          }}
-        >
-          <Box display="flex" justifyContent="space-evenly" width="100%">
-            {renderInfoBox(false, downloadIcon, "سرعت دانلود", download)}
-            {renderInfoBox(false, uploadIcon, "سرعت آپلود", upload)}
-            {renderInfoBox(false, pingIcon, "پینگ", latency)}
-          </Box>
-          <Typography variant="h6" color="text">
-            برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
-          </Typography>
-          <Box alignSelf="flex-end" marginLeft="2rem">
-            <ViewDetailsButton target="/history" />
-          </Box>
-        </Box>
-      </CardContainer>
-      <ShowResult
-        openDialog={openDialog}
-        handleCloseDialog={handleCloseDialog}
-        ping={latency}
-        download={download}
-        upload={upload}
-      />
+      </CardContainer >
     </>
   );
 };

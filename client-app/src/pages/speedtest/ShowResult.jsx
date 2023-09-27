@@ -267,7 +267,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                 value={ping}
                 measure="ms"
                 opacity={1}
-                //Display ping, download, and upload speeds
+              //Display ping, download, and upload speeds
               />
               <SpeedBox
                 title="سرعت آپلود"
@@ -321,7 +321,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                   border: "none",
                 },
               }}
-              //Share and retry buttons
+            //Share and retry buttons
             >
               تست مجدد
             </Button>
@@ -449,7 +449,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                 alignItems: "center",
                 overflow: "auto",
               }}
-              //List of social media options for share link
+            //List of social media options for share link
             >
               {ShareDialog.map((item, index) => (
                 <ListItem key={index}>
@@ -518,7 +518,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
                   }}
                   id="alert-dialog-slide-description"
                   ref={textRef}
-                  //Speed Test sharing link0660
+                //Speed Test sharing link0660
                 >
                   {`http://eyesp.live/result?ping=${ping}&download=${download}&upload=${upload}`}
                 </DialogContentText>
@@ -543,7 +543,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
           color="info"
           autoFocus
           onClick={handleCloseDialog}
-          sx={{color: "#1F75A6"}}
+          sx={{ color: "#1F75A6" }}
         >
           مشاهده صفحه
         </Button>
