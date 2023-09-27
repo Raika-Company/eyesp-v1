@@ -16,6 +16,11 @@ import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
  * Raw data for the ISPs for comparison.
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
  */
+
+/**
+ * Raw data representing various ISPs and their performance metrics.
+ * @type {Array.<Object>}
+ */
 const RawISPData = [
   {
     rank: "#1",
@@ -129,12 +134,13 @@ const parseNumber = (str) => {
  * @param {number} props.mpCardContainers - Padding value.
  * @returns {JSX.Element} The rendered component.
  */
-const ISPPerformance = (props) => {
+const ISPPerformance = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
-  const [province, setSortProvince] = useState("انتخاب کنید");
   const [provinceData, setProvinceData] = useState(ProvincesCompare);
   const [selectedProvince, setSelectedProvince] = useState("انتخاب کنید");
 
@@ -184,6 +190,7 @@ const ISPPerformance = (props) => {
       sx={{
         paddingX: mpCardContainers,
         paddingY: "1.75rem",
+        overflow: "hidden",
       }}
     >
       <Box
@@ -209,10 +216,17 @@ const ISPPerformance = (props) => {
           display={"flex"}
           flexDirection={isSmScreen ? "column" : "row"}
           alignItems={"center"}
-          gap={2}
+          gap={isSmScreen ? "1rem" : "0"}
         >
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-            <Typography>استان مورد نظر:</Typography>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            width={"100%"}
+          >
+            <Typography sx={{ whiteSpace: "nowrap" }}>
+              استان مورد نظر:
+            </Typography>
             <Select
               labelId="change-province-label"
               id="change-province"
@@ -221,7 +235,7 @@ const ISPPerformance = (props) => {
               displayEmpty
               sx={{
                 borderRadius: "1.25rem",
-                marginLeft: "max(1rem, 5vw)",
+                marginLeft: isSmScreen ? "0" : "1rem",
                 marginRight: "0.5rem",
               }}
               renderValue={(selectedValue) =>
@@ -235,8 +249,13 @@ const ISPPerformance = (props) => {
               ))}
             </Select>
           </Box>
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-            <Typography> چینش براساس:</Typography>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            width={"100%"}
+          >
+            <Typography whiteSpace={"nowrap"}> چینش براساس:</Typography>
 
             <Select
               value={sortCriteria}
@@ -263,7 +282,14 @@ const ISPPerformance = (props) => {
           </Box>
         </Box>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          overflowX: isMdScreen ? "scroll" : "hidden",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <ISPTable
           isDetail={true}
           ISPdata={sortedISPData.slice(0, visibleRows)}

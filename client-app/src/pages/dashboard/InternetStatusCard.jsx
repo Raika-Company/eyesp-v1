@@ -20,6 +20,7 @@ import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 import NewIranMap from "./map/NewIranMap";
 import CardContainer from "../../app/common/CardContainer";
 import { ContainedButton } from "../../app/common/ContainedButton";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 
 // Hooks
 import useDynamicMP from "../../app/hooks/useDynamicMP";
@@ -279,14 +280,14 @@ const InternetStatusCard = (props) => {
           width="100%"
         >
           <Typography>استان مورد نظر:</Typography>
-          <Select
+          <ContainedSelect
             labelId="change-province-label"
             id="change-province"
             label="انتخاب کنید"
             value={province}
             onChange={handleProvinceChange}
             displayEmpty
-            sx={{ borderRadius: "1.25rem" }}
+            sx={{ paddingLeft: "2rem" }}
           >
             <MenuItem value="">انتخاب کنید</MenuItem>
             {provinces.map((provinceItem) => (
@@ -294,7 +295,7 @@ const InternetStatusCard = (props) => {
                 {provinceItem.name}
               </MenuItem>
             ))}
-          </Select>
+          </ContainedSelect>
         </Box>
         <Box margin="5%">
           <NewIranMap />

@@ -176,19 +176,17 @@ const OperatorCompare = () => {
               <FormControl
                 sx={{
                   m: "0.4rem",
-                  width: 150,
+                  width: 170,
                   borderRadius: "25px",
                 }}
                 size="small"
               >
-                <InputLabel id={`demo-select-small-label-${index}`}>
-                  {items}
-                </InputLabel>
                 <ContainedSelect
                   labelId={`demo-select-small-label-${index}`}
                   id={`demo-select-small-${index}`}
                   label={items}
                   onChange={handleChange}
+                  displayEmpty
                 >
                   <MenuItem disabled>
                     <span>{items}</span>

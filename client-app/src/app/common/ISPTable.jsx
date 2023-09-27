@@ -1,5 +1,12 @@
 import React, { memo } from "react";
-import { styled, keyframes, IconButton, Box, Typography } from "@mui/material";
+import {
+  styled,
+  keyframes,
+  IconButton,
+  Box,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 
 /**
@@ -59,64 +66,47 @@ const gradients = [
  * @returns {JSX.Element}
  */
 const ISPTable = ({ ISPdata, isDetail }) => {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  const rowsHead = [
+    { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
+    { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
+    { unit: "(m/s)", label: "پینگ" },
+    { unit: "(m/s)", label: "پکت لاس" },
+    { unit: "(%)", label: "عملکرد" },
+  ];
   return (
     <Box
       sx={{
         backgroundColor: "transparent",
         boxShadow: 0,
         marginBottom: "1rem",
+        width: isMdScreen ? "19em" : "100%",
       }}
     >
       {isDetail ? (
         <>
-          <RowBox>
+          <RowBox sx={{ width: "80em" }}>
             <Typography>رتبه</Typography>
             <Typography>نام</Typography>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین دانلود </Typography>
-            </Box>
-
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین آپلود </Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پینگ</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پکت لاس</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>عملکرد</Typography>
-            </Box>
+            {rowsHead.map((row) => {
+              return (
+                <Box
+                  key={row.label}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                >
+                  <Typography>{row.unit}</Typography>
+                  <Typography>{row.label}</Typography>
+                </Box>
+              );
+            })}
             <Typography>جزئیات</Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
+              sx={{ width: "80em" }}
               key={Items.rank}
               delay={index * 0.2}
               gradient={gradients[index >= 3 ? 3 : index]}
@@ -177,5 +167,4 @@ const ISPTable = ({ ISPdata, isDetail }) => {
     </Box>
   );
 };
-
 export default memo(ISPTable);

@@ -41,7 +41,7 @@ const baseTheme = createTheme({
     h4: {
       fontSize: '14px',
       [theme.breakpoints.up('md')]: {
-        fontSize: '20px',
+        fontSize: '16px',
       },
       fontFamily: "PeydaSemiBold"
     },
