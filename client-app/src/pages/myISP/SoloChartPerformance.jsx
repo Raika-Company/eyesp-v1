@@ -237,7 +237,7 @@ const SoloChartPerformance = () => {
             </ContainedSelect>
           </FormControl>
           <Box display={"flex"} justifyContent={"center"} gap={2}>
-            <Button variant="text" component={Link} to="/operator-performance">
+            <Button variant="text" component={Link} to="/isp-performance">
               سایر اپراتورها
             </Button>
             <img src={leftArrow} alt="leftArrow" />

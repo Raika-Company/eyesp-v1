@@ -16,6 +16,11 @@ import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
  * Raw data for the ISPs for comparison.
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
  */
+
+/**
+ * Raw data representing various ISPs and their performance metrics.
+ * @type {Array.<Object>}
+ */
 const RawISPData = [
   {
     rank: "#1",
@@ -277,7 +282,14 @@ const ISPPerformance = () => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ overflowX: isMdScreen ? "scroll" : "hidden" }}>
+      <Box
+        sx={{
+          overflowX: isMdScreen ? "scroll" : "hidden",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <ISPTable
           isDetail={true}
           ISPdata={sortedISPData.slice(0, visibleRows)}

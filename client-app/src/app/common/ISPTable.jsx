@@ -68,6 +68,13 @@ const gradients = [
 const ISPTable = ({ ISPdata, isDetail }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const rowsHead = [
+    { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
+    { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
+    { unit: "(m/s)", label: "پینگ" },
+    { unit: "(m/s)", label: "پکت لاس" },
+    { unit: "(%)", label: "عملکرد" },
+  ];
   return (
     <Box
       sx={{
@@ -82,47 +89,19 @@ const ISPTable = ({ ISPdata, isDetail }) => {
           <RowBox sx={{ width: "80em" }}>
             <Typography>رتبه</Typography>
             <Typography>نام</Typography>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین دانلود </Typography>
-            </Box>
-
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>سرعت میانگین آپلود </Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پینگ</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>پکت لاس</Typography>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-            >
-              <Typography>(mb/s)</Typography>
-              <Typography>عملکرد</Typography>
-            </Box>
+            {rowsHead.map((row) => {
+              return (
+                <Box
+                  key={row.label}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                >
+                  <Typography>{row.unit}</Typography>
+                  <Typography>{row.label}</Typography>
+                </Box>
+              );
+            })}
             <Typography>جزئیات</Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
@@ -188,5 +167,4 @@ const ISPTable = ({ ISPdata, isDetail }) => {
     </Box>
   );
 };
-
 export default memo(ISPTable);
