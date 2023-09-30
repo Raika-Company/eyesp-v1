@@ -8,7 +8,7 @@ import Facebook from '../../app/assets/image/imgLogoSocialM/facebook.svg'
 import SimpleIcon from '../../app/assets/image/imgLogoSocialM/simple-icon.svg'
 
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { ContainedButton } from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
@@ -45,7 +45,8 @@ const SOCIAL_ICONS = [
 ]
 
 const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
-  const navigate = useNavigate()
+  const theme = useTheme();
+  const navigate = useNavigate();
 
   const renderInfoBox = (isColumn, iconSrc, title, value, unit) => (
     <InfoBox isColumn={isColumn} iconSrc={iconSrc} title={title} value={value} isTestEnds={isTestEnds} unit={unit} />
@@ -86,7 +87,7 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
           backgroundColor: "#FFF",
           marginBottom: "1rem",
           border: '1px solid #FFF',
-          background: 'rgba(255, 255, 255, 0.80)',
+          background: theme.palette.mode === 'dark' ? 'rgba(11, 17, 19, 0.9)' : 'rgba(255, 255, 255, 0.5)',
           backdropFilter: 'blur(10px)',
           zIndex: '5',
         }}

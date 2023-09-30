@@ -266,7 +266,7 @@ const SpeedTest = () => {
                 }}
               >
                 <Typography
-                  color="#000"
+                  color= {theme.palette.mode === "light" ? "#000" : "#FFF"}
                   variant="start"
                 >
                   شروع

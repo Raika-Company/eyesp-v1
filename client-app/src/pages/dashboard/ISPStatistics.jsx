@@ -22,14 +22,14 @@ const STATISTICS_LIGHT = [
   },
   {
     background:
-      "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #44593E 0%, #253644 100%)",
+      "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C2E1BC 0%, rgba(205, 224, 235, 0.00) 100%)",
     title: "میانگین سرعت",
     unit: "(mb/s)",
     value: "21",
   },
   {
     background:
-      "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #44593E 0%, #253644 100%)",
+      "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C2E1BC 0%, rgba(205, 224, 235, 0.00) 100%)",
     title: "میانگین پینگ",
     unit: "ms",
     value: "43",
