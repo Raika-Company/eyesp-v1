@@ -217,7 +217,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#005A99",
+      main: "#008EDD",
     },
     secondary: {
       main: "#1A2D3A"
@@ -235,13 +235,22 @@ export const darkTheme = createTheme({
       main: "#83A673",
     },
     text: {
-      main: "#C0C0C0",
-      textBlack: "#E0E0E0",
-      textInfo: "#9EB5C1",
-      subTitle: "#A0A0A0"
+      main: "#E8E8E8",
+      textBlack: "#FFF",
+      textInfo: "#FFF",
+      subTitle: "#FFF"
     },
     background: {
       default: "#121212",
     },
   },
+  // components: {
+  //   MuiDrawer: {
+  //     styleOverrides: {
+  //       paper: {
+  //         backgroundColor: "white",
+  //       },
+  //     },
+  //   },
+  // },
 });

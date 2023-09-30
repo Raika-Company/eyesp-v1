@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import uploadIcon from "../../app/assets/image/uploadIcon.svg";
 import downloadIcon from "../../app/assets/image/downloadIcon.svg";
 import clockIcon from "../../app/assets/image/clockIcon.svg";
@@ -38,13 +38,14 @@ const HistoryCard = ({
   upload,
   ip,
 }) => {
+  const theme = useTheme();
   return (
     <Box
       width="15.8125rem"
       padding="1.45rem"
       borderRadius="2rem"
-      backgroundColor="#FFF"
-      boxShadow="0px 4px 40px 0px rgba(0, 0, 0, 0.20)"
+      backgroundColor= {theme.palette.mode === 'dark' ? '#081C30' : '#FFF'}
+      boxShadow= {theme.palette.mode === 'dark' ? '0px 0px 20px 0px rgba(255, 255, 255, 0.40)' : '0px 4px 40px 0px rgba(0, 0, 0, 0.05)'}
     >
       <InfoSection label="تاریخ" value={date} />
       <InfoSection label="ساعت" value={time} />

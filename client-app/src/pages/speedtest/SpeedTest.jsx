@@ -45,13 +45,13 @@ const AddressAndServer = ({ip}) => (
       <Typography
         key={index}
         variant="h4"
-        color="text"
+        color="text.main"
       >
         {text}:
         <Typography
           component="span"
           variant="h5"
-          color="text"
+          color="text.main"
           marginX="0.5rem"
         >
           {text === "آدرس" ? ip : "تهران - زیرساخت"}
@@ -266,7 +266,7 @@ const SpeedTest = () => {
                 }}
               >
                 <Typography
-                  color="#000"
+                  color= {theme.palette.mode === "light" ? "#000" : "#FFF"}
                   variant="start"
                 >
                   شروع
@@ -317,7 +317,7 @@ const SpeedTest = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
-            <Typography variant="h5" color="text" marginLeft="1rem">نوع تست</Typography>
+            <Typography variant="h5" color="text.main" marginLeft="1rem">نوع تست</Typography>
           </Box>
 
           <FloatingResult download={download} upload={upload} latency={latency} isTestEnds={isTestEnds} />

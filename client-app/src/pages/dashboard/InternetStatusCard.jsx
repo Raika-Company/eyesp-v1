@@ -12,6 +12,7 @@ import {
   useMediaQuery,
   keyframes,
   SvgIcon,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
@@ -72,11 +73,12 @@ const InternetStatusTitle = () => (
  * @param {string} props.detail - Detailed information about the disorder.
  * @returns {JSX.Element} The rendered component.
  */
-const DisorderAccordion = ({ title, detail }) => (
+const DisorderAccordion = ({ theme, title, detail }) => (
   <Accordion
     sx={{
       boxShadow: 0,
       marginY: "0.5em",
+      backgroundColor: theme.palette.mode == "light" ? "#FFF" : "transparent",
       "&.MuiAccordion-root": {
         borderRadius: "1.875rem",
         "&:before": {
@@ -119,6 +121,7 @@ const InternetStatusCard = (props) => {
     handleProvinceChange,
     qualityPercentage,
   } = props;
+  const theme = useTheme();
 
   const paddingMainBox = useDynamicMP(390, 1440, 1.81, 4);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -201,49 +204,26 @@ const InternetStatusCard = (props) => {
           </Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <Typography
-            fontSize="1rem"
-            fontFamily="PeydaLight"
-            sx={{ color: "#676767" }}
-          >
+          <Typography variant="h5" color="text.main">
             وضعیت:{" "}
-            <Typography
-              component="span"
-              fontFamily="PeydaSemiBold"
-              fontSize="1.5rem"
-              sx={{ color: "#008EDD" }}
-            >
+            <Typography component="span" variant="h4" color="primary">
               مطلوب
             </Typography>
           </Typography>
-          <Typography
-            fontSize="1rem"
-            fontFamily="PeydaLight"
-            sx={{ color: "#676767" }}
-          >
+          <Typography variant="h5" color="text.main">
             عملکرد کلی
           </Typography>
         </Box>
-        <Typography
-          fontFamily="PeydaRegular"
-          fontSize="1.25rem"
-          color="#676767"
-          marginTop="2.875rem"
-          gutterBottom
-        >
+        <Typography variant="h3" color="text.main" marginTop="2.875rem" gutterBottom>
           اختلالات موجود (
-          <Typography
-            component="span"
-            fontFamily="PeydaSemiBold"
-            fontSize="1.25rem"
-          >
+          <Typography component="span" variant="h4" color="text.main">
             3 مورد
           </Typography>
           )
         </Typography>
         <Box>
           {disorders.map((disorder) => (
-            <DisorderAccordion key={disorder.title} {...disorder} />
+            <DisorderAccordion theme={theme} key={disorder.title} {...disorder} />
           ))}
         </Box>
         <Box marginTop="2.875rem">
@@ -252,22 +232,20 @@ const InternetStatusCard = (props) => {
             sx={{ fontSize: "1rem" }}
             onClick={handleClickOpenDialog}
             bgColor="#FF8A35"
-            bgHover="white"
             txtHover="#FF8A35"
           >
             گزارش اختلال
           </ContainedButton>
           <Button
-            fontSize="1rem"
-            variant="text"
+            variant="text.main"
             sx={{
-              color: "#676767",
-              fontFamily: "PeydaRegular",
               marginRight: "min(1.94rem, 2vw)",
             }}
             onClick={handleDisturbanceClick}
           >
+            <Typography variant="h6" color="text.main">
             گزارش خطا در اطلاعات
+            </Typography>
           </Button>
         </Box>
       </Box>
@@ -279,7 +257,9 @@ const InternetStatusCard = (props) => {
           gap="1rem"
           width="100%"
         >
-          <Typography>استان مورد نظر:</Typography>
+          <Typography variant="h3" color="text.main">
+            استان مورد نظر:
+          </Typography>
           <ContainedSelect
             labelId="change-province-label"
             id="change-province"

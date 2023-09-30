@@ -327,7 +327,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
             </Button>
             <Button
               onClick={handleClickOpen}
-              variant="text"
+              variant="text.main"
               sx={{
                 color: "#1F75A6",
                 fontSize: "1.2rem",
@@ -419,7 +419,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
             </Button>
             <Button
               onClick={handleClickOpen}
-              variant="text"
+              variant="text.main"
               sx={{
                 color: "#1F75A6",
                 fontSize: "1.8rem",
@@ -539,7 +539,7 @@ const ShowResult = ({ handleCloseDialog, openDialog, ping, download, upload }) =
       </DialogContent>
       <DialogActions>
         <Button
-          variant="text"
+          variant="text.main"
           color="info"
           autoFocus
           onClick={handleCloseDialog}

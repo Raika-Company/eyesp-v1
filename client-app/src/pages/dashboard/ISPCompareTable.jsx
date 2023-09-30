@@ -130,9 +130,8 @@ const ISPCompareTable = ({ mpCardContainers }) => {
         }}
       >
         <Typography
-          color="#2C2C2C"
-          fontSize="1.5rem"
-          fontFamily="PeydaSemiBold"
+          variant="h1"
+          color="text.textBlack"
         >
           رتبه بندی ISPها
         </Typography>
@@ -142,8 +141,8 @@ const ISPCompareTable = ({ mpCardContainers }) => {
       {visibleRows < RawISPData.length && (
         <Typography
           variant="body1"
+          color="text.main"
           sx={{
-            color: "textColor.main",
             textAlign: "center",
             marginY: "1rem",
             cursor: "pointer",

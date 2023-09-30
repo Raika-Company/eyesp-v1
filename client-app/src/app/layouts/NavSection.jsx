@@ -100,7 +100,7 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
         sx={{
           transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
           color: iconColor(item.path, location),
-          cursor: 'pointer',
+          cursor: "pointer",
           "&:hover": {
             background: "none",
           },
@@ -153,8 +153,13 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
       borderRadius="1.96875rem"
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
-      backgroundColor="white"
-      sx={{ fontSize: "0.9rem" }}
+      sx={{
+        fontSize: "0.9rem",
+        background:
+          theme.palette.mode === "light"
+            ? "white"
+            : "radial-gradient(2039.04% 152.73% at 8.42% 0%, #354E63 0%, #243441 100%)",
+      }}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (
         <NavItem

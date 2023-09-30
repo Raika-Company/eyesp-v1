@@ -3,14 +3,11 @@ import {
   Button,
   ButtonGroup,
   FormControl,
-  Grid,
-  InputLabel,
   MenuItem,
-  Paper,
-  Select,
   Tooltip,
   Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
@@ -21,10 +18,11 @@ import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
+import CardContainer from "../../app/common/CardContainer";
 
 const SoloChartPerformance = () => {
-  const radialBackground =
-    "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)";
+  const theme = useTheme();
+
   const buttons = [
     { label: "سرعت دانلود", width: "80%" },
     { label: "سرعت آپلود", width: "80%" },
@@ -86,7 +84,7 @@ const SoloChartPerformance = () => {
     color: "#676767",
   };
   const buttonGroupStyle = {
-    backgroundColor: "#F4F4F4",
+    backgroundColor: theme.palette.mode === "dark" ? "#020D13" : "#F4F4F4",
     width: "70%",
     alignItems: "center",
     gap: "11px",
@@ -100,22 +98,17 @@ const SoloChartPerformance = () => {
   }, []);
 
   return (
-    <Box
-      component={Paper}
-      elevation={8}
-      marginY="1rem"
-      borderRadius="2rem"
-      paddingBottom="4.25rem"
-      paddingX="5%"
-      flexBasis="50%"
+    <CardContainer
       sx={{
-        background: radialBackground,
-        boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
         pt: isLgScreen ? "1.3rem" : "3.5rem",
+        marginY: "1rem",
+        paddingBottom: "4.25rem",
+        paddingX: "5%",
+        flexBasis: "50%",
       }}
     >
       <Typography
@@ -144,8 +137,10 @@ const SoloChartPerformance = () => {
               borderRadius="3rem"
               padding="1rem"
               sx={{
-                backgroundImage:
-                  "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+                background:
+                  theme.palette.mode === "dark"
+                    ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
+                    : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
               }}
               width="100%"
               height="100%"
@@ -242,14 +237,18 @@ const SoloChartPerformance = () => {
             </ContainedSelect>
           </FormControl>
           <Box display={"flex"} justifyContent={"space-between"}>
-            <Button variant="text" component={Link} to="/operator-performance">
+            <Button
+              variant="text.main"
+              component={Link}
+              to="/operator-performance"
+            >
               سایر اپراتورها
               <img src={leftArrow} alt="leftArrow" />
             </Button>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </CardContainer>
   );
 };
 

@@ -133,25 +133,22 @@ const Province = () => {
       >
         <Box flex={1}>
           <Typography
-            fontFamily="PeydaSemibold"
-            fontSize="1.5rem"
-            color="#2C2C2C"
+            variant="h1"
+            color="text.textBlack"
             gutterBottom
           >
             وضعیت اینترنت
           </Typography>
           <Typography
-            fontFamily="PeydaLight"
-            fontSize="1.5rem"
-            color="#676767"
+            variant="h2"
+            color="text.main"
             gutterBottom
           >
             استان{" "}
             <Typography
               component="span"
-              fontSize="1.5rem"
-              fontFamily="PeydaLight"
-              color="#008EDD"
+              variant="h2"
+              color="primary"
             >
               {provinceName}
             </Typography>
@@ -208,40 +205,36 @@ const Province = () => {
           </Box>
           <Box display="flex" justifyContent="space-between">
             <Typography
-              fontSize="1rem"
-              fontFamily="PeydaLight"
-              sx={{ color: "#676767" }}
+              variant="h5"
+              color="text.main"
             >
               وضعیت:{" "}
               <Typography
                 component="span"
-                fontFamily="PeydaSemiBold"
-                fontSize="1.5rem"
-                sx={{ color: "#008EDD" }}
+                variant="h4"
+                color="primary"
               >
                 مطلوب
               </Typography>
             </Typography>
             <Typography
-              fontSize="1rem"
-              fontFamily="PeydaLight"
-              sx={{ color: "#676767" }}
+              variant="h5"
+              color="text.main"
             >
               عملکرد کلی
             </Typography>
           </Box>
           <Typography
-            fontFamily="PeydaRegular"
-            fontSize="1.25rem"
-            color="#676767"
+            variant="h3"
+            color="text.main"
             marginTop="2.875rem"
             gutterBottom
           >
             اختلالات موجود (
             <Typography
-              component="span"
-              fontFamily="PeydaSemiBold"
-              fontSize="1.25rem"
+            component="span"
+              variant="h4"
+              color="text.main"
             >
               3 مورد
             </Typography>
@@ -267,10 +260,10 @@ const Province = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>{disorder.title}</Typography>
+                  <Typography variant="h6" color="text.main">{disorder.title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>{disorder.detail}</Typography>
+                  <Typography variant="h6" color="text.main">{disorder.detail}</Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
@@ -279,7 +272,6 @@ const Province = () => {
             <ContainedButton
               variant="contained"
               bgColor="#FF8A35"
-              bgHover="white"
               txtHover="#FF8A35"
               sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
               onClick={handleClickOpenDialog}
@@ -288,7 +280,7 @@ const Province = () => {
             </ContainedButton>
             <Button
               fontSize="1rem"
-              variant="text"
+              variant="text.main"
               sx={{
                 color: "#676767",
                 fontFamily: "PeydaRegular",
@@ -319,7 +311,7 @@ const Province = () => {
               alignItems="center"
               gap="1rem"
             >
-              <Typography>استان مورد نظر:</Typography>
+              <Typography variant="h3" color="text.main">استان مورد نظر:</Typography>
               <ContainedSelect
                 labelId="change-province-label"
                 id="change-province"
@@ -340,7 +332,7 @@ const Province = () => {
               component={Link}
               to="/dashboard"
               fontSize="1rem"
-              variant="text"
+              variant="text.main"
               sx={{
                 color: "#008EDD",
                 fontFamily: "PeydaRegular",

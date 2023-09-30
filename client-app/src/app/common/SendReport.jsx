@@ -45,7 +45,7 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
       </DialogContent>
       <DialogActions>
         <Button
-          variant="text"
+          variant="text.main"
           color="success"
           autoFocus
           onClick={handleCloseDialog}
@@ -53,7 +53,7 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
           ارسال گزارش
         </Button>
         <Button
-          variant="text"
+          variant="text.main"
           color="error"
           autoFocus
           onClick={handleCloseDialog}

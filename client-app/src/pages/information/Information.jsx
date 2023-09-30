@@ -20,7 +20,6 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
-import styles from "./Information.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";
@@ -155,7 +154,6 @@ const Information = () => {
             p: isSmScreen ? "0.5rem" : "1rem",
             direction: "ltr",
           }}
-          className={isMdScreen ? "" : styles.ScrollBar}
         >
           {filteredDefinitions.map((definition) => (
             <DefinitionTerm title={definition.title} key={definition.title}>
@@ -196,18 +194,19 @@ const DefinitionTerm = ({ title, children }) => {
         backgroundColor: isSmScreen
           ? "transparent"
           : theme.palette.mode === "dark"
-          ? "rgba(0, 0, 0, 0.8)"
+          ? "transparent"
           : "rgba(255, 255, 255, 0.8)",
         borderRadius: isSmScreen ? "" : "32px",
+        border: theme.palette.mode === "dark" ? "1px solid #FFF" : "none",
         py: "1em",
         px: "1em",
         boxShadow: isSmScreen ? "" : "0px 0px 15px 0px rgba(0, 0, 0, 0.20)",
         direction: "rtl",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
-          backgroundColor: "rgba(255, 255, 255, 1)",
+          backgroundColor: theme.palette.mode === "light" ? "rgba(255, 255, 255, 1)" : "transparent",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          transform: "scale(1.05)",
+          transform: "scale(1.04)",
         },
       }}
     >
