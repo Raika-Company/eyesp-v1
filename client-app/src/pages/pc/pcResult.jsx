@@ -1,13 +1,32 @@
+/**
+ * React component for displaying the result of a speed test.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.ping - The ping value.
+ * @param {number} props.download - The download speed value.
+ * @param {number} props.upload - The upload speed value.
+ * @returns {JSX.Element} - The rendered result component.
+ */
 import { Box, Button } from "@mui/material";
-
+// Assets
 import Download from "../../app/assets/image/Img-SpeedTest/download1.svg";
 import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
 import Ping from "../../app/assets/image/Img-SpeedTest/ping1.svg";
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 
+// Local components
 import PcSpeedBox from "./pcSpeedBox";
 import PcInformationBox from "./pcInformationBox";
+
+/**
+ * Functional component representing the PC Speed Test results.
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.ping - The ping value in milliseconds.
+ * @param {number} props.download - The download speed value in Mbps.
+ * @param {number} props.upload - The upload speed value in Mbps.
+ * @returns {JSX.Element} - The rendered PC Speed Test Results component.
+ */
 
 const PcResult = ({ ping, download, upload }) => {
   return (

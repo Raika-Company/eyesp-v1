@@ -57,7 +57,7 @@ function PcDrawMeter({
     if (theme == "dark") {
       numberColor = "#45628A";
     } else {
-      numberColor = "#cfcfcf";
+      numberColor = "#8f8f8f";
     }
 
     const startAngle = -Math.PI * 1.2;
@@ -82,9 +82,9 @@ function PcDrawMeter({
       canvas.height - 78 * sizScale
     );
 
-    gradient.addColorStop(0, "#84B3FA");
+    gradient.addColorStop(0, "#1D77FF");
     gradient.addColorStop(0.5, "#5A9CFF");
-    gradient.addColorStop(1, "#126AED");
+    gradient.addColorStop(1, "#1D77FF");
 
     ctx.beginPath();
     ctx.strokeStyle = gradient;
@@ -119,7 +119,7 @@ function PcDrawMeter({
       startHalfCircleBegin,
       startHalfCircleEnd
     );
-    ctx.fillStyle = mbps > 0.1 ? "#84B3FA" : fg;
+    ctx.fillStyle = mbps > 0.1 ? "#1D77FF" : fg;
     ctx.fill();
 
     ctx.beginPath();
@@ -136,7 +136,7 @@ function PcDrawMeter({
       endHalfCircleBegin,
       endHalfCircleEnd
     );
-    ctx.fillStyle = mbps > 99 ? "#126AED" : fg;
+    ctx.fillStyle = mbps > 99 ? "#1D77FF" : fg;
     ctx.fill();
 
     ctx.textAlign = "center";
@@ -165,7 +165,7 @@ function PcDrawMeter({
         canvas.height,
         ctx.lineWidth
       );
-      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#126AED" : numberColor;
+      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#fff" : numberColor;
       ctx.fillText(currentNumberIndex * 10, position.x, position.y);
     }
 
@@ -182,7 +182,7 @@ function PcDrawMeter({
       ctx.rotate(angle);
 
       var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.7;
-      var pointerWidthTop = 9 * sizScale * 1.5;
+      var pointerWidthTop = 9 * sizScale * 0.9;
       var pointerWidthBottom = 15 * sizScale * 1.5;
 
       ctx.beginPath();
@@ -196,8 +196,8 @@ function PcDrawMeter({
 
       // Create the gradient
       var gradient = ctx.createLinearGradient(0, -pointerLength, 0, 0);
-      gradient.addColorStop(0, "#126AED");
-      gradient.addColorStop(1, "#84B3FA");
+      gradient.addColorStop(0, "#7DB1FF");
+      gradient.addColorStop(1, "#1A75FF");
       ctx.fillStyle = gradient;
       ctx.fill();
 
@@ -209,7 +209,7 @@ function PcDrawMeter({
   }, [amount, bk, fg, mbps, isDl, theme]);
 
   return (
-    <canvas ref={canvasRef} style={{ width: "190%", height: "190%" }}></canvas>
+    <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
   );
 }
 
