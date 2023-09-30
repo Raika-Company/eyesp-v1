@@ -14,11 +14,13 @@ import { Box, Container, CssBaseline, useMediaQuery } from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
 import { lightTheme, darkTheme } from "./layouts/Palette";
 import { mainRoutes } from "./routes/Routes";
+
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
 import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
+import Pc from "../pages/pc/pc";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -115,6 +117,7 @@ function App() {
                 </Container>
               }
             />
+            <Route path="/pc" element={<Pc />} />
           </Routes>
         </Suspense>
       </Router>

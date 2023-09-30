@@ -2,12 +2,8 @@ import React, { lazy } from "react";
 
 import SpeedTest from "../../pages/speedtest/SpeedTest";
 
-const Dashboard = lazy(() =>
-  import("../../pages/dashboard/Dashboard")
-);
-const Information = lazy(() =>
-  import("../../pages/information/Information")
-);
+const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
+const Information = lazy(() => import("../../pages/information/Information"));
 const OperatorCompare = lazy(() =>
   import("../../pages/ispCompare/OperatorCompare")
 );
@@ -15,13 +11,13 @@ const ISPPerformance = lazy(() =>
   import("../../pages/ispPerformance/ISPPerformance")
 );
 
-const TestHistory = lazy(() =>
-  import("../../pages/testHistory/TestHistory")
-);
+const TestHistory = lazy(() => import("../../pages/testHistory/TestHistory"));
 
 const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
 const Province = lazy(() => import("../../pages/dashboard/province/Province"));
+
+const Pc = lazy(() => import("../../pages/pc/pc"));
 
 export const mainRoutes = [
   {
@@ -90,5 +86,13 @@ export const mainRoutes = [
     description: "Detailed insights into specific province metrics and data.",
     keywords: "province, details, insights, metrics",
     robots: "noindex, nofollow",
+  },
+];
+
+export const mainRoutesPc = [
+  {
+    path: "/pc",
+    element: <Pc />,
+    title: " pc | TIC Radar",
   },
 ];
