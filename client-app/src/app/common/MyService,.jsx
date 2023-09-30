@@ -14,6 +14,7 @@ import frame from "../../app/assets/image/frame.svg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SendReport from "./SendReport";
 import CustomSnackbar from "./CustomeSnackbar";
+import CardContainer from "./CardContainer";
 
 const MyService = () => {
   const disorders = [
@@ -61,18 +62,16 @@ const MyService = () => {
 
   return (
     <>
-      <Box
-        component={Paper}
-        elevation={8}
+      <CardContainer
         marginY="1rem"
-        borderRadius="2rem"
         paddingTop="3.5rem"
         paddingBottom="2.25rem"
-        paddingX="5%"
         sx={{
-          background: radialBackground,
+          marginY: "1rem",
+          paddingTop: "3.5rem",
+          paddingBottom: "2.25rem",
+          paddingX: "5%",
           flexBasis: isMdScreen ? "100%" : "49.5%",
-          boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
         }}
       >
         <Typography variant="h1" color="text.textBlack" gutterBottom>
@@ -174,7 +173,7 @@ const MyService = () => {
             گزارش خطا در اطلاعات
           </Button>
         </Box>
-      </Box>
+      </CardContainer>
       <CustomSnackbar
         open={disturbance}
         message="گزارش شما با موفقیت ارسال شد."

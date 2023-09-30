@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import Carousel from "./Carousel";
 import { ContainedButton } from "../../app/common/ContainedButton";
+import CardContainer from "../../app/common/CardContainer";
 
 const TEST_RESULTS = "testResults";
 
@@ -102,15 +103,15 @@ const NewTestHistory = () => {
     [testHistory]
   );
   return (
-    <Box
-      borderRadius="2rem"
-      marginTop="1rem"
-      marginBottom="4rem"
-      paddingX={cardContainerPaddingX}
-      paddingY={cardContainerPaddingY}
-      backgroundColor="#F7FAFD"
-      overflowY="auto"
-      overflowX="hidden"
+    <CardContainer
+      sx={{
+        marginTop: "1rem",
+        marginBottom: "4rem",
+        paddingX: cardContainerPaddingX,
+        paddingY: cardContainerPaddingY,
+        overflowY: "auto",
+        overflowX: "hidden",
+      }}
     >
       <Box
         sx={{
@@ -170,7 +171,7 @@ const NewTestHistory = () => {
       {sections.map((section, index) => (
         <CategorySection key={index} {...section} />
       ))}
-    </Box>
+    </CardContainer>
   );
 };
 

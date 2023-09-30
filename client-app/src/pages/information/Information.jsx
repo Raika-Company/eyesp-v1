@@ -20,7 +20,6 @@ import { useTheme } from "@mui/material/styles";
 // Importing custom LoadingSpinner component for modular structure
 import LoadingSpinner from "../../app/common/LoadingSpinner";
 
-import styles from "./Information.module.css";
 // Assets
 // Importing images used in the Result component
 import informationLogo from "../../../public/icon-information.png";

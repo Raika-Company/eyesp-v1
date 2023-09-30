@@ -237,7 +237,7 @@ export const darkTheme = createTheme({
     text: {
       main: "#E8E8E8",
       textBlack: "#FFF",
-      textInfo: "#9EB5C1",
+      textInfo: "#FFF",
       subTitle: "#FFF"
     },
     background: {
