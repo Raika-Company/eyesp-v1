@@ -1,7 +1,7 @@
 import { Button, styled } from "@mui/material";
 
-const ContainedButton = styled(Button)(
-  ({ theme, bgColor, txtColor, bgHover, txtHover }) => ({
+const ContainedButton = styled(({ bgColor, txtColor, txtHover, ...other }) => <Button {...other} />)(
+  ({ bgColor, txtColor, txtHover }) => ({
     boxShadow: "none",
     borderRadius: "1.3125rem",
     paddingInline: "2em",
@@ -10,7 +10,7 @@ const ContainedButton = styled(Button)(
     color: txtColor,
     border: "2px solid transparent",
     "&:hover": {
-      backgroundColor: bgHover,
+      backgroundColor: "transparent",
       color: txtHover,
       borderColor: bgColor,
       boxShadow: "none",

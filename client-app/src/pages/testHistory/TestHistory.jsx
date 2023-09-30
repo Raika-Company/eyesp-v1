@@ -126,7 +126,6 @@ const NewTestHistory = () => {
             onClick={handleButtonClick}
             variant="contained"
             bgColor=" #259FDA"
-            bgHover="white"
             txtHover=" #259FDA"
             sx={{
               fontSize: "1rem",

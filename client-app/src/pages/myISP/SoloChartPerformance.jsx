@@ -242,7 +242,7 @@ const SoloChartPerformance = () => {
             </ContainedSelect>
           </FormControl>
           <Box display={"flex"} justifyContent={"space-between"}>
-            <Button variant="text" component={Link} to="/operator-performance">
+            <Button variant="text.main" component={Link} to="/operator-performance">
               سایر اپراتورها
               <img src={leftArrow} alt="leftArrow" />
             </Button>

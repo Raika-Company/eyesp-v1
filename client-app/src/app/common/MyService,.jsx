@@ -157,7 +157,6 @@ const MyService = () => {
           <ContainedButton
             variant="contained"
             bgColor="#FF8A35"
-            bgHover="white"
             txtHover="#FF8A35"
             sx={{ fontSize: "1rem" }}
             onClick={handleClickOpenDialog}

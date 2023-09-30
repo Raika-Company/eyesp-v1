@@ -85,7 +85,6 @@ const UserSatisfaction = () => {
               color: "white",
             }}
             bgColor="#008EDD"
-            bgHover="white"
             txtHover="#008EDD"
           >
             ثبت بازخورد

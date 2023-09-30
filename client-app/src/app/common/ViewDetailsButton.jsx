@@ -8,7 +8,7 @@ const ViewDetailsButton = ({ target }) => {
       component={Link}
       to={target}
       fontSize="1rem"
-      variant="text"
+      variant="text.main"
       sx={{ color: "#008EDD", fontFamily: "PeydaRegular" }}
       endIcon={<WestIcon sx={{ marginRight: "1rem" }} />}
     >

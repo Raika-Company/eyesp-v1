@@ -19,6 +19,7 @@ import "./App.css";
 import NewLogo from "./common/NewLogo";
 import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
+import ThemeSwitcher from "./common/ThemeSwitcher";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -98,6 +99,10 @@ function App() {
                         endIndex={undefined}
                         openNav={openNav}
                         setOpenNav={setOpenNav}
+                      />
+                      <ThemeSwitcher
+                        themeMode={currentThemeMode}
+                        toggleTheme={toggleTheme}
                       />
                     </Box>
                     <Box flex={1}>
