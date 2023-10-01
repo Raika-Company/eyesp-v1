@@ -1,9 +1,23 @@
-import { Box, Typography } from "@mui/material";
+/**
+ * A React component representing the RADAR GAME logo.
+ * @component
+ * @returns {JSX.Element} - The rendered LogoRadar component.
+ */
+
 import React from "react";
+
+// Import Material-UI components and styles
+import { Box, Typography } from "@mui/material";
 
 const LogoRadar = () => {
   return (
-    <Box sx={{ padding: "0.3rem 0  0 2.7rem", color: "#fff", position: "relative" }}>
+    <Box
+      sx={{
+        padding: "0.3rem 0  0 2.7rem",
+        color: "#fff",
+        position: "relative",
+      }}
+    >
       <Typography variant="text" sx={{ fontSize: "2.5rem" }}>
         RADAR
       </Typography>
@@ -27,7 +41,7 @@ const LogoRadar = () => {
           position: "absolute",
           top: "68px",
           left: "33px",
-          border:"4px solid #232323"
+          border: "4px solid #232323",
         }}
       ></Box>
     </Box>

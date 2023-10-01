@@ -42,6 +42,22 @@ import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers
  * @returns {JSX.Element} - The rendered Speed Test component.
  */
 
+const InfoBoxData = [
+  {
+    title: "Scaleway",
+    value: "51.15.57.153",
+    iconSrc: Person,
+    altText: "Person Icon",
+  },
+  {
+    title: "KEYYO",
+    value: "Paris",
+    iconSrc: Globe,
+    altText: "Server Icon",
+    buttonLabel: "Change Server",
+  },
+];
+
 const PcSpeedTest = ({ themeMode }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -365,19 +381,16 @@ const PcSpeedTest = ({ themeMode }) => {
           gap={10}
           sx={{ display: { xs: "none", md: "flex" } }}
         >
-          <PcInformationBox
-            title="Scaleway"
-            value="51.15.57.153"
-            iconSrc={Person}
-            altText="Person Icon"
-          />
-          <PcInformationBox
-            title="KEYYO"
-            value="Paris"
-            iconSrc={Globe}
-            altText="Server Icon"
-            buttonLabel="Change Server"
-          />
+          {InfoBoxData.map((items, index) => (
+            <PcInformationBox
+              key={index}
+              title={items.title}
+              value={items.value}
+              iconSrc={items.iconSrc}
+              altText={items.altText}
+              buttonLabel={items.buttonLabel}
+            />
+          ))}
         </Box>
         <Box
           sx={{
@@ -392,7 +405,6 @@ const PcSpeedTest = ({ themeMode }) => {
           <PcAboutBox iconSrc={tikRed} />
           <PcAboutBox iconSrc={Web} />
         </Box>
-        {/* <FloatingResult  download={speedData.downloadSpeed} upload={uploadSpeed} latency={speedData.ping} isTestEnds={isTestEnds} /> */}
       </Box>
     </>
   );
