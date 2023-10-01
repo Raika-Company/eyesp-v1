@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   Box,
   Typography,
@@ -6,12 +6,23 @@ import {
   useMediaQuery,
   useTheme,
   keyframes,
+  Slide,
+  Paper,
+  InputBase,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Radio,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { STATUS_MAP } from "./constant";
 
@@ -34,6 +45,10 @@ const fadeIn = keyframes`
 const mbpsToAmount = (s) => {
   return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
 };
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const AddressAndServer = ({ ip, server }) => (
   <Box>
@@ -79,12 +94,34 @@ const SpeedTest = () => {
   const { isFetchingServers, selectBestServer } = useFetchServers();
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [isServerSelected, setIsServerSelected] = useState(false);
+  const [openSelectServer, setOpenSelectServer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios
       .get("https://server1.eyesp.live/get-ip")
       .then((res) => setClientIp(res.data.ip));
     // .catch((error) => console.error("Error fetching client IP:", error));
+  }, []);
+
+  const fetchServers = async () => {
+    try {
+      const response = await axios.get("https://server1.eyesp.live/servers");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching servers:", error);
+    }
+  };
+
+  const [servers, setServers] = useState([]);
+
+  useEffect(() => {
+    const getServers = async () => {
+      const serverData = await fetchServers();
+      setServers(serverData);
+    };
+
+    getServers();
   }, []);
 
   useEffect(() => {
@@ -126,7 +163,7 @@ const SpeedTest = () => {
   }, [selectedServerURL]);
 
   useEffect(() => {
-    if (!socket || !isServerSelected) return; // Prevent ping test if server isn't selected
+    if (!socket || !isServerSelected) return;
     let pingCount = 0,
       minLatency = Infinity;
     socket.on("pong_event", async (timestamp) => {
@@ -142,12 +179,12 @@ const SpeedTest = () => {
   }, [socket, isServerSelected]);
 
   const startPingTest = () => {
-    if (!isServerSelected) return; // Prevent ping test if server isn't selected
+    if (!isServerSelected) return;
     socket && socket.emit("ping_event", performance.now());
   };
 
   const handleButtonClick = () => {
-    if (!isServerSelected) return; // Prevent other tests if server isn't selected
+    if (!isServerSelected) return;
     setIsGoButtonVisible(false);
     startPingTest();
     handleStart();
@@ -226,6 +263,14 @@ const SpeedTest = () => {
     }
   };
 
+  const handleSelectServer = () => {
+    setOpenSelectServer(true);
+  };
+
+  const handleCloseSelectServer = () => {
+    setOpenSelectServer(false);
+  };
+
   return (
     <>
       <CardContainer
@@ -260,7 +305,18 @@ const SpeedTest = () => {
           height="100%"
           paddingBottom="10%"
         >
-          <AddressAndServer ip={clientIp} server={selectedServerURL} />
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <AddressAndServer ip={clientIp} server={selectedServerURL} />
+            {isServerSelected ? (
+              <Button onClick={handleSelectServer}>
+                <Typography variant="h6" color="primary" component="span">
+                  انتخاب سرور
+                </Typography>
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Box>
           <Box
             width={isMdScreen ? "25vmin" : "55vmin"}
             height={isMdScreen ? "25vmin" : "55vmin"}
@@ -334,7 +390,6 @@ const SpeedTest = () => {
               نوع تست
             </Typography>
           </Box>
-
           <FloatingResult
             download={download}
             upload={upload}
@@ -342,6 +397,91 @@ const SpeedTest = () => {
             isTestEnds={isTestEnds}
           />
         </Box>
+        <Dialog
+          open={openSelectServer}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseSelectServer}
+          aria-describedby="تغییر سرور"
+        >
+          <DialogTitle
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "25px",
+                }}
+              >
+                <InputBase
+                  sx={{ mr: 1, flex: 1 }}
+                  placeholder="جست و جو"
+                  inputProps={{ "aria-label": "جست و جو" }}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Box>
+            <Button
+              color="text"
+              onClick={handleCloseSelectServer}
+              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
+            >
+              بستن
+            </Button>
+          </DialogTitle>
+          <DialogContent>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              borderRadius="1.4375rem"
+            >
+              {servers.map((server) => (
+                <Box
+                  key={server.id}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width="100%"
+                  padding="0.5rem"
+                  borderBottom="1px solid #eee"
+                >
+                  <Radio
+                    value={server.url}
+                    checked={selectedServerURL === server.url}
+                    onChange={(e) => setSelectedServerURL(e.target.value)}
+                  />
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="flex-end"
+                  >
+                    <Typography variant="body1">{server.name}</Typography>
+                    <Typography variant="body2">{server.location}</Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </DialogContent>
+        </Dialog>
       </CardContainer>
     </>
   );
