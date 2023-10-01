@@ -13,7 +13,6 @@ import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers
 import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
 
-import ShowResult from "./ShowResult";
 import { STATUS_MAP } from "./constant";
 
 import io from "socket.io-client";
@@ -36,18 +35,10 @@ const mbpsToAmount = (s) => {
   return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
 };
 
-const renderInfoBox = (isColumn, iconSrc, title, value) => (
-  <InfoBox isColumn={isColumn} iconSrc={iconSrc} title={title} value={value} />
-);
-
-const AddressAndServer = ({ip}) => (
+const AddressAndServer = ({ ip, server }) => (
   <Box>
     {["آدرس", "سرور"].map((text, index) => (
-      <Typography
-        key={index}
-        variant="h4"
-        color="text.main"
-      >
+      <Typography key={index} variant="h4" color="text.main">
         {text}:
         <Typography
           component="span"
@@ -55,7 +46,13 @@ const AddressAndServer = ({ip}) => (
           color="text.main"
           marginX="0.5rem"
         >
-          {text === "آدرس" ? ip : "تهران - زیرساخت"}
+          {text === "آدرس"
+            ? ip === ""
+              ? "در حال پیدا کردن ip"
+              : ip
+            : server === ""
+            ? "در حال انتخاب سرور"
+            : "تهران - زیرساخت"}
         </Typography>
       </Typography>
     ))}
@@ -76,40 +73,60 @@ const SpeedTest = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [upload, setUpload] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [testStateNumber, setTestStateNumber] = useState(0)
+  const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
   const { isFetchingServers, selectBestServer } = useFetchServers();
-  const [selectedServerURL, setSelectedServerURL] = useState("https://server1.eyesp.live/");
+  const [selectedServerURL, setSelectedServerURL] = useState("");
+  const [isServerSelected, setIsServerSelected] = useState(false);
 
   useEffect(() => {
-    axios.get("https://server1.eyesp.live/get-ip")
-      .then((res) => setClientIp(res.data.ip))
-      .catch((error) => console.error("Error fetching client IP:", error));
+    axios
+      .get("https://server1.eyesp.live/get-ip")
+      .then((res) => setClientIp(res.data.ip));
+    // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
 
-  // useEffect(() => {
-  //   if (selectedServerURL) return;
+  useEffect(() => {
+    if (selectedServerURL) {
+      setIsServerSelected(true);
+    }
+  }, [selectedServerURL]);
 
-  //   if (!isFetchingServers) {
-  //     selectBestServer().then(url => {
-  //       if (url) {
-  //         setSelectedServerURL(url);
-  //       }
-  //     });
-  //   }
-  // }, [isFetchingServers, selectBestServer, selectedServerURL]);
+  useEffect(() => {
+    if (selectedServerURL) return;
+
+    if (!isFetchingServers) {
+      selectBestServer().then((url) => {
+        if (url) {
+          setSelectedServerURL(url);
+        }
+      });
+    }
+  }, [isFetchingServers, selectBestServer, selectedServerURL]);
 
   const PING_TIMES = 10;
 
   useEffect(() => {
+    if (selectedServerURL === "") {
+      return;
+    }
     const s = socket || io(selectedServerURL);
     setSocket(s);
+
+    s.on("connect", () => {
+      console.log("Socket connected");
+    });
+
+    s.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
+
     return () => s.disconnect();
   }, [selectedServerURL]);
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !isServerSelected) return; // Prevent ping test if server isn't selected
     let pingCount = 0,
       minLatency = Infinity;
     socket.on("pong_event", async (timestamp) => {
@@ -122,12 +139,15 @@ const SpeedTest = () => {
         socket.emit("ping_event", performance.now());
       }
     });
-  }, [socket]);
+  }, [socket, isServerSelected]);
 
-  const startPingTest = () =>
+  const startPingTest = () => {
+    if (!isServerSelected) return; // Prevent ping test if server isn't selected
     socket && socket.emit("ping_event", performance.now());
+  };
 
   const handleButtonClick = () => {
+    if (!isServerSelected) return; // Prevent other tests if server isn't selected
     setIsGoButtonVisible(false);
     startPingTest();
     handleStart();
@@ -146,9 +166,9 @@ const SpeedTest = () => {
           ulStatus,
           pingStatus,
           jitterStatus,
-          testState
+          testState,
         } = data;
-        setTestStateNumber(testState)
+        setTestStateNumber(testState);
         if (isDl && flag) {
           setDownload(dlStatus);
           setDownloadProgress(dlProgress);
@@ -206,10 +226,6 @@ const SpeedTest = () => {
     }
   };
 
-  const handleCloseDialog = () => {
-    setIsTestEnds(false);
-  };
-
   return (
     <>
       <CardContainer
@@ -223,11 +239,7 @@ const SpeedTest = () => {
         }}
       >
         <Box display="flex" justifyContent="space-between">
-          <Typography
-            variant="h1"
-            color=""
-            gutterBottom
-          >
+          <Typography variant="h1" color="" gutterBottom>
             تست اینترنت
           </Typography>
           <Button
@@ -235,7 +247,7 @@ const SpeedTest = () => {
             to="/history"
             variant="h3"
             color="text.subHeading"
-            startIcon={<HistoryIcon sx={{mx: "0.5rem"}}/>}
+            startIcon={<HistoryIcon sx={{ mx: "0.5rem" }} />}
           >
             تست های گذشته
           </Button>
@@ -248,7 +260,7 @@ const SpeedTest = () => {
           height="100%"
           paddingBottom="10%"
         >
-          <AddressAndServer ip={clientIp} />
+          <AddressAndServer ip={clientIp} server={selectedServerURL} />
           <Box
             width={isMdScreen ? "25vmin" : "55vmin"}
             height={isMdScreen ? "25vmin" : "55vmin"}
@@ -267,7 +279,7 @@ const SpeedTest = () => {
                 }}
               >
                 <Typography
-                  color= {theme.palette.mode === "light" ? "#000" : "#FFF"}
+                  color={theme.palette.mode === "light" ? "#000" : "#FFF"}
                   variant="start"
                 >
                   شروع
@@ -318,12 +330,19 @@ const SpeedTest = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
-            <Typography variant="h5" color="text.main" marginLeft="1rem">نوع تست</Typography>
+            <Typography variant="h5" color="text.main" marginLeft="1rem">
+              نوع تست
+            </Typography>
           </Box>
 
-          <FloatingResult download={download} upload={upload} latency={latency} isTestEnds={isTestEnds} />
+          <FloatingResult
+            download={download}
+            upload={upload}
+            latency={latency}
+            isTestEnds={isTestEnds}
+          />
         </Box>
-      </CardContainer >
+      </CardContainer>
     </>
   );
 };
