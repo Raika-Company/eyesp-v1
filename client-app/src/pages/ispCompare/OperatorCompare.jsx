@@ -4,14 +4,17 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
-import xAxis from "../../app/assets/image/xAxis.svg";
-import yAxis from "../../app/assets/image/yAxis.svg";
+import xAxisLight from "../../app/assets/image/time-compare-light.svg";
+import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
+import yAxisLight from "../../app/assets/image/speed-compare-light.svg";
+import yAxisDark from "../../app/assets/image/speed-compare-dark.svg";
 import axios from "axios";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
+import CardContainer from "../../app/common/CardContainer";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
-function GridItem({ rendered, title, data }) {
+function GridItem({ theme ,rendered, title, data }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
@@ -23,8 +26,10 @@ function GridItem({ rendered, title, data }) {
             borderRadius="3rem"
             padding="1rem"
             sx={{
-              backgroundImage:
-                "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+              background:
+              theme.palette.mode === "dark"
+              ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
+              : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
             }}
             width="100%"
             height="250px"
@@ -61,9 +66,13 @@ function GridItem({ rendered, title, data }) {
               </Box>
             )}
           </Box>
-          <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
+          <img
+            src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
+            alt="xAxis"
+            style={{ width: "100%" }}
+          />
         </Box>
-        <img src={yAxis} alt="yAxis" style={{ height: "250px" }} />
+        <img src={theme.palette.mode === "light" ? yAxisLight : yAxisDark} alt="yAxis" style={{ height: "250px" }} />
       </Box>
     </Grid>
   );
@@ -148,15 +157,11 @@ const OperatorCompare = () => {
   }, []);
   return (
     <>
-      <Box
+      <CardContainer
         sx={{
           mt: "1rem",
           mb: "2rem",
           p: "2rem",
-          borderRadius: "25px",
-          boxShadow: "0 4px 40px 0 rgba(0, 0, 0, 0.20)",
-          backgroundImage:
-            "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)",
         }}
       >
         <Box
@@ -209,6 +214,7 @@ const OperatorCompare = () => {
           {titlesChart.map((title, index) => (
             <GridItem
               key={index}
+              theme={theme}
               rendered={rendered}
               title={title}
               data={
@@ -224,7 +230,7 @@ const OperatorCompare = () => {
             />
           ))}
         </Grid>
-      </Box>
+      </CardContainer>
     </>
   );
 };
