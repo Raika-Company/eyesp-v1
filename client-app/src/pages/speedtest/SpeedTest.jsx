@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
+import elipseDark from "../../app/assets/image/elipse-dark.svg";
 
 import ShowResult from "./ShowResult";
 import { STATUS_MAP } from "./constant";
@@ -285,7 +286,7 @@ const SpeedTest = () => {
                 }}
               >
                 <img
-                  src={elipse}
+                  src={theme.palette.mode === "dark" ? elipseDark : elipse}
                   alt="speed-meter"
                   style={{ maxWidth: "100%", height: "100%", zIndex: 1 }}
                 />
