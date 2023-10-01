@@ -98,47 +98,6 @@ function PcDrawMeter({
     );
     ctx.stroke();
 
-    // const radiusForRoundedEffect = ctx.lineWidth / 2;
-
-    // ctx.beginPath();
-    // var tangentStartAngle = Math.atan2(
-    //   -Math.sin(startAngle),
-    //   -Math.cos(startAngle)
-    // );
-    // var tangentEndAngle = Math.atan2(-Math.sin(endAngle), -Math.cos(endAngle));
-    // var startHalfCircleBegin = tangentStartAngle;
-    // var startHalfCircleEnd = tangentStartAngle + Math.PI;
-
-    // ctx.arc(
-    //   canvas.width / 2 +
-    //     Math.cos(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-    //   canvas.height -
-    //     78 * sizScale +
-    //     Math.sin(startAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-    //   radiusForRoundedEffect,
-    //   startHalfCircleBegin,
-    //   startHalfCircleEnd
-    // );
-    // ctx.fillStyle = mbps > 0.1 ? "#1D77FF" : fg;
-    // ctx.fill();
-
-    // ctx.beginPath();
-    // var endHalfCircleBegin = tangentEndAngle - Math.PI;
-    // var endHalfCircleEnd = tangentEndAngle;
-
-    // ctx.arc(
-    //   canvas.width / 2 +
-    //     Math.cos(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-    //   canvas.height -
-    //     78 * sizScale +
-    //     Math.sin(endAngle) * (canvas.height / 1.5 - ctx.lineWidth),
-    //   radiusForRoundedEffect,
-    //   endHalfCircleBegin,
-    //   endHalfCircleEnd
-    // );
-    // ctx.fillStyle = mbps > 99 ? "#1D77FF" : fg;
-    // ctx.fill();
-
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = 12 * sizScale + "px PeydaBold";
@@ -170,9 +129,9 @@ function PcDrawMeter({
     }
 
     // if (isDl) {
-      for (let i = 0; i <= 10; i++) {
-        drawNumber(i);
-      }
+    for (let i = 0; i <= 10; i++) {
+      drawNumber(i);
+    }
     // }
 
     // Drawing the trapezoid hand (pointer)

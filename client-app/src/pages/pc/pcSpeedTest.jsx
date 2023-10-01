@@ -1,26 +1,20 @@
-/**
- * React component for the Speed Test functionality.
- * @component
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.themeMode - The theme mode for styling.
- * @returns {JSX.Element} - The rendered Speed Test component.
- */
-
-// React core and hooks
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-// Import Material-UI components and styles
-import { useMediaQuery } from "@mui/material";
-import { Box, useTheme } from "@mui/material";
-
+import React from "react";
+import {
+  Box,
+  useMediaQuery,
+  useTheme,
+  keyframes,
+  Button,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 
-// Local components
-import PcAboutBox from "./pcAboutBox";
-import PcSpeedBox from "./pcSpeedBox";
-import PcDrawMeter from "./pcDrawMeter";
-import PcInformationBox from "./pcInformationBox";
+import { STATUS_MAP } from "../speedtest/constant";
+
+import io from "socket.io-client";
+import axios from "axios";
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
 import Download from "../../app/assets/image/Img-SpeedTest/download1.svg";
@@ -32,15 +26,16 @@ import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
 import virasty from "../../app/assets/image/Img-SpeedTest/virasty 1.svg";
 import Web from "../../app/assets/image/Img-SpeedTest/Web.svg";
 
-// utils
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import PcSpeedBox from "./pcSpeedBox";
+import PcDrawMeter from "./pcDrawMeter";
+import PcAboutBox from "./pcAboutBox";
+import PcInformationBox from "./pcInformationBox";
+import { Link } from "react-router-dom";
 
-/**
- * Functional component representing the PC Speed Test.
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.themeMode - The theme mode for styling.
- * @returns {JSX.Element} - The rendered Speed Test component.
- */
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
 const InfoBoxData = [
   {
@@ -58,155 +53,140 @@ const InfoBoxData = [
   },
 ];
 
-const PcSpeedTest = ({ themeMode }) => {
+const PcspTest = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const [speedData, setSpeedData] = useState({
-    ping: null,
-    downloadSpeed: null,
-  });
-  const [isTestEnds, setIsTestEnds] = useState(false);
-  const [uploadSpeed, setUploadSpeed] = useState(null);
-  const [testStage, setTestStage] = useState(null); // "ping", "download", "upload"
-  const [isstartagain, setIsStartAgain] = useState(true);
   const [isMeterVisible, setIsMeterVisible] = useState(true);
+  const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
+  const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [status, setStatus] = useState(2);
+  const [isTestEnds, setIsTestEnds] = useState(false);
+  const [socket, setSocket] = useState(null);
+  const [latency, setLatency] = useState(0);
+  const [download, setDownload] = useState(0);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [upload, setUpload] = useState(0);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [testStateNumber, setTestStateNumber] = useState(0);
+  const [isDl, setIsDl] = useState(true);
+  const [clientIp, setClientIp] = useState("");
+  const [selectedServerURL, setSelectedServerURL] = useState(
+    "https://server1.eyesp.live/"
+  );
 
-  /**
-   * useEffect hook to update the component based on the test stage.
-   * @function
-   * @name useEffect
-   * @param {Function} callback - The callback function to execute.
-   * @param {Array} dependencies - The dependencies to watch for changes.
-   * @returns {void}
-   */
   useEffect(() => {
-    if (testStage === "download") {
-    } else if (testStage === "upload") {
-      setIsMeterVisible(false);
-    }
-  }, [testStage]);
+    axios
+      .get("https://server1.eyesp.live/get-ip")
+      .then((res) => setClientIp(res.data.ip))
+      .catch((error) => console.error("Error fetching client IP:", error));
+  }, []);
+
+  const PING_TIMES = 10;
 
   useEffect(() => {
-    if (testStage === "upload" && isTestEnds) {
-      setIsTestEnds(true);
-    }
-  }, [testStage, isTestEnds]);
+    const s = socket || io(selectedServerURL);
+    setSocket(s);
+    return () => s.disconnect();
+  }, [selectedServerURL]);
 
-  /**
-   * useEffect hook to handle button click and start the test.
-   * @function
-   * @name handleButtonClick
-   * @returns {void}
-   */
+  useEffect(() => {
+    if (!socket) return;
+    let pingCount = 0,
+      minLatency = Infinity;
+    socket.on("pong_event", async (timestamp) => {
+      const currentLatency = performance.now() - timestamp;
+      minLatency = Math.min(minLatency, currentLatency);
+      pingCount++;
+      if (pingCount === PING_TIMES) {
+        setLatency(minLatency.toFixed(2));
+      } else {
+        socket.emit("ping_event", performance.now());
+      }
+    });
+  }, [socket]);
+
+  const startPingTest = () =>
+    socket && socket.emit("ping_event", performance.now());
 
   const handleButtonClick = () => {
-    localStorage.removeItem("testResults");
-
     setIsStartButtonVisible(false);
-    setIsMeterVisible(true);
-    setIsStartAgain(false);
-    setTimeout(() => {
-      // After 1 second, display ping value
-      setSpeedData((prev) => ({
-        ...prev,
-        ping: Math.floor(Math.random() * 31) + 50,
-      }));
-      setTestStage("download");
-    }, 1000);
+    startPingTest();
+    handleStart();
   };
 
-  useEffect(() => {
-    if (testStage === "download") {
-      // Simulate download test
-      let timeElapsed = 0;
-      // Generate initial random number for download
-      let initialDownload = parseFloat((Math.random() * 20 + 10).toFixed(2)); // random number between 10 and 30
+  let flag = true;
 
-      const interval = setInterval(() => {
-        timeElapsed += 100;
-        if (timeElapsed <= 1000) {
-          setSpeedData((prev) => ({
-            ...prev,
-            downloadSpeed: initialDownload,
-          }));
-        } else if (timeElapsed > 1000 && timeElapsed <= 6000) {
-          // Ensure subsequent values are within ±2 of the initial value
-          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
-          setSpeedData((prev) => ({
-            ...prev,
-            downloadSpeed: parseFloat(
-              (initialDownload + parseFloat(randomDifference)).toFixed(2)
-            ),
-          }));
-        } else {
-          clearInterval(interval);
-          setTimeout(() => {
-            // Add a timeout here to delay the next test
-            setTestStage("upload");
-          }, 3000); // Delay the upload test by 3 seconds
+  const handleStart = () => {
+    if (window.speedtest.getState() === STATUS_MAP.RUNNING) {
+    } else {
+      window.speedtest.onupdate = (data) => {
+        const {
+          dlProgress,
+          dlStatus,
+          ulProgress,
+          ulStatus,
+          pingStatus,
+          jitterStatus,
+          testState,
+        } = data;
+        setTestStateNumber(testState);
+        if (isDl && flag) {
+          setDownload(dlStatus);
+          setDownloadProgress(dlProgress);
+          if (dlProgress == 1) {
+            setIsDl(false);
+            flag = false;
+          }
         }
-      }, 100);
-      return () => clearInterval(interval);
-    } else if (testStage === "upload") {
-      // Simulate upload test
-      let timeElapsed = 0;
-      // Generate initial random number for upload
-      let initialUpload = parseFloat((Math.random() * 10 + 5).toFixed(2)); // random number between 5 and 15
 
-      const interval = setInterval(() => {
-        timeElapsed += 100;
-        if (timeElapsed <= 500) {
-          setUploadSpeed(10 * (timeElapsed / 500));
-        } else if (timeElapsed > 500 && timeElapsed <= 5500) {
-          // Ensure subsequent values are within ±2 of the initial value
-          let randomDifference = (Math.random() * 4 - 2).toFixed(2);
-          setUploadSpeed(
-            parseFloat(
-              (initialUpload + parseFloat(randomDifference)).toFixed(2)
-            )
-          );
-        } else {
-          clearInterval(interval);
+        if (!isDl || dlProgress == 1) {
+          setUpload(ulStatus);
+          setUploadProgress(ulProgress);
+        }
+
+        if (dlProgress == 1 && ulProgress == 1) {
+          setIsMeterVisible(false);
           const currentJalaliDateInEnglish = moment().format("jYYYY/jM/jD");
           const currentJalaliDateInFarsi = convertToPersianNumbers(
             currentJalaliDateInEnglish
           );
 
-          const testResults = {
-            date: currentJalaliDateInFarsi, // Store the current Jalali date with Farsi numbers
-            ping: speedData.ping,
-            download: speedData.downloadSpeed,
-            upload: parseFloat(
-              (
-                initialUpload + parseFloat((Math.random() * 4 - 2).toFixed(2))
-              ).toFixed(2)
-            ),
-            providerLocation: "Paris-Irancell",
+          const getCurrentTime = () => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+
+            return `${hours}:${minutes}:${seconds}`;
           };
 
+          const testResults = {
+            date: currentJalaliDateInFarsi,
+            time: convertToPersianNumbers(getCurrentTime()),
+            ping: convertToPersianNumbers(latency),
+            download: convertToPersianNumbers(dlStatus),
+            testDuration: convertToPersianNumbers("00:16"),
+            upload: convertToPersianNumbers(ulStatus),
+            server: "Paris-KEYYO",
+            ip: clientIp,
+          };
           const existingResults = JSON.parse(
             localStorage.getItem("testResults") || "[]"
           );
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
+
           setIsTestEnds(true);
         }
-      }, 100);
-      return () => clearInterval(interval);
+      };
+      window.speedtest.onend = () => {
+        setStatus(STATUS_MAP.READY);
+      };
+      setStatus(STATUS_MAP.RUNNING);
+      window.speedtest.start();
     }
-  }, [testStage]);
+  };
 
-  /**
-   * useEffect hook to calculate box height based on navbar height.
-   * @function
-   * @name useEffect
-   * @param {Function} callback - The callback function to execute.
-   * @param {Array} dependencies - The dependencies to watch for changes.
-   * @returns {void}
-   */
   const [boxHeight, setBoxHeight] = useState("90dvh");
   useEffect(() => {
     const navbarElement = document.querySelector(".nav-height");
@@ -257,7 +237,7 @@ const PcSpeedTest = ({ themeMode }) => {
             title="UPLOAD"
             iconSrc={Upload}
             altText="before upload icon"
-            value={isStartButtonVisible ? null : uploadSpeed}
+            value={isStartButtonVisible ? null : upload}
             measure="Mbps"
             opacity={isStartButtonVisible ? "0.2" : "1"}
           />
@@ -266,7 +246,7 @@ const PcSpeedTest = ({ themeMode }) => {
             title="DOWNLOAD"
             iconSrc={Download}
             altText="before download icon"
-            value={isStartButtonVisible ? null : speedData.downloadSpeed}
+            value={isStartButtonVisible ? null : download}
             measure="Mbps"
             opacity={isStartButtonVisible ? "0.2" : "1"}
           />
@@ -274,7 +254,7 @@ const PcSpeedTest = ({ themeMode }) => {
             title="PING"
             iconSrc={Ping}
             altText="ping icon"
-            value={isStartButtonVisible ? null : speedData.ping}
+            value={isStartButtonVisible ? null : latency}
             measure="ms"
             opacity={isStartButtonVisible ? "0.2" : "1"}
           />
@@ -287,32 +267,32 @@ const PcSpeedTest = ({ themeMode }) => {
           }}
         >
           {isStartButtonVisible ? (
-            <Box
+            <Button
               onClick={handleButtonClick}
               sx={{
                 height: "clamp(15rem,10rem + 10vmin,16rem)",
                 width: "clamp(15rem,10rem + 10vmin,16rem)",
                 borderRadius: "50%",
                 border: "7.429px solid #FA5356",
-                backgroundOrigin: "border-box",
-                backgroundClip: "padding-box, border-box",
-                fontSize: "2.3rem",
-                fontWeight: "400",
-                lineHeight: "normal",
-                fontStyle: "normal",
-                paddingTop: "5.8rem",
+                paddingTop: "1.8rem",
                 color: "#FFF",
                 textAlign: "center",
                 cursor: "pointer",
                 userSelect: "none",
+                ":hover": {
+                  backgroundColor: "transparent",
+                  border: "7.429px solid #FA5356",
+                },
               }}
-              variant="outlined"
             >
-              START
-            </Box>
+              <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+                START
+              </Typography>
+            </Button>
           ) : isMeterVisible ? (
             <Box
               sx={{
+                animation: `${fadeIn} 1s ease-in-out`,
                 [theme.breakpoints.between("xs", "sm")]: {
                   width: "100%",
                 },
@@ -324,33 +304,22 @@ const PcSpeedTest = ({ themeMode }) => {
               }}
             >
               <PcDrawMeter
-                amount={0.2} // This can be adjusted or removed based on the functionality of DrawMeter
                 bk={
                   /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                     ? "#45628A"
                     : "#1B70EE1C"
                 }
                 fg={"#1B70EE1C"}
-                progress={0.3}
-                prog={0.3} // Adjust this if it's being used differently than 'progress'
-                mbps={
-                  testStage === "download"
-                    ? speedData.downloadSpeed
-                    : uploadSpeed
-                }
-                isDl={true}
-                theme={themeMode}
+                progress={isDl ? downloadProgress : uploadProgress}
+                mbps={isDl ? download : upload}
+                isDl={isDl}
+                testState={testStateNumber}
+                theme="light"
               />
             </Box>
           ) : (
-            <Box
-              onClick={() => {
-                setIsStartButtonVisible(true);
-                setIsMeterVisible(false);
-                setIsStartAgain(true);
-                setIsTestEnds(false);
-                setTestStage(null);
-              }}
+            <Button
+              onClick={() => window.location.reload(true)}
               sx={{
                 height: "clamp(15rem,10rem + 10vmin,16rem)",
                 width: "clamp(15rem,10rem + 10vmin,16rem)",
@@ -359,19 +328,25 @@ const PcSpeedTest = ({ themeMode }) => {
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
                 fontSize: "2.3rem",
-                fontWeight: "400",
-                lineHeight: "normal",
-                fontStyle: "normal",
-                paddingTop: "5.8rem",
+                paddingTop: "1.8rem",
                 color: "#FFF",
                 textAlign: "center",
                 cursor: "pointer",
                 userSelect: "none",
+                ":hover": {
+                  backgroundColor: "transparent",
+                  border: "7.429px solid #FA5356",
+                },
               }}
               variant="outlined"
             >
-              Test Again
-            </Box>
+              <Typography
+                variant="text"
+                sx={{ fontSize: "2.3rem", textTransform: "capitalize" }}
+              >
+                Test Again
+              </Typography>
+            </Button>
           )}
         </Box>
         <Box
@@ -397,8 +372,7 @@ const PcSpeedTest = ({ themeMode }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-evenly",
-            width: isSmScreen ? "45%" : isMdScreen ? "25%" : "12rem",
-            ml: isMdScreen ? "1.1rem" : "1.1rem",
+            width: isSmScreen ? "45%" : isMdScreen ? "16%" : "12%",
           }}
         >
           <PcAboutBox iconSrc={virasty} />
@@ -410,4 +384,4 @@ const PcSpeedTest = ({ themeMode }) => {
   );
 };
 
-export default PcSpeedTest;
+export default PcspTest;
