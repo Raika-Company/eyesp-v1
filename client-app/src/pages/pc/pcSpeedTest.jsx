@@ -241,7 +241,7 @@ const PcspTest = () => {
         <Box
           sx={{
             width: "100%",
-            height: "clamp(20.9rem,20.9rem + 3vmin, 3rem)",
+            height: "clamp(20.6rem,20.6rem + 3vmin, 3rem)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
