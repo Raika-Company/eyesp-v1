@@ -9,10 +9,10 @@ import React from "react";
  * @returns {JSX.Element} - The rendered AboutBox component.
  */
 
-const PcAboutBox = ({ iconSrc, altText }) => {
+const PcAboutBox = ({ iconSrc, altText, index }) => {
   return (
-    <Box sx={{ cursor: "pointer" }}>
-      <img src={iconSrc} alt={altText} height="31px" />
+    <Box sx={{ cursor: "pointer", margin: index === 1 ? "0 1rem" : "" }}>
+      <img src={iconSrc} alt={altText} height="31px" width="31px" />
     </Box>
   );
 };

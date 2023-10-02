@@ -29,7 +29,9 @@ const PcSpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => {
           {measure}
         </Typography>
       </Box>
-      <Typography color="#FFF">{value !== null ? value : "--"}</Typography>
+      <Typography color="#FFF" fontSize="2rem">
+        {value !== null ? value : "--"}
+      </Typography>
     </Box>
   );
 };

@@ -31,6 +31,7 @@ import PcDrawMeter from "./pcDrawMeter";
 import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import { Link } from "react-router-dom";
+import PcMiniSpeedBox from "./pcMiniSpeedBox";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -54,10 +55,13 @@ const InfoBoxData = [
 ];
 
 const PcspTest = () => {
+  const [currentTestType, setCurrentTestType] = useState("download");
+
   const theme = useTheme();
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const isXlScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [status, setStatus] = useState(2);
   const [isTestEnds, setIsTestEnds] = useState(false);
@@ -187,47 +191,23 @@ const PcspTest = () => {
     }
   };
 
-  const [boxHeight, setBoxHeight] = useState("90dvh");
-  useEffect(() => {
-    const navbarElement = document.querySelector(".nav-height");
-
-    if (navbarElement) {
-      const navbarHeight = navbarElement.offsetHeight;
-      setBoxHeight(`calc(98dvh - ${navbarHeight}px)`);
-    } else {
-      setBoxHeight("98dvh");
-    }
-  }, []);
-
   return (
     <>
       <Box
+        width="100%"
+        height="75%"
         component="main"
-        height={boxHeight}
-        sx={{
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          backgroundPosition: "left bottom",
-          [theme.breakpoints.between("xs", "sm")]: {
-            backgroundSize: "contain",
-          },
-          [theme.breakpoints.up("md")]: {
-            backgroundSize: "40%",
-          },
-        }}
         display="flex"
-        flexDirection="column"
-        justifyContent="space-evenly"
-        alignItems="stretch"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="flex-start"
       >
         <Box
+          width="90%"
           display="flex"
-          flexDirection="row"
+          alignItems="center"
           justifyContent="space-evenly"
           height="clamp(5rem,5rem + 3vmin, 3rem)"
-          width="75%"
-          marginX="auto"
-          alignItems="center"
           textAlign="center"
           sx={{
             display: { xs: "none", md: "flex" },
@@ -261,6 +241,8 @@ const PcspTest = () => {
         </Box>
         <Box
           sx={{
+            width: "100%",
+            height: "clamp(18.2rem,18.2rem + 3vmin, 3rem)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -270,18 +252,23 @@ const PcspTest = () => {
             <Button
               onClick={handleButtonClick}
               sx={{
-                height: "clamp(15rem,10rem + 10vmin,16rem)",
-                width: "clamp(15rem,10rem + 10vmin,16rem)",
-                borderRadius: "50%",
-                border: "7.429px solid #FA5356",
+                height: "clamp(17rem,10rem + 10vmin,16rem)",
+                width: "clamp(17rem,10rem + 10vmin,16rem)",
+                border: "5.529px solid transparent",
+
+                background:
+                  " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                borderRadius: "50em",
                 paddingTop: "1.8rem",
                 color: "#FFF",
                 textAlign: "center",
                 cursor: "pointer",
                 userSelect: "none",
                 ":hover": {
-                  backgroundColor: "transparent",
-                  border: "7.429px solid #FA5356",
+                  border: "5.529px solid transparent",
+                  background:
+                    " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                  borderRadius: "50em",
                 },
               }}
             >
@@ -292,6 +279,7 @@ const PcspTest = () => {
           ) : isMeterVisible ? (
             <Box
               sx={{
+                position: "relative",
                 animation: `${fadeIn} 1s ease-in-out`,
                 [theme.breakpoints.between("xs", "sm")]: {
                   width: "100%",
@@ -316,29 +304,56 @@ const PcspTest = () => {
                 testState={testStateNumber}
                 theme="light"
               />
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-evenly"
+                height="clamp(2rem,2rem + 3vmin, 3rem)"
+                width="100%"
+                marginX="auto"
+                alignItems="center"
+                textAlign="center"
+                sx={{
+                  display: {
+                    xs: "none",
+                    md: "flex",
+                    position: "absolute",
+                    bottom: "-30px",
+                  },
+                }}
+              >
+                <PcMiniSpeedBox
+                  iconSrc={Upload}
+                  altText="before upload icon"
+                  value={isStartButtonVisible ? null : upload}
+                  measure="Mbps"
+                  opacity={isStartButtonVisible ? "0.2" : "1"}
+                />
+              </Box>
             </Box>
           ) : (
             <Button
               onClick={() => window.location.reload(true)}
               sx={{
-                height: "clamp(15rem,10rem + 10vmin,16rem)",
-                width: "clamp(15rem,10rem + 10vmin,16rem)",
-                borderRadius: "50%",
-                border: "7.429px solid #FA5356",
-                backgroundOrigin: "border-box",
-                backgroundClip: "padding-box, border-box",
-                fontSize: "2.3rem",
+                height: "clamp(17rem,10rem + 10vmin,16rem)",
+                width: "clamp(17rem,10rem + 10vmin,16rem)",
+                border: "5.529px solid transparent",
+
+                background:
+                  " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                borderRadius: "50em",
                 paddingTop: "1.8rem",
                 color: "#FFF",
                 textAlign: "center",
                 cursor: "pointer",
                 userSelect: "none",
                 ":hover": {
-                  backgroundColor: "transparent",
-                  border: "7.429px solid #FA5356",
+                  border: "5.529px solid transparent",
+                  background:
+                    " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                  borderRadius: "50em",
                 },
               }}
-              variant="outlined"
             >
               <Typography
                 variant="text"
@@ -350,6 +365,7 @@ const PcspTest = () => {
           )}
         </Box>
         <Box
+          width="95%"
           flexDirection="row"
           alignItems="center"
           justifyContent="center"
@@ -369,14 +385,14 @@ const PcspTest = () => {
         </Box>
         <Box
           sx={{
+            width: "95.5%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-evenly",
-            width: isSmScreen ? "45%" : isMdScreen ? "16%" : "12%",
+            justifyContent: "flex-start",
           }}
         >
           <PcAboutBox iconSrc={virasty} />
-          <PcAboutBox iconSrc={tikRed} />
+          <PcAboutBox iconSrc={tikRed} index={1} />
           <PcAboutBox iconSrc={Web} />
         </Box>
       </Box>

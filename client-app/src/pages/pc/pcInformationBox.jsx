@@ -29,7 +29,7 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           cursor: "pointer",
         }}
       >
-        <img height="30px" src={iconSrc} alt={altText} />
+        <img height="27px" width="27px" src={iconSrc} alt={altText} />
       </Box>
       <Box>
         <Typography sx={{ color: "#FFF" }} variant="h1">
@@ -39,7 +39,9 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           {value}
         </Typography>
         {buttonLabel ? (
-          <Button sx={{ color: "#D81303" }}>{buttonLabel}</Button>
+          <Button sx={{ color: "#D81303", textTransform: "capitalize" }}>
+            {buttonLabel}
+          </Button>
         ) : null}
       </Box>
     </Box>

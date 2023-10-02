@@ -5,7 +5,17 @@ import LogoRadar from "./LogoRadar";
 
 const Pc = () => {
   return (
-    <Box sx={{ bgcolor: "#232323", direction: "ltr" }}>
+    <Box
+      sx={{
+        bgcolor: "#232323",
+        direction: "ltr",
+        height: "100vh",
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <LogoRadar />
       <PcSpeedTest />
     </Box>
