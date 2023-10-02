@@ -7,11 +7,11 @@ const Pc = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#232323",
-        direction: "ltr",
         height: "100vh",
         display: "flex",
         flexWrap: "wrap",
+        direction: "ltr",
+        bgcolor: "#232323",
         alignItems: "center",
         justifyContent: "center",
       }}

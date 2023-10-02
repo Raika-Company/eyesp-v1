@@ -195,22 +195,23 @@ const PcspTest = () => {
     <>
       <Box
         width="100%"
-        height="75%"
+        height="80%"
         component="main"
         display="flex"
         flexWrap="wrap"
         justifyContent="center"
-        alignItems="flex-start"
+        alignItems="center"
       >
         <Box
-          width="90%"
+          // width="80%"
           display="flex"
+          flexWrap="wrap"
           alignItems="center"
           justifyContent="space-evenly"
-          height="clamp(5rem,5rem + 3vmin, 3rem)"
+          height="clamp(4rem,4rem + 3vmin, 3rem)"
           textAlign="center"
           sx={{
-            display: { xs: "none", md: "flex" },
+            display: { xs: "none", sm: "flex" },
           }}
         >
           <PcSpeedBox
@@ -229,6 +230,7 @@ const PcspTest = () => {
             value={isStartButtonVisible ? null : download}
             measure="Mbps"
             opacity={isStartButtonVisible ? "0.2" : "1"}
+            index={1}
           />
           <PcSpeedBox
             title="PING"
@@ -242,7 +244,7 @@ const PcspTest = () => {
         <Box
           sx={{
             width: "100%",
-            height: "clamp(18.2rem,18.2rem + 3vmin, 3rem)",
+            height: "clamp(20.9rem,20.9rem + 3vmin, 3rem)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -252,8 +254,8 @@ const PcspTest = () => {
             <Button
               onClick={handleButtonClick}
               sx={{
-                height: "clamp(17rem,10rem + 10vmin,16rem)",
-                width: "clamp(17rem,10rem + 10vmin,16rem)",
+                height: "clamp(19.8rem,20rem + 10vmin,16rem)",
+                width: "clamp(19.8rem,20rem + 10vmin,16rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -272,7 +274,7 @@ const PcspTest = () => {
                 },
               }}
             >
-              <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+              <Typography variant="text" sx={{ fontSize: "3.2rem" }}>
                 START
               </Typography>
             </Button>
@@ -316,7 +318,7 @@ const PcspTest = () => {
                 sx={{
                   display: {
                     xs: "none",
-                    md: "flex",
+                    sm: "flex",
                     position: "absolute",
                     bottom: "-30px",
                   },
@@ -335,8 +337,8 @@ const PcspTest = () => {
             <Button
               onClick={() => window.location.reload(true)}
               sx={{
-                height: "clamp(17rem,10rem + 10vmin,16rem)",
-                width: "clamp(17rem,10rem + 10vmin,16rem)",
+                height: "clamp(19.8rem,20rem + 10vmin,16rem)",
+                width: "clamp(19.8rem,20rem + 10vmin,16rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -357,7 +359,7 @@ const PcspTest = () => {
             >
               <Typography
                 variant="text"
-                sx={{ fontSize: "2.3rem", textTransform: "capitalize" }}
+                sx={{ fontSize: "3.2rem", textTransform: "capitalize" }}
               >
                 Test Again
               </Typography>
@@ -366,12 +368,11 @@ const PcspTest = () => {
         </Box>
         <Box
           width="95%"
-          height="28%"
           flexDirection="row"
           alignItems="center"
           justifyContent="center"
           gap={10}
-          sx={{ display: { xs: "none", md: "flex" } }}
+          sx={{ display: { xs: "none", sm: "flex" } }}
         >
           {InfoBoxData.map((items, index) => (
             <PcInformationBox
@@ -387,6 +388,7 @@ const PcspTest = () => {
         <Box
           sx={{
             width: "95.5%",
+            height: "7%",
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",

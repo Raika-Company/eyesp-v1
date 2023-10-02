@@ -11,7 +11,7 @@ const PcMiniSpeedBox = ({
 }) => {
   return (
     <Box>
-      <Typography color="#FFF" fontSize="2rem">
+      <Typography color="#FFF" fontSize="1.5rem">
         {value !== null ? value : "--"}
       </Typography>
       <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
@@ -19,7 +19,7 @@ const PcMiniSpeedBox = ({
           <img src={iconSrc} alt={altText} height="20px" width="20px" />
         </Box>
 
-        <Typography color="#909090" fontSize="1.5rem" variant="subtitle2">
+        <Typography color="#909090" fontSize="1rem" variant="subtitle2">
           {measure}
         </Typography>
       </Box>

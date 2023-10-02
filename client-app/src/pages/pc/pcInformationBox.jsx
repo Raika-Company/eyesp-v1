@@ -15,21 +15,28 @@ import React from "react";
 
 const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
   return (
-    <Box display="flex" alignItems="center" flexDirection="row" gap={2}>
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="row"
+      gap={2}
+    >
       <Box
         sx={{
           border: "1px solid #FFF",
           borderRadius: "50%",
           p: "1rem",
-          height: "55px",
-          width: "55px",
+          height: "65px",
+          width: "65px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
         }}
       >
-        <img height="27px" width="27px" src={iconSrc} alt={altText} />
+        <img height="32px" width="32px" src={iconSrc} alt={altText} />
       </Box>
       <Box>
         <Typography sx={{ color: "#FFF" }} variant="h1">
@@ -39,9 +46,19 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           {value}
         </Typography>
         {buttonLabel ? (
-          <Button sx={{ color: "#D81303", textTransform: "capitalize" }}>
+          <Typography
+            component="button"
+            sx={{
+              color: "#D81303",
+              textTransform: "capitalize",
+              bgcolor: "transparent",
+              outline: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
             {buttonLabel}
-          </Button>
+          </Typography>
         ) : null}
       </Box>
     </Box>

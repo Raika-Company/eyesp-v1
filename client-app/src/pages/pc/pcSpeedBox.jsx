@@ -15,21 +15,38 @@ import React from "react";
 // Import Material-UI components and styles
 import { Box, Typography } from "@mui/material";
 
-const PcSpeedBox = ({ title, iconSrc, altText, value, measure, opacity }) => {
+const PcSpeedBox = ({ title, iconSrc, altText, value, measure, opacity, index }) => {
   return (
     <Box>
-      <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
+      <Box
+        sx={{ margin: index === 1 ? "0 6rem" : "" }}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap={1}
+      >
         <Box sx={{ opacity: opacity }}>
           <img src={iconSrc} alt={altText} height="31px" width="31px" />
         </Box>
-        <Typography fontSize="1.8rem" color="#FFF" variant="subtitle2">
+        <Typography
+          fontSize="clamp(1rem, 1.5rem + 0.0781vw, 4rem)"
+          color="#FFF"
+          variant="subtitle2"
+        >
           {title}
         </Typography>
-        <Typography color="#909090" fontSize="1.5rem" variant="subtitle2">
+        <Typography
+          color="#909090"
+          fontSize="clamp(1.125rem, 0.9rem + 0.0586vw, 3rem)"
+          variant="subtitle2"
+        >
           {measure}
         </Typography>
       </Box>
-      <Typography color="#FFF" fontSize="2rem">
+      <Typography
+        color="#FFF"
+        fontSize="clamp(1.125rem, 0.7rem + 0.0265vw, 2.5rem)"
+      >
         {value !== null ? value : "--"}
       </Typography>
     </Box>

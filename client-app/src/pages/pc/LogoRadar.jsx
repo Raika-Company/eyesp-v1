@@ -14,7 +14,6 @@ const LogoRadar = () => {
     <Box
       sx={{
         width: "100%",
-        height: "14%",
         padding: "0 0 0 2.2rem",
         color: "#fff",
         position: "relative",
