@@ -410,12 +410,12 @@ const SpeedTest = () => {
                 theme.palette.mode === "light"
                   ? "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(247, 250, 254, 0.80) 0.01%, #F3F3F3 100%)"
                   : "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(40, 44, 52, 0.80) 0.01%, #2D2D2D 100%)",
-                  marginRight: "5%"
+              marginRight: "5%",
             },
           }}
         >
           <DialogTitle
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            sx={{ display: "flex", justifyContent: "space-between", gap: "4rem" }}
           >
             <Box
               sx={{
@@ -434,7 +434,7 @@ const SpeedTest = () => {
                 }}
               >
                 <InputBase
-                  sx={{ mr: 1, flex: 1 }}
+                  sx={{ mr: 1 }}
                   placeholder="جست و جو"
                   inputProps={{ "aria-label": "جست و جو" }}
                   value={searchQuery}
@@ -467,7 +467,9 @@ const SpeedTest = () => {
                 width="100%"
                 padding="0.5rem"
                 borderRadius="1.4375rem"
-                backgroundColor={theme.palette.mode === "light" ? "#FFF" : "#000"}
+                backgroundColor={
+                  theme.palette.mode === "light" ? "#FFF" : "#000"
+                }
               >
                 <Typography variant="body1">
                   {server.name} - {server.location}
