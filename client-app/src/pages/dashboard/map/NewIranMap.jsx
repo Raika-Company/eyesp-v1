@@ -2,16 +2,10 @@ import React, { useState, useEffect } from "react";
 import iranProvinces from "../../../../public/data/IranProvinces.js";
 import styles from "./NewIranMap.module.css";
 
-import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
-import { useTheme } from "@mui/material";
+import iranBorder from "../../../../public/data/IranMapData.js";
 
-const StyledSpan = styled("span")({
-  position: "absolute",
-  left: (props) => `${props.x + 5}px`,
-  top: (props) => `${props.y + 5}px`,
-  zIndex: 999,
-});
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 const useMouse = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -31,12 +25,6 @@ const useMouse = () => {
   return mousePosition;
 };
 
-const getProvinceColor = (provinceName) => {
-  const province = iranProvinces.find((p) => p.name === provinceName);
-
-  return province ? province.color : "";
-};
-
 const NewIranMap = ({ isProvince, currentProvince }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -48,7 +36,7 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
   const [provinceSelected, setProvinceSelected] = useState(false);
   const [cities, setCities] = useState(["تمام ایران"]);
 
-  const borderColor = theme.palette.mode === "dark" ? "#181D23" : "#FFF";
+  const borderColor = "#FFF";
 
   return (
     <>
@@ -100,6 +88,9 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
             enableBackground="new 20 0 970 960"
             xmlSpace="preserve"
           >
+            {/* <g className={styles.border}>
+              <path className={styles.iran} d={iranBorder} />
+            </g> */}
             <defs>
               <defs>
                 <linearGradient
@@ -143,6 +134,16 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
                 <stop offset="0%" style={{ stopColor: "#D04747" }} />
                 <stop offset="100%" style={{ stopColor: "#DA8E8E" }} />
               </linearGradient>
+              <linearGradient
+                id="darkModeGradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor="#3D3D3D" />
+                <stop offset="100%" stopColor="#2A2A2A" />
+              </linearGradient>
             </defs>
             <g className={styles.province}>
               {provinces.map((province) => (
@@ -154,7 +155,9 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
                     isProvince
                       ? currentProvince == province.name
                         ? "url(#blueGradient)"
-                        : "url(#grayGradient)"
+                        : theme.palette.mode === "light"
+                        ? "url(#grayGradient)"
+                        : "url(#darkModeGradient)"
                       : province.color == "#14A784"
                       ? "url(#blueGradient)"
                       : province.color == "#FF8F3F"
@@ -168,7 +171,7 @@ const NewIranMap = ({ isProvince, currentProvince }) => {
                     navigate(`/dashboard/${province.name}`, {
                       state: {
                         provinceName: province.name,
-                        provinceQuality: province.quality
+                        provinceQuality: province.quality,
                       },
                     });
                   }}

@@ -403,6 +403,16 @@ const SpeedTest = () => {
           keepMounted
           onClose={handleCloseSelectServer}
           aria-describedby="تغییر سرور"
+          PaperProps={{
+            sx: {
+              borderRadius: "2rem",
+              background:
+                theme.palette.mode === "light"
+                  ? "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(247, 250, 254, 0.80) 0.01%, #F3F3F3 100%)"
+                  : "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(40, 44, 52, 0.80) 0.01%, #2D2D2D 100%)",
+                  marginRight: "5%"
+            },
+          }}
         >
           <DialogTitle
             sx={{ display: "flex", justifyContent: "space-between" }}
@@ -448,38 +458,27 @@ const SpeedTest = () => {
             </Button>
           </DialogTitle>
           <DialogContent>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              borderRadius="1.4375rem"
-            >
-              {servers.map((server) => (
-                <Box
-                  key={server.id}
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  width="100%"
-                  padding="0.5rem"
-                  borderBottom="1px solid #eee"
-                >
-                  <Radio
-                    value={server.url}
-                    checked={selectedServerURL === server.url}
-                    onChange={(e) => setSelectedServerURL(e.target.value)}
-                  />
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="flex-end"
-                  >
-                    <Typography variant="body1">{server.name}</Typography>
-                    <Typography variant="body2">{server.location}</Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
+            {servers.map((server) => (
+              <Box
+                key={server.id}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                width="100%"
+                padding="0.5rem"
+                borderRadius="1.4375rem"
+                backgroundColor={theme.palette.mode === "light" ? "#FFF" : "#000"}
+              >
+                <Typography variant="body1">
+                  {server.name} - {server.location}
+                </Typography>
+                <Radio
+                  value={server.url}
+                  checked={selectedServerURL === server.url}
+                  onChange={(e) => setSelectedServerURL(e.target.value)}
+                />
+              </Box>
+            ))}
           </DialogContent>
         </Dialog>
       </CardContainer>
