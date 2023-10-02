@@ -366,6 +366,7 @@ const PcspTest = () => {
         </Box>
         <Box
           width="95%"
+          height="28%"
           flexDirection="row"
           alignItems="center"
           justifyContent="center"
