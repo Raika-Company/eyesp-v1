@@ -140,9 +140,9 @@ function PcDrawMeter({
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
       ctx.rotate(angle);
 
-      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.6;
-      var pointerWidthTop = 9 * sizScale * 0.7;
-      var pointerWidthBottom = 15 * sizScale * 1.2;
+      var pointerLength = (canvas.height / 1.4 - ctx.lineWidth) * 0.6;
+      var pointerWidthTop = 9 * sizScale * 0.6;
+      var pointerWidthBottom = 15 * sizScale * 1.3;
 
       ctx.beginPath();
       // Start from the narrower end

@@ -335,8 +335,8 @@ const PcspTest = () => {
             <Button
               onClick={() => window.location.reload(true)}
               sx={{
-                height: "clamp(19.8rem,20rem + 10vmin,16rem)",
-                width: "clamp(19.8rem,20rem + 10vmin,16rem)",
+                height: "clamp(16.5rem,20rem + 10vmin,16rem)",
+                width: "clamp(16.5rem,20rem + 10vmin,16rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -357,7 +357,7 @@ const PcspTest = () => {
             >
               <Typography
                 variant="text"
-                sx={{ fontSize: "3.2rem", textTransform: "capitalize" }}
+                sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
               >
                 Test Again
               </Typography>
