@@ -3,27 +3,27 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 
 const useFetchServers = () => {
-    const [servers, setServers] = useState([]);
-    const [isFetchingServers, setIsFetchingServers] = useState(false);
-    const [bestServerUrl, setBestServerUrl] = useState(null);
-    
-    const isBestServerFound = useRef(false);
-  
-    useEffect(() => {
-      const fetchServers = async () => {
-        try {
-          setIsFetchingServers(true);
-          const response = await axios.get('https://server1.eyesp.live/servers');
-          setServers(response.data);
-          setIsFetchingServers(false);
-        } catch (error) {
-          console.error('Error fetching servers:', error);
-          setIsFetchingServers(false);
-        }
-      };
-  
-      fetchServers();
-    }, []);
+  const [servers, setServers] = useState([]);
+  const [isFetchingServers, setIsFetchingServers] = useState(false);
+  const [bestServerUrl, setBestServerUrl] = useState(null);
+
+  const isBestServerFound = useRef(false);
+
+  useEffect(() => {
+    const fetchServers = async () => {
+      try {
+        setIsFetchingServers(true);
+        const response = await axios.get('https://server1.eyesp.live/servers');
+        setServers(response.data);
+        setIsFetchingServers(false);
+      } catch (error) {
+        // console.error('Error fetching servers:', error);
+        setIsFetchingServers(false);
+      }
+    };
+
+    fetchServers();
+  }, []);
 
   const PING_TIMES = 10;
 
@@ -51,7 +51,7 @@ const useFetchServers = () => {
       });
 
       socket.on('connect_error', (err) => {
-        console.error('Error connecting to server:', err);
+        // console.error('Error connecting to server:', err);
         resolve(Infinity);
         socket.disconnect();
       });
@@ -66,7 +66,7 @@ const useFetchServers = () => {
     }
 
     if (servers.length === 0) {
-      console.error('No servers available to ping.');
+      // console.error('No servers available to ping.');
       return;
     }
 
@@ -77,7 +77,7 @@ const useFetchServers = () => {
 
     setBestServerUrl(bestServer.url);
     isBestServerFound.current = true;
-    
+
     return bestServer.url;
   };
 

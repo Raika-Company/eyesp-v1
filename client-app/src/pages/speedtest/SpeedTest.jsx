@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   Box,
   Typography,
@@ -6,13 +6,24 @@ import {
   useMediaQuery,
   useTheme,
   keyframes,
+  Slide,
+  Paper,
+  InputBase,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Radio,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
+import elipseDark from "../../app/assets/image/elipse-dark.svg";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 
-import ShowResult from "./ShowResult";
 import { STATUS_MAP } from "./constant";
 
 import io from "socket.io-client";
@@ -35,18 +46,14 @@ const mbpsToAmount = (s) => {
   return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
 };
 
-const renderInfoBox = (isColumn, iconSrc, title, value) => (
-  <InfoBox isColumn={isColumn} iconSrc={iconSrc} title={title} value={value} />
-);
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
-const AddressAndServer = ({ip}) => (
+const AddressAndServer = ({ ip, server }) => (
   <Box>
     {["آدرس", "سرور"].map((text, index) => (
-      <Typography
-        key={index}
-        variant="h4"
-        color="text"
-      >
+      <Typography key={index} variant="h4" color="text.main">
         {text}:
         <Typography
           component="span"
@@ -54,7 +61,13 @@ const AddressAndServer = ({ip}) => (
           color="text"
           marginX="0.5rem"
         >
-          {text === "آدرس" ? ip : "تهران - زیرساخت"}
+          {text === "آدرس"
+            ? ip === ""
+              ? "در حال پیدا کردن ip"
+              : ip
+            : server === ""
+            ? "در حال انتخاب سرور"
+            : "تهران - زیرساخت"}
         </Typography>
       </Typography>
     ))}
@@ -75,40 +88,82 @@ const SpeedTest = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [upload, setUpload] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [testStateNumber, setTestStateNumber] = useState(0)
+  const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
   const { isFetchingServers, selectBestServer } = useFetchServers();
-  const [selectedServerURL, setSelectedServerURL] = useState("https://server1.eyesp.live/");
+  const [selectedServerURL, setSelectedServerURL] = useState("");
+  const [isServerSelected, setIsServerSelected] = useState(false);
+  const [openSelectServer, setOpenSelectServer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    axios.get("https://server1.eyesp.live/get-ip")
-      .then((res) => setClientIp(res.data.ip))
-      .catch((error) => console.error("Error fetching client IP:", error));
+    axios
+      .get("https://server1.eyesp.live/get-ip")
+      .then((res) => setClientIp(res.data.ip));
+    // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
 
-  // useEffect(() => {
-  //   if (selectedServerURL) return;
+  const fetchServers = async () => {
+    try {
+      const response = await axios.get("https://server1.eyesp.live/servers");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching servers:", error);
+    }
+  };
 
-  //   if (!isFetchingServers) {
-  //     selectBestServer().then(url => {
-  //       if (url) {
-  //         setSelectedServerURL(url);
-  //       }
-  //     });
-  //   }
-  // }, [isFetchingServers, selectBestServer, selectedServerURL]);
+  const [servers, setServers] = useState([]);
+
+  useEffect(() => {
+    const getServers = async () => {
+      const serverData = await fetchServers();
+      setServers(serverData);
+    };
+
+    getServers();
+  }, []);
+
+  useEffect(() => {
+    if (selectedServerURL) {
+      setIsServerSelected(true);
+    }
+  }, [selectedServerURL]);
+
+  useEffect(() => {
+    if (selectedServerURL) return;
+
+    if (!isFetchingServers) {
+      selectBestServer().then((url) => {
+        if (url) {
+          setSelectedServerURL(url);
+        }
+      });
+    }
+  }, [isFetchingServers, selectBestServer, selectedServerURL]);
 
   const PING_TIMES = 10;
 
   useEffect(() => {
+    if (selectedServerURL === "") {
+      return;
+    }
     const s = socket || io(selectedServerURL);
     setSocket(s);
+
+    s.on("connect", () => {
+      console.log("Socket connected");
+    });
+
+    s.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
+
     return () => s.disconnect();
   }, [selectedServerURL]);
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !isServerSelected) return;
     let pingCount = 0,
       minLatency = Infinity;
     socket.on("pong_event", async (timestamp) => {
@@ -121,12 +176,15 @@ const SpeedTest = () => {
         socket.emit("ping_event", performance.now());
       }
     });
-  }, [socket]);
+  }, [socket, isServerSelected]);
 
-  const startPingTest = () =>
+  const startPingTest = () => {
+    if (!isServerSelected) return;
     socket && socket.emit("ping_event", performance.now());
+  };
 
   const handleButtonClick = () => {
+    if (!isServerSelected) return;
     setIsGoButtonVisible(false);
     startPingTest();
     handleStart();
@@ -145,9 +203,9 @@ const SpeedTest = () => {
           ulStatus,
           pingStatus,
           jitterStatus,
-          testState
+          testState,
         } = data;
-        setTestStateNumber(testState)
+        setTestStateNumber(testState);
         if (isDl && flag) {
           setDownload(dlStatus);
           setDownloadProgress(dlProgress);
@@ -205,8 +263,12 @@ const SpeedTest = () => {
     }
   };
 
-  const handleCloseDialog = () => {
-    setIsTestEnds(false);
+  const handleSelectServer = () => {
+    setOpenSelectServer(true);
+  };
+
+  const handleCloseSelectServer = () => {
+    setOpenSelectServer(false);
   };
 
   return (
@@ -222,11 +284,7 @@ const SpeedTest = () => {
         }}
       >
         <Box display="flex" justifyContent="space-between">
-          <Typography
-            variant="h1"
-            color=""
-            gutterBottom
-          >
+          <Typography variant="h1" color="" gutterBottom>
             تست اینترنت
           </Typography>
           <Button
@@ -234,7 +292,7 @@ const SpeedTest = () => {
             to="/history"
             variant="h3"
             color="text.subHeading"
-            startIcon={<HistoryIcon sx={{mx: "0.5rem"}}/>}
+            startIcon={<HistoryIcon sx={{ mx: "0.5rem" }} />}
           >
             تست های گذشته
           </Button>
@@ -247,7 +305,18 @@ const SpeedTest = () => {
           height="100%"
           paddingBottom="10%"
         >
-          <AddressAndServer ip={clientIp} />
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <AddressAndServer ip={clientIp} server={selectedServerURL} />
+            {isServerSelected ? (
+              <Button onClick={handleSelectServer}>
+                <Typography variant="h6" color="primary" component="span">
+                  انتخاب سرور
+                </Typography>
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Box>
           <Box
             width={isMdScreen ? "25vmin" : "55vmin"}
             height={isMdScreen ? "25vmin" : "55vmin"}
@@ -266,7 +335,7 @@ const SpeedTest = () => {
                 }}
               >
                 <Typography
-                  color="#000"
+                  color={theme.palette.mode === "light" ? "#000" : "#FFF"}
                   variant="start"
                 >
                   شروع
@@ -285,7 +354,7 @@ const SpeedTest = () => {
                 }}
               >
                 <img
-                  src={elipse}
+                  src={theme.palette.mode === "dark" ? elipseDark : elipse}
                   alt="speed-meter"
                   style={{ maxWidth: "100%", height: "100%", zIndex: 1 }}
                 />
@@ -317,12 +386,104 @@ const SpeedTest = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
-            <Typography variant="h5" color="text" marginLeft="1rem">نوع تست</Typography>
+            <Typography variant="h5" color="text.main" marginLeft="1rem">
+              نوع تست
+            </Typography>
           </Box>
-
-          <FloatingResult download={download} upload={upload} latency={latency} isTestEnds={isTestEnds} />
+          <FloatingResult
+            download={download}
+            upload={upload}
+            latency={latency}
+            isTestEnds={isTestEnds}
+          />
         </Box>
-      </CardContainer >
+        <Dialog
+          open={openSelectServer}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseSelectServer}
+          aria-describedby="تغییر سرور"
+          PaperProps={{
+            sx: {
+              borderRadius: "2rem",
+              background:
+                theme.palette.mode === "light"
+                  ? "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(247, 250, 254, 0.80) 0.01%, #F3F3F3 100%)"
+                  : "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(40, 44, 52, 0.80) 0.01%, #2D2D2D 100%)",
+              marginRight: "5%",
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{ display: "flex", justifyContent: "space-between", gap: "4rem" }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "25px",
+                }}
+              >
+                <InputBase
+                  sx={{ mr: 1 }}
+                  placeholder="جست و جو"
+                  inputProps={{ "aria-label": "جست و جو" }}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Box>
+            <Button
+              color="text"
+              onClick={handleCloseSelectServer}
+              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
+            >
+              بستن
+            </Button>
+          </DialogTitle>
+          <DialogContent>
+            {servers.map((server) => (
+              <Box
+                key={server.id}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                width="100%"
+                padding="0.5rem"
+                borderRadius="1.4375rem"
+                backgroundColor={
+                  theme.palette.mode === "light" ? "#FFF" : "#000"
+                }
+              >
+                <Typography variant="body1">
+                  {server.name} - {server.location}
+                </Typography>
+                <Radio
+                  value={server.url}
+                  checked={selectedServerURL === server.url}
+                  onChange={(e) => setSelectedServerURL(e.target.value)}
+                />
+              </Box>
+            ))}
+          </DialogContent>
+        </Dialog>
+      </CardContainer>
     </>
   );
 };

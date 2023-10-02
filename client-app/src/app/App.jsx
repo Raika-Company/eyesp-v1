@@ -38,7 +38,7 @@ function App() {
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
   const storedThemeMode = localStorage.getItem("themeMode");
-  const initialTheme = storedThemeMode === "dark" ? darkTheme : lightTheme;
+  const initialTheme = (storedThemeMode === "light" ? lightTheme : darkTheme);
 
   const [theme, setTheme] = useState(initialTheme);
 
@@ -103,6 +103,7 @@ function App() {
                         setOpenNav={setOpenNav}
                       />
                       <ThemeSwitcher
+                      openNav={openNav}
                         themeMode={currentThemeMode}
                         toggleTheme={toggleTheme}
                       />

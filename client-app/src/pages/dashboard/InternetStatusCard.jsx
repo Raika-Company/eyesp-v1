@@ -277,7 +277,7 @@ const InternetStatusCard = (props) => {
             ))}
           </ContainedSelect>
         </Box>
-        <Box margin="5%">
+        <Box>
           <NewIranMap />
         </Box>
       </Box>
