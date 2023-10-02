@@ -15,7 +15,8 @@ import React from "react";
 // Import Material-UI components and styles
 import { Box, Typography } from "@mui/material";
 
-const PcSpeedBox = ({ title, iconSrc, altText, value, measure, opacity, index }) => {
+const PcSpeedBox = ({ title, iconSrc, altText, value, measure, index }) => {
+  
   return (
     <Box>
       <Box
@@ -25,7 +26,7 @@ const PcSpeedBox = ({ title, iconSrc, altText, value, measure, opacity, index })
         justifyContent="center"
         gap={1}
       >
-        <Box sx={{ opacity: opacity }}>
+        <Box>
           <img src={iconSrc} alt={altText} height="31px" width="31px" />
         </Box>
         <Typography

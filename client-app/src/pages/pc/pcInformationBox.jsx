@@ -13,6 +13,7 @@ import React from "react";
  * @returns {JSX.Element} - The rendered InformationBox component.
  */
 
+
 const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
   return (
     <Box

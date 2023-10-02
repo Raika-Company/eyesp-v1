@@ -17,9 +17,9 @@ import axios from "axios";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
-import Download from "../../app/assets/image/Img-SpeedTest/download1.svg";
-import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
-import Ping from "../../app/assets/image/Img-SpeedTest/ping1.svg";
+import Download from "../../app/assets/image/Img-SpeedTest/downloadNoColor.svg";
+import Upload from "../../app/assets/image/Img-SpeedTest/uploadNoColor.svg";
+import Ping from "../../app/assets/image/Img-SpeedTest/pingNoColor.svg";
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -220,7 +220,6 @@ const PcspTest = () => {
             altText="before upload icon"
             value={isStartButtonVisible ? null : upload}
             measure="Mbps"
-            opacity={isStartButtonVisible ? "0.2" : "1"}
           />
 
           <PcSpeedBox
@@ -229,7 +228,6 @@ const PcspTest = () => {
             altText="before download icon"
             value={isStartButtonVisible ? null : download}
             measure="Mbps"
-            opacity={isStartButtonVisible ? "0.2" : "1"}
             index={1}
           />
           <PcSpeedBox
@@ -238,7 +236,6 @@ const PcspTest = () => {
             altText="ping icon"
             value={isStartButtonVisible ? null : latency}
             measure="ms"
-            opacity={isStartButtonVisible ? "0.2" : "1"}
           />
         </Box>
         <Box
