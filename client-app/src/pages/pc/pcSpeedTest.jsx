@@ -17,9 +17,9 @@ import axios from "axios";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
-import Download from "../../app/assets/image/Img-SpeedTest/downloadNoColor.svg";
-import Upload from "../../app/assets/image/Img-SpeedTest/uploadNoColor.svg";
-import Ping from "../../app/assets/image/Img-SpeedTest/pingNoColor.svg";
+import Download from "../../app/assets/image/Img-SpeedTest/download1.svg";
+import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
+import Ping from "../../app/assets/image/Img-SpeedTest/ping1.svg";
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -55,8 +55,6 @@ const InfoBoxData = [
 ];
 
 const PcspTest = () => {
-  const [currentTestType, setCurrentTestType] = useState("download");
-
   const theme = useTheme();
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
@@ -220,6 +218,7 @@ const PcspTest = () => {
             altText="before upload icon"
             value={isStartButtonVisible ? null : upload}
             measure="Mbps"
+            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
 
           <PcSpeedBox
@@ -228,6 +227,7 @@ const PcspTest = () => {
             altText="before download icon"
             value={isStartButtonVisible ? null : download}
             measure="Mbps"
+            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
             index={1}
           />
           <PcSpeedBox
@@ -236,12 +236,13 @@ const PcspTest = () => {
             altText="ping icon"
             value={isStartButtonVisible ? null : latency}
             measure="ms"
+            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
         </Box>
         <Box
           sx={{
             width: "100%",
-            height: "clamp(20.6rem,20.6rem + 3vmin, 3rem)",
+            height: "clamp(20.9rem,20.9rem + 3vmin, 3rem)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

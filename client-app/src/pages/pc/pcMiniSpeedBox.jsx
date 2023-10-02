@@ -7,7 +7,7 @@ const PcMiniSpeedBox = ({
   altText,
   value,
   measure,
-  opacity,
+  filter,
 }) => {
   return (
     <Box>
@@ -15,7 +15,7 @@ const PcMiniSpeedBox = ({
         {value !== null ? value : "--"}
       </Typography>
       <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
-        <Box sx={{ opacity: opacity }}>
+        <Box sx={{ filter: filter }}>
           <img src={iconSrc} alt={altText} height="20px" width="20px" />
         </Box>
 
