@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 
 /**
@@ -13,8 +13,9 @@ import React from "react";
  * @returns {JSX.Element} - The rendered InformationBox component.
  */
 
-
 const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <Box
       display="flex"
@@ -29,15 +30,22 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           border: "1px solid #FFF",
           borderRadius: "50%",
           p: "1rem",
-          height: "65px",
-          width: "65px",
+          width: isMdScreen ? "30px" : "50px",
+          height: isMdScreen ? "30px" : "50px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
         }}
       >
-        <img height="32px" width="32px" src={iconSrc} alt={altText} />
+        <img
+          style={{
+            width: isMdScreen ? "19px" : "29px",
+            height: isMdScreen ? "19px" : "29px",
+          }}
+          src={iconSrc}
+          alt={altText}
+        />
       </Box>
       <Box>
         <Typography sx={{ color: "#FFF" }} variant="h1">

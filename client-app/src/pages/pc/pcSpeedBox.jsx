@@ -7,30 +7,47 @@
  * @param {string} props.altText - The alternative text for the icon.
  * @param {number|null} props.value - The speed value to be displayed, or null if not available.
  * @param {string} props.measure - The unit of measurement for the speed value.
- * @param {string} props.opacity - The opacity of the component, represented as a CSS value (e.g., "0.2").
+ * @param {string} props.filter - The filter of the component, represented as a CSS value (e.g., "0.2").
  * @returns {JSX.Element} - The rendered SpeedBox component.
  */
 import React from "react";
 
 // Import Material-UI components and styles
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 
-const PcSpeedBox = ({ title, iconSrc, altText, value, measure, filter, index }) => {
-  
+const PcSpeedBox = ({
+  title,
+  iconSrc,
+  altText,
+  value,
+  measure,
+  filter,
+  index,
+}) => {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <Box>
       <Box
-        sx={{ margin: index === 1 ? "0 6rem" : "" }}
+        sx={{ marginX: index === 1 ? "clamp(5rem, 5rem + 1vw, 2.5rem)" : "" }}
         display="flex"
         alignItems="center"
         justifyContent="center"
         gap={1}
       >
-        <Box sx={{ filter: filter }}>
-          <img src={iconSrc} alt={altText} height="31px" width="31px" />
+        <Box
+          sx={{
+            filter: filter,
+            width: isMdScreen ? "20px" : "30px",
+            height: isMdScreen ? "20px" : "30px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <img src={iconSrc} alt={altText} />
         </Box>
         <Typography
-          fontSize="clamp(1rem, 1.5rem + 0.0781vw, 4rem)"
+          fontSize="clamp(1rem, 0.7rem + 1vw, 2.5rem)"
           color="#FFF"
           variant="subtitle2"
         >
@@ -38,7 +55,7 @@ const PcSpeedBox = ({ title, iconSrc, altText, value, measure, filter, index }) 
         </Typography>
         <Typography
           color="#909090"
-          fontSize="clamp(1.125rem, 0.9rem + 0.0586vw, 3rem)"
+          fontSize="clamp(1rem, 0.7rem + 1vw, 2.5rem)"
           variant="subtitle2"
         >
           {measure}

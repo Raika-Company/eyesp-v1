@@ -14,7 +14,8 @@ const LogoRadar = () => {
     <Box
       sx={{
         width: "100%",
-        padding: "0 0 0 2.2rem",
+        height: "15%",
+        padding: "0 0 0 1.5rem",
         color: "#fff",
         position: "relative",
       }}
@@ -26,7 +27,7 @@ const LogoRadar = () => {
         variant="text"
         sx={{
           position: "absolute",
-          left: "33.4px",
+          left: "22.4px",
           top: "28px",
           fontSize: "3rem",
         }}
@@ -41,7 +42,7 @@ const LogoRadar = () => {
           borderRadius: "11rem",
           position: "absolute",
           top: "63px",
-          left: "26px",
+          left: "15px",
           border: "4px solid #232323",
         }}
       ></Box>

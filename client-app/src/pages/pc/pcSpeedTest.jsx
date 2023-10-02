@@ -17,9 +17,9 @@ import axios from "axios";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
-import Download from "../../app/assets/image/Img-SpeedTest/download1.svg";
+import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
 import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
-import Ping from "../../app/assets/image/Img-SpeedTest/ping1.svg";
+import Ping from "../../app/assets/image/Img-SpeedTest/DownloadUp.svg";
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -30,7 +30,7 @@ import PcSpeedBox from "./pcSpeedBox";
 import PcDrawMeter from "./pcDrawMeter";
 import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
-import { Link } from "react-router-dom";
+
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 
 const fadeIn = keyframes`
@@ -242,7 +242,7 @@ const PcspTest = () => {
         <Box
           sx={{
             width: "100%",
-            height: "clamp(20.9rem,20.9rem + 3vmin, 3rem)",
+            height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -252,8 +252,8 @@ const PcspTest = () => {
             <Button
               onClick={handleButtonClick}
               sx={{
-                height: "clamp(19.8rem,20rem + 10vmin,16rem)",
-                width: "clamp(19.8rem,20rem + 10vmin,16rem)",
+                height: "clamp(16.5rem,18rem + 10vmin,15rem)",
+                width: "clamp(16.5rem,18rem + 10vmin,15rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -272,7 +272,7 @@ const PcspTest = () => {
                 },
               }}
             >
-              <Typography variant="text" sx={{ fontSize: "3.2rem" }}>
+              <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
                 START
               </Typography>
             </Button>
