@@ -5,11 +5,11 @@ const useDebounceTime = (value) => {
   const valueRef = useRef(value);
 
   useEffect(() => {
-    if (value !== valueRef.current && Date.now() - timeRef.current > 300) {
+    if (Date.now() - timeRef.current > 250) {
       valueRef.current = value;
       timeRef.current = Date.now();
     }
-  });
+  }, [value]);
 
   return valueRef.current;
 };

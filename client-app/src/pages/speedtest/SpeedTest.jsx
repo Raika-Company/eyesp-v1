@@ -232,9 +232,6 @@ const SpeedTest = () => {
         }
       });
     await Promise.all(promises);
-    setTimeout(() => {
-      setState((prevState) => ({...prevState, isDl: !state.isDl}));
-    }, MAX_TIME * 1000);
   };
 
   const handleButtonClick = () => {
@@ -254,6 +251,7 @@ const SpeedTest = () => {
       return;
     }
     await measureSpeed("download");
+    setState((prevState) => ({...prevState, isDl: !state.isDl}));
     await sleep(2000);
     await measureSpeed("upload");
 
