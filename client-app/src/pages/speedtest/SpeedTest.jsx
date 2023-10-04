@@ -95,11 +95,12 @@ const SpeedTest = () => {
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
-  const abortController = new AbortController();
+  // const abortController = new AbortController();
 
   const [state, setState] = useState({
     isTestEnds: false,
     isGoButtonVisible: true,
+    progress: 0,
     socket: null,
     latency: 0,
     download: 0,
@@ -187,6 +188,8 @@ const SpeedTest = () => {
   };
 
   const measureSpeed = async (type) => {
+    const now = performance.now();
+    const abortController = new AbortController();
     const numConnections = state.isDetailedTest ? 4 : 1;
     const promises = Array(numConnections)
       .fill()
@@ -196,10 +199,24 @@ const SpeedTest = () => {
             `${BASE_URL}/${type}-speed?uid=${state.uid}&cid=cid-sample&$conn=${i}`,
             {signal: abortController.signal}
           );
+
+          setTimeout(() => {
+            abortController.abort();
+          }, MAX_TIME * 1000);
+
           if (!response.ok || !response.body) throw response.statusText;
           const reader = response.body.getReader();
           const decoder = new TextDecoder();
+
+          let min = null;
           while (true) {
+            const percentValue = ((performance.now() - now) / 9000) * 100;
+
+            if (!min) min = percentValue;
+            setState((prev) => ({
+              ...prev,
+              progress: percentValue - min,
+            }));
             const {value, done} = await reader.read();
             if (done) break;
             const decodedChunk = decoder.decode(value, {stream: true});
@@ -228,12 +245,16 @@ const SpeedTest = () => {
     handleStart();
   };
 
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
   const handleStart = async () => {
     if (!state.isServerSelected /*  || !state.socket */) {
       console.error("Server not selected or socket not ready");
       return;
     }
     await measureSpeed("download");
+    await sleep(2000);
     await measureSpeed("upload");
 
     const currentJalaliDateInEnglish = moment().format("jYYYY/jM/jD");
@@ -363,7 +384,7 @@ const SpeedTest = () => {
                       : "#1B70EE1C"
                   }
                   fg={"#1B70EE1C"}
-                  // progress={state.isDl ? downloadProgress : uploadProgress}
+                  progress={state.progress}
                   mbps={state.isDl ? state.download : state.upload}
                   isDl={state.isDl}
                   testState={state.testStateNumber}

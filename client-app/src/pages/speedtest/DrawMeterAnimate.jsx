@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, { useRef, useEffect, useState } from "react";
+import React, {useRef, useEffect, useState} from "react";
 
 /**
  * DrawMeter Component
@@ -28,8 +28,8 @@ import React, { useRef, useEffect, useState } from "react";
  */
 
 // test debouncing for making the start and end of the test animated
-const LOWER_BOUND = 0.03
-const UPPER_BOUND = 0.95
+const LOWER_BOUND = 3;
+const UPPER_BOUND = 105;
 
 function DrawMeterAnimate({
   amount,
@@ -41,10 +41,10 @@ function DrawMeterAnimate({
   theme,
   testState,
 }) {
-  const [isEndAnimationStarted, setIsEndAnimationStarted] = useState(false)
+  const [isEndAnimationStarted, setIsEndAnimationStarted] = useState(false);
   const canvasRef = useRef(null);
 
-
+  console.log(progress);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -72,7 +72,8 @@ function DrawMeterAnimate({
 
     // Drawing the trapezoid hand (pointer)
     function drawPointer(angle) {
-      if ((progress <= LOWER_BOUND || progress >= UPPER_BOUND)) ctx.clearRect(0, 0, canvas.width, canvas.height)
+      if (progress <= LOWER_BOUND || progress >= UPPER_BOUND)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
@@ -107,18 +108,17 @@ function DrawMeterAnimate({
 
     function normalizeMbps(mbps) {
       if (mbps <= 10) {
-        return (mbps / 20);
+        return mbps / 20;
       }
       return 0.55 + (mbps - 10) / 220;
     }
 
     var normalizedMbps = normalizeMbps(mbps);
     var nextPointerAngle =
-      -startAngle + (endAngle - startAngle) * (normalizedMbps) + 0.2;
+      -startAngle + (endAngle - startAngle) * normalizedMbps + 0.2;
 
     const getNextPoint = () =>
-      -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps)) + 0.2;
-
+      -startAngle + (endAngle - startAngle) * normalizeMbps(mbps) + 0.2;
 
     const DURATION = 1000;
 
@@ -126,55 +126,59 @@ function DrawMeterAnimate({
 
     // Animate start of test
     function drawPointerStartAnimate(time) {
-      if (!startTime) startTime = time || performance.now()
+      if (!startTime) startTime = time || performance.now();
 
-      const deltaTime = (time - startTime) / DURATION
-      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) + 0.2
-
+      const deltaTime = (time - startTime) / DURATION;
+      const currentPointerAngle =
+        -startAngle +
+        (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) +
+        0.2;
 
       if (deltaTime >= 1) {
-        startTime = null
-        drawPointer(getNextPoint())
+        startTime = null;
+        drawPointer(getNextPoint());
       } else {
-        drawPointer(currentPointerAngle)
-        requestAnimationFrame(drawPointerStartAnimate)
+        drawPointer(currentPointerAngle);
+        requestAnimationFrame(drawPointerStartAnimate);
       }
     }
 
     // Animate end of test
     function drawPointerEndAnimate(time) {
-      if (!startTime) startTime = time || performance.now()
+      if (!startTime) startTime = time || performance.now();
 
-      const deltaTime = Math.max(1 - ((time - startTime) / (DURATION - 800)), 0);
-      const currentPointerAngle = -startAngle + (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) + 0.2
+      const deltaTime = Math.max(1 - (time - startTime) / DURATION, 0);
+      const currentPointerAngle =
+        -startAngle +
+        (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) +
+        0.2;
 
       if (deltaTime <= 0) {
-        startTime = null
-        drawPointer(-startAngle + .2)
+        startTime = null;
+        drawPointer(-startAngle + 0.2);
       } else {
-        drawPointer(currentPointerAngle)
-        requestAnimationFrame(drawPointerEndAnimate)
+        drawPointer(currentPointerAngle);
+        requestAnimationFrame(drawPointerEndAnimate);
       }
     }
 
     // Start of test
-    if ((progress <= LOWER_BOUND) && (testState === 1 || testState === 3)) {
-      drawPointerStartAnimate()
+    if (progress <= LOWER_BOUND) {
+      drawPointerStartAnimate();
     }
     // End of test
-    else if ((progress >= UPPER_BOUND && !isEndAnimationStarted)) {
-      setIsEndAnimationStarted(true)
-      drawPointerEndAnimate()
+    else if (progress >= UPPER_BOUND && !isEndAnimationStarted) {
+      setIsEndAnimationStarted(true);
+      drawPointerEndAnimate();
     }
     // Test
     else {
-      drawPointer(nextPointerAngle)
+      drawPointer(nextPointerAngle);
     }
-
   }, [mbps, isDl, theme, progress, testState, isEndAnimationStarted]);
 
   return (
-    <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
+    <canvas ref={canvasRef} style={{width: "100%", height: "100%"}}></canvas>
   );
 }
 
