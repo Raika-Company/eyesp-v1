@@ -20,6 +20,7 @@ import axios from "axios";
 
 /**
  * A React component for displaying information with an optional button.
+ *
  * @component
  * @param {Object} props - The properties passed to the component.
  * @param {string} props.title - The title or label for the information.
@@ -29,18 +30,30 @@ import axios from "axios";
  * @param {string} props.buttonLabel - The label for an optional button.
  * @returns {JSX.Element} - The rendered InformationBox component.
  */
-
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+/**
+ * PcInformationBox component displays information with an optional button for selecting a server.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.title - The title or label for the information.
+ * @param {string} props.value - The information value to be displayed.
+ * @param {string} props.iconSrc - The source URL for the icon representing the information type.
+ * @param {string} props.altText - The alternative text for the icon.
+ * @param {string} props.buttonLabel - The label for an optional button.
+ * @returns {JSX.Element} - The rendered PcInformationBox component.
+ */
+
 const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
   const theme = useTheme();
-  const [searchQuery, setSearchQuery] = useState("");
   const [servers, setServers] = useState([]);
-  const [openSelectServer, setOpenSelectServer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedServerURL, setSelectedServerURL] = useState("");
+  const [openSelectServer, setOpenSelectServer] = useState(false);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const handleSelectServer = () => {
     setOpenSelectServer(true);
   };
@@ -56,6 +69,11 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
 
     getServers();
   }, []);
+
+  /**
+   * Fetches server data from the API.
+   * @returns {Promise<Array>} - A promise that resolves to an array of server data.
+   */
 
   const fetchServers = async () => {
     try {
@@ -132,9 +150,6 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           sx: {
             borderRadius: "2rem",
             background: "#363636",
-            // theme.palette.mode === "light"
-            //   ? "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(247, 250, 254, 0.80) 0.01%, #F3F3F3 100%)"
-            //   : "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(40, 44, 52, 0.80) 0.01%, #2D2D2D 100%)",
             marginRight: "5%",
           },
         }}

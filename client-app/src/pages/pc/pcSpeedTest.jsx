@@ -281,8 +281,6 @@ const PcspTest = () => {
               sx={{
                 position: "relative",
                 animation: `${fadeIn} 1s ease-in-out`,
-                // width: "80%",
-                // height: "80%",
                 height: "clamp(10rem,10rem + 10vmin,16rem)",
                 width: "clamp(21rem,21rem + 10vmin,16rem)",
               }}
@@ -376,11 +374,7 @@ const PcspTest = () => {
               iconSrc={items.iconSrc}
               altText={items.altText}
               buttonLabel={
-                isStartButtonVisible
-                  ? items.buttonLabel
-                  : null || isTestEnds
-                  ? items.buttonLabel
-                  : null
+                isStartButtonVisible || isTestEnds ? items.buttonLabel : null
               }
             />
           ))}
@@ -395,9 +389,9 @@ const PcspTest = () => {
             mx: "1.7rem",
           }}
         >
-          <PcAboutBox iconSrc={virasty} />
-          <PcAboutBox iconSrc={tikRed} index={1} />
-          <PcAboutBox iconSrc={Web} />
+          {[virasty, tikRed, Web].map((iconSrc, index) => (
+            <PcAboutBox key={index} iconSrc={iconSrc} index={1} />
+          ))}
         </Box>
       </Box>
     </>
