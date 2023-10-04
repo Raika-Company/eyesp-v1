@@ -1,5 +1,22 @@
-import { Box, Button, Typography, useMediaQuery } from "@mui/material";
-import React from "react";
+import React, { forwardRef, useEffect, useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputBase,
+  Paper,
+  Radio,
+  Slide,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@emotion/react";
+import axios from "axios";
 
 /**
  * A React component for displaying information with an optional button.
@@ -13,64 +30,190 @@ import React from "react";
  * @returns {JSX.Element} - The rendered InformationBox component.
  */
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
+  const theme = useTheme();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [servers, setServers] = useState([]);
+  const [openSelectServer, setOpenSelectServer] = useState(false);
+  const [selectedServerURL, setSelectedServerURL] = useState("");
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const handleSelectServer = () => {
+    setOpenSelectServer(true);
+  };
+  const handleCloseSelectServer = () => {
+    setOpenSelectServer(false);
+  };
+
+  useEffect(() => {
+    const getServers = async () => {
+      const serverData = await fetchServers();
+      setServers(serverData);
+    };
+
+    getServers();
+  }, []);
+
+  const fetchServers = async () => {
+    try {
+      const response = await axios.get("https://server1.eyesp.live/servers");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching servers:", error);
+    }
+  };
 
   return (
-    <Box
-      display="flex"
-      flexWrap="wrap"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="row"
-      gap={2}
-    >
+    <>
       <Box
-        sx={{
-          border: "1px solid #FFF",
-          borderRadius: "50%",
-          p: "1rem",
-          width: isMdScreen ? "30px" : "50px",
-          height: isMdScreen ? "30px" : "50px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
+        display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="row"
+        gap={2}
+      >
+        <Box
+          sx={{
+            border: "1px solid #FFF",
+            borderRadius: "50%",
+            p: "1rem",
+            width: isMdScreen ? "30px" : "50px",
+            height: isMdScreen ? "30px" : "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+          }}
+        >
+          <img
+            style={{
+              width: isMdScreen ? "19px" : "29px",
+              height: isMdScreen ? "19px" : "29px",
+            }}
+            src={iconSrc}
+            alt={altText}
+          />
+        </Box>
+        <Box>
+          <Typography sx={{ color: "#FFF" }} variant="h1">
+            {title}
+          </Typography>
+          <Typography sx={{ color: "#8d8d8d" }} variant="h6">
+            {value}
+          </Typography>
+          {buttonLabel ? (
+            <Typography
+              onClick={handleSelectServer}
+              component="button"
+              sx={{
+                color: "#D81303",
+                bgcolor: "transparent",
+                outline: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {buttonLabel}
+            </Typography>
+          ) : null}
+        </Box>
+      </Box>
+      <Dialog
+        open={openSelectServer}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseSelectServer}
+        aria-describedby="Change Server"
+        PaperProps={{
+          sx: {
+            borderRadius: "2rem",
+            background: "#363636",
+            // theme.palette.mode === "light"
+            //   ? "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(247, 250, 254, 0.80) 0.01%, #F3F3F3 100%)"
+            //   : "radial-gradient(157.11% 128.46% at 12.62% 0%, rgba(40, 44, 52, 0.80) 0.01%, #2D2D2D 100%)",
+            marginRight: "5%",
+          },
         }}
       >
-        <img
-          style={{
-            width: isMdScreen ? "19px" : "29px",
-            height: isMdScreen ? "19px" : "29px",
-          }}
-          src={iconSrc}
-          alt={altText}
-        />
-      </Box>
-      <Box>
-        <Typography sx={{ color: "#FFF" }} variant="h1">
-          {title}
-        </Typography>
-        <Typography sx={{ color: "#8d8d8d" }} variant="h6">
-          {value}
-        </Typography>
-        {buttonLabel ? (
-          <Typography
-            component="button"
+        <DialogTitle
+          sx={{ display: "flex", justifyContent: "space-between", gap: "4rem" }}
+        >
+          <Box
             sx={{
-              color: "#D81303",
-              textTransform: "capitalize",
-              bgcolor: "transparent",
-              outline: "none",
-              border: "none",
-              cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
             }}
           >
-            {buttonLabel}
-          </Typography>
-        ) : null}
-      </Box>
-    </Box>
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "25px",
+                bgcolor: "#444",
+              }}
+            >
+              <InputBase
+                sx={{ mr: 1, color: "#fff", mt: "0.4rem" }}
+                placeholder="Search"
+                inputProps={{ "aria-label": "Search" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <IconButton
+                type="button"
+                sx={{ p: "10px", color: "#cfcfcf" }}
+                aria-label="search"
+              >
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </Box>
+          <Button
+            sx={{ color: "#fff" }}
+            onClick={handleCloseSelectServer}
+            endIcon={
+              <CloseIcon
+                sx={{ marginX: "0.5rem", color: "#cfcfcf", mb: "0.3rem" }}
+              />
+            }
+          >
+            Close
+          </Button>
+        </DialogTitle>
+        <DialogContent>
+          {servers.map((server) => (
+            <Box
+              key={server.id}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
+              padding="0.5rem"
+              borderRadius="1.4375rem"
+              backgroundColor={
+                theme.palette.mode === "light" ? "#cfcfcf" : "#000"
+              }
+            >
+              <Typography variant="body1">
+                {server.name} - {server.location}
+              </Typography>
+              <Radio
+                value={server.url}
+                checked={selectedServerURL === server.url}
+                onChange={(e) => setSelectedServerURL(e.target.value)}
+              />
+            </Box>
+          ))}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

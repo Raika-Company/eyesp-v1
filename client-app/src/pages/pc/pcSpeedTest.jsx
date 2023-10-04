@@ -375,7 +375,13 @@ const PcspTest = () => {
               value={items.value}
               iconSrc={items.iconSrc}
               altText={items.altText}
-              buttonLabel={items.buttonLabel}
+              buttonLabel={
+                isStartButtonVisible
+                  ? items.buttonLabel
+                  : null || isTestEnds
+                  ? items.buttonLabel
+                  : null
+              }
             />
           ))}
         </Box>
@@ -386,7 +392,7 @@ const PcspTest = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            mx:"1.7rem"
+            mx: "1.7rem",
           }}
         >
           <PcAboutBox iconSrc={virasty} />
