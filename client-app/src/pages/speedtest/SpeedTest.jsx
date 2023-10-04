@@ -1,8 +1,7 @@
 // External Libraries
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, {useEffect, useState} from "react";
+import {v4 as uuidv4} from "uuid";
 import axios from "axios";
-import io from "socket.io-client";
 import moment from "moment-jalaali";
 import {
   Box,
@@ -13,10 +12,10 @@ import {
   keyframes,
 } from "@mui/material";
 import HistoryIcon from "@mui/icons-material/History";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 // Internal Utilities and Components
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
 import useFetchServers from "../../app/utils/useFetchServers";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import CardContainer from "../../app/common/CardContainer";
@@ -56,7 +55,7 @@ const PING_TIMES = 10;
  * @param {string} props.server - The server information to display.
  * @return {JSX.Element} The rendered AddressAndServer component.
  */
-const AddressAndServer = ({ ip, server }) => (
+const AddressAndServer = ({ip, server}) => (
   <Box>
     {["آدرس", "سرور"].map((text, index) => (
       <Typography key={index} variant="h4" color="text.main">
@@ -114,13 +113,13 @@ const SpeedTest = () => {
     uid: uuidv4(),
   });
 
-  const { isFetchingServers, selectBestServer } = useFetchServers();
+  const {isFetchingServers, selectBestServer} = useFetchServers();
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/ip-info`)
       .then((res) =>
-        setState((prevState) => ({ ...prevState, clientIp: res.data.data.ip }))
+        setState((prevState) => ({...prevState, clientIp: res.data.data.ip}))
       );
   }, []);
 
@@ -135,8 +134,7 @@ const SpeedTest = () => {
     if (state.selectedServerURL || isFetchingServers) return;
     selectBestServer().then(
       (url) =>
-        url &&
-        setState((prevState) => ({ ...prevState, selectedServerURL: url }))
+        url && setState((prevState) => ({...prevState, selectedServerURL: url}))
     );
   }, [isFetchingServers, selectBestServer, state.selectedServerURL]);
 
@@ -175,21 +173,17 @@ const SpeedTest = () => {
   const startHelloRequest = () => {
     axios
       .get(`${BASE_URL}/hello?uid=${state.uid}&cid=cid-sample`)
-      .then((res) =>
-        console.log(res)
-      );
+      .then((res) => console.log(res));
   };
 
   const startPingTest = () => {
     if (!state.isServerSelected) return;
-    axios
-      .get(`${BASE_URL}/ping?uid=${state.uid}&cid=cid-sample`)
-      .then((res) =>
-        setState((prevState) => ({
-          ...prevState,
-          latency: res.data
-        }))
-      );
+    axios.get(`${BASE_URL}/ping?uid=${state.uid}&cid=cid-sample`).then((res) =>
+      setState((prevState) => ({
+        ...prevState,
+        latency: res.data,
+      }))
+    );
   };
 
   const measureSpeed = async (type) => {
@@ -200,19 +194,19 @@ const SpeedTest = () => {
         try {
           const response = await fetch(
             `${BASE_URL}/${type}-speed?uid=${state.uid}&cid=cid-sample&$conn=${i}`,
-            { signal: abortController.signal }
+            {signal: abortController.signal}
           );
           if (!response.ok || !response.body) throw response.statusText;
           const reader = response.body.getReader();
           const decoder = new TextDecoder();
           while (true) {
-            const { value, done } = await reader.read();
+            const {value, done} = await reader.read();
             if (done) break;
-            const decodedChunk = decoder.decode(value, { stream: true });
+            const decodedChunk = decoder.decode(value, {stream: true});
             decodedChunk.split(" ").map((speed) => {
               speed = parseFloat(speed);
               if (!isNaN(speed)) {
-                setState((prevState) => ({ ...prevState, [type]: speed }));
+                setState((prevState) => ({...prevState, [type]: speed}));
               }
             });
           }
@@ -222,20 +216,20 @@ const SpeedTest = () => {
       });
     await Promise.all(promises);
     setTimeout(() => {
-      setState((prevState) => ({ ...prevState, isDl: !state.isDl }));
+      setState((prevState) => ({...prevState, isDl: !state.isDl}));
     }, MAX_TIME * 1000);
   };
 
   const handleButtonClick = () => {
     if (!state.isServerSelected) return;
-    setState((prevState) => ({ ...prevState, isGoButtonVisible: false }));
+    setState((prevState) => ({...prevState, isGoButtonVisible: false}));
     startHelloRequest();
     startPingTest();
     handleStart();
   };
 
   const handleStart = async () => {
-    if (!state.isServerSelected/*  || !state.socket */) {
+    if (!state.isServerSelected /*  || !state.socket */) {
       console.error("Server not selected or socket not ready");
       return;
     }
@@ -295,7 +289,7 @@ const SpeedTest = () => {
           to="/history"
           variant="h3"
           color="text.subHeading"
-          startIcon={<HistoryIcon sx={{ mx: "0.5rem" }} />}
+          startIcon={<HistoryIcon sx={{mx: "0.5rem"}} />}
         >
           تست های گذشته
         </Button>
@@ -351,7 +345,7 @@ const SpeedTest = () => {
               <img
                 src={theme.palette.mode === "dark" ? elipseDark : elipse}
                 alt="speed-meter"
-                style={{ maxWidth: "100%", height: "100%", zIndex: 1 }}
+                style={{maxWidth: "100%", height: "100%", zIndex: 1}}
               />
               <div
                 style={{
@@ -385,13 +379,11 @@ const SpeedTest = () => {
             textOff="تست فوری"
             checked={state.isDetailedTest}
             onChange={() => {
-              console.log(!state.isDetailedTest)
               setState((prevState) => ({
                 ...prevState,
                 isDetailedTest: !state.isDetailedTest,
-              }))
-            }
-            }
+              }));
+            }}
           />
           <Typography variant="h5" color="text.main" marginLeft="1rem">
             نوع تست
