@@ -27,7 +27,14 @@ const PcSpeedBox = ({
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Box
         sx={{ marginX: index === 1 ? "clamp(5rem, 5rem + 1vw, 2.5rem)" : "" }}
         display="flex"
@@ -61,12 +68,23 @@ const PcSpeedBox = ({
           {measure}
         </Typography>
       </Box>
-      <Typography
-        color="#FFF"
-        fontSize="clamp(1.125rem, 0.7rem + 0.0265vw, 2.5rem)"
+
+      <Box
+        sx={{
+          width: "100%",
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        {value !== null ? value : "--"}
-      </Typography>
+        <Typography
+          color="#FFF"
+          fontSize="clamp(1.125rem, 0.7rem + 0.0265vw, 2.5rem)"
+        >
+          {value !== null ? value : "--"}
+        </Typography>
+      </Box>
     </Box>
   );
 };
