@@ -93,7 +93,7 @@ const AnimatingNumber = ({value}) => {
         height: "100%",
         margin: "auto",
         display: "flex",
-        flexDirection: "row-reverse",
+        // flexDirection: "row-reverse",
         overflow: "hidden",
         // fontSize: "16px",
         position: "relative",

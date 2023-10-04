@@ -44,7 +44,6 @@ function DrawMeterAnimate({
   const [isEndAnimationStarted, setIsEndAnimationStarted] = useState(false);
   const canvasRef = useRef(null);
 
-  console.log(progress);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
