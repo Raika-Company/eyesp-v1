@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import usePrevious from "../../../app/hooks/usePrevious";
-import {Box, Typography} from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 import "./AnimatingNumber.css";
 
 const formatForDisplay = (number = 0) => {
@@ -78,6 +78,7 @@ const DecimalColumn = () => {
 };
 
 const AnimatingNumber = ({value}) => {
+  const theme = useTheme();
   const numArray = formatForDisplay(value);
   const previousNumber = usePrevious(value);
 
@@ -92,7 +93,7 @@ const AnimatingNumber = ({value}) => {
         display: "flex",
         overflow: "hidden",
         position: "relative",
-        color: "#fff",
+        color: theme.palette.mode === "dark" ? "#fff" : "gray",
       }}
     >
       {numArray.map((number, index) =>
