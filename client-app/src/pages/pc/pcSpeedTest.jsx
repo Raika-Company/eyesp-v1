@@ -281,14 +281,10 @@ const PcspTest = () => {
               sx={{
                 position: "relative",
                 animation: `${fadeIn} 1s ease-in-out`,
-                [theme.breakpoints.between("xs", "sm")]: {
-                  width: "100%",
-                },
-                [theme.breakpoints.up("md")]: {
-                  width: "80%",
-                },
+                // width: "80%",
+                // height: "80%",
                 height: "clamp(10rem,10rem + 10vmin,16rem)",
-                width: "clamp(10rem,10rem + 10vmin,16rem)",
+                width: "clamp(21rem,21rem + 10vmin,16rem)",
               }}
             >
               <PcDrawMeter
