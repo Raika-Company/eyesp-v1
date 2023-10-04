@@ -386,6 +386,7 @@ const PcspTest = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
+            mx:"1.7rem"
           }}
         >
           <PcAboutBox iconSrc={virasty} />

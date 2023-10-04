@@ -11,7 +11,7 @@ import React from "react";
 
 const PcAboutBox = ({ iconSrc, altText, index }) => {
   return (
-    <Box sx={{ cursor: "pointer", margin: index === 1 ? "0 1rem" : "" }}>
+    <Box sx={{ cursor: "pointer", margin: index === 1 ? "0 1.5rem" : "" }}>
       <img src={iconSrc} alt={altText} height="31px" width="31px" />
     </Box>
   );
