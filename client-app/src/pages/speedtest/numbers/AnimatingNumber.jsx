@@ -29,7 +29,7 @@ const NumberColumn = ({digit, delta}) => {
     if (!animationClass) return;
     const timer = setTimeout(() => {
       setAnimationClass("");
-    }, 501);
+    }, 201);
 
     return () => clearTimeout(timer);
   }, [digit, delta, animationClass]);
@@ -45,9 +45,6 @@ const NumberColumn = ({digit, delta}) => {
           y: position,
         }}
         className={`ticker-column ${animationClass}`}
-        transition={{
-          duration: 0.25,
-        }}
         style={{
           position: "absolute",
           height: "1000%",
@@ -93,9 +90,7 @@ const AnimatingNumber = ({value}) => {
         height: "100%",
         margin: "auto",
         display: "flex",
-        flexDirection: "row-reverse",
         overflow: "hidden",
-        // fontSize: "16px",
         position: "relative",
         color: "#fff",
       }}
