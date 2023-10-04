@@ -266,7 +266,7 @@ const SpeedTest = () => {
     );
     existingResults.push(testResults);
     localStorage.setItem("testResults", JSON.stringify(existingResults));
-    //setIsTestEnds(true);
+    setState((prev) => ({...prev, isTestEnds: true}));
   };
 
   return (
