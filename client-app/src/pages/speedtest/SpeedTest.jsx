@@ -96,6 +96,7 @@ const SpeedTest = () => {
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
+  const abortController = new AbortController();
 
   const [state, setState] = useState({
     isTestEnds: false,
@@ -117,9 +118,9 @@ const SpeedTest = () => {
 
   useEffect(() => {
     axios
-      .get("https://server1.eyesp.live/get-ip")
+      .get(`${BASE_URL}/ip-info`)
       .then((res) =>
-        setState((prevState) => ({ ...prevState, clientIp: res.data.ip }))
+        setState((prevState) => ({ ...prevState, clientIp: res.data.data.ip }))
       );
   }, []);
 
@@ -139,7 +140,7 @@ const SpeedTest = () => {
     );
   }, [isFetchingServers, selectBestServer, state.selectedServerURL]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!state.selectedServerURL) return;
     const s = state.socket || io(state.selectedServerURL);
     setState((prevState) => ({ ...prevState, socket: s }));
@@ -150,13 +151,13 @@ const SpeedTest = () => {
     );
 
     return () => s.disconnect();
-  }, [state.selectedServerURL]);
+  }, [state.selectedServerURL]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!state.socket || !state.isServerSelected) return;
     let pingCount = 0,
       minLatency = Infinity;
-    state.socket.on("pong_event", async (timestamp) => {
+    state.socket.on("ping_event", async (timestamp) => {
       const currentLatency = performance.now() - timestamp;
       minLatency = Math.min(minLatency, currentLatency);
       pingCount++;
@@ -169,11 +170,26 @@ const SpeedTest = () => {
         state.socket.emit("ping_event", performance.now());
       }
     });
-  }, [state.socket, state.isServerSelected]);
+  }, [state.socket, state.isServerSelected]); */
+
+  const startHelloRequest = () => {
+    axios
+      .get(`${BASE_URL}/hello?uid=${state.uid}&cid=cid-sample`)
+      .then((res) =>
+        console.log(res)
+      );
+  };
 
   const startPingTest = () => {
     if (!state.isServerSelected) return;
-    state.socket && state.socket.emit("ping_event", performance.now());
+    axios
+      .get(`${BASE_URL}/ping?uid=${state.uid}&cid=cid-sample`)
+      .then((res) =>
+        setState((prevState) => ({
+          ...prevState,
+          latency: res.data
+        }))
+      );
   };
 
   const measureSpeed = async (type) => {
@@ -183,7 +199,7 @@ const SpeedTest = () => {
       .map(async (_, i) => {
         try {
           const response = await fetch(
-            `${BASE_URL}/${type}-speed?uid=${state.uid}&conn=${i}`,
+            `${BASE_URL}/${type}-speed?uid=${state.uid}&cid=cid-sample&$conn=${i}`,
             { signal: abortController.signal }
           );
           if (!response.ok || !response.body) throw response.statusText;
@@ -207,19 +223,19 @@ const SpeedTest = () => {
     await Promise.all(promises);
     setTimeout(() => {
       setState((prevState) => ({ ...prevState, isDl: !state.isDl }));
-      setTestStage(type === "download" ? "upload" : "");
     }, MAX_TIME * 1000);
   };
 
   const handleButtonClick = () => {
     if (!state.isServerSelected) return;
     setState((prevState) => ({ ...prevState, isGoButtonVisible: false }));
+    startHelloRequest();
     startPingTest();
     handleStart();
   };
 
   const handleStart = async () => {
-    if (!state.isServerSelected || !state.socket) {
+    if (!state.isServerSelected/*  || !state.socket */) {
       console.error("Server not selected or socket not ready");
       return;
     }
@@ -243,20 +259,20 @@ const SpeedTest = () => {
     const testResults = {
       date: currentJalaliDateInFarsi,
       time: convertToPersianNumbers(getCurrentTime()),
-      ping: convertToPersianNumbers(latency),
-      download: convertToPersianNumbers(dlStatus),
+      ping: convertToPersianNumbers(state.latency),
+      download: convertToPersianNumbers(state.download),
       testDuration: convertToPersianNumbers("00:16"),
       testType: "دقیق",
-      upload: convertToPersianNumbers(ulStatus),
+      upload: convertToPersianNumbers(state.upload),
       server: "ایرانسل-تهران",
-      ip: clientIp,
+      ip: state.clientIp,
     };
     const existingResults = JSON.parse(
       localStorage.getItem("testResults") || "[]"
     );
     existingResults.push(testResults);
     localStorage.setItem("testResults", JSON.stringify(existingResults));
-    setIsTestEnds(true);
+    //setIsTestEnds(true);
   };
 
   return (
@@ -368,11 +384,13 @@ const SpeedTest = () => {
             textOn="تست دقیق"
             textOff="تست فوری"
             checked={state.isDetailedTest}
-            onChange={() =>
+            onChange={() => {
+              console.log(!state.isDetailedTest)
               setState((prevState) => ({
                 ...prevState,
                 isDetailedTest: !state.isDetailedTest,
               }))
+            }
             }
           />
           <Typography variant="h5" color="text.main" marginLeft="1rem">
