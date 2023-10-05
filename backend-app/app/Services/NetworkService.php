@@ -3,20 +3,25 @@ namespace App\Services;
 
 class NetworkService {
 
-	public static function Ping($pingServer, $count = 10) : array
+	public static function Ping($pingServer, $timeOut = 1)
 	{
-        $counter = 0;
-        $pings = [];
-        while($counter < $count) {
-            $timeBeginning = microtime(true);
-            @fSockOpen($pingServer, 80, $errno, $errstr, 10);
-            $timeOver = microtime(true);
-            $pings[] = (($timeOver - $timeBeginning) * 1000);
-            $counter++;
+        $timeBeginning = microtime(true);
+        @fSockOpen($pingServer, 80, $errno, $errstr, $timeOut);
+        $timeOver = microtime(true);
+
+		return (($timeOver - $timeBeginning) * 1000);
+	}
+
+    public static function Jitter(array $pingTimes)
+    {
+        $averagePingTime = array_sum($pingTimes) / count($pingTimes);
+        $jitterValues = [];
+        foreach ($pingTimes as $pingTime) {
+            $jitterValues[] = abs($pingTime - $averagePingTime);
         }
 
-		return $pings;
-	}
+        return max($jitterValues);
+    }
 
 }
 

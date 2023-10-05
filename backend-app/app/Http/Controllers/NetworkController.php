@@ -41,7 +41,7 @@ class NetworkController extends Controller
         $ping = [];
         $best_server_index = 0;
         $servers = $servers->map(function($server) use (&$ping){
-            $ping[$server->id] = current(NetworkService::Ping(Str::replace(['https://', 'http://'], '', $server->url), 1));
+            $ping[$server->id] = NetworkService::Ping(Str::replace(['https://', 'http://'], '', $server->url), 1);
             $server->best_server = false;
             return $server;
         });
@@ -163,16 +163,24 @@ class NetworkController extends Controller
     public function Ping(Request $request)
     {
         $pingServer = "static.kar1.net";
-        $pings = NetworkService::Ping($pingServer);
+        $counter = 0;
+        while($counter < 10) {
+            $pingTimes[] = NetworkService::Ping($pingServer);
+            $counter++;
+        }
+
+        $ping = round(min($pingTimes));
+        $jitter = NetworkService::Jitter($pingTimes);
+
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
             'date' => today()->toDateString(),
         ],[
-            'ping' => round(array_sum($pings) / count($pings), 0),
-            'jitter' => max($pings) - min($pings)
+            'ping' => $ping,
+            'jitter' => round($jitter, 0),
         ]);
 
-        return round(array_sum($pings) / count($pings), 0);
+        return round($ping, 0);
     }
 }
