@@ -17,9 +17,9 @@ import SwitchBtnMobile from "../../app/common/SwitchBtnMobile";
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
 function GridItem({ theme, rendered, title, data }) {
   return (
-    <Grid xs={12} md={6} padding="2rem">
-      <Box display="flex">
-        <Box>
+    <Grid xs={12} md={6} padding="0.5rem">
+      <Box display="flex" justifyContent="center">
+        <Box width="100%">
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
@@ -124,7 +124,7 @@ const OperatorCompare = () => {
   const [randomChartData4, setRandomChartData4] = useState([]);
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const handleChange = (event) => {
     setFormControlItems(event.target.value);
@@ -166,7 +166,7 @@ const OperatorCompare = () => {
     <>
       <Box
         sx={{
-          display: isMdScreen ? "flex" : " none",
+          display: isLgScreen ? "flex" : " none",
           width: "100%",
           height: "78px",
           borderRadius: "2rem",
@@ -203,12 +203,14 @@ const OperatorCompare = () => {
           <Typography mb="1rem" color="text.textBlack" variant="h1">
             نمودار عملکرد اپراتور
           </Typography>
-          <Box>
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+          >
             {FormControlItems.map((items, index) => (
               <FormControl
                 sx={{
                   m: "0.4rem",
-                  width: isSmScreen ? 133 : 163,
+                  width: isSmScreen ? 125 : isLgScreen ? 150 : 180,
                   borderRadius: "25px",
                 }}
                 size="small"
@@ -242,7 +244,7 @@ const OperatorCompare = () => {
               </FormControl>
             ))}
           </Box>
-          <Box sx={{ display: isMdScreen ? "none" : " flex" }}>
+          <Box sx={{ display: isLgScreen ? "none" : " flex" }}>
             <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
           </Box>
         </Box>

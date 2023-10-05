@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   Radio,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
@@ -36,7 +37,7 @@ import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
@@ -55,12 +56,7 @@ const AddressAndServer = ({ ip, server }) => (
     {["آدرس", "سرور"].map((text, index) => (
       <Typography key={index} variant="h4" color="text.main">
         {text}:
-        <Typography
-          component="span"
-          variant="h5"
-          color="text"
-          marginX="0.5rem"
-        >
+        <Typography component="span" variant="h5" color="text" marginX="0.5rem">
           {text === "آدرس"
             ? ip === ""
               ? "در حال پیدا کردن ip"
@@ -386,8 +382,23 @@ const SpeedTest = () => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
-            <Typography variant="h5" color="text.main" marginLeft="1rem">
+            <Typography
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                mt: "0.2rem",
+              }}
+              variant="h5"
+              color="text.main"
+              marginLeft="1rem"
+            >
               نوع تست
+              <Tooltip title="Delete">
+                <IconButton>
+                  <InfoOutlinedIcon sx={{ mr: "0.2rem", fontSize: "1.2rem" }} />
+                </IconButton>
+              </Tooltip>
             </Typography>
           </Box>
           <FloatingResult
@@ -415,7 +426,11 @@ const SpeedTest = () => {
           }}
         >
           <DialogTitle
-            sx={{ display: "flex", justifyContent: "space-between", gap: "4rem" }}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "4rem",
+            }}
           >
             <Box
               sx={{

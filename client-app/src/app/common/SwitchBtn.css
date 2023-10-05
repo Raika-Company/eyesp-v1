@@ -6,7 +6,7 @@ label {
 
 .btn-color-mode-switch > label.btn-color-mode-switch-inner {
     margin: 0px;
-    width: 170px;
+    width: 180px;
     height: 41px;
     background: #f4f4f4;
     box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1) inset;
@@ -68,7 +68,7 @@ label {
 
 .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
     content: attr(data-on);
-    left: 88px;
+    left: 98px;
     background: #259fda;
 }
 
