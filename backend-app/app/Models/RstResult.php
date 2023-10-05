@@ -16,7 +16,6 @@ class RstResult extends Model
         'uuid',
         'date',
         'time',
-        'duration',
         'type',
         'servers',
         'ip',
@@ -27,7 +26,9 @@ class RstResult extends Model
         'lon',
         'ping',
         'download',
+        'download_duration',
         'upload',
+        'upload_duration',
         'jitter',
     ];
 

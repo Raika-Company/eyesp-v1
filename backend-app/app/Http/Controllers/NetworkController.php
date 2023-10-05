@@ -119,7 +119,7 @@ class NetworkController extends Controller
             'date' => today()->toDateString(),
         ],[
             'download' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
-            'duration' => $duration
+            'download_duration' => $duration
         ]);
     }
 
@@ -157,6 +157,7 @@ class NetworkController extends Controller
             'date' => today()->toDateString(),
         ],[
             'upload' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
+            'upload_duration' => $duration
         ]);
     }
 
