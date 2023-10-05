@@ -30,14 +30,23 @@ import PcSpeedBox from "./pcSpeedBox";
 import PcDrawMeter from "./pcDrawMeter";
 import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
-
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
+
+/**
+ * A keyframes animation for fading in elements.
+ * @type {Object}
+ */
 
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `;
 
+/**
+ * An array containing data for information boxes.
+ * Each item in the array has properties like title, value, iconSrc, altText, and buttonLabel.
+ * @type {Array<Object>}
+ */
 const InfoBoxData = [
   {
     title: "Scaleway",
@@ -54,13 +63,16 @@ const InfoBoxData = [
   },
 ];
 
+/**
+ * PcspTest component is the main component for the speed test functionality.
+ * It includes various sub-components like PcSpeedBox, PcDrawMeter, PcAboutBox, and PcInformationBox.
+ * @returns {JSX.Element} - The rendered PcspTest component.
+ */
+
 const PcspTest = () => {
   const theme = useTheme();
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
-  const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
-  const isXlScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [status, setStatus] = useState(2);
   const [isTestEnds, setIsTestEnds] = useState(false);
   const [socket, setSocket] = useState(null);
@@ -77,6 +89,9 @@ const PcspTest = () => {
   );
 
   useEffect(() => {
+    /**
+     * Fetches the client's IP address and updates the state.
+     */
     axios
       .get("https://server1.eyesp.live/get-ip")
       .then((res) => setClientIp(res.data.ip))
@@ -86,12 +101,19 @@ const PcspTest = () => {
   const PING_TIMES = 10;
 
   useEffect(() => {
+    /**
+     * Sets up the socket connection when the selected server URL changes.
+     * Disconnects the existing socket when the component unmounts.
+     */
     const s = socket || io(selectedServerURL);
     setSocket(s);
     return () => s.disconnect();
   }, [selectedServerURL]);
 
   useEffect(() => {
+    /**
+     * Listens for the "pong_event" emitted by the server to calculate latency.
+     */
     if (!socket) return;
     let pingCount = 0,
       minLatency = Infinity;
@@ -119,6 +141,9 @@ const PcspTest = () => {
   let flag = true;
 
   const handleStart = () => {
+    /**
+     * Handles the start of the speed test when the button is clicked.
+     */
     if (window.speedtest.getState() === STATUS_MAP.RUNNING) {
     } else {
       window.speedtest.onupdate = (data) => {

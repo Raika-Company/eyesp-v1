@@ -193,7 +193,7 @@ const OperatorCompare = () => {
                   displayEmpty
                 >
                   <MenuItem disabled>
-                    <span style={{ color: "#676767" }}>{items}</span>
+                    <span style={{ color: "#E3E3E3" }}>{items}</span>
                   </MenuItem>
                   {data[index].map((menuItem, menuItemIndex) => (
                     <MenuItem
