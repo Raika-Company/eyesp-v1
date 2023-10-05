@@ -82,7 +82,7 @@ const ISPTable = ({ ISPdata, isDetail }) => {
         backgroundColor: "transparent",
         boxShadow: 0,
         marginBottom: "1rem",
-        width: isXsScreen ? "19em" : isMdScreen ? "22em" : "100%",
+        width: isXsScreen ? "19em" : isMdScreen ? "24em" : "100%",
       }}
     >
       {isDetail ? (
