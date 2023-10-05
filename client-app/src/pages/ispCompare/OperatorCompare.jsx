@@ -14,7 +14,7 @@ import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
-function GridItem({ theme ,rendered, title, data }) {
+function GridItem({ theme, rendered, title, data }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
@@ -27,9 +27,9 @@ function GridItem({ theme ,rendered, title, data }) {
             padding="1rem"
             sx={{
               background:
-              theme.palette.mode === "dark"
-              ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
-              : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+                theme.palette.mode === "dark"
+                  ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
+                  : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
             }}
             width="100%"
             height="250px"
@@ -72,7 +72,11 @@ function GridItem({ theme ,rendered, title, data }) {
             style={{ width: "100%" }}
           />
         </Box>
-        <img src={theme.palette.mode === "light" ? yAxisLight : yAxisDark} alt="yAxis" style={{ height: "250px" }} />
+        <img
+          src={theme.palette.mode === "light" ? yAxisLight : yAxisDark}
+          alt="yAxis"
+          style={{ height: "250px" }}
+        />
       </Box>
     </Grid>
   );

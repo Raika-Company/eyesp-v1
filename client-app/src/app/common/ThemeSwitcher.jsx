@@ -2,7 +2,13 @@ import React from "react";
 import styled from "@emotion/styled";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 const StyledSwitchContainer = styled.div`
   display: flex;
@@ -31,12 +37,17 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
 
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const isVisible = openNav || isMdUp;
-
+  const handleThemeChange = (mode) => {
+    if (themeMode !== mode) {
+      toggleTheme(mode);
+    }
+  };
   return (
     <Box
       display={isVisible ? "flex" : "none"}
-      flexDirection="column"
+      justifyContent={"flex-start"}
       borderRadius="1.96875rem"
+      alignItems={"center"}
       padding="0.75rem"
       marginTop="1.56rem"
       sx={{
@@ -46,13 +57,52 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
             : "radial-gradient(2039.04% 152.73% at 8.42% 0%, #354E63 0%, #243441 100%)",
       }}
     >
-      <IconButton aria-label="change theme" onClick={toggleTheme}>
-        {isDarkMode ? (
-          <Icon src={moon} alt="Moon Icon" />
-        ) : (
-          <Icon src={sun} alt="Sun Icon" />
-        )}
-      </IconButton>
+      {openNav ? (
+        <>
+          <IconButton
+            aria-label="change to light theme"
+            onClick={() => handleThemeChange("light")}
+          >
+            <span
+              style={{
+                display: "flex",
+                backgroundColor: !isDarkMode ? "#008EDD" : "transparent",
+                padding: "0.4em",
+                borderRadius: "50%",
+              }}
+            >
+              <Icon src={sun} alt="Sun Icon" />
+            </span>
+          </IconButton>
+          <IconButton
+            aria-label="change to dark theme"
+            onClick={() => handleThemeChange("dark")}
+          >
+            <span
+              style={{
+                display: "flex",
+                backgroundColor: isDarkMode ? "#008EDD" : "transparent",
+                padding: "0.4em",
+                borderRadius: "50%",
+              }}
+            >
+              <Icon src={moon} alt="Moon Icon" />
+            </span>
+          </IconButton>
+          <Typography>{isDarkMode ? "حالت روشن" : "حالت خاموش"}</Typography>
+        </>
+      ) : (
+        <IconButton
+          aria-label="change theme"
+          onClick={() => handleThemeChange(isDarkMode ? "light" : "dark")}
+        >
+          {isDarkMode ? (
+            <Icon src={moon} alt="Moon Icon" />
+          ) : (
+            <Icon src={sun} alt="Sun Icon" />
+          )}
+        </IconButton>
+      )}
     </Box>
   );
 };

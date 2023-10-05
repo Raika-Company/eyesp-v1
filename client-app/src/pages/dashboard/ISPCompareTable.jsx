@@ -129,10 +129,7 @@ const ISPCompareTable = ({ mpCardContainers }) => {
           marginBottom: "1.4rem",
         }}
       >
-        <Typography
-          variant="h1"
-          color="text.textBlack"
-        >
+        <Typography variant="h1" color="text.textBlack">
           رتبه بندی ISPها
         </Typography>
         <ViewDetailsButton target="/isp-performance" />
