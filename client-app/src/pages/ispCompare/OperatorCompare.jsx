@@ -1,23 +1,38 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
-import React from "react";
+import {Box, Grid, Typography, useTheme} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
-import { useEffect, useState } from "react";
+import {AreaChart, Area, Tooltip, ResponsiveContainer} from "recharts";
+import {useEffect, useState} from "react";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
-import yAxisLight from "../../app/assets/image/speed-compare-light.svg";
-import yAxisDark from "../../app/assets/image/speed-compare-dark.svg";
+import YAxisLine from "./YAxisLine";
 import axios from "axios";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import { ContainedSelect } from "../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 
-const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
-function GridItem({ theme, rendered, title, data }) {
+const titlesChart = [
+  {
+    title: "میانگین عملکرد",
+    unit: "Mb/s",
+  },
+  {
+    title: "پاکت لاس",
+    unit: "%",
+  },
+  {
+    title: "میانگین سرعت",
+    unit: "Mb/s",
+  },
+  {
+    title: "پینگ",
+    unit: "Ms",
+  },
+];
+function GridItem({theme, rendered, title, data, unit}) {
   return (
     <Grid xs={12} md={6} padding="2rem">
-      <Box display="flex">
+      <Box display="flex" position="relative">
         <Box>
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
@@ -69,13 +84,12 @@ function GridItem({ theme, rendered, title, data }) {
           <img
             src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
             alt="xAxis"
-            style={{ width: "100%" }}
+            style={{width: "100%"}}
           />
         </Box>
-        <img
-          src={theme.palette.mode === "light" ? yAxisLight : yAxisDark}
-          alt="yAxis"
-          style={{ height: "250px" }}
+        <YAxisLine
+          max={Math.max(...data.map((line) => line.value))}
+          unit={unit}
         />
       </Box>
     </Grid>
@@ -182,6 +196,7 @@ const OperatorCompare = () => {
           <Box>
             {FormControlItems.map((items, index) => (
               <FormControl
+                key={index}
                 sx={{
                   m: "0.4rem",
                   width: 170,
@@ -197,11 +212,11 @@ const OperatorCompare = () => {
                   displayEmpty
                 >
                   <MenuItem disabled>
-                    <span style={{ color: "#676767" }}>{items}</span>
+                    <span style={{color: "#676767"}}>{items}</span>
                   </MenuItem>
                   {data[index].map((menuItem, menuItemIndex) => (
                     <MenuItem
-                      sx={{ color: "text.main" }}
+                      sx={{color: "text.main"}}
                       key={menuItemIndex}
                       value={menuItem}
                     >
@@ -215,12 +230,13 @@ const OperatorCompare = () => {
           <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
         </Box>
         <Grid container>
-          {titlesChart.map((title, index) => (
+          {titlesChart.map((line, index) => (
             <GridItem
               key={index}
               theme={theme}
               rendered={rendered}
-              title={title}
+              title={line.title}
+              unit={line.unit}
               data={
                 // Assign each chart a different randomChartData
                 index === 0
