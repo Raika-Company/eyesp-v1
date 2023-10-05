@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -12,9 +12,10 @@ import axios from "axios";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
+import SwitchBtnMobile from "../../app/common/SwitchBtnMobile";
 
 const titlesChart = ["میانگین عملکرد", "پاکت لاس", "میانگین سرعت", "پینگ"];
-function GridItem({ theme ,rendered, title, data }) {
+function GridItem({ theme, rendered, title, data }) {
   return (
     <Grid xs={12} md={6} padding="2rem">
       <Box display="flex">
@@ -27,9 +28,9 @@ function GridItem({ theme ,rendered, title, data }) {
             padding="1rem"
             sx={{
               background:
-              theme.palette.mode === "dark"
-              ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
-              : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+                theme.palette.mode === "dark"
+                  ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
+                  : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
             }}
             width="100%"
             height="250px"
@@ -72,7 +73,11 @@ function GridItem({ theme ,rendered, title, data }) {
             style={{ width: "100%" }}
           />
         </Box>
-        <img src={theme.palette.mode === "light" ? yAxisLight : yAxisDark} alt="yAxis" style={{ height: "250px" }} />
+        <img
+          src={theme.palette.mode === "light" ? yAxisLight : yAxisDark}
+          alt="yAxis"
+          style={{ height: "250px" }}
+        />
       </Box>
     </Grid>
   );
@@ -109,14 +114,17 @@ function generateRandomData() {
 }
 const OperatorCompare = () => {
   const theme = useTheme();
-  const [formControlItems, setFormControlItems] = useState("");
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
+  const [rendered, setRendered] = useState(false);
+  const [formControlItems, setFormControlItems] = useState("");
   const [currentChartData, setCurrentChartData] = useState({});
   const [randomChartData1, setRandomChartData1] = useState([]);
   const [randomChartData2, setRandomChartData2] = useState([]);
   const [randomChartData3, setRandomChartData3] = useState([]);
   const [randomChartData4, setRandomChartData4] = useState([]);
-  const [rendered, setRendered] = useState(false);
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
 
   const handleChange = (event) => {
     setFormControlItems(event.target.value);
@@ -141,7 +149,6 @@ const OperatorCompare = () => {
         const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
         if (defaultISPData) {
           setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
-
           setRandomChartData1(generateRandomData());
           setRandomChartData2(generateRandomData());
           setRandomChartData3(generateRandomData());
@@ -157,6 +164,27 @@ const OperatorCompare = () => {
   }, []);
   return (
     <>
+      <Box
+        sx={{
+          display: isMdScreen ? "flex" : " none",
+          width: "100%",
+          height: "78px",
+          borderRadius: "2rem",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 4px 20px 0 rgba(0, 0, 0, 0.10)",
+          background:
+            theme.palette.mode === "dark"
+              ? "radial-gradient(214.28% 128.84% at 3.96% 11.02%, rgba(58, 73, 88, 0.82) 0%, rgba(35, 52, 69, 0.82) 48.53%, rgba(9, 25, 39, 0.82) 100%)"
+              : "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)",
+          boxShadow:
+            theme.palette.mode === "light"
+              ? "0px 4px 40px 0px rgba(0, 0, 0, 0.20)"
+              : "0px 4px 40px 0px rgba(255, 255, 255, 0.10)",
+        }}
+      >
+        <SwitchBtnMobile textOn="مقایسه" textOff="مشاهده تکی" />
+      </Box>
       <CardContainer
         sx={{
           mt: "1rem",
@@ -172,7 +200,7 @@ const OperatorCompare = () => {
             justifyContent: "space-evenly",
           }}
         >
-          <Typography color="text.textBlack" variant="h1">
+          <Typography mb="1rem" color="text.textBlack" variant="h1">
             نمودار عملکرد اپراتور
           </Typography>
           <Box>
@@ -180,7 +208,7 @@ const OperatorCompare = () => {
               <FormControl
                 sx={{
                   m: "0.4rem",
-                  width: 170,
+                  width: isSmScreen ? 133 : 163,
                   borderRadius: "25px",
                 }}
                 size="small"
@@ -193,7 +221,13 @@ const OperatorCompare = () => {
                   displayEmpty
                 >
                   <MenuItem disabled>
-                    <span style={{ color: "#E3E3E3" }}>{items}</span>
+                    <Typography
+                      sx={{
+                        color: "text.chartTitleColor",
+                      }}
+                    >
+                      <span>{items}</span>
+                    </Typography>
                   </MenuItem>
                   {data[index].map((menuItem, menuItemIndex) => (
                     <MenuItem
@@ -208,7 +242,9 @@ const OperatorCompare = () => {
               </FormControl>
             ))}
           </Box>
-          <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
+          <Box sx={{ display: isMdScreen ? "none" : " flex" }}>
+            <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
+          </Box>
         </Box>
         <Grid container>
           {titlesChart.map((title, index) => (

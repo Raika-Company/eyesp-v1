@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import "./SwitchBtn.css";
+import "./SwitchBtnMobile.css";
 
-const SwitchBtn = ({ textOn, textOff }) => {
+const SwitchBtnMobile = ({ textOn, textOff }) => {
   return (
     <Box
       sx={{
@@ -13,16 +13,16 @@ const SwitchBtn = ({ textOn, textOff }) => {
       }}
     >
       <label className="switch btn-color-mode-switch">
-        <input type="checkbox" name="color_mode" id="color_mode" value="1" />
+        <input type="checkbox" name="color_mode_mobile" id="color_mode_mobile" value="1" />
         <label
-          htmlFor="color_mode"
+          htmlFor="color_mode_mobile"
           data-on={textOn}
           data-off={textOff}
-          className="btn-color-mode-switch-inner"
+          className="btn-color-mode-switch-inner-mobile"
         ></label>
       </label>
     </Box>
   );
 };
 
-export default SwitchBtn;
+export default SwitchBtnMobile;

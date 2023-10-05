@@ -14,6 +14,10 @@ const ContainedSelect = styled(Select)({
   "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     border: 0,
   },
+  ".css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
+    {
+      paddingRight: "10px",
+    },
 });
 
 export { ContainedSelect };
