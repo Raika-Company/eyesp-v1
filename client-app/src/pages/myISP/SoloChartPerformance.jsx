@@ -19,6 +19,7 @@ import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
 import {ContainedSelect} from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
+import {CustomTooltip} from "../ispCompare/OperatorCompare";
 
 const SoloChartPerformance = () => {
   const theme = useTheme();
@@ -151,7 +152,7 @@ const SoloChartPerformance = () => {
               {rendered && (
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={chartData}>
-                    <Tooltip />
+                    <Tooltip content={<CustomTooltip />} />
                     <defs>
                       <linearGradient
                         id="gradientChart"

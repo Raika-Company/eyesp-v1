@@ -11,6 +11,33 @@ import SwitchBtn from "../../app/common/SwitchBtn";
 import {ContainedSelect} from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 
+export const CustomTooltip = ({active, payload}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        style={{
+          background: "#fff",
+          color: "#333",
+          boxShadow: "0 3px 14px rgb(0 0 0 / 40%)",
+          padding: "1px",
+          textAlign: "left",
+          borderRadius: "1rem",
+        }}
+      >
+        <div
+          style={{
+            margin: "13px 19px",
+          }}
+        >
+          <p>month: {payload[0].payload.month.split(" ")[0]}</p>
+          <p>value: {payload[0].payload.value}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
 const titlesChart = [
   {
     title: "میانگین عملکرد",
@@ -53,7 +80,7 @@ function GridItem({theme, rendered, title, data, unit}) {
               <Box>
                 <ResponsiveContainer width="100%" height={150}>
                   <AreaChart width="100%" height="100%" data={data}>
-                    <Tooltip />
+                    <Tooltip content={<CustomTooltip />} />
                     <defs>
                       <linearGradient
                         id="gradientChart"
