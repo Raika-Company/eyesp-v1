@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ISP from "./ISP";
+import ThemeSwitcher from "../common/ThemeSwitcher";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
     path: "/dashboard",
     toggle: "isHomeOpen",
   },
+
   {
     label: "تست سرعت",
     icon: (color) => (

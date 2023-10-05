@@ -123,7 +123,6 @@ const ISPPerformance = () => {
       >
         <Typography
           variant="h1"
-          color="#2C2C2C"
           fontSize="1.5rem"
           fontFamily="PeydaSemiBold"
           textAlign={isSmScreen ? "center" : "left"}
@@ -185,7 +184,6 @@ const ISPPerformance = () => {
               color="primary"
               sx={{
                 marginRight: "0.5rem",
-                color: "#676767",
                 borderRadius: "1.25rem",
                 float: "left",
               }}
