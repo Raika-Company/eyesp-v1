@@ -1,20 +1,18 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import NewLogo from "../../app/common/NewLogo";
+import {useEffect, useState, useCallback, useMemo} from "react";
+import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
-import Carousel from "./Carousel";
-import { ContainedButton } from "../../app/common/ContainedButton";
+import {ContainedButton} from "../../app/common/ContainedButton";
 import CardContainer from "../../app/common/CardContainer";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation, Scrollbar, A11y} from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const TEST_RESULTS = "testResults";
 
@@ -29,7 +27,7 @@ const categorizeTests = (tests) => {
   };
 
   tests.forEach((test) => {
-    const testDate = moment(test.date, "jYYYY/jM/jD").startOf("day");
+    const testDate = moment(test.englishDate, "jYYYY/jM/jD").startOf("day");
     const diffDays = now.diff(testDate.convertToEnglishNumbers, "days");
 
     if (diffDays < 1) {
@@ -43,23 +41,44 @@ const categorizeTests = (tests) => {
     }
   });
 
+  categories.last24Hours.sort(
+    (a, b) => new Date(a.englishDate) - new Date(b.englishDate)
+  );
+
   return categories;
 };
 
-const CategorySection = ({ title, category }) => {
-  if (!category || category.length === 0) return null;
+const CategorySection = ({title, category}) => {
+  const theme = useTheme();
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
+  if (!category || category.length === 0) return null;
   return (
     <>
       <Typography color="text.textBlack" variant="h2" mt={3} mb={1}>
         {title}
       </Typography>
-      <Carousel itemsToShow={4} itemsToShowSm={1}>
-        {category &&
-          category.map((result, index) => (
-            <HistoryCard key={index} {...result} />
-          ))}
-      </Carousel>
+      <Swiper
+        style={{
+          width: "95%",
+          borderRadius: "1rem",
+          position: "absolute",
+        }}
+        slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
+        navigation
+        spaceBetween={5}
+        modules={[Navigation, Scrollbar, A11y]}
+        pagination={{clickable: true}}
+        scrollbar={{draggable: true}}
+      >
+        {category.slice(0, 20).map((result, index) => (
+          <SwiperSlide key={index}>
+            <HistoryCard {...result} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </>
   );
 };
@@ -95,22 +114,26 @@ const NewTestHistory = () => {
 
   const sections = useMemo(
     () => [
-      { title: "امروز", category: testHistory.last24Hours },
-      { title: "هفته گذشته", category: testHistory.lastWeek },
-      { title: "ماه گذشته", category: testHistory.lastMonth },
-      { title: "تست های گذشته", category: testHistory.older },
+      {title: "امروز", category: testHistory.last24Hours},
+      {title: "هفته گذشته", category: testHistory.lastWeek},
+      {title: "ماه گذشته", category: testHistory.lastMonth},
+      {title: "تست های گذشته", category: testHistory.older},
     ],
     [testHistory]
   );
+
   return (
     <CardContainer
       sx={{
         marginTop: "1rem",
         marginBottom: "4rem",
-        paddingX: cardContainerPaddingX,
+        paddingX: "1rem",
         paddingY: cardContainerPaddingY,
         overflowY: "auto",
         overflowX: "hidden",
+        position: "relative",
+        width: "100%",
+        height: "75vh",
       }}
     >
       <Box

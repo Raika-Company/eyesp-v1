@@ -1,10 +1,9 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 import uploadIcon from "../../app/assets/image/uploadIcon.svg";
 import downloadIcon from "../../app/assets/image/downloadIcon.svg";
-import clockIcon from "../../app/assets/image/clockIcon.svg";
 
-const InfoSection = ({ label, value }) => (
+const InfoSection = ({label, value}) => (
   <>
     <Typography marginTop="0.5rem" variant="h6" color="text.main">
       {label}:{" "}
@@ -15,7 +14,7 @@ const InfoSection = ({ label, value }) => (
   </>
 );
 
-const ResultSection = ({ icon, label, value, unit }) => (
+const ResultSection = ({icon, label, value, unit}) => (
   <Box display="flex" flexDirection="column" alignItems="center">
     <img src={icon} alt={label} />
     <Typography variant="chartTitle" color="text.textInfo">
@@ -41,11 +40,14 @@ const HistoryCard = ({
   const theme = useTheme();
   return (
     <Box
-      width="15.8125rem"
-      padding="1.45rem"
-      borderRadius="2rem"
-      backgroundColor= {theme.palette.mode === 'dark' ? '#081C30' : '#FFF'}
-      boxShadow= {theme.palette.mode === 'dark' ? '0px 0px 20px 0px rgba(255, 255, 255, 0.40)' : '0px 4px 40px 0px rgba(0, 0, 0, 0.05)'}
+      padding="1rem"
+      borderRadius="1rem"
+      backgroundColor={theme.palette.mode === "dark" ? "#081C30" : "#FFF"}
+      boxShadow={
+        theme.palette.mode === "dark"
+          ? "0px 0px 5px 0px rgba(255, 255, 255, 0.40)"
+          : "0px 4px 10px 0px rgba(0, 0, 0, 0.05)"
+      }
     >
       <InfoSection label="تاریخ" value={date} />
       <InfoSection label="ساعت" value={time} />
@@ -54,14 +56,13 @@ const HistoryCard = ({
       <InfoSection label="سرور" value={server} />
       <InfoSection label="آی پی" value={ip} />
       <Box
-        width="100%"
         paddingX="1.5rem"
         paddingY="0.6rem"
         marginTop={1}
         display="flex"
         justifyContent="center"
         alignItems="center"
-        gap="2.5rem"
+        gap="1.5rem"
         borderRadius="2rem"
         sx={{
           background:
