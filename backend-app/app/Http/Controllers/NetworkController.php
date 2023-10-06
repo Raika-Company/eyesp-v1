@@ -7,21 +7,38 @@ use App\Services\IpInfo;
 use Illuminate\Http\Request;
 use App\Models\RstServer;
 use App\Services\NetworkService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class NetworkController extends Controller
 {
-    public function Hello(Request $request)
+    function getClientIp(Request $request)
     {
         try {
-            $ipInfo = new IpInfo('5.113.197.78');// ToDo: get ip from $request
-            $ipInfoResponse = $ipInfo->GetInfo();
+            $validator = Validator::make($request->all(), [
+                'ip' => 'sometimes|ip', // Validate that 'ip' is a valid IP address
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => 'Invalid IP address'], 400);
+            }
+            $clientIp = $request->ip();
+            return response()->json(['ip' => $clientIp]);
 
-            RstResult::InsertHelloRequest(
-                $request->cid,
-                $request->uid,
-                $ipInfoResponse
-            );
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        //rst_isp_stats
+
+    }
+    public function setIpInfo(Request $request)
+    {
+        try {
+            RstResult::InsertHelloRequest((object)$request->all());
 
             return response()->json([
                 'status' => true,
@@ -54,30 +71,6 @@ class NetworkController extends Controller
             }
         }
         return response()->json(['servers' => $servers->toArray(), 'best_server_index' => $best_server_index]);
-    }
-
-    function IpInfo(Request $request)
-    {
-        try {
-            $ipInfo = new IpInfo('5.113.197.78');// ToDo: get ip from $request
-            $ipInfoResponse = $ipInfo->GetInfo();
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'ip' => $ipInfoResponse->query,
-                    'isp' => $ipInfoResponse->org,
-                    'country' => $ipInfoResponse->countryCode,
-                    'city' => $ipInfoResponse->city,
-                ],
-                'message' => ''
-            ]);
-        } catch(\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'data' => [],
-                'message' => $e->getMessage()
-            ]);
-        }
     }
 
     function TakeTime($start, $end = null)

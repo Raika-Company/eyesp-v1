@@ -42,7 +42,7 @@ const mbpsToAmount = (s) => {
 const BASE_URL = "http://127.0.0.1:8000/api/v1";
 
 //set maximum time for test in seconds
-const MAX_TIME = 10;
+const MAX_TIME = 20;
 
 const PING_TIMES = 10;
 

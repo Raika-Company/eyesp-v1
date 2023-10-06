@@ -32,21 +32,21 @@ class RstResult extends Model
         'jitter',
     ];
 
-    public static function InsertHelloRequest($cid, $uid, $ipInfo)
+    public static function InsertHelloRequest($ipInfo)
     {
         self::updateOrCreate([
-            'uuid' => $uid,
-            'cid' => $cid,
+            'uuid' => $ipInfo->uid,
+            'cid' => $ipInfo->cid,
             'date' => today()->toDateString(),
-            //'ip' => $request->getClientIp(),
-            'ip' => $ipInfo->query,
+            'ip' => $ipInfo->ip,
         ],[
             'time' => now()->toTimeString(),
-            'country' => $ipInfo->countryCode,
+            'country' => $ipInfo->country,
             'city' => $ipInfo->city,
-            'isp' => $ipInfo->org,
+            'isp' => $ipInfo->isp,
             'lat' => $ipInfo->lat,
             'lon' => $ipInfo->lon,
+            'type' => $ipInfo->test_type,
         ]);
     }
 }

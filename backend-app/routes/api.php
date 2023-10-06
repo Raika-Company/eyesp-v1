@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->middleware(['cors'])->group(function () {
     Route::name('speed-test.')->group(function () {
-        Route::get('/hello', [NetworkController::class, 'Hello']);
-        Route::get('/servers', [NetworkController::class, 'Servers']);
-        Route::get('/ping', [NetworkController::class, 'Ping']);
-        Route::get('/download-speed', [NetworkController::class, 'DownloadSpeed']);
-        Route::get('/ip-info', [NetworkController::class, 'IpInfo']);
-        Route::get('/upload-speed', [NetworkController::class, 'UploadSpeed']);
+        Route::get('/get-ip', [NetworkController::class, 'getClientIp']);
+        Route::post('/set-ip-info', [NetworkController::class, 'setIpInfo']);
+        Route::get('/servers', [NetworkController::class, 'servers']);
+        Route::get('/ping', [NetworkController::class, 'ping']);
+        Route::get('/download-speed', [NetworkController::class, 'downloadSpeed']);
+        Route::get('/upload-speed', [NetworkController::class, 'uploadSpeed']);
     });
 });
 
