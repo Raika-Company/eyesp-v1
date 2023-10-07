@@ -54,6 +54,7 @@ const parseNumber = (str) => {
 const ISPPerformance = () => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
@@ -62,7 +63,6 @@ const ISPPerformance = () => {
   const [selectedProvince, setSelectedProvince] = useState("انتخاب کنید");
 
   const [visibleRows, setVisibleRows] = useState(6);
-
   const sortFunctions = useMemo(
     () => ({
       "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
@@ -209,10 +209,12 @@ const ISPPerformance = () => {
           },
         }}
       >
-        <ISPTable
-          isDetail={true}
-          ISPdata={sortedISPData.slice(0, visibleRows)}
-        />
+        <Box sx={{ width: isXsScreen ? "19em" : isMdScreen ? "22em" : "100%" }}>
+          <ISPTable
+            isDetail={true}
+            ISPdata={sortedISPData.slice(0, visibleRows)}
+          />
+        </Box>
       </Box>
     </CardContainer>
   );

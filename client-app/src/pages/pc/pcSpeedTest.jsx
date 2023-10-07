@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 
-import { STATUS_MAP } from "../speedtest/constant";
+import { STATUS_MAP } from "./constant";
 
 import io from "socket.io-client";
 import axios from "axios";
