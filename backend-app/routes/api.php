@@ -35,6 +35,7 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
 
         Route::prefix('client')->group(function () {
             Route::post('/report', [ClientController::class, 'report']);
+            Route::post('/feedback', [ClientController::class, 'feedback']);
         });
     });
 });
