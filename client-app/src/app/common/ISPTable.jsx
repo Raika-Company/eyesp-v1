@@ -66,9 +66,6 @@ const gradients = [
  * @returns {JSX.Element}
  */
 const ISPTable = ({ ISPdata, isDetail }) => {
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
-
   const rowsHead = [
     { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
     { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
@@ -82,7 +79,6 @@ const ISPTable = ({ ISPdata, isDetail }) => {
         backgroundColor: "transparent",
         boxShadow: 0,
         marginBottom: "1rem",
-        width: isXsScreen ? "19em" : isMdScreen ? "24em" : "100%",
       }}
     >
       {isDetail ? (
