@@ -14,9 +14,9 @@ const ContainedSelect = styled(Select)({
   "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     border: 0,
   },
-  ".css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1xklhfu-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
+  ".css-1t0qkoj-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1t0qkoj-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1t0qkoj-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
     {
-      paddingRight: "10px",
+      paddingRight: "0.5rem",
     },
 });
 
