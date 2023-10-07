@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback, useMemo} from "react";
+import {useEffect, useState, useCallback, useMemo, useRef} from "react";
 import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
@@ -54,6 +54,7 @@ const CategorySection = ({title, category}) => {
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   if (!category || category.length === 0) return null;
+
   return (
     <>
       <Typography color="text.textBlack" variant="h2" mt={3} mb={1}>
@@ -61,13 +62,13 @@ const CategorySection = ({title, category}) => {
       </Typography>
       <Swiper
         style={{
-          width: "95%",
           borderRadius: "1rem",
+          width: "85vw",
         }}
         slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
         navigation
-        spaceBetween={8}
-        modules={[Navigation, Scrollbar, A11y]}
+        spaceBetween={5}
+        modules={[Navigation, Scrollbar]}
         pagination={{clickable: true}}
         scrollbar={{draggable: true}}
       >
@@ -128,13 +129,6 @@ const NewTestHistory = () => {
         padding: "1rem",
         overflowX: "hidden",
         position: "relative",
-        width: "100%",
-        height: `${
-          75 +
-          (testHistory.lastWeek.length > 0 ? 50 : 0) +
-          (testHistory.lastMonth.length > 0 ? 50 : 0) +
-          (testHistory.older.length > 0 ? 50 : 0)
-        }vh`,
       }}
     >
       <Box
@@ -159,18 +153,6 @@ const NewTestHistory = () => {
             {" "}
             انجام تست
           </ContainedButton>
-          {/* <Button
-            component={Link}
-            to="/"
-            sx={{
-              borderRadius: "2rem",
-              backgroundColor: "#259FDA",
-              paddingX: "2.75rem",
-              color: "#ffffff",
-            }}
-          >
-            انجام تست
-          </Button> */}
           {isMD ? (
             <>
               <Typography variant="h6" color="text.textBlack">
@@ -180,9 +162,7 @@ const NewTestHistory = () => {
                 192.168.0.129
               </Typography>
             </>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </Box>
       </Box>
       {isMD ? (
@@ -192,19 +172,9 @@ const NewTestHistory = () => {
           آدرس IP: 192.168.0.129
         </Typography>
       )}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          position: "absolute",
-          width: "95%",
-        }}
-      >
-        {sections.map((section, index) => (
-          <CategorySection key={index} {...section} />
-        ))}
-      </Box>
+      {sections.map((section, index) => (
+        <CategorySection key={index} {...section} />
+      ))}
     </CardContainer>
   );
 };

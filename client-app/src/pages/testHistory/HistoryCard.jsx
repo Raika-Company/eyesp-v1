@@ -40,6 +40,7 @@ const HistoryCard = ({
   const theme = useTheme();
   return (
     <Box
+      maxWidth="13rem"
       padding="1rem"
       borderRadius="1rem"
       backgroundColor={theme.palette.mode === "dark" ? "#081C30" : "#FFF"}
