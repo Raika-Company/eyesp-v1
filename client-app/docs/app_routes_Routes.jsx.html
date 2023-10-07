@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/routes/Routes.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/routes/Routes.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { lazy } from "react";
+
+/**
+ * Utility function to lazy load components based on the given path.
+ * @param {string} path - The path to the component.
+ * @returns {React.LazyExoticComponent} - A lazy-loaded component.
+ */
+
+// Utility function to lazy load components
+const lazyLoad = (path) => lazy(() => import(`../../pages/${path}`));
+
+const SpeedTest = lazyLoad("speedtest/SpeedTest");
+const Dashboard = lazyLoad("dashboard/Dashboard");
+const Information = lazyLoad("information/Information");
+const OperatorCompare = lazyLoad("ispPerformance/OperatorCompare");
+const TestHistory = lazyLoad("testHistory/TestHistory");
+const MyISP = lazyLoad("myISP/MyISP");
+const Province = lazyLoad("dashboard/province/Province");
+
+/**
+ * Creates a route object for use within the routing system.
+ * @param {string} path - The URL path for the route.
+ * @param {React.ComponentType} component - The component to render at this path.
+ * @param {string} title - The title for the route.
+ * @param {string} description - The description for the route.
+ * @param {string} keywords - The SEO keywords for the route.
+ * @param {string} robots - The robots meta tag content for the route.
+ * @returns {Object} - A route object.
+ */
+const createRoute = (
+  path,
+  component,
+  title,
+  description,
+  keywords,
+  robots
+) => ({
+  path,
+  element: React.createElement(component),
+  title: `${title} | TIC Radar`,
+  description,
+  keywords,
+  robots,
+});
+
+/**
+ * An array of main routes for the application.
+ * @type {Array&lt;Object>}
+ */
+export const mainRoutes = [
+  createRoute(
+    "/",
+    SpeedTest,
+    "Speed Test",
+    "Test your internet speed with our reliable and fast speed testing tool.",
+    "speed test, internet speed, broadband speed, download speed, upload speed",
+    "index, follow"
+  ),
+  createRoute(
+    "/dashboard",
+    Dashboard,
+    "Dashboard",
+    "Admin dashboard to manage and review system metrics.",
+    "dashboard, admin panel, system metrics",
+    "noindex, nofollow"
+  ),
+  createRoute(
+    "/information",
+    Information,
+    "Information",
+    "Defining concepts related to the Internet and its disorders.",
+    "information, internet, internet speed, broadband speed, download speed, upload speed",
+    "index, follow"
+  ),
+  createRoute(
+    "/history",
+    TestHistory,
+    "Test History",
+    "Review all your past internet speed tests in one place.",
+    "test history, speed results, past tests",
+    "index, follow"
+  ),
+  createRoute(
+    "/my-isp",
+    MyISP,
+    "My ISP",
+    "Review all your past internet speed tests in one place.",
+    "test history, speed results, past tests",
+    "index, follow"
+  ),
+  createRoute(
+    "/operator-performance",
+    OperatorPerformance,
+    "Operator Performance",
+    "Review all your past internet speed tests in one place.",
+    "test history, speed results, past tests",
+    "index, follow"
+  ),
+  createRoute(
+    "/dashboard/:provinceName",
+    Province,
+    "Province Details",
+    "Detailed insights into specific province metrics and data.",
+    "province, details, insights, metrics",
+    "noindex, nofollow"
+  ),
+];</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Information.html">Information</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DisorderAccordion">DisorderAccordion</a></li><li><a href="global.html#DrawMeter">DrawMeter</a></li><li><a href="global.html#ISPCompareTable">ISPCompareTable</a></li><li><a href="global.html#ISPTable">ISPTable</a></li><li><a href="global.html#InformationBox">InformationBox</a></li><li><a href="global.html#InternetStatusCard">InternetStatusCard</a></li><li><a href="global.html#InternetStatusTitle">InternetStatusTitle</a></li><li><a href="global.html#NewResult">NewResult</a></li><li><a href="global.html#RawISPData">RawISPData</a></li><li><a href="global.html#RowBox">RowBox</a></li><li><a href="global.html#SpeedBox">SpeedBox</a></li><li><a href="global.html#baseTheme">baseTheme</a></li><li><a href="global.html#createRoute">createRoute</a></li><li><a href="global.html#createTypography">createTypography</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#disorders">disorders</a></li><li><a href="global.html#fadeInAnimation">fadeInAnimation</a></li><li><a href="global.html#gradients">gradients</a></li><li><a href="global.html#lazyLoad">lazyLoad</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#mainRoutes">mainRoutes</a></li><li><a href="global.html#parseNumber">parseNumber</a></li><li><a href="global.html#selectionItems">selectionItems</a></li><li><a href="global.html#useAdjustedBoxHeight">useAdjustedBoxHeight</a></li><li><a href="global.html#useDynamicMP">useDynamicMP</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 15:41:45 GMT+0400 (Gulf Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

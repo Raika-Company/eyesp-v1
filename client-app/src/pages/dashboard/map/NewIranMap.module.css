@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  justify-content: center;
+  direction: rtl;
+  padding: 0 0 1rem 0;
+  font-size: 11px;
+  margin: 0 auto;
+  height: auto;
+  width: 100%;
+  /* padding-top: 5rem; */
+}
+
+.show_title {
+  display: block;
+  position: absolute;
+  margin: 0;
+  padding: 0 5px;
+  text-align: center;
+  line-height: 26px;
+  border-radius: 2px;
+  opacity: 0.8;
+  z-index: 999;
+  direction: ltr;
+  color: #5e5e5e;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.show_title_Line {
+  width: auto;
+  height: 4px;
+  background-color: #5e5e5e;
+}
+
+.additional_text_Wrapper {
+  position: relative;
+}
+.additional_text {
+  position: absolute;
+  top: 65px;
+  right: -22.2%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  z-index: 9999;
+}
+
+.map {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.map .svg {
+  position: relative;
+  height: 100%;
+  width: auto;
+}
+
+.map .border path {
+  fill: #fff;
+}
+
+.map .sea path,
+.map .lake path {
+  fill: #6caed8;
+}
+
+.map {
+  position: relative;
+}
+
+.map .province path:hover {
+  cursor: crosshair;
+}
+
+.map .sea path:nth-child(2):hover {
+  fill: #1f79b1;
+}
+
+.map .province path:focus {
+  fill: #1bb97c;
+  outline: 0;
+}
+
+.map .map_zoom {
+  transform: scale(1.3);
+  width: 350%;
+  height: 120%;
+  padding: 0;
+}

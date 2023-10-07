@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/dashboard/InternetStatusCard.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/dashboard/InternetStatusCard.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// External Libraries
+import React from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  Typography,
+  useMediaQuery,
+  keyframes,
+  SvgIcon,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
+
+// Local Components
+import NewIranMap from "./map/NewIranMap";
+import CardContainer from "../../app/common/CardContainer";
+import { ContainedButton } from "../../app/common/ContainedButton";
+
+// Hooks
+import useDynamicMP from "../../app/hooks/useDynamicMP";
+
+// Data &amp; Assets
+import provinces from "./../../../public/data/provinces.json";
+import frame from "../../app/assets/image/frame.svg";
+
+/**
+ * Sample disorder data.
+ * @type {Array&lt;Object>}
+ */
+const disorders = [
+  {
+    title: "اختلال در برقراری با سرور های خارج",
+    detail:
+      "توضیحات مربوط به اختلال در برقراری با سرور های خارج می تواند در این قسمت قرار گیرد. ممکن است شما بخواهید جزئیات بیشتری در مورد این اختلال، دلایل آن یا راه حل های پیشنهادی را در این قسمت ارائه دهید.",
+  },
+  {
+    title: "کندی سرعت",
+    detail:
+      "توضیحات مربوط به اختلال سرعت می تواند در این قسمت قرار گیرد. ممکن است شما بخواهید جزئیات بیشتری در مورد این اختلال، دلایل آن یا راه حل های پیشنهادی را در این قسمت ارائه دهید.",
+  },
+  {
+    title: "افزایش پینگ",
+    detail:
+      "توضیحات مربوط به افزایش پینگ می تواند در این قسمت قرار گیرد. ممکن است شما بخواهید جزئیات بیشتری در مورد این اختلال، دلایل آن یا راه حل های پیشنهادی را در این قسمت ارائه دهید.",
+  },
+];
+
+/**
+ * Renders the internet status title.
+ * @returns {JSX.Element} The rendered component.
+ */
+const InternetStatusTitle = () => (
+  &lt;React.Fragment>
+    &lt;Typography
+      fontFamily="PeydaSemibold"
+      fontSize="1.5rem"
+      color="#2C2C2C"
+      gutterBottom
+    >
+      وضعیت اینترنت
+    &lt;/Typography>
+    &lt;Typography
+      fontFamily="PeydaLight"
+      fontSize="1.5rem"
+      color="#676767"
+      gutterBottom
+    >
+      سراسر کشور
+    &lt;/Typography>
+  &lt;/React.Fragment>
+);
+
+/**
+ * Renders an accordion component for displaying disorders.
+ * @param {Object} props - Component properties.
+ * @param {string} props.title - The title of the disorder.
+ * @param {string} props.detail - Detailed information about the disorder.
+ * @returns {JSX.Element} The rendered component.
+ */
+const DisorderAccordion = ({ title, detail }) => (
+  &lt;Accordion
+    sx={{
+      boxShadow: 0,
+      marginY: "0.5em",
+      "&amp;.MuiAccordion-root": {
+        borderRadius: "1.875rem",
+        "&amp;:before": {
+          display: "none",
+        },
+      },
+    }}
+  >
+    &lt;AccordionSummary
+      expandIcon={&lt;ExpandMoreIcon />}
+      aria-controls="panel1a-content"
+      id="panel1a-header"
+    >
+      &lt;Typography>{title}&lt;/Typography>
+    &lt;/AccordionSummary>
+    &lt;AccordionDetails>
+      &lt;Typography>{detail}&lt;/Typography>
+    &lt;/AccordionDetails>
+  &lt;/Accordion>
+);
+
+/**
+ * Renders the main internet status card component.
+ * @param {Object} props - Component properties.
+ * @param {Function} props.handleClickOpenDialog - Function to handle the dialog open action.
+ * @param {Function} props.handleDisturbanceClick - Function to handle disturbance click action.
+ * @param {string} props.province - Current selected province.
+ * @param {Function} props.handleProvinceChange - Function to handle province change action.
+ * @returns {JSX.Element} The rendered component.
+ */
+const InternetStatusCard = (props) => {
+  const {
+    handleClickOpenDialog,
+    handleDisturbanceClick,
+    province,
+    handleProvinceChange,
+    qualityPercentage,
+  } = props;
+
+  const paddingMainBox = useDynamicMP(390, 1440, 1.81, 4);
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
+
+  const [fillPercentage, setFillPercentage] = React.useState(0);
+  const [isAnimating, setIsAnimating] = React.useState(true);
+
+  const targetPercentage = qualityPercentage;
+  const duration = 3000;
+  const startTime = React.useRef(Date.now());
+
+  const cubicEaseOut = (t, b, c, d) => {
+    t /= d;
+    t--;
+    return c * (t * t * t + 1) + b;
+  };
+
+  const updateFillPercentage = () => {
+    const currentTime = Date.now() - startTime.current;
+    if (currentTime >= duration) {
+      clearInterval(intervalId.current);
+      setIsAnimating(false);
+      setFillPercentage(targetPercentage);
+    } else {
+      const newPercentage = cubicEaseOut(
+        currentTime,
+        0,
+        targetPercentage,
+        duration
+      );
+      setFillPercentage(Math.round(newPercentage));
+    }
+  };
+
+  const intervalId = React.useRef(null);
+
+  React.useEffect(() => {
+    if (isAnimating) {
+      intervalId.current = setInterval(updateFillPercentage, 50);
+    }
+    return () => {
+      clearInterval(intervalId.current);
+    };
+  }, [isAnimating]);
+
+  return (
+    &lt;CardContainer
+      sx={{
+        display: "flex",
+        flexDirection: isMdScreen ? "row" : "column-reverse",
+        marginTop: "1rem",
+        paddingTop: "3.5rem",
+        paddingX: paddingMainBox,
+      }}
+    >
+      &lt;Box flex={1}>
+        &lt;InternetStatusTitle />
+        &lt;Box display="flex" flexDirection="column" marginTop="5.75rem">
+          &lt;Box
+            position="relative"
+            height="0.875rem"
+            backgroundColor="#D9D9D9"
+            width="100%"
+            borderRadius="0.65625rem"
+            sx={{ direction: "ltr" }}
+          >
+            &lt;Box
+              position="absolute"
+              top="-4rem"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              transition="left 5s cubic-bezier(0.23, 1, 0.32, 1)"
+              sx={{ left: `${fillPercentage - 3}%` }}
+            >
+              &lt;Typography
+                fontSize="1.5rem"
+                fontFamily="PeydaSemiBold"
+                color="#008EDD"
+              >{`${fillPercentage}%`}&lt;/Typography>
+              &lt;SvgIcon>
+                &lt;svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="38"
+                  viewBox="0 0 18 38"
+                  fill="none"
+                >
+                  &lt;path
+                    d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                    fill="#008EDD"
+                  />
+                &lt;/svg>
+              &lt;/SvgIcon>
+            &lt;/Box>
+            &lt;Box
+              height="100%"
+              width={`${fillPercentage}%`}
+              backgroundColor="#008EDD"
+              borderRadius="0.65625rem"
+            >&lt;/Box>
+          &lt;/Box>
+        &lt;/Box>
+        &lt;Box display="flex" justifyContent="space-between">
+          &lt;Typography
+            fontSize="1rem"
+            fontFamily="PeydaLight"
+            sx={{ color: "#676767" }}
+          >
+            وضعیت:{" "}
+            &lt;Typography
+              component="span"
+              fontFamily="PeydaSemiBold"
+              fontSize="1.5rem"
+              sx={{ color: "#008EDD" }}
+            >
+              مطلوب
+            &lt;/Typography>
+          &lt;/Typography>
+          &lt;Typography
+            fontSize="1rem"
+            fontFamily="PeydaLight"
+            sx={{ color: "#676767" }}
+          >
+            عملکرد کلی
+          &lt;/Typography>
+        &lt;/Box>
+        &lt;Typography
+          fontFamily="PeydaRegular"
+          fontSize="1.25rem"
+          color="#676767"
+          marginTop="2.875rem"
+          gutterBottom
+        >
+          اختلالات موجود (
+          &lt;Typography
+            component="span"
+            fontFamily="PeydaSemiBold"
+            fontSize="1.25rem"
+          >
+            3 مورد
+          &lt;/Typography>
+          )
+        &lt;/Typography>
+        &lt;Box>
+          {disorders.map((disorder) => (
+            &lt;DisorderAccordion key={disorder.title} {...disorder} />
+          ))}
+        &lt;/Box>
+        &lt;Box marginTop="2.875rem">
+          &lt;ContainedButton
+            variant="contained"
+            sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
+            onClick={handleClickOpenDialog}
+          >
+            گزارش اختلال
+          &lt;/ContainedButton>
+          &lt;Button
+            fontSize="1rem"
+            variant="text.main"
+            sx={{
+              color: "#676767",
+              fontFamily: "PeydaRegular",
+              marginRight: "min(1.94rem, 2vw)",
+            }}
+            onClick={handleDisturbanceClick}
+          >
+            گزارش خطا در اطلاعات
+          &lt;/Button>
+        &lt;/Box>
+      &lt;/Box>
+      &lt;Box flex={1}>
+        &lt;Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          gap="1rem"
+          width="100%"
+        >
+          &lt;Typography>استان مورد نظر:&lt;/Typography>
+          &lt;Select
+            labelId="change-province-label"
+            id="change-province"
+            label="انتخاب کنید"
+            value={province}
+            onChange={handleProvinceChange}
+            displayEmpty
+            sx={{ borderRadius: "1.25rem" }}
+          >
+            &lt;MenuItem value="">انتخاب کنید&lt;/MenuItem>
+            {provinces.map((provinceItem) => (
+              &lt;MenuItem key={provinceItem.name} value={provinceItem.name}>
+                {provinceItem.name}
+              &lt;/MenuItem>
+            ))}
+          &lt;/Select>
+        &lt;/Box>
+        &lt;Box margin="5%">
+          &lt;NewIranMap />
+        &lt;/Box>
+      &lt;/Box>
+    &lt;/CardContainer>
+  );
+};
+
+export default InternetStatusCard;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Information.html">Information</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DisorderAccordion">DisorderAccordion</a></li><li><a href="global.html#DrawMeter">DrawMeter</a></li><li><a href="global.html#ISPCompareTable">ISPCompareTable</a></li><li><a href="global.html#ISPTable">ISPTable</a></li><li><a href="global.html#InformationBox">InformationBox</a></li><li><a href="global.html#InternetStatusCard">InternetStatusCard</a></li><li><a href="global.html#InternetStatusTitle">InternetStatusTitle</a></li><li><a href="global.html#NewResult">NewResult</a></li><li><a href="global.html#RawISPData">RawISPData</a></li><li><a href="global.html#RowBox">RowBox</a></li><li><a href="global.html#SpeedBox">SpeedBox</a></li><li><a href="global.html#baseTheme">baseTheme</a></li><li><a href="global.html#createRoute">createRoute</a></li><li><a href="global.html#createTypography">createTypography</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#disorders">disorders</a></li><li><a href="global.html#fadeInAnimation">fadeInAnimation</a></li><li><a href="global.html#gradients">gradients</a></li><li><a href="global.html#lazyLoad">lazyLoad</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#mainRoutes">mainRoutes</a></li><li><a href="global.html#parseNumber">parseNumber</a></li><li><a href="global.html#selectionItems">selectionItems</a></li><li><a href="global.html#useAdjustedBoxHeight">useAdjustedBoxHeight</a></li><li><a href="global.html#useDynamicMP">useDynamicMP</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 15:41:45 GMT+0400 (Gulf Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
