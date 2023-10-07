@@ -38,6 +38,7 @@ const PcSpeedBox = ({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
+        userSelect: "none",
       }}
     >
       <Box
@@ -91,7 +92,7 @@ const PcSpeedBox = ({
         <Typography
           variant="subtitle2"
           color="#FFF"
-          fontSize="clamp(2.2rem, 1.4em + 2vw, 3rem)"
+          fontSize="clamp(2.2rem, 1em + 2vw, 3rem)"
         >
           {value !== null ? value : "--"}
         </Typography>

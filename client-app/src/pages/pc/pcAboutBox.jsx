@@ -14,7 +14,13 @@ import { Box } from "@mui/material";
  */
 const PcAboutBox = ({ iconSrc, altText, index }) => {
   return (
-    <Box sx={{ cursor: "pointer", margin: index === 1 ? "0 0.8rem" : "" }}>
+    <Box
+      sx={{
+        cursor: "pointer",
+        margin: index === 1 ? "0 0.8rem" : "",
+        userSelect: "none",
+      }}
+    >
       <img src={iconSrc} alt={altText} height="31px" width="31px" />
     </Box>
   );

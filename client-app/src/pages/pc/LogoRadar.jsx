@@ -33,7 +33,8 @@ const LogoRadar = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        px:"0.6rem"
+        px: "0.6rem",
+        userSelect: "none",
       }}
     >
       <img

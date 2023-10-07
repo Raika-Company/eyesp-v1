@@ -391,7 +391,7 @@ const PcspTest = () => {
           alignItems="center"
           justifyContent="center"
           gap={7}
-          // sx={{ display: { xs: "none", sm: "flex" } }}\
+          // sx={{ display: { xs: "none", sm: "flex" } }}
           display="flex"
         >
           {InfoBoxData.map((items, index) => (
