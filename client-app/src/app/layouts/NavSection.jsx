@@ -89,7 +89,7 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
         margin: "10px 0",
         borderRadius: "1rem",
         "&:hover": {
-          background: "#f5f5f5",
+          background: "#182633",
         },
         transition: "all .2s linear",
       }}

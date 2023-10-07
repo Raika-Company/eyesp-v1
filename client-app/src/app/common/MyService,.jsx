@@ -4,11 +4,12 @@ import {
   AccordionSummary,
   Box,
   Button,
-  Paper,
+  SvgIcon,
   Typography,
+  keyframes,
   useMediaQuery,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ContainedButton } from "./ContainedButton";
 import frame from "../../app/assets/image/frame.svg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -16,7 +17,23 @@ import SendReport from "./SendReport";
 import CustomSnackbar from "./CustomeSnackbar";
 import CardContainer from "./CardContainer";
 
-const MyService = () => {
+const MyService = (props) => {
+  const { qualityPercentage } = props;
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const fill = keyframes`
+  to {
+    width: ${qualityPercentage}%;
+  }
+`;
+
   const disorders = [
     {
       title: "اختلال در برقراری با سرور های خارج",
@@ -80,7 +97,71 @@ const MyService = () => {
         <Typography variant="h2" color="text.main" gutterBottom>
           ایرانسل
         </Typography>
-        <img
+
+        <Box display="flex" flexDirection="column" marginTop="5.75rem">
+          <Typography
+            variant="h1"
+            color="primary"
+            sx={{
+              marginRight: `${100 - qualityPercentage - 2.6}%`,
+              opacity: visible ? 1 : 0,
+              transition: "opacity 2s",
+            }}
+          >{`${qualityPercentage}%`}</Typography>
+
+          <SvgIcon
+            sx={{
+              opacity: visible ? 1 : 0,
+              transition: "opacity 2s",
+              marginRight: `${100 - qualityPercentage - 1.5}%`,
+              marginBottom: "0.25rem",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="38"
+              viewBox="0 1 14 29"
+              fill="none"
+            >
+              <path
+                d="M9 0.339745L0.339744 9L9 17.6603L17.6603 9L9 0.339745ZM10.5 38L10.5 9L7.5 9L7.5 38L10.5 38Z"
+                fill="#008EDD"
+              />
+            </svg>
+          </SvgIcon>
+          <Box
+            position="relative"
+            height="0.875rem"
+            backgroundColor="#D9D9D9"
+            width="100%"
+            borderRadius="0.65625rem"
+            sx={{ direction: "ltr" }}
+          >
+            <Box
+              height="100%"
+              width={qualityPercentage}
+              backgroundColor="#008EDD"
+              borderRadius="0.65625rem"
+              sx={{
+                animation: `${fill} 3s cubic-bezier(0.23, 1, 0.32, 1) forwards`,
+              }}
+            ></Box>
+          </Box>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="h5" color="text.main">
+            وضعیت:{" "}
+            <Typography component="span" variant="h4" color="primary">
+              مطلوب
+            </Typography>
+          </Typography>
+          <Typography variant="h5" color="text.main">
+            عملکرد کلی
+          </Typography>
+        </Box>
+
+        {/* <img
           src={frame}
           alt="frame"
           style={{ width: "100%", marginTop: "0.69rem" }}
@@ -109,7 +190,7 @@ const MyService = () => {
           <Typography variant="h5" color="text.main">
             عملکرد کلی
           </Typography>
-        </Box>
+        </Box> */}
         <Typography
           variant="h3"
           color="text.main"

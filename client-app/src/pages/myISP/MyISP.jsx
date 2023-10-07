@@ -51,7 +51,7 @@ const MyISP = () => {
         display="flex"
         sx={{ gap: mpCardContainers, flexWrap: isMdScreen ? "wrap" : "" }}
       >
-        <MyService />
+        <MyService qualityPercentage={78} />
         <UserSatisfaction />
       </Box>
       <SoloChartPerformance />

@@ -15,6 +15,7 @@ import NewLogo from "./common/NewLogo";
 import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
+import Pc from "../pages/pc/pc";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -116,6 +117,7 @@ function App() {
                 </Container>
               }
             />
+            <Route path="/pc" element={<Pc />} />
           </Routes>
         </Suspense>
       </Router>
