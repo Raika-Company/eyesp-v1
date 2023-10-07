@@ -17,7 +17,7 @@ import "swiper/css/scrollbar";
 const TEST_RESULTS = "testResults";
 
 const categorizeTests = (tests) => {
-  const now = moment().startOf("day");
+  const now = moment();
 
   const categories = {
     last24Hours: [],
@@ -27,8 +27,8 @@ const categorizeTests = (tests) => {
   };
 
   tests.forEach((test) => {
-    const testDate = moment(test.englishDate, "jYYYY/jM/jD").startOf("day");
-    const diffDays = now.diff(testDate.convertToEnglishNumbers, "days");
+    const testDate = moment(test.englishDate, "jYYYY/jM/jD");
+    const diffDays = now.diff(testDate, "days");
 
     if (diffDays < 1) {
       categories.last24Hours.push(test);
@@ -49,7 +49,6 @@ const categorizeTests = (tests) => {
 };
 
 const CategorySection = ({title, category}) => {
-  const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
@@ -64,7 +63,6 @@ const CategorySection = ({title, category}) => {
         style={{
           width: "95%",
           borderRadius: "1rem",
-          position: "absolute",
         }}
         slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
         navigation
@@ -73,14 +71,11 @@ const CategorySection = ({title, category}) => {
         pagination={{clickable: true}}
         scrollbar={{draggable: true}}
       >
-        {category
-          .slice(0, 20)
-          .reverse()
-          .map((result, index) => (
-            <SwiperSlide key={index}>
-              <HistoryCard {...result} />
-            </SwiperSlide>
-          ))}
+        {category.slice(0, 20).map((result, index) => (
+          <SwiperSlide key={index}>
+            <HistoryCard {...result} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
@@ -130,13 +125,16 @@ const NewTestHistory = () => {
       sx={{
         marginTop: "1rem",
         marginBottom: "4rem",
-        paddingX: "1rem",
-        paddingY: cardContainerPaddingY,
-        overflowY: "auto",
+        padding: "1rem",
         overflowX: "hidden",
         position: "relative",
         width: "100%",
-        height: "75vh",
+        height: `${
+          75 +
+          (testHistory.lastWeek.length > 0 ? 50 : 0) +
+          (testHistory.lastMonth.length > 0 ? 50 : 0) +
+          (testHistory.older.length > 0 ? 50 : 0)
+        }vh`,
       }}
     >
       <Box
@@ -194,9 +192,19 @@ const NewTestHistory = () => {
           آدرس IP: 192.168.0.129
         </Typography>
       )}
-      {sections.map((section, index) => (
-        <CategorySection key={index} {...section} />
-      ))}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          position: "absolute",
+          width: "95%",
+        }}
+      >
+        {sections.map((section, index) => (
+          <CategorySection key={index} {...section} />
+        ))}
+      </Box>
     </CardContainer>
   );
 };
