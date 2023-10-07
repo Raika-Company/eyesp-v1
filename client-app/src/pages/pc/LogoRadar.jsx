@@ -7,45 +7,29 @@
 import React from "react";
 
 // Import Material-UI components and styles
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+
+import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
 
 const LogoRadar = () => {
   return (
     <Box
       sx={{
         width: "100%",
-        height: "15%",
-        padding: "0 0 0 2rem",
-        color: "#fff",
-        position: "relative",
+        height: "9%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-start",
       }}
     >
-      <Typography variant="text" sx={{ fontSize: "2.5rem" }}>
-        RADAR
-      </Typography>
-      <Typography
-        variant="text"
-        sx={{
-          position: "absolute",
-          left: "30.3px",
-          top: "28px",
-          fontSize: "3rem",
+      <img
+        style={{
+          width: "auto",
+          height: "100%",
         }}
-      >
-        GAME
-      </Typography>
-      <Box
-        sx={{
-          width: "18px",
-          height: "18px",
-          bgcolor: "red",
-          borderRadius: "11rem",
-          position: "absolute",
-          top: "63px",
-          left: "22px",
-          border: "4px solid #232323",
-        }}
-      ></Box>
+        src={RadarLogo}
+        alt="Radar-Logo"
+      />
     </Box>
   );
 };

@@ -29,15 +29,19 @@ const PcSpeedBox = ({
   return (
     <Box
       sx={{
+        height: "90%",
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Box
-        sx={{ marginX: index === 1 ? "clamp(5rem, 5rem + 1vw, 2.5rem)" : "" }}
+        sx={{
+          marginX: index === 1 ? "clamp(2rem, 2rem + 1vw, 2.5rem)" : "",
+        }}
         display="flex"
+        flexWrap="wrap"
         alignItems="center"
         justifyContent="center"
         gap={1}
@@ -54,16 +58,18 @@ const PcSpeedBox = ({
           <img src={iconSrc} alt={altText} />
         </Box>
         <Typography
-          fontSize="clamp(1rem, 0.7rem + 1vw, 2.5rem)"
+          fontSize="clamp(0.6rem, 0.6rem + 1vw, 2.5rem)"
           color="#FFF"
           variant="subtitle2"
+          pt="0.5rem"
         >
           {title}
         </Typography>
         <Typography
           color="#909090"
-          fontSize="clamp(1rem, 0.7rem + 1vw, 2.5rem)"
+          fontSize="clamp(0.6rem, 0.6rem + 1vw, 2.5rem)"
           variant="subtitle2"
+          pt="0.5rem"
         >
           {measure}
         </Typography>
@@ -72,15 +78,16 @@ const PcSpeedBox = ({
       <Box
         sx={{
           width: "100%",
-          height: "40px",
+          height: "50px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <Typography
+          variant="subtitle2"
           color="#FFF"
-          fontSize="clamp(1.125rem, 0.7rem + 0.0265vw, 2.5rem)"
+          fontSize="clamp(2.625rem, 1.4em + 2vw, 3rem)"
         >
           {value !== null ? value : "--"}
         </Typography>
