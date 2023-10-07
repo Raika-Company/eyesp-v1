@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, {lazy} from "react";
 
 import SpeedTest from "../../pages/speedtest/SpeedTest";
 

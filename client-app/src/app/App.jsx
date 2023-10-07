@@ -2,19 +2,13 @@
  * @file Represents the main entry point of the application.
  */
 
-import { useState, Suspense, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
-import { Box, Container, CssBaseline, useMediaQuery } from "@mui/material";
+import {useState, Suspense} from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {ThemeProvider} from "@mui/material/styles";
+import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
-import { lightTheme, darkTheme } from "./layouts/Palette";
-import { mainRoutes } from "./routes/Routes";
-
+import {lightTheme, darkTheme} from "./layouts/Palette";
+import {mainRoutes} from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
@@ -38,7 +32,7 @@ function App() {
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
   const storedThemeMode = localStorage.getItem("themeMode");
-  const initialTheme = (storedThemeMode === "light" ? lightTheme : darkTheme);
+  const initialTheme = storedThemeMode === "light" ? lightTheme : darkTheme;
 
   const [theme, setTheme] = useState(initialTheme);
 
@@ -66,7 +60,7 @@ function App() {
               element={
                 <Container
                   maxWidth="xl"
-                  sx={{ overflow: isMdUp ? "" : "hidden" }}
+                  sx={{overflow: isMdUp ? "" : "hidden"}}
                 >
                   <Box
                     display="flex"
@@ -103,7 +97,7 @@ function App() {
                         setOpenNav={setOpenNav}
                       />
                       <ThemeSwitcher
-                      openNav={openNav}
+                        openNav={openNav}
                         themeMode={currentThemeMode}
                         toggleTheme={toggleTheme}
                       />
