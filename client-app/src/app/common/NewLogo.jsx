@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import logo from "../../app/assets/image/newLogo.svg";
-import Logo from "../layouts/logo";
+import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 
 const NewLogo = () => {

@@ -48,6 +48,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
 
   const renderInfoBox = (isColumn, iconSrc, title, value, unit) => (
     <InfoBox
+      key={title}
       isColumn={isColumn}
       iconSrc={iconSrc}
       title={title}

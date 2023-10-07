@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Radio,
   Tooltip,
 } from "@mui/material";
@@ -25,8 +24,6 @@ import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
-import {STATUS_MAP} from "./constant";
 
 import io from "socket.io-client";
 import CardContainer from "../../app/common/CardContainer";
@@ -190,7 +187,8 @@ const SpeedTest = () => {
   let flag = true;
 
   const handleStart = () => {
-    if (window.speedtest.getState() === STATUS_MAP.RUNNING) {
+    if (window.speedtest.getState() === 2) {
+      return;
     } else {
       window.speedtest.onupdate = (data) => {
         const {
@@ -255,9 +253,9 @@ const SpeedTest = () => {
         }
       };
       window.speedtest.onend = () => {
-        setStatus(STATUS_MAP.READY);
+        setStatus(1);
       };
-      setStatus(STATUS_MAP.RUNNING);
+      setStatus(2);
       window.speedtest.start();
     }
   };

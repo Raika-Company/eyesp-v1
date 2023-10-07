@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { io } from 'socket.io-client';
+//import { io } from 'socket.io-client';
+
 
 const useFetchServers = () => {
   const [servers, setServers] = useState([]);
+  const [bestServerIndex, setBestServersIndex] = useState([]);
   const [isFetchingServers, setIsFetchingServers] = useState(false);
   const [bestServerUrl, setBestServerUrl] = useState(null);
 
@@ -13,8 +15,9 @@ const useFetchServers = () => {
     const fetchServers = async () => {
       try {
         setIsFetchingServers(true);
-        const response = await axios.get('https://server1.eyesp.live/servers');
-        setServers(response.data);
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/servers');
+        setServers(response.data.servers);
+        setBestServersIndex(response.data.best_server_index);
         setIsFetchingServers(false);
       } catch (error) {
         // console.error('Error fetching servers:', error);
@@ -25,9 +28,9 @@ const useFetchServers = () => {
     fetchServers();
   }, []);
 
-  const PING_TIMES = 10;
+  //const PING_TIMES = 10;
 
-  const pingServer = async (url) => {
+  /* const pingServer = async (url) => {
     return new Promise((resolve) => {
       const socket = io(url, { transports: ['websocket'] });
 
@@ -38,7 +41,7 @@ const useFetchServers = () => {
         socket.emit("ping_event", performance.now());
       };
 
-      socket.on("pong_event", (timestamp) => {
+      socket.on("ping_event", (timestamp) => {
         const currentLatency = performance.now() - timestamp;
         minLatency = Math.min(minLatency, currentLatency);
         pingCount++;
@@ -58,7 +61,7 @@ const useFetchServers = () => {
 
       sendPing();
     });
-  };
+  }; */
 
   const selectBestServer = async () => {
     if (isBestServerFound.current) {
@@ -70,10 +73,11 @@ const useFetchServers = () => {
       return;
     }
 
-    const latencies = await Promise.all(servers.map(server => pingServer(server.url)));
-    const minLatency = Math.min(...latencies);
-    const bestServer = servers[latencies.indexOf(minLatency)];
-    console.log(`Best server: ${bestServer.url} with latency: ${minLatency}ms`);
+    //const latencies = await Promise.all(servers.map(server => pingServer(server.url)));
+    //const minLatency = Math.min(...latencies);
+    const bestServer = servers[bestServerIndex];
+    //console.log(`Best server: ${bestServer.url} with latency: ${minLatency}ms`);
+    console.log(bestServer)
 
     setBestServerUrl(bestServer.url);
     isBestServerFound.current = true;

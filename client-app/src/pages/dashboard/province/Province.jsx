@@ -26,7 +26,7 @@ import NewIranMap from "../map/NewIranMap";
 import NewLogo from "../../../app/common/NewLogo";
 
 // Assets and data imports
-import frame from "../../../app/assets/image/Frame.svg";
+import frame from "../../../app/assets/image/frame.svg";
 import provinces from "../../../../public/data/provinces.json";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SendReport from "../../../app/common/SendReport";
