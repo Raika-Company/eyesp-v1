@@ -3,6 +3,8 @@ import React, { useEffect, useState, forwardRef } from "react";
 // External Libraries
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import io from "socket.io-client";
 import moment from "moment-jalaali";
 import {
   Box,
@@ -18,20 +20,18 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Radio,
   Tooltip,
 } from "@mui/material";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
-import HistoryIcon from "@mui/icons-material/History";
-import { Link } from "react-router-dom";
 
 // Internal Utilities and Components
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
-import useFetchServers from "../../app/utils/useFetchServers";
+import useFetchServers from "../../app/hooks/useFetchServers";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import CardContainer from "../../app/common/CardContainer";
 import SwitchBtn from "../../app/common/SwitchBtn";
+import FloatingResult from "./FloatingResult";
+import DrawMeterAnimate from "./DrawMeterAnimate";
 
 // Assets
 import elipse from "../../app/assets/image/elipse.svg";
@@ -39,19 +39,7 @@ import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
-import { STATUS_MAP } from "./constant";
-
-import io from "socket.io-client";
-import CardContainer from "../../app/common/CardContainer";
-import useDynamicMP from "../../app/hooks/useDynamicMP";
-import useFetchServers from "../../app/hooks/useFetchServers";
 import HistoryIcon from "@mui/icons-material/History";
-import SwitchBtn from "../../app/common/SwitchBtn";
-import FloatingResult from "./FloatingResult";
-import DrawMeterAnimate from "./DrawMeterAnimate";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -360,7 +348,7 @@ const SpeedTest = () => {
           width={isMdScreen ? "25vmin" : "55vmin"}
           height={isMdScreen ? "25vmin" : "55vmin"}
         >
-          {isGoButtonVisible ? (
+          {state.isGoButtonVisible ? (
             <Button
               onClick={handleButtonClick}
               sx={{
@@ -534,8 +522,13 @@ const SpeedTest = () => {
               </Typography>
               <Radio
                 value={server.url}
-                checked={selectedServerURL === server.url}
-                onChange={(e) => setSelectedServerURL(e.target.value)}
+                checked={state.selectedServerURL === server.url}
+                onChange={(e) =>
+                  setState({
+                    ...state,
+                    selectedServerURL: e.target.value,
+                  })
+                }
               />
             </Box>
           ))}
