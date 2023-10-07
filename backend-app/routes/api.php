@@ -27,6 +27,10 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
         Route::get('/ping', [NetworkController::class, 'ping']);
         Route::get('/download-speed', [NetworkController::class, 'downloadSpeed']);
         Route::get('/upload-speed', [NetworkController::class, 'uploadSpeed']);
+
+        Route::prefix('dashboard')->group(function () {
+            Route::get('/isp-metrics/{city?}', [NetworkController::class, 'ispMetrics']);
+        });
     });
 });
 

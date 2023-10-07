@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RstIspStats;
 use App\Models\RstResult;
 use App\Services\IpInfo;
 use Illuminate\Http\Request;
 use App\Models\RstServer;
 use App\Services\NetworkService;
+use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -19,10 +23,18 @@ class NetworkController extends Controller
                 'ip' => 'sometimes|ip', // Validate that 'ip' is a valid IP address
             ]);
             if ($validator->fails()) {
-                return response()->json(['error' => 'Invalid IP address'], 400);
+                return response()->json([
+                    'status' => false,
+                    'data' => [],
+                    'message' => 'Invalid IP address'
+                ]);
             }
-            $clientIp = $request->ip();
-            return response()->json(['ip' => $clientIp]);
+
+            return response()->json([
+                'status' => true,
+                'data' => ['ip' => $request->ip()],
+                'message' => '',
+            ]);
 
         } catch(\Exception $e) {
             return response()->json([
@@ -31,10 +43,8 @@ class NetworkController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-
-        //rst_isp_stats
-
     }
+
     public function setIpInfo(Request $request)
     {
         try {
@@ -52,7 +62,7 @@ class NetworkController extends Controller
         }
     }
 
-    public function Servers()
+    public function servers()
     {
         $servers = RstServer::all();
         $ping = [];
@@ -73,19 +83,7 @@ class NetworkController extends Controller
         return response()->json(['servers' => $servers->toArray(), 'best_server_index' => $best_server_index]);
     }
 
-    function TakeTime($start, $end = null)
-    {
-        if (!$end) {
-            $end = microtime();
-        }
-        list($start_usec, $start_sec) = explode(" ", $start);
-        list($end_usec, $end_sec) = explode(" ", $end);
-        $diff_sec = intval($end_sec) - intval($start_sec);
-        $diff_usec = floatval($end_usec) - floatval($start_usec);
-        return floatval($diff_sec) + $diff_usec;
-    }
-
-    public function DownloadSpeed(Request $request)
+    public function downloadSpeed(Request $request)
     {
         $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=".$request->uid;
         $chunkSize = 20000;
@@ -94,7 +92,7 @@ class NetworkController extends Controller
         $s = microtime();
         while (!feof($handle)) {
             stream_get_contents($handle, $chunkSize, ($counter * $chunkSize));
-            $duration = $this->TakeTime($s);
+            $duration = NetworkService::TakeTime($s);
             if ($duration > 0) {
                 $bytesPerSec = ($counter * $chunkSize) / $duration;
                 $kbPerSec = $bytesPerSec / 1024;
@@ -116,7 +114,7 @@ class NetworkController extends Controller
         ]);
     }
 
-    public function UploadSpeed(Request $request)
+    public function uploadSpeed(Request $request)
     {
         $upload_server = "kar1.net";
         $data = "POST / HTTP/1.0\r\n"
@@ -130,7 +128,7 @@ class NetworkController extends Controller
         $f = @fsockopen($upload_server, 80);
         while (($counter * $chunkSize) < strlen($data)) {
             fwrite($f, substr($data, ($counter * $chunkSize), 20000));
-            $duration = $this->TakeTime($start);
+            $duration = NetworkService::TakeTime($start);
             if ($duration > 0) {
                 $bytesPerSec = ($counter * $chunkSize) / $duration;
                 $kbPerSec = $bytesPerSec / 1024;
@@ -154,7 +152,7 @@ class NetworkController extends Controller
         ]);
     }
 
-    public function Ping(Request $request)
+    public function ping(Request $request)
     {
         $pingServer = "static.kar1.net";
         $counter = 0;
@@ -176,5 +174,71 @@ class NetworkController extends Controller
         ]);
 
         return round($ping, 0);
+    }
+
+    public function ispMetrics(Request $request)
+    {
+        try {
+            $isp = [0 => 'irancell', 1 => 'hamrah aval', 2 => 'shatel', 3 => 'mobinnet', 4 =>'hiweb'];
+            $ispMetrics = RstIspStats::where('date', '>=', Carbon::today()->subDays(7))->get();
+            $totalRecord = $ispMetrics->count();
+            $data['totalQualityAverage'] = round($ispMetrics->sum('total_quality_average') / $totalRecord, 0);
+            $data['clients'] = $ispMetrics->sum('clients');
+            $data['speedAverage'] = round($ispMetrics->sum('speed_average') / $totalRecord, 0);
+            $data['pingAverage'] = round($ispMetrics->sum('ping_average') / $totalRecord, 0);
+
+            foreach ($isp as $item) {
+                $metrics = $ispMetrics->where('isp', $item);
+                $count = $metrics->count();
+                if($count < 1) {
+                    continue;
+                }
+                $data['isp'][$item] = [
+                    'downloadSpeedAverage' => round($metrics->sum('download_speed_average') / $count, 0),
+                    'uploadSpeedAverage' => round($metrics->sum('upload_speed_average') / $count, 0),
+                    'pingAverage' => round($metrics->sum('ping_average') / $count, 0),
+                    'packetLoss' => round($metrics->sum('packet_loss') / $count, 0),
+                    'totalQuality' => round($metrics->sum('total_quality_average') / $count, 0),
+                ];
+            }
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => ''
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function ana()
+    {
+        // Define your thresholds for the various metrics
+        $thresholds = [
+            'speed' => 10,   // example value
+            'ping' => 150,   // example value in ms
+            'packet_loss' => 2,  // example value in percentage
+        ];
+
+        // Replace these with actual data retrieval logic
+        $trustedData = [
+            'speed' => [8, 17, 15],
+            'ping' => [70, 99, 120],
+            'packet_loss' => [18, 2, 7],
+        ];
+
+        $userData = [
+            'speed' => [10, 18, 32],
+            'ping' => [20, 15, 19],
+            'packet_loss' => [2, 4, 5],
+        ];
+
+        $report = NetworkService::analyzeIssues($trustedData, $userData, $thresholds);
+
+        dd($report);
     }
 }
