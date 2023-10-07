@@ -1,4 +1,4 @@
-import {Box, Grid, Typography, useTheme} from "@mui/material";
+import {Box, Grid, Typography, useTheme, useMediaQuery} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import {AreaChart, Area, Tooltip, ResponsiveContainer} from "recharts";
@@ -59,7 +59,7 @@ const titlesChart = [
 ];
 function GridItem({theme, rendered, title, data, unit}) {
   return (
-    <Grid xs={12} md={6} padding="2rem">
+    <Grid item xs={12} md={6} padding="2rem">
       <Box display="flex" position="relative">
         <Box>
           <Typography color="text.main" variant="h4" gutterBottom>

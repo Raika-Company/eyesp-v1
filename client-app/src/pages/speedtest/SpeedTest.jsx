@@ -24,6 +24,7 @@ import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import {STATUS_MAP} from "./constant";
 
