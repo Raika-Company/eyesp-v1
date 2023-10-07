@@ -344,7 +344,7 @@ const PcspTest = () => {
                 }}
               >
                 <PcMiniSpeedBox
-                  iconSrc={Upload}
+                  iconSrc={isStartButtonVisible ? uploadNoColor : Upload}
                   altText="before upload icon"
                   value={isStartButtonVisible ? null : upload}
                   measure="Mbps"
