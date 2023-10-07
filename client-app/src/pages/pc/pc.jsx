@@ -14,7 +14,7 @@ const Pc = () => {
         bgcolor: "#232323",
         alignItems: "center",
         justifyContent: "center",
-        p:"2rem"
+        p: "2rem",
       }}
     >
       <LogoRadar />

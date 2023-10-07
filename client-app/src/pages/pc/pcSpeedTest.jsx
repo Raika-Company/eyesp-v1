@@ -230,7 +230,8 @@ const PcspTest = () => {
           flexWrap="wrap"
           alignItems="center"
           justifyContent="space-evenly"
-          height="clamp(4rem,4rem + 3vmin, 3rem)"
+          mt="1rem"
+          // height="clamp(4rem,4rem + 3vmin, 3rem)"
           textAlign="center"
           sx={{
             // display: { xs: "none", sm: "flex" },
