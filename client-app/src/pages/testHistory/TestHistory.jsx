@@ -68,16 +68,19 @@ const CategorySection = ({title, category}) => {
         }}
         slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
         navigation
-        spaceBetween={5}
+        spaceBetween={8}
         modules={[Navigation, Scrollbar, A11y]}
         pagination={{clickable: true}}
         scrollbar={{draggable: true}}
       >
-        {category.slice(0, 20).map((result, index) => (
-          <SwiperSlide key={index}>
-            <HistoryCard {...result} />
-          </SwiperSlide>
-        ))}
+        {category
+          .slice(0, 20)
+          .reverse()
+          .map((result, index) => (
+            <SwiperSlide key={index}>
+              <HistoryCard {...result} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );
