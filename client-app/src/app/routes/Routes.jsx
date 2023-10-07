@@ -17,6 +17,8 @@ const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 
 const Province = lazy(() => import("../../pages/dashboard/province/Province"));
 
+const Pc = lazy(() => import("../../pages/pc/pc"));
+
 export const mainRoutes = [
   {
     path: "/",
@@ -84,5 +86,13 @@ export const mainRoutes = [
     description: "Detailed insights into specific province metrics and data.",
     keywords: "province, details, insights, metrics",
     robots: "noindex, nofollow",
+  },
+];
+
+export const mainRoutesPc = [
+  {
+    path: "/pc",
+    element: <Pc />,
+    title: " pc | TIC Radar",
   },
 ];
