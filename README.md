@@ -73,6 +73,41 @@ Before diving into the app setup, ensure your environment meets the following pr
 
 This will get your application up and running on [http://localhost:5173](http://localhost:5173). Enjoy the experience!
 
+### Backend Installation
+
+1. **Navigate to the Project Directory**:
+
+   ```bash
+   cd rayka-speedtest
+   cd backend-app
+   ```
+2. **Install Composer**
+
+   ```bash
+      https://getcomposer.org/download/
+   ```
+3. **Install Dependencies**:
+
+   ```bash
+   composer install
+   ```
+4. **Run Migration**:
+
+   ```bash
+   php artisan migrate
+   ```
+5. **Insert Test Servers**
+   ```bash
+   INSERT INTO `rst_servers` (`id`,`name`,`location`,`url`) VALUES (1,'زیر ساخت','تهران','http://server.sample');
+   ```
+4. **Start the Development Server**:
+
+   ```bash
+   php artisan serve
+   ```
+
+This will get your application up and running on [http://localhost:8000](http://localhost:8000). Enjoy the experience!
+
 ## Documentation
 
 ### Project Architecture
