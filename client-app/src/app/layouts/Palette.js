@@ -203,6 +203,9 @@ export const lightTheme = createTheme({
     background: {
       default: "#E8F1F9",
     },
+    hover: {
+      main: "#E8E8E8"
+    }
   },
 });
 
@@ -243,6 +246,9 @@ export const darkTheme = createTheme({
     background: {
       default: "#121212",
     },
+    hover: {
+      main: "#182633"
+    }
   },
   // components: {
   //   MuiDrawer: {
