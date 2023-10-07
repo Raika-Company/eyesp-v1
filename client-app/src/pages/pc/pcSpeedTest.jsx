@@ -20,6 +20,10 @@ import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
 import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
 import Ping from "../../app/assets/image/Img-SpeedTest/DownloadUp.svg";
+import PingNoColor from "../../app/assets/image/Img-SpeedTest/ping-NoColor.svg";
+import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoColor.svg";
+import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
+
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -240,29 +244,26 @@ const PcspTest = () => {
         >
           <PcSpeedBox
             title="UPLOAD"
-            iconSrc={Upload}
+            iconSrc={isStartButtonVisible ? uploadNoColor : Upload}
             altText="before upload icon"
             value={isStartButtonVisible ? null : upload}
             measure="Mbps"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
 
           <PcSpeedBox
             title="DOWNLOAD"
-            iconSrc={Download}
+            iconSrc={isStartButtonVisible ? downloadNoColor : Download}
             altText="before download icon"
             value={isStartButtonVisible ? null : download}
             measure="Mbps"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
             index={1}
           />
           <PcSpeedBox
             title="PING"
-            iconSrc={Ping}
+            iconSrc={isStartButtonVisible ? PingNoColor : Ping}
             altText="ping icon"
             value={isStartButtonVisible ? null : latency}
             measure="ms"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
         </Box>
         <Box
