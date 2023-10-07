@@ -157,11 +157,11 @@ class NetworkController extends Controller
         $pingServer = "static.kar1.net";
         $counter = 0;
         while($counter < 10) {
-            $pingTimes[] = NetworkService::Ping($pingServer);
+            list($pingTimes[], $packetLoss[]) = NetworkService::Ping($pingServer);
             $counter++;
         }
-
-        $ping = round(min($pingTimes));
+        $ping = round(array_sum($pingTimes) / count($pingTimes));
+        $packetLoss = array_sum($packetLoss);
         $jitter = NetworkService::Jitter($pingTimes);
 
         RstResult::updateOrCreate([
@@ -170,6 +170,7 @@ class NetworkController extends Controller
             'date' => today()->toDateString(),
         ],[
             'ping' => $ping,
+            'packet_loss' => $packetLoss,
             'jitter' => round($jitter, 0),
         ]);
 

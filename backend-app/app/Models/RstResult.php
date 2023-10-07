@@ -25,6 +25,7 @@ class RstResult extends Model
         'lat',
         'lon',
         'ping',
+        'packet_loss',
         'download',
         'download_duration',
         'upload',
