@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\NetworkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,10 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
 
         Route::prefix('dashboard')->group(function () {
             Route::get('/isp-metrics/{city?}', [NetworkController::class, 'ispMetrics']);
+        });
+
+        Route::prefix('client')->group(function () {
+            Route::post('/report', [ClientController::class, 'report']);
         });
     });
 });
