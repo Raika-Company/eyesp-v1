@@ -20,11 +20,22 @@ class NetworkService {
 
 	public static function Ping($pingServer, $timeOut = 1)
 	{
-        $timeBeginning = microtime(true);
-        @fSockOpen($pingServer, 80, $errno, $errstr, $timeOut);
-        $timeOver = microtime(true);
+        $ip = gethostbyname($pingServer);
+        $receivedPings = 0;
+        $pingTimes = 0;
+        $startTime = microtime(true);
+        $socket = fsockopen($ip, 80, $errno, $errstr, $timeOut);
 
-		return (($timeOver - $timeBeginning) * 1000);
+        if ($socket !== false) {
+            fclose($socket);
+            $endTime = microtime(true);
+            $pingTimes = round(($endTime - $startTime) * 1000, 0);
+            $receivedPings++;
+        }
+
+        $packetLoss = ((1 - $receivedPings));
+
+        return [$pingTimes, $packetLoss];
 	}
 
     public static function Jitter(array $pingTimes)
