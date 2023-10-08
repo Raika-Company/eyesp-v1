@@ -24,7 +24,7 @@ import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import {STATUS_MAP} from "./constant";
 
@@ -400,7 +400,7 @@ const SpeedTest = () => {
               نوع تست
               <Tooltip title="Delete">
                 <IconButton>
-                  <InfoOutlinedIcon sx={{ mr: "0.2rem", fontSize: "1.2rem" }} />
+                  <InfoOutlinedIcon sx={{mr: "0.2rem", fontSize: "1.2rem"}} />
                 </IconButton>
               </Tooltip>
             </Typography>
