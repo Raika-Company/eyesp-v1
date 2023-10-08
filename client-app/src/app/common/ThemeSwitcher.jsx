@@ -122,9 +122,9 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
           onClick={() => handleThemeChange(isDarkMode ? "light" : "dark")}
         >
           {isDarkMode ? (
-            <Icon src={moon} alt="Moon Icon" />
+            <Icon src={sun} alt="Moon Icon" />
           ) : (
-            <Icon src={sun} alt="Sun Icon" />
+            <Icon src={moon} alt="Sun Icon" />
           )}
         </AnimatedIconButton>
       )}
