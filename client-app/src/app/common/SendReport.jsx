@@ -19,7 +19,11 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { ContainedButton } from "./ContainedButton";
 import DoneReport from "./DoneReport";
-const SendReport = ({ handleCloseDialog, openDialog }) => {
+const SendReport = ({
+  handleCloseDialog,
+  openDialog,
+  handleDoneReportOpen,
+}) => {
   const [openDoneReport, setOpenDoneReport] = useState(false);
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -134,7 +138,7 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
             <ContainedButton
               onClick={() => {
                 handleCloseDialog();
-                setTimeout(() => setOpenDoneReport(true), 300);
+                setTimeout(handleDoneReportOpen, 300);
               }}
               variant="contained"
               bgColor="#FF8A35"
