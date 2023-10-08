@@ -1,4 +1,4 @@
-import React, {forwardRef} from "react";
+import {forwardRef} from "react";
 import {
   Box,
   Typography,
@@ -157,6 +157,7 @@ const SpeedTest = () => {
     });
 
     return () => s.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedServerURL]);
 
   useEffect(() => {
