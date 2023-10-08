@@ -157,7 +157,7 @@ const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       sx={{
         transition: "all .25s linear",
-        width: openNav ? "12rem" : isMdUp ? "4rem" : "12rem",
+        width: openNav ? "13rem" : isMdUp ? "4rem" : "12rem",
         marginRight: isMdUp || openNav ? "initial" : "-15rem",
         fontSize: "0.9rem",
         position: "relative",
