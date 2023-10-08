@@ -106,6 +106,7 @@ function DrawMeterAnimate({
     }
 
     function normalizeMbps(mbps) {
+      mbps = Math.min(mbps, 120);
       if (mbps <= 10) {
         return mbps / 20;
       }
@@ -115,9 +116,6 @@ function DrawMeterAnimate({
     var normalizedMbps = normalizeMbps(mbps);
     var nextPointerAngle =
       -startAngle + (endAngle - startAngle) * normalizedMbps + 0.2;
-
-    const getNextPoint = () =>
-      -startAngle + (endAngle - startAngle) * normalizeMbps(mbps) + 0.2;
 
     const DURATION = 1000;
 
@@ -135,7 +133,7 @@ function DrawMeterAnimate({
 
       if (deltaTime >= 1) {
         startTime = null;
-        drawPointer(getNextPoint());
+        drawPointer(nextPointerAngle);
       } else {
         drawPointer(currentPointerAngle);
         requestAnimationFrame(drawPointerStartAnimate);

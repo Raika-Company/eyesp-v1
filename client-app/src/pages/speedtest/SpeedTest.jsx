@@ -306,7 +306,7 @@ const SpeedTest = () => {
         >
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <AddressAndServer ip={clientIp} server={selectedServerURL} />
-            {isServerSelected ? (
+            {isServerSelected && isGoButtonVisible ? (
               <Button onClick={handleSelectServer}>
                 <Typography variant="h6" color="primary" component="span">
                   انتخاب سرور
