@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import React, { useState, useEffect } from "react";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
