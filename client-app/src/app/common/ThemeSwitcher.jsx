@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React, { useState, useEffect } from "react";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
 import {
@@ -8,24 +7,54 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  keyframes,
+  styled,
 } from "@mui/material";
 
-const Icon = styled.img`
+const Icon = styled("img")`
   width: 24px;
   height: 24px;
 `;
 
+const AnimatedIconButton = styled(IconButton)`
+  transition: transform 0.3s ease-out;
+`;
+const fadeInLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const AnimatedTypography = styled(Typography)`
+  animation: ${fadeInLeft} 1s both;
+`;
 const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
   const theme = useTheme();
   const isDarkMode = themeMode === "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const isVisible = openNav || isMdUp;
+
+  const [moonTranslateX, setMoonTranslateX] = useState(0);
+  const [sunTranslateX, setSunTranslateX] = useState(0);
+
   const handleThemeChange = (mode) => {
-    if (themeMode !== mode) {
-      toggleTheme(mode);
+    toggleTheme(mode);
+    if (mode === "dark") {
+      setMoonTranslateX(46);
+      setSunTranslateX(-46);
+    } else {
+      setMoonTranslateX(0);
+      setSunTranslateX(0);
     }
   };
-
+  useEffect(() => {
+    handleThemeChange("dark");
+  }, []);
   return (
     <Box
       display={isVisible ? "flex" : "none"}
@@ -51,35 +80,31 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
               borderRadius: "50%",
             }}
           >
-            <IconButton
-              aria-label={
-                isDarkMode ? "change to dark theme" : "change to light theme"
-              }
-              onClick={() => handleThemeChange(isDarkMode ? "dark" : "light")}
+            <AnimatedIconButton
+              style={{ transform: `translateX(${sunTranslateX}px)` }}
+              aria-label="change to light theme"
+              onClick={() => handleThemeChange("light")}
+              disabled={!isDarkMode}
             >
-              <Icon
-                src={isDarkMode ? sun : moon}
-                alt={isDarkMode ? "Sun Icon" : "Moon Icon"}
-              />
-            </IconButton>
+              <Icon src={sun} />
+            </AnimatedIconButton>
           </span>
 
-          <IconButton
-            aria-label={
-              isDarkMode ? "change to light theme" : "change to dark theme"
-            }
-            onClick={() => handleThemeChange(isDarkMode ? "light" : "dark")}
+          <AnimatedIconButton
+            style={{ transform: `translateX(${moonTranslateX}px)` }}
+            aria-label="change to dark theme"
+            onClick={() => handleThemeChange("dark")}
+            disabled={isDarkMode}
           >
-            <Icon
-              src={isDarkMode ? moon : sun}
-              alt={isDarkMode ? "Moon Icon" : "Sun Icon"}
-            />
-          </IconButton>
+            <Icon src={moon} />
+          </AnimatedIconButton>
 
-          <Typography>{isDarkMode ? "حالت روشن" : "حالت خاموش"}</Typography>
+          <AnimatedTypography key={isDarkMode ? "dark" : "light"}>
+            {isDarkMode ? "حالت روشن" : "حالت خاموش"}
+          </AnimatedTypography>
         </>
       ) : (
-        <IconButton
+        <AnimatedIconButton
           aria-label="change theme"
           onClick={() => handleThemeChange(isDarkMode ? "light" : "dark")}
         >
@@ -88,7 +113,7 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
           ) : (
             <Icon src={sun} alt="Sun Icon" />
           )}
-        </IconButton>
+        </AnimatedIconButton>
       )}
     </Box>
   );
