@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Radio,
   Tooltip,
 } from "@mui/material";
@@ -24,14 +23,12 @@ import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-
-import {STATUS_MAP} from "./constant";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import io from "socket.io-client";
 import CardContainer from "../../app/common/CardContainer";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
-import useFetchServers from "../../app/hooks/useFetchServers";
+import useFetchServersBackend from "../../app/hooks/useFetchServersBackend";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
@@ -71,7 +68,7 @@ const AddressAndServer = ({ip, server}) => (
   </Box>
 );
 
-const SpeedTest = () => {
+const NewSpeedTest = () => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
@@ -88,7 +85,7 @@ const SpeedTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const {isFetchingServers, selectBestServer} = useFetchServersBackend();
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [isServerSelected, setIsServerSelected] = useState(false);
   const [openSelectServer, setOpenSelectServer] = useState(false);
@@ -190,7 +187,8 @@ const SpeedTest = () => {
   let flag = true;
 
   const handleStart = () => {
-    if (window.speedtest.getState() === STATUS_MAP.RUNNING) {
+    if (window.speedtest.getState() === 2) {
+      return;
     } else {
       window.speedtest.onupdate = (data) => {
         const {
@@ -255,9 +253,9 @@ const SpeedTest = () => {
         }
       };
       window.speedtest.onend = () => {
-        setStatus(STATUS_MAP.READY);
+        setStatus(1);
       };
-      setStatus(STATUS_MAP.RUNNING);
+      setStatus(2);
       window.speedtest.start();
     }
   };
@@ -277,7 +275,7 @@ const SpeedTest = () => {
         sx={{
           paddingX: pXCardContainers,
           paddingY: pYCardContainers,
-          height: isMdScreen ? "calc(90vh - 10rem)" : "calc(100vh - 10rem)",
+          height: isMdScreen ? "calc(90vh - 10rem)" : "calc(100vh - 8rem)",
           position: "relative",
           overflow: "visible",
         }}
@@ -399,7 +397,7 @@ const SpeedTest = () => {
               نوع تست
               <Tooltip title="Delete">
                 <IconButton>
-                  <InfoOutlinedIcon sx={{ mr: "0.2rem", fontSize: "1.2rem" }} />
+                  <InfoOutlinedIcon sx={{mr: "0.2rem", fontSize: "1.2rem"}} />
                 </IconButton>
               </Tooltip>
             </Typography>
@@ -498,4 +496,4 @@ const SpeedTest = () => {
   );
 };
 
-export default SpeedTest;
+export default NewSpeedTest;
