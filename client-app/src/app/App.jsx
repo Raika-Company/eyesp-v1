@@ -30,11 +30,7 @@ function App() {
     setOpenNav(!openNav);
   };
 
-  useEffect(() => {
-    api.speedTest.getPing().then((data) => {
-      console.log(data);
-    });
-  });
+  useEffect(() => {});
 
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 

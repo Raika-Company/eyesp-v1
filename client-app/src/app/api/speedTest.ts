@@ -17,5 +17,27 @@ export const getPing = async () => {
 
   return await axios.http.get(rootAddress + `/ping?cid=${cid}&uid=${uid}`)
 }
+export const getDownloadSpeed = async () => {
+  const uid = Idv4()
+  let cid = storage.get(config.cid)
+  if (!cid) {
+    const newId = Idv4()
+    storage.set(config.cid, newId)
+    cid = newId
+  }
+
+  return await axios.http.get(rootAddress + `/download-speed?cid=${cid}&uid=${uid}`)
+}
+export const getUploadSpeed = async () => {
+  const uid = Idv4()
+  let cid = storage.get(config.cid)
+  if (!cid) {
+    const newId = Idv4()
+    storage.set(config.cid, newId)
+    cid = newId
+  }
+
+  return await axios.http.get(rootAddress + `/upload-speed?cid=${cid}&uid=${uid}`)
+}
 
 
