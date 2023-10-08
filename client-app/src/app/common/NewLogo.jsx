@@ -5,7 +5,7 @@ import logo from "../../app/assets/image/newLogo.svg";
 import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 
-const NewLogo = () => {
+const NewLogo = ({openNav}) => {
   const navigate = useNavigate();
 
   const handleBoxClick = () => {
