@@ -1,13 +1,13 @@
-import { useEffect, useState, useCallback, useMemo, useRef } from "react";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {useEffect, useState, useCallback, useMemo, useRef} from "react";
+import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
-import { ContainedButton } from "../../app/common/ContainedButton";
+import {ContainedButton} from "../../app/common/ContainedButton";
 import CardContainer from "../../app/common/CardContainer";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Scrollbar, A11y } from "swiper/modules";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation, Scrollbar, A11y} from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -48,7 +48,7 @@ const categorizeTests = (tests) => {
   return categories;
 };
 
-const CategorySection = ({ title, category }) => {
+const CategorySection = ({title, category}) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
@@ -63,14 +63,14 @@ const CategorySection = ({ title, category }) => {
       <Swiper
         style={{
           borderRadius: "1rem",
-          width: "85vw",
+          width: "90%",
         }}
         slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
         navigation
         spaceBetween={5}
         modules={[Navigation, Scrollbar]}
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
+        pagination={{clickable: true}}
+        scrollbar={{draggable: true}}
       >
         {category.slice(0, 20).map((result, index) => (
           <SwiperSlide key={index}>
@@ -113,10 +113,10 @@ const NewTestHistory = () => {
 
   const sections = useMemo(
     () => [
-      { title: "امروز", category: testHistory.last24Hours },
-      { title: "هفته گذشته", category: testHistory.lastWeek },
-      { title: "ماه گذشته", category: testHistory.lastMonth },
-      { title: "تست های گذشته", category: testHistory.older },
+      {title: "امروز", category: testHistory.last24Hours},
+      {title: "هفته گذشته", category: testHistory.lastWeek},
+      {title: "ماه گذشته", category: testHistory.lastMonth},
+      {title: "تست های گذشته", category: testHistory.older},
     ],
     [testHistory]
   );

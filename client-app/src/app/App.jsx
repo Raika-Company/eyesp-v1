@@ -51,6 +51,7 @@ function App() {
 
   const currentThemeMode = theme === lightTheme ? "light" : "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,6 +68,7 @@ function App() {
                 >
                   <Box
                     display="flex"
+                    marginX={isLgUp ? "10%" : "0"}
                     justifyContent="space-between"
                     marginBottom="1rem"
                   >
@@ -78,6 +80,7 @@ function App() {
                   </Box>
                   <Box
                     display="flex"
+                    marginX={isLgUp ? "10%" : ""}
                     gap={
                       isMdUp
                         ? mpCardContainers
@@ -86,7 +89,12 @@ function App() {
                         : "0"
                     }
                   >
-                    <Box flexShrink={0}>
+                    <Box
+                      flexShrink={0}
+                      sx={{
+                        position: "fixed",
+                      }}
+                    >
                       <NavSection
                         startIndex={0}
                         endIndex={2}
@@ -108,6 +116,11 @@ function App() {
                     <Box
                       flexShrink={0}
                       maxWidth={isMdUp ? `calc(100% - 6rem)` : "100%"}
+                      width="100%"
+                      sx={{
+                        marginRight: openNav ? "15rem" : isMdUp ? "5rem" : "0",
+                        transition: "all .25s linear",
+                      }}
                     >
                       <Routes>
                         {mainRoutes.map((route) => (
