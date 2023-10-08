@@ -62,7 +62,7 @@ function App() {
               path="/*"
               element={
                 <Container
-                  maxWidth="xl"
+                  maxWidth={openNav ? "x1" : "100vw"}
                   sx={{overflow: isMdUp ? "" : "hidden"}}
                 >
                   <Box
@@ -105,7 +105,10 @@ function App() {
                         toggleTheme={toggleTheme}
                       />
                     </Box>
-                    <Box flex={1}>
+                    <Box
+                      flexShrink={0}
+                      maxWidth={isMdUp ? `calc(100% - 6rem)` : "100%"}
+                    >
                       <Routes>
                         {mainRoutes.map((route) => (
                           <Route
