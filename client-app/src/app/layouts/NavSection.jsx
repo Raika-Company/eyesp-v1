@@ -111,7 +111,6 @@ const NavItem = ({item, openNav, setOpenNav, toggleNavState, location}) => {
       >
         {item.icon(iconColor(item.path, location))}
       </IconButton>
-      {/* {openNav && ( */}
       <Typography
         component="span"
         variant="h6"
@@ -120,14 +119,13 @@ const NavItem = ({item, openNav, setOpenNav, toggleNavState, location}) => {
           position: "absolute",
           opacity: openNav ? 1 : 0,
           right: openNav ? "2.5rem" : "-5rem",
-          transition: "opacity .5s ease-in,  right .25s .1s linear",
+          transition: "opacity .25s .2s ease-in,  right .25s .1s linear",
           color: iconColor(item.path, location),
           cursor: "pointer",
         }}
       >
         {item.label}
       </Typography>
-      {/* )} */}
     </Box>
   );
 };
