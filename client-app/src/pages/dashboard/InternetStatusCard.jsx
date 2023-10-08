@@ -1,5 +1,5 @@
 // External Libraries
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -20,8 +20,8 @@ import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 // Local Components
 import NewIranMap from "./map/NewIranMap";
 import CardContainer from "../../app/common/CardContainer";
-import { ContainedButton } from "../../app/common/ContainedButton";
-import { ContainedSelect } from "../../app/common/ContainedSelect";
+import {ContainedButton} from "../../app/common/ContainedButton";
+import {ContainedSelect} from "../../app/common/ContainedSelect";
 
 // Hooks
 import useDynamicMP from "../../app/hooks/useDynamicMP";
@@ -73,7 +73,7 @@ const InternetStatusTitle = () => (
  * @param {string} props.detail - Detailed information about the disorder.
  * @returns {JSX.Element} The rendered component.
  */
-const DisorderAccordion = ({ theme, title, detail }) => (
+const DisorderAccordion = ({theme, title, detail}) => (
   <Accordion
     sx={{
       boxShadow: 0,
@@ -190,7 +190,7 @@ const InternetStatusCard = (props) => {
             backgroundColor="#D9D9D9"
             width="100%"
             borderRadius="0.65625rem"
-            sx={{ direction: "ltr" }}
+            sx={{direction: "ltr"}}
           >
             <Box
               height="100%"
@@ -214,7 +214,12 @@ const InternetStatusCard = (props) => {
             عملکرد کلی
           </Typography>
         </Box>
-        <Typography variant="h3" color="text.main" marginTop="2.875rem" gutterBottom>
+        <Typography
+          variant="h3"
+          color="text.main"
+          marginTop="2.875rem"
+          gutterBottom
+        >
           اختلالات موجود (
           <Typography component="span" variant="h4" color="text.main">
             3 مورد
@@ -223,13 +228,17 @@ const InternetStatusCard = (props) => {
         </Typography>
         <Box>
           {disorders.map((disorder) => (
-            <DisorderAccordion theme={theme} key={disorder.title} {...disorder} />
+            <DisorderAccordion
+              theme={theme}
+              key={disorder.title}
+              {...disorder}
+            />
           ))}
         </Box>
-        <Box marginTop="2.875rem">
+        <Box marginTop="2.875rem" marginBottom="1rem">
           <ContainedButton
             variant="contained"
-            sx={{ fontSize: "1rem" }}
+            sx={{fontSize: "1rem"}}
             onClick={handleClickOpenDialog}
             bgColor="#FF8A35"
             txtHover="#FF8A35"
@@ -244,7 +253,7 @@ const InternetStatusCard = (props) => {
             onClick={handleDisturbanceClick}
           >
             <Typography variant="h6" color="text.main">
-            گزارش خطا در اطلاعات
+              گزارش خطا در اطلاعات
             </Typography>
           </Button>
         </Box>
@@ -267,7 +276,7 @@ const InternetStatusCard = (props) => {
             value={province}
             onChange={handleProvinceChange}
             displayEmpty
-            sx={{ paddingLeft: "2rem" }}
+            sx={{paddingLeft: "2rem"}}
           >
             <MenuItem value="">انتخاب کنید</MenuItem>
             {provinces.map((provinceItem) => (
