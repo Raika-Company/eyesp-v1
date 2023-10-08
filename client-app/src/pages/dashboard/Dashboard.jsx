@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Box, Container, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import DoneReport from "../../app/common/DoneReport";
 // Lazy load the components
 const NewLogo = React.lazy(() => import("../../app/common/NewLogo"));
 const SendReport = React.lazy(() => import("../../app/common/SendReport"));
@@ -33,6 +33,7 @@ const Dashboard = () => {
   const [province, setProvince] = useState("");
   const [disturbance, setDisturbance] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDoneReport, setOpenDoneReport] = useState(false);
 
   /**
    * Handles province selection and navigates to the specific province dashboard.
@@ -107,6 +108,7 @@ const Dashboard = () => {
       <SendReport
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
+        handleDoneReportOpen={() => setOpenDoneReport(true)}
       />
     </>
   );
