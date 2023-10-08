@@ -1,7 +1,7 @@
 // NavSection.js
-import React, { useEffect } from "react";
-import { Box } from "@mui/system";
-import { IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {useEffect} from "react";
+import {Box} from "@mui/system";
+import {IconButton, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {
   Home as HomeIcon,
   Speed as SpeedIcon,
@@ -9,15 +9,14 @@ import {
   InfoOutlined as InfoOutlinedIcon,
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ISP from "./ISP";
-import ThemeSwitcher from "../common/ThemeSwitcher";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
     icon: (color) => (
       <HomeIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
     path: "/dashboard",
@@ -28,7 +27,7 @@ const NAV_ITEMS = [
     label: "تست سرعت",
     icon: (color) => (
       <SpeedIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
     path: "/",
@@ -38,7 +37,7 @@ const NAV_ITEMS = [
     label: "تست های گذشته",
     icon: (color) => (
       <HistoryIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
     path: "/history",
@@ -54,7 +53,7 @@ const NAV_ITEMS = [
     label: "اطلاعات شبکه من",
     icon: (color) => (
       <InfoOutlinedIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
     path: "/information",
@@ -64,7 +63,7 @@ const NAV_ITEMS = [
     label: "گزارش ها",
     icon: (color) => (
       <SignalCellularAltOutlinedIcon
-        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
+        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
     path: "/operator-compare",
@@ -75,7 +74,7 @@ const NAV_ITEMS = [
 const iconColor = (path, location) =>
   location.pathname === path ? "#00A3FF" : "inherit";
 
-const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
+const NavItem = ({item, openNav, setOpenNav, toggleNavState, location}) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -92,6 +91,8 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
           backgroundColor: "hover.main",
         },
         transition: "all .2s linear",
+        position: "relative",
+        overflow: "hidden",
       }}
       onClick={() => {
         if (isMdDown) setOpenNav((openNav) => !openNav);
@@ -110,26 +111,28 @@ const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
       >
         {item.icon(iconColor(item.path, location))}
       </IconButton>
-      {openNav && (
-        <Typography
-          component="span"
-          variant="h6"
-          sx={{
-            visibility: openNav ? "visible" : "hidden",
-            opacity: openNav ? 1 : 0,
-            transition: "opacity 0.5s ease-in, visibility 0.5s ease-in",
-            color: iconColor(item.path, location),
-            cursor: "pointer",
-          }}
-        >
-          {item.label}
-        </Typography>
-      )}
+      {/* {openNav && ( */}
+      <Typography
+        component="span"
+        variant="h6"
+        sx={{
+          visibility: openNav ? "visible" : "hidden",
+          position: "absolute",
+          opacity: openNav ? 1 : 0,
+          right: openNav ? "2.5rem" : "-5rem",
+          transition: "opacity .5s ease-in,  right .25s .1s linear",
+          color: iconColor(item.path, location),
+          cursor: "pointer",
+        }}
+      >
+        {item.label}
+      </Typography>
+      {/* )} */}
     </Box>
   );
 };
 
-const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
+const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
   const history = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -139,7 +142,7 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
     history(path);
   };
 
-  const { key } = useLocation();
+  const {key} = useLocation();
   useEffect(() => {
     !isMdUp && setOpenNav(false);
 
@@ -150,12 +153,13 @@ const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
 
   return (
     <Box
-      display={isVisible ? "flex" : "none"}
       flexDirection="column"
       borderRadius="1.96875rem"
       padding="0.75rem"
       marginTop={startIndex === 0 ? "1rem" : "1.56rem"}
       sx={{
+        transition: "width .25s linear",
+        width: openNav ? "12rem" : "4rem",
         fontSize: "0.9rem",
         background:
           theme.palette.mode === "light"
