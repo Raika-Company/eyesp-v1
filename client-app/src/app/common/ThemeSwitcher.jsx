@@ -45,7 +45,6 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
   useEffect(() => {
     if (isDarkMode) {
       setMoonTranslateX(46);
-
       setSunTranslateX(-46);
     } else {
       setSunTranslateX(0);

@@ -79,7 +79,7 @@ const DoneReport = ({ handleCloseDialog, openDialog }) => {
           variant="contained"
           bgColor="#FF8A35"
           txtHover="#FF8A35"
-          sx={{ fontSize: "1rem", width: "50%" }}
+          sx={{ fontSize: "1rem", width: "50%", whiteSpace: "nowrap" }}
         >
           ثبت گزارش جدید{" "}
         </ContainedButton>{" "}
