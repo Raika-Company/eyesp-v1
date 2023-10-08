@@ -37,6 +37,7 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
       overflow="hidden"
       sx={{
         width: openNav ? "12rem" : "4rem",
+        marginRight: isMdUp || openNav ? "initial" : "-15rem",
         transition: "all .25s linear",
         background:
           theme.palette.mode === "light"

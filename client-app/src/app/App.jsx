@@ -2,7 +2,7 @@
  * @file Represents the main entry point of the application.
  */
 
-import {useState, Suspense} from "react";
+import {useState, Suspense, useEffect} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
@@ -16,6 +16,7 @@ import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
 import Pc from "../pages/pc/pc";
+import api from "./api";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -28,6 +29,12 @@ function App() {
   const toggleOpenMenu = () => {
     setOpenNav(!openNav);
   };
+
+  useEffect(() => {
+    api.speedTest.getPing().then((data) => {
+      console.log(data);
+    });
+  });
 
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
