@@ -110,6 +110,13 @@ const Dashboard = () => {
         handleCloseDialog={handleCloseDialog}
         handleDoneReportOpen={() => setOpenDoneReport(true)}
       />
+      <DoneReport
+        openDialog={openDoneReport}
+        handleCloseDialog={() => {
+          setOpenDoneReport(false);
+          setOpenDialog(true);
+        }}
+      />
     </>
   );
 };
