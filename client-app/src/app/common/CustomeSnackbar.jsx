@@ -17,7 +17,7 @@ const CustomSnackbar = ({ open, message, severity, handleClose }) => {
           fontSize: "1.5rem",
           padding: "1rem 2rem",
           ".MuiAlert-icon": {
-            fontSize: "2.5rem",
+            fontSize: "1.6rem",
           },
           ".MuiAlert-action": {
             "& .MuiIconButton-root": {
