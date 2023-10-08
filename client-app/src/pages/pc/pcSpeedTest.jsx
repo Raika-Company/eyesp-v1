@@ -20,6 +20,10 @@ import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
 import Upload from "../../app/assets/image/Img-SpeedTest/upload1.svg";
 import Ping from "../../app/assets/image/Img-SpeedTest/DownloadUp.svg";
+import PingNoColor from "../../app/assets/image/Img-SpeedTest/ping-NoColor.svg";
+import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoColor.svg";
+import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
+
 import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
 import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -218,7 +222,7 @@ const PcspTest = () => {
     <>
       <Box
         width="100%"
-        height="80%"
+        height="85dvh"
         component="main"
         display="flex"
         flexWrap="wrap"
@@ -226,42 +230,40 @@ const PcspTest = () => {
         alignItems="center"
       >
         <Box
-          // width="80%"
           display="flex"
           flexWrap="wrap"
           alignItems="center"
           justifyContent="space-evenly"
-          height="clamp(4rem,4rem + 3vmin, 3rem)"
+          mt="1rem"
+          // height="clamp(4rem,4rem + 3vmin, 3rem)"
           textAlign="center"
           sx={{
-            display: { xs: "none", sm: "flex" },
+            // display: { xs: "none", sm: "flex" },
+            display: "flex",
           }}
         >
           <PcSpeedBox
             title="UPLOAD"
-            iconSrc={Upload}
+            iconSrc={isStartButtonVisible ? uploadNoColor : Upload}
             altText="before upload icon"
             value={isStartButtonVisible ? null : upload}
             measure="Mbps"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
 
           <PcSpeedBox
             title="DOWNLOAD"
-            iconSrc={Download}
+            iconSrc={isStartButtonVisible ? downloadNoColor : Download}
             altText="before download icon"
             value={isStartButtonVisible ? null : download}
             measure="Mbps"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
             index={1}
           />
           <PcSpeedBox
             title="PING"
-            iconSrc={Ping}
+            iconSrc={isStartButtonVisible ? PingNoColor : Ping}
             altText="ping icon"
             value={isStartButtonVisible ? null : latency}
             measure="ms"
-            filter={isStartButtonVisible ? "grayscale(100%)" : "grayscale(0%)"}
           />
         </Box>
         <Box
@@ -277,8 +279,8 @@ const PcspTest = () => {
             <Button
               onClick={handleButtonClick}
               sx={{
-                height: "clamp(16.5rem,18rem + 10vmin,15rem)",
-                width: "clamp(16.5rem,18rem + 10vmin,15rem)",
+                height: "clamp(15.5rem,18rem + 10vmin,15rem)",
+                width: "clamp(15.5rem,18rem + 10vmin,15rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -306,7 +308,7 @@ const PcspTest = () => {
               sx={{
                 position: "relative",
                 animation: `${fadeIn} 1s ease-in-out`,
-                height: "clamp(10rem,10rem + 10vmin,16rem)",
+                height: "clamp(9rem,9rem + 10vmin,16rem)",
                 width: "clamp(21rem,21rem + 10vmin,16rem)",
               }}
             >
@@ -342,7 +344,7 @@ const PcspTest = () => {
                 }}
               >
                 <PcMiniSpeedBox
-                  iconSrc={Upload}
+                  iconSrc={isStartButtonVisible ? uploadNoColor : Upload}
                   altText="before upload icon"
                   value={isStartButtonVisible ? null : upload}
                   measure="Mbps"
@@ -354,8 +356,8 @@ const PcspTest = () => {
             <Button
               onClick={() => window.location.reload(true)}
               sx={{
-                height: "clamp(16.5rem,20rem + 10vmin,16rem)",
-                width: "clamp(16.5rem,20rem + 10vmin,16rem)",
+                height: "clamp(15.5rem,20rem + 10vmin,16rem)",
+                width: "clamp(15.5rem,20rem + 10vmin,16rem)",
                 border: "5.529px solid transparent",
 
                 background:
@@ -388,8 +390,9 @@ const PcspTest = () => {
           flexDirection="row"
           alignItems="center"
           justifyContent="center"
-          gap={10}
-          sx={{ display: { xs: "none", sm: "flex" } }}
+          gap={7}
+          // sx={{ display: { xs: "none", sm: "flex" } }}
+          display="flex"
         >
           {InfoBoxData.map((items, index) => (
             <PcInformationBox
@@ -406,12 +409,11 @@ const PcspTest = () => {
         </Box>
         <Box
           sx={{
-            width: "95.5%",
+            width: "100%",
             height: "7%",
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            mx: "1.7rem",
           }}
         >
           {[virasty, tikRed, Web].map((iconSrc, index) => (

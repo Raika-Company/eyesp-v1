@@ -40,14 +40,15 @@ const HistoryCard = ({
   const theme = useTheme();
   return (
     <Box
+      maxWidth="13rem"
       padding="1rem"
       borderRadius="1rem"
       backgroundColor={theme.palette.mode === "dark" ? "#081C30" : "#FFF"}
-      boxShadow={
-        theme.palette.mode === "dark"
-          ? "0px 0px 5px 0px rgba(255, 255, 255, 0.40)"
-          : "0px 4px 10px 0px rgba(0, 0, 0, 0.05)"
-      }
+      // boxShadow={
+      //   theme.palette.mode === "dark"
+      //     ? "0px 0px 5px 0px rgba(255, 255, 255, 0.40)"
+      //     : "0px 4px 10px 0px rgba(0, 0, 0, 0.05)"
+      // }
     >
       <InfoSection label="تاریخ" value={date} />
       <InfoSection label="ساعت" value={time} />

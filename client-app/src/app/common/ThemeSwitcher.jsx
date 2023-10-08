@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import React, { useState, useEffect } from "react";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
@@ -57,13 +58,17 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
   }, []);
   return (
     <Box
-      display={isVisible ? "flex" : "none"}
+      display="flex"
       justifyContent={"flex-start"}
       borderRadius="1.96875rem"
       alignItems={"center"}
       padding="0.75rem"
       marginTop="1.56rem"
+      position="relative"
+      overflow="hidden"
       sx={{
+        width: openNav ? "12rem" : "4rem",
+        transition: "all .25s linear",
         background:
           theme.palette.mode === "light"
             ? "white"

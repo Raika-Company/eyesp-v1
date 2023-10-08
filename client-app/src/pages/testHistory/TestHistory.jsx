@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
@@ -17,7 +17,7 @@ import "swiper/css/scrollbar";
 const TEST_RESULTS = "testResults";
 
 const categorizeTests = (tests) => {
-  const now = moment().startOf("day");
+  const now = moment();
 
   const categories = {
     last24Hours: [],
@@ -27,8 +27,8 @@ const categorizeTests = (tests) => {
   };
 
   tests.forEach((test) => {
-    const testDate = moment(test.englishDate, "jYYYY/jM/jD").startOf("day");
-    const diffDays = now.diff(testDate.convertToEnglishNumbers, "days");
+    const testDate = moment(test.englishDate, "jYYYY/jM/jD");
+    const diffDays = now.diff(testDate, "days");
 
     if (diffDays < 1) {
       categories.last24Hours.push(test);
@@ -49,12 +49,12 @@ const categorizeTests = (tests) => {
 };
 
 const CategorySection = ({ title, category }) => {
-  const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   if (!category || category.length === 0) return null;
+
   return (
     <>
       <Typography color="text.textBlack" variant="h2" mt={3} mb={1}>
@@ -62,14 +62,13 @@ const CategorySection = ({ title, category }) => {
       </Typography>
       <Swiper
         style={{
-          width: "95%",
           borderRadius: "1rem",
-          position: "absolute",
+          width: "85vw",
         }}
         slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
         navigation
         spaceBetween={5}
-        modules={[Navigation, Scrollbar, A11y]}
+        modules={[Navigation, Scrollbar]}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
       >
@@ -127,13 +126,9 @@ const NewTestHistory = () => {
       sx={{
         marginTop: "1rem",
         marginBottom: "4rem",
-        paddingX: "1rem",
-        paddingY: cardContainerPaddingY,
-        overflowY: "auto",
+        padding: "1rem",
         overflowX: "hidden",
         position: "relative",
-        width: "100%",
-        height: "75vh",
       }}
     >
       <Box
@@ -158,18 +153,6 @@ const NewTestHistory = () => {
             {" "}
             انجام تست
           </ContainedButton>
-          {/* <Button
-            component={Link}
-            to="/"
-            sx={{
-              borderRadius: "2rem",
-              backgroundColor: "#259FDA",
-              paddingX: "2.75rem",
-              color: "#ffffff",
-            }}
-          >
-            انجام تست
-          </Button> */}
           {isMD ? (
             <>
               <Typography variant="h6" color="text.textBlack">
@@ -179,9 +162,7 @@ const NewTestHistory = () => {
                 192.168.0.129
               </Typography>
             </>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </Box>
       </Box>
       {isMD ? (

@@ -72,6 +72,16 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
         {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
         {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
         {renderInfoBox(true, pingIcon, "پینگ", latency)}
+        {/* {isTestEnds && (
+          <ContainedButton
+            bgColor="#FF8A35"
+            txtColor="#fff"
+            txtHover="#FF8A35"
+            onClick={() => navigate(0)}
+          >
+            تست مجدد
+          </ContainedButton>
+        )} */}
       </Box>
 
       <Box
