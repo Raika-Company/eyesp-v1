@@ -60,7 +60,7 @@ function App() {
               element={
                 <Container
                   maxWidth="xl"
-                  sx={{overflow: isMdUp ? "" : "hidden"}}
+                  sx={{overflow: isMdUp ? "none" : "hidden"}}
                 >
                   <Box
                     display="flex"
