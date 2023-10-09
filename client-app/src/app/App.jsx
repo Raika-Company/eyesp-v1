@@ -80,7 +80,7 @@ function App() {
                       toggleOpenMenu={toggleOpenMenu}
                       openNav={openNav}
                     />
-                    <NewLogo openNav={openNav} isLgUp={isLgUp} />
+                    <NewLogo />
                   </Box>
                   <Box
                     display="flex"

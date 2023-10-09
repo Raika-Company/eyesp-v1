@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom"; // Import useNavigate
 import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 
-const NewLogo = ({openNav}) => {
+const NewLogo = () => {
   const navigate = useNavigate();
 
   const handleBoxClick = () => {

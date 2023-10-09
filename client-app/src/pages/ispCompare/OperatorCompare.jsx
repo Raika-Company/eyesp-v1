@@ -1,25 +1,25 @@
 import {Box, Grid, Typography, useTheme, useMediaQuery} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
-import { useEffect, useState } from "react";
+import {AreaChart, Area, Tooltip, ResponsiveContainer} from "recharts";
+import {useEffect, useState} from "react";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import YAxisLine from "./YAxisLine";
 import axios from "axios";
 import SwitchBtn from "../../app/common/SwitchBtn";
-import { ContainedSelect } from "../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 import SwitchBtnMobile from "../../app/common/SwitchBtnMobile";
 
-export const CustomTooltip = ({ active, payload }) => {
+export const CustomTooltip = ({active, payload}) => {
   if (active && payload && payload.length) {
     return (
       <div
         style={{
           background: "#fff",
           color: "#333",
-          boxShadow: "0 3px 14px rgb(0 0 0 / 40%)",
+          boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
           padding: "1px",
           textAlign: "left",
           borderRadius: "1rem",
@@ -57,11 +57,11 @@ const titlesChart = [
     unit: "Ms",
   },
 ];
-function GridItem({ theme, rendered, title, data, unit }) {
+function GridItem({theme, rendered, title, data, unit}) {
   return (
     <Grid item xs={12} md={6} padding="2rem">
       <Box display="flex" position="relative">
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{width: "100%"}}>
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
@@ -112,7 +112,7 @@ function GridItem({ theme, rendered, title, data, unit }) {
           <img
             src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
             alt="xAxis"
-            style={{ width: "100%" }}
+            style={{width: "100%"}}
           />
         </Box>
         <YAxisLine
@@ -245,7 +245,7 @@ const OperatorCompare = () => {
             نمودار عملکرد اپراتور
           </Typography>
           <Box
-            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+            sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}
           >
             {FormControlItems.map((items, index) => (
               <FormControl
@@ -265,11 +265,11 @@ const OperatorCompare = () => {
                   displayEmpty
                 >
                   <MenuItem disabled>
-                    <span style={{ color: "#676767" }}>{items}</span>
+                    <span style={{color: "#676767"}}>{items}</span>
                   </MenuItem>
                   {data[index].map((menuItem, menuItemIndex) => (
                     <MenuItem
-                      sx={{ color: "text.main" }}
+                      sx={{color: "text.main"}}
                       key={menuItemIndex}
                       value={menuItem}
                     >
@@ -280,7 +280,7 @@ const OperatorCompare = () => {
               </FormControl>
             ))}
           </Box>
-          <Box sx={{ display: isMdScreen ? "none" : " flex" }}>
+          <Box sx={{display: isMdScreen ? "none" : " flex"}}>
             <SwitchBtn textOn="مقایسه" textOff="مشاهده تکی" />
           </Box>
         </Box>
