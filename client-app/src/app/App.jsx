@@ -124,7 +124,7 @@ function App() {
                       sx={{
                         marginRight: openNav ? "15rem" : isMdUp ? "5rem" : "0",
                         transition: "all .25s linear",
-                        background: "#232323",
+                        // background: "#232323",
                       }}
                     >
                       <Routes>
