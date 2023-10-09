@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback, useMemo, useRef} from "react";
+import {useEffect, useState, useCallback, useMemo} from "react";
 import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
@@ -7,7 +7,7 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 import {ContainedButton} from "../../app/common/ContainedButton";
 import CardContainer from "../../app/common/CardContainer";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Scrollbar, A11y} from "swiper/modules";
+import {Navigation, Scrollbar} from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -61,10 +61,6 @@ const CategorySection = ({title, category}) => {
         {title}
       </Typography>
       <Swiper
-        style={{
-          borderRadius: "1rem",
-          width: "90%",
-        }}
         slidesPerView={isSmScreen ? 1 : isMdScreen ? 3 : 4}
         navigation
         spaceBetween={5}
@@ -73,7 +69,10 @@ const CategorySection = ({title, category}) => {
         scrollbar={{draggable: true}}
       >
         {category.slice(0, 20).map((result, index) => (
-          <SwiperSlide key={index} style={{display: "flex", justifyContent: "center"}}>
+          <SwiperSlide
+            key={index}
+            style={{display: "flex", justifyContent: "center"}}
+          >
             <HistoryCard {...result} />
           </SwiperSlide>
         ))}
