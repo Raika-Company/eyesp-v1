@@ -11,10 +11,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ContainedButton } from "./ContainedButton";
-import frame from "../../app/assets/image/frame.svg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SendReport from "./SendReport";
-import CustomSnackbar from "./CustomeSnackbar";
+import SendErrorReport from "./SendErrorReport";
+import CustomSnackbar from "./CustomSnackbar";
 import CardContainer from "./CardContainer";
 
 const MyService = (props) => {
@@ -261,7 +260,7 @@ const MyService = (props) => {
         severity="info"
         handleClose={handleDisturbanceClose}
       />
-      <SendReport
+      <SendErrorReport
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
       />

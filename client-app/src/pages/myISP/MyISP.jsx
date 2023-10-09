@@ -15,7 +15,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 
 // Import Local components
-import MyService from "../../app/common/MyService,";
+import MyService from "../../app/common/MyService";
 import UserSatisfaction from "../../app/common/UserSatisfaction";
 import SoloChartPerformance from "./SoloChartPerformance";
 

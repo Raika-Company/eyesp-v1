@@ -181,31 +181,26 @@ class NetworkController extends Controller
     {
         try {
             $isp = [0 => 'irancell', 1 => 'hamrah aval', 2 => 'shatel', 3 => 'mobinnet', 4 =>'hiweb'];
-            $ispMetrics = RstIspStats::where('date', '>=', Carbon::today()->subDays(7))->get();
-            $totalRecord = $ispMetrics->count();
-            $data['totalQualityAverage'] = round($ispMetrics->sum('total_quality_average') / $totalRecord, 0);
-            $data['clients'] = $ispMetrics->sum('clients');
-            $data['speedAverage'] = round($ispMetrics->sum('speed_average') / $totalRecord, 0);
-            $data['pingAverage'] = round($ispMetrics->sum('ping_average') / $totalRecord, 0);
-
-            foreach ($isp as $item) {
-                $metrics = $ispMetrics->where('isp', $item);
-                $count = $metrics->count();
-                if($count < 1) {
-                    continue;
-                }
-                $data['isp'][$item] = [
-                    'downloadSpeedAverage' => round($metrics->sum('download_speed_average') / $count, 0),
-                    'uploadSpeedAverage' => round($metrics->sum('upload_speed_average') / $count, 0),
-                    'pingAverage' => round($metrics->sum('ping_average') / $count, 0),
-                    'packetLoss' => round($metrics->sum('packet_loss') / $count, 0),
-                    'totalQuality' => round($metrics->sum('total_quality_average') / $count, 0),
-                ];
-            }
-
             return response()->json([
                 'status' => true,
-                'data' => $data,
+                'data' => NetworkService::IspMetrics($isp),
+                'message' => ''
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function myIspMetrics(Request $request)
+    {
+        try {
+            $isp = [0 => 'irancell'];
+            return response()->json([
+                'status' => true,
+                'data' => NetworkService::IspMetrics($isp),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
