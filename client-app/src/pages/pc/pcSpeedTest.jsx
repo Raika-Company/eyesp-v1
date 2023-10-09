@@ -222,8 +222,8 @@ const PcspTest = () => {
   return (
     <Box
       component="main"
-      minHeight="calc(100vh - 7rem)"
-      gap="1rem"
+      height="calc(100vh - 10rem)"
+      gap=".5rem"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
@@ -402,7 +402,6 @@ const PcspTest = () => {
         sx={{
           display: "flex",
           gap: "1rem",
-          // marginTop: "auto",
           marginRight: "auto",
           alignItems: "center",
           justifyContent: "flex-start",
