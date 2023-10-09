@@ -9,26 +9,26 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {Area, AreaChart, ResponsiveContainer} from "recharts";
+import { useEffect, useState } from "react";
+import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import YAxisLine from "../ispCompare/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
-import {ContainedSelect} from "../../app/common/ContainedSelect";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
-import {CustomTooltip} from "../ispCompare/OperatorCompare";
+import { CustomTooltip } from "../ispCompare/OperatorCompare";
 
 const SoloChartPerformance = () => {
   const theme = useTheme();
 
   const buttons = [
-    {label: "سرعت دانلود", width: "80%"},
-    {label: "سرعت آپلود", width: "80%"},
-    {label: "پینگ", width: "80%"},
-    {label: "درصد عملکرد", width: "80%"},
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
   ];
 
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
@@ -117,6 +117,7 @@ const SoloChartPerformance = () => {
         color="text.textBlack"
         gutterBottom
         sx={{
+          width: "100%",
           mt: isLgScreen ? "0.4rem" : "",
           display: isLgScreen ? "none" : "flex",
         }}
@@ -134,7 +135,7 @@ const SoloChartPerformance = () => {
       >
         <Box
           display="flex"
-          sx={{flexBasis: isLgScreen ? "100%" : "70%", position: "relative"}}
+          sx={{ flexBasis: isLgScreen ? "100%" : "70%", position: "relative" }}
         >
           <Box>
             <Box
@@ -179,7 +180,7 @@ const SoloChartPerformance = () => {
                 </ResponsiveContainer>
               )}
             </Box>
-            <img src={xAxis} alt="xAxis" style={{width: "100%"}} />
+            <img src={xAxis} alt="xAxis" style={{ width: "100%" }} />
           </Box>
           <YAxisLine
             max={Math.max(...chartData.map((line) => line.value))}
@@ -209,15 +210,15 @@ const SoloChartPerformance = () => {
                 onClick={() => handleButtonClick(index)}
                 style={
                   clickedButtonIndex === index
-                    ? {...activeButtonStyle, width: btn.width}
-                    : {...defaultButtonStyle, width: btn.width}
+                    ? { ...activeButtonStyle, width: btn.width }
+                    : { ...defaultButtonStyle, width: btn.width }
                 }
               >
                 {btn.label}
               </Button>
             ))}
           </ButtonGroup>
-          <FormControl sx={{width: "70%"}}>
+          <FormControl sx={{ width: "70%" }}>
             <Typography
               variant="h3"
               color="text.main"
