@@ -102,7 +102,7 @@ export const mainRoutes = [
 
 export const mainRoutesPc = [
   {
-    path: "/pc",
+    path: "/app",
     element: <Pc />,
     title: " pc | TIC Radar",
   },

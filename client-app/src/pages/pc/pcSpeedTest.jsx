@@ -7,14 +7,14 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 
-import {STATUS_MAP} from "./constant";
+import { STATUS_MAP } from "./constant";
 
 import io from "socket.io-client";
 import axios from "axios";
-import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
@@ -24,8 +24,8 @@ import PingNoColor from "../../app/assets/image/Img-SpeedTest/ping-NoColor.svg";
 import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoColor.svg";
 import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
 
-import Globe from "../../app/assets/image/Img-SpeedTest/server.svg";
-import Person from "../../app/assets/image/Img-SpeedTest/user.svg";
+import server from "../../app/assets/image/Img-SpeedTest/server.svg";
+import client from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
 import virasty from "../../app/assets/image/Img-SpeedTest/virasty 1.svg";
 import Web from "../../app/assets/image/Img-SpeedTest/Web.svg";
@@ -35,6 +35,7 @@ import PcDrawMeter from "./pcDrawMeter";
 import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
+import useFetchServers from "../../app/hooks/useFetchServers";
 
 /**
  * A keyframes animation for fading in elements.
@@ -45,27 +46,6 @@ const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `;
-
-/**
- * An array containing data for information boxes.
- * Each item in the array has properties like title, value, iconSrc, altText, and buttonLabel.
- * @type {Array<Object>}
- */
-const InfoBoxData = [
-  {
-    title: "Scaleway",
-    value: "51.15.57.153",
-    iconSrc: Person,
-    altText: "Person Icon",
-  },
-  {
-    title: "KEYYO",
-    value: "Paris",
-    iconSrc: Globe,
-    altText: "Server Icon",
-    buttonLabel: "Change Server",
-  },
-];
 
 /**
  * PcspTest component is the main component for the speed test functionality.
@@ -89,19 +69,27 @@ const PcspTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const [selectedServerURL, setSelectedServerURL] = useState(
-    "https://server1.eyesp.live/"
-  );
+  const [selectedServerURL, setSelectedServerURL] = useState("");
+  const { isFetchingServers, selectBestServer } = useFetchServers();
 
   useEffect(() => {
-    /**
-     * Fetches the client's IP address and updates the state.
-     */
     axios
       .get("https://server1.eyesp.live/get-ip")
-      .then((res) => setClientIp(res.data.ip))
-      .catch((error) => console.error("Error fetching client IP:", error));
+      .then((res) => setClientIp(res.data.ip));
+    // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
+
+  useEffect(() => {
+    if (selectedServerURL) return;
+
+    if (!isFetchingServers) {
+      selectBestServer().then((url) => {
+        if (url) {
+          setSelectedServerURL(url);
+        }
+      });
+    }
+  }, [isFetchingServers, selectBestServer, selectedServerURL]);
 
   const PING_TIMES = 10;
 
@@ -138,6 +126,7 @@ const PcspTest = () => {
     socket && socket.emit("ping_event", performance.now());
 
   const handleButtonClick = () => {
+    if (selectedServerURL==="") return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
@@ -298,7 +287,7 @@ const PcspTest = () => {
               },
             }}
           >
-            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
+            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
               START
             </Typography>
           </Button>
@@ -309,6 +298,7 @@ const PcspTest = () => {
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
               width: "clamp(21rem,21rem + 10vmin,16rem)",
+              marginBottom: "3rem"
             }}
           >
             <PcDrawMeter
@@ -377,7 +367,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
+              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
             >
               Test Again
             </Typography>
@@ -385,18 +375,21 @@ const PcspTest = () => {
         )}
       </Box>
       <Box alignItems="center" justifyContent="center" gap={7} display="flex">
-        {InfoBoxData.map((items, index) => (
-          <PcInformationBox
-            key={index}
-            title={items.title}
-            value={items.value}
-            iconSrc={items.iconSrc}
-            altText={items.altText}
-            buttonLabel={
-              isStartButtonVisible || isTestEnds ? items.buttonLabel : null
-            }
-          />
-        ))}
+        <PcInformationBox
+          title="Tehran"
+          value={clientIp === "" ? "Finding IP..." : clientIp}
+          iconSrc={client}
+          altText="client information"
+        />
+        <PcInformationBox
+          title={selectedServerURL === "" ? "Finding Server..." : "Tehran"}
+          value={selectedServerURL === "" ? "Finding Server..." : "infrastructure"}
+          iconSrc={server}
+          altText="server information"
+          buttonLabel={
+            isStartButtonVisible || isTestEnds ? "Change Server" : null
+          }
+        />
       </Box>
       <Box
         sx={{

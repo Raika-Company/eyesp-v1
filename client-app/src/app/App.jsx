@@ -140,7 +140,7 @@ function App() {
                 </Container>
               }
             />
-            <Route path="/pc" element={<Pc />} />
+            <Route path="/app" element={<Pc />} />
           </Routes>
         </Suspense>
       </Router>
