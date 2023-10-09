@@ -19,7 +19,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
-import CustomSnackbar from "./CustomeSnackbar";
+import CustomSnackbar from "./CustomSnackbar";
 
 const labels = {
   0.5: "بی فایده",

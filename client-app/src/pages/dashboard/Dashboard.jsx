@@ -8,7 +8,7 @@ const SendErrorReport = React.lazy(() =>
   import("../../app/common/SendErrorReport")
 );
 const CustomSnackbar = React.lazy(() =>
-  import("../../app/common/CustomeSnackbar")
+  import("../../app/common/CustomSnackbar")
 );
 const InternetStatusCard = React.lazy(() => import("./InternetStatusCard"));
 const ISPStatistics = React.lazy(() => import("./ISPStatistics"));
