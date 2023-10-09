@@ -15,7 +15,7 @@ const YAxisLine = ({max, unit, height}) => {
         flexDirection: "column",
         gap: ".5rem",
         position: "absolute",
-        left: "-3rem",
+        left: "-2.5rem",
       }}
     >
       <Typography>{unit}</Typography>

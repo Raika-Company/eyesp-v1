@@ -160,7 +160,6 @@ const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
         width: openNav ? "13rem" : isMdUp ? "4rem" : "12rem",
         marginRight: isMdUp || openNav ? "initial" : "-15rem",
         fontSize: "0.9rem",
-        position: "relative",
         background:
           theme.palette.mode === "light"
             ? "white"

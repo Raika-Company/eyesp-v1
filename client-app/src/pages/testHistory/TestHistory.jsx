@@ -127,7 +127,7 @@ const NewTestHistory = () => {
         marginBottom: "4rem",
         padding: "1rem",
         overflowX: "hidden",
-        position: "relative",
+        width: isMD ? "calc(100% - 5rem)" : "100%",
       }}
     >
       <Box

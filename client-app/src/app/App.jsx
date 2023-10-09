@@ -102,7 +102,7 @@ function App() {
                         toggleTheme={toggleTheme}
                       />
                     </Box>
-                    <Box flex={1}>
+                    <Box flex={1} width="100%">
                       <Routes>
                         {mainRoutes.map((route) => (
                           <Route
