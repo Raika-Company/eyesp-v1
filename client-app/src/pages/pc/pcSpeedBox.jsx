@@ -34,6 +34,7 @@ const PcSpeedBox = ({
   return (
     <Box
       sx={{
+        flexBasis: "10rem",
         display: "flex",
         flexWrap: "wrap",
         gap: ".5rem",
