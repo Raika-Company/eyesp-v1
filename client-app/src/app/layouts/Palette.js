@@ -1,12 +1,10 @@
-import {
-  createTheme
-} from "@mui/material";
+import { createTheme } from "@mui/material";
 
 var theme = createTheme();
 
 const commonTypography = (fontSize, fontSizeMd) => ({
   fontSize,
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     fontSize: fontSizeMd,
   },
 });
@@ -18,104 +16,104 @@ const commonTypography = (fontSize, fontSizeMd) => ({
 const baseTheme = createTheme({
   typography: {
     h1: {
-      fontSize: '18px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '24px',
+      fontSize: "18px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "24px",
       },
-      fontFamily: "PeydaSemiBold"
+      fontFamily: "PeydaSemiBold",
     },
     h2: {
-      fontSize: '18px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '24px',
+      fontSize: "18px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "24px",
       },
-      fontFamily: "PeydaLight"
+      fontFamily: "PeydaLight",
     },
     h3: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '20px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "20px",
       },
-      fontFamily: "PeydaRegular"
+      fontFamily: "PeydaRegular",
     },
     h4: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "PeydaSemiBold"
+      fontFamily: "PeydaSemiBold",
     },
     h5: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "PeydaLight"
+      fontFamily: "PeydaLight",
     },
     h6: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "PeydaRegular"
+      fontFamily: "PeydaRegular",
     },
     body1: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "Peyda"
+      fontFamily: "Peyda",
     },
     body2: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "Peyda"
+      fontFamily: "Peyda",
     },
     subtitle1: {
-      fontSize: '14px',
-      fontFamily: "PeydaRegular"
+      fontSize: "14px",
+      fontFamily: "PeydaRegular",
     },
     subtitle2: {
-      fontSize: '14px',
-      fontFamily: "PeydaLight"
+      fontSize: "14px",
+      fontFamily: "PeydaLight",
     },
     button: {
-      fontSize: '14px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '16px',
+      fontSize: "14px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "16px",
       },
-      fontFamily: "PeydaSemiBold"
+      fontFamily: "PeydaSemiBold",
     },
     mainDigits: {
-      fontSize: '24px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '40px',
+      fontSize: "24px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "40px",
       },
-      fontFamily: "PeydaSemiBold"
+      fontFamily: "PeydaSemiBold",
     },
     chartTitle: {
-      fontSize: '16px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '20px',
+      fontSize: "16px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "20px",
       },
-      fontFamily: "PeydaLight"
+      fontFamily: "PeydaLight",
     },
     logo: {
       fontSize: "20px",
-      [theme.breakpoints.up('md')]: {
-        fontSize: '24px',
+      [theme.breakpoints.up("md")]: {
+        fontSize: "24px",
       },
-      fontFamily: "TrenchThin"
+      fontFamily: "TrenchThin",
     },
     start: {
       fontSize: "1.5rem",
-      [theme.breakpoints.up('md')]: {
-        fontSize: '1.75rem',
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.75rem",
       },
-      fontFamily: "PeydaRegular"
-    }
+      fontFamily: "PeydaRegular",
+    },
   },
   components: {
     MuiInputLabel: {
@@ -158,11 +156,10 @@ const baseTheme = createTheme({
           borderRadius: "12px",
           paddingTop: "6px",
         },
-      }
+      },
     },
   },
 });
-
 
 /**
  * Light theme configuration.
@@ -198,14 +195,14 @@ export const lightTheme = createTheme({
       textInfo: "#3E6389",
       subTitle: "#878787",
       subHeading: "#454545",
-      chartTitleColor: "#7D93AA"
+      chartTitleColor: "#7D93AA",
     },
     background: {
       default: "#E8F1F9",
     },
     hover: {
-      main: "#E8E8E8"
-    }
+      main: "#E8E8E8",
+    },
   },
 });
 
@@ -223,7 +220,7 @@ export const darkTheme = createTheme({
       main: "#008EDD",
     },
     secondary: {
-      main: "#1A2D3A"
+      main: "#1A2D3A",
     },
     error: {
       main: "#FF5A00",
@@ -241,14 +238,14 @@ export const darkTheme = createTheme({
       main: "#E8E8E8",
       textBlack: "#FFF",
       textInfo: "#FFF",
-      subTitle: "#FFF"
+      subTitle: "#FFF",
     },
     background: {
       default: "#121212",
     },
     hover: {
-      main: "#182633"
-    }
+      main: "#182633",
+    },
   },
   // components: {
   //   MuiDrawer: {

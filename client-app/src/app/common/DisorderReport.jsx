@@ -19,7 +19,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { ContainedButton } from "./ContainedButton";
 import DoneReport from "./DoneReport";
-const SendReport = ({
+const DisorderReport = ({
   handleCloseDialog,
   openDialog,
   handleDoneReportOpen,
@@ -54,6 +54,18 @@ const SendReport = ({
       borderRadius: "4px",
     },
   }));
+  const buttonLabels = [
+    "قطعی اینترنت",
+    "کاهش سرعت دانلود",
+    "کاهش سرعت آپلود",
+    "افزایش پینگ",
+  ];
+  const fields = [
+    { label: "شماره تلفن همراه" },
+    { label: "اپراتور" },
+    { label: "استان" },
+    { label: "زمان مشاهده اختلال" },
+  ];
   return (
     <>
       <Dialog
@@ -104,42 +116,39 @@ const SendReport = ({
             gap={2}
             sx={{ maxWidth: { xs: "100%", sm: "60%" } }}
           >
-            <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-              <div>
-                <Typography gutterBottom variant="h4">
-                  شماره تلفن همراه
-                </Typography>
-                <StyledTextField variant="outlined" size="small" />
-              </div>
-              <div>
-                <Typography gutterBottom variant="h4">
-                  استان{" "}
-                </Typography>
-                <StyledTextField variant="outlined" size="small" />
-              </div>
-            </div>
-            <Typography>انتخاب گزارش اختلال خطا</Typography>
-            <Box sx={{ height: "150px", overflowY: "auto", overflowX: "none" }}>
-              <ScrollBox>
-                <FormControl fullWidth>
-                  <RadioGroup
-                    dir="ltr"
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
-                    name="radio-buttons-group"
-                  >
-                    {reports.map((report) => (
-                      <FormControlLabel
-                        key={report.id}
-                        sx={{ justifyContent: "space-between", margin: "0" }}
-                        value={report.value}
-                        control={<Radio />}
-                        label={report.label}
-                      />
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-              </ScrollBox>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+              {fields.slice(0, 2).map((field) => (
+                <div key={field.label}>
+                  <Typography gutterBottom variant="h4">
+                    {field.label}
+                  </Typography>
+                  <StyledTextField variant="outlined" size="small" />
+                </div>
+              ))}
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+              {fields.slice(2, 4).map((field) => (
+                <div key={field.label}>
+                  <Typography gutterBottom variant="h4">
+                    {field.label}
+                  </Typography>
+                  <StyledTextField variant="outlined" size="small" />
+                </div>
+              ))}
+            </Box>
+            <Typography>نوع اختلال (درصورت اگاهی انتخاب کنید)</Typography>
+            <Box display="flex" flexWrap="wrap" gap={1}>
+              {buttonLabels.map((label, index) => (
+                <ContainedButton
+                  key={index}
+                  variant="contained"
+                  bgColor="#293643"
+                  txtHover="#FF8A35"
+                  sx={{ fontSize: "1rem" }}
+                >
+                  {label}
+                </ContainedButton>
+              ))}
             </Box>
             <Typography variant="h4">توضیح بیشتر</Typography>
             <StyledTextField
@@ -176,9 +185,10 @@ const SendReport = ({
                 fontSize: "1rem",
                 position: "absolute",
                 bottom: { xs: "7.5em", sm: "0" },
+                width: "100%",
               }}
             >
-              گزارش اختلال
+              ثبت گزارش{" "}
             </ContainedButton>
           </Box>
         </DialogContent>
@@ -191,4 +201,4 @@ const SendReport = ({
   );
 };
 
-export default SendReport;
+export default DisorderReport;
