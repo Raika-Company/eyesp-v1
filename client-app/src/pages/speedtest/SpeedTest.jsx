@@ -38,6 +38,7 @@ import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -499,6 +500,7 @@ const SpeedTest = () => {
           </DialogContent>
         </Dialog>
       </CardContainer>
+      {/* <AnimatesSpeedTestNumber value={download || 0} unit="Mbs" /> */}
     </>
   );
 };
