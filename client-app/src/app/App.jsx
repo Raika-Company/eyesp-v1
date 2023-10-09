@@ -71,12 +71,21 @@ function App() {
                     marginX={isLgUp ? "10%" : "0"}
                     justifyContent="space-between"
                     marginBottom="1rem"
+                    sx={{
+                      width: isLgUp
+                        ? openNav
+                          ? `calc(80% + 10rem)`
+                          : `calc(80%)`
+                        : "100%",
+
+                      transition: "all .25s linear",
+                    }}
                   >
                     <NewNavbar
                       toggleOpenMenu={toggleOpenMenu}
                       openNav={openNav}
                     />
-                    <NewLogo />
+                    <NewLogo openNav={openNav} />
                   </Box>
                   <Box
                     display="flex"
