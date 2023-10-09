@@ -8,6 +8,7 @@ import Facebook from "../../app/assets/image/imgLogoSocialM/facebook.svg";
 import SimpleIcon from "../../app/assets/image/imgLogoSocialM/simple-icon.svg";
 
 import {Box, Typography, useTheme} from "@mui/material";
+import Fade from "@mui/material/Fade";
 import {ContainedButton} from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
@@ -67,21 +68,44 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
         justifyContent="space-evenly"
         width="100%"
         marginY={1}
-        sx={{display: {xs: "flex", md: "none"}}}
+        sx={{
+          display: {xs: "flex", md: "none"},
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
         {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
         {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
         {renderInfoBox(true, pingIcon, "پینگ", latency)}
-        {/* {isTestEnds && (
-          <ContainedButton
-            bgColor="#FF8A35"
-            txtColor="#fff"
-            txtHover="#FF8A35"
-            onClick={() => navigate(0)}
+        <Fade in={isTestEnds}>
+          <Box
+            sx={{
+              position: "absolute",
+              transition: "all .25s linear",
+              top: "25%",
+              left: "25%",
+              transform: "translateX(-12.5%)",
+              zIndex: "10",
+              height: "10rem",
+              width: "14rem",
+              borderRadius: "2rem",
+              backdropFilter: "blur(5px)",
+              background: "rgba(0, 0, 0, .4)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            تست مجدد
-          </ContainedButton>
-        )} */}
+            <ContainedButton
+              bgColor="#FF8A35"
+              txtColor="#fff"
+              txtHover="#FF8A35"
+              onClick={() => navigate(0)}
+            >
+              تست مجدد
+            </ContainedButton>
+          </Box>
+        </Fade>
       </Box>
 
       <Box
@@ -140,6 +164,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             txtHover="#FF8A35"
             sx={{
               minWidth: "30%",
+              position: "absolute",
             }}
             onClick={() => navigate(0)}
           >

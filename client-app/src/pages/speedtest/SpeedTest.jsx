@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import {forwardRef} from "react";
 import {
   Box,
   Typography,
@@ -17,16 +17,16 @@ import {
   Radio,
   Tooltip,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import moment from "moment-jalaali";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
 import elipse from "../../app/assets/image/elipse.svg";
 import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
-import { STATUS_MAP } from "./constant";
+import {STATUS_MAP} from "./constant";
 
 import io from "socket.io-client";
 import CardContainer from "../../app/common/CardContainer";
@@ -37,7 +37,7 @@ import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -52,7 +52,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddressAndServer = ({ ip, server }) => (
+const AddressAndServer = ({ip, server}) => (
   <Box>
     {["آدرس", "سرور"].map((text, index) => (
       <Typography key={index} variant="h4" color="text.main">
@@ -74,6 +74,7 @@ const AddressAndServer = ({ ip, server }) => (
 const SpeedTest = () => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
   const [status, setStatus] = useState(2);
@@ -88,7 +89,7 @@ const SpeedTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const { isFetchingServers, selectBestServer } = useFetchServers();
+  const {isFetchingServers, selectBestServer} = useFetchServers();
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [isServerSelected, setIsServerSelected] = useState(false);
   const [openSelectServer, setOpenSelectServer] = useState(false);
@@ -292,7 +293,7 @@ const SpeedTest = () => {
             to="/history"
             variant="h3"
             color="text.subHeading"
-            startIcon={<HistoryIcon sx={{ mx: "0.5rem" }} />}
+            startIcon={<HistoryIcon sx={{mx: "0.5rem"}} />}
           >
             تست های گذشته
           </Button>
@@ -356,7 +357,7 @@ const SpeedTest = () => {
                 <img
                   src={theme.palette.mode === "dark" ? elipseDark : elipse}
                   alt="speed-meter"
-                  style={{ maxWidth: "100%", height: "100%", zIndex: 1 }}
+                  style={{maxWidth: "100%", height: "100%", zIndex: 1}}
                 />
                 <div
                   style={{
@@ -377,7 +378,6 @@ const SpeedTest = () => {
                     progress={isDl ? downloadProgress : uploadProgress}
                     mbps={isDl ? download : upload}
                     isDl={isDl}
-                    testState={testStateNumber}
                     theme="light"
                   />
                 </div>
@@ -400,7 +400,7 @@ const SpeedTest = () => {
               نوع تست
               <Tooltip title="Delete">
                 <IconButton>
-                  <InfoOutlinedIcon sx={{ mr: "0.2rem", fontSize: "1.2rem" }} />
+                  <InfoOutlinedIcon sx={{mr: "0.2rem", fontSize: "1.2rem"}} />
                 </IconButton>
               </Tooltip>
             </Typography>
@@ -453,17 +453,13 @@ const SpeedTest = () => {
                 }}
               >
                 <InputBase
-                  sx={{ mr: 1 }}
+                  sx={{mr: 1}}
                   placeholder="جست و جو"
-                  inputProps={{ "aria-label": "جست و جو" }}
+                  inputProps={{"aria-label": "جست و جو"}}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <IconButton
-                  type="button"
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
+                <IconButton type="button" sx={{p: "10px"}} aria-label="search">
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -471,7 +467,7 @@ const SpeedTest = () => {
             <Button
               color="text"
               onClick={handleCloseSelectServer}
-              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
+              endIcon={<CloseIcon sx={{marginX: "0.5rem"}} />}
             >
               بستن
             </Button>

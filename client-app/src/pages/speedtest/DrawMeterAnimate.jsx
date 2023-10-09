@@ -144,7 +144,10 @@ function DrawMeterAnimate({
     function drawPointerEndAnimate(time) {
       if (!startTime) startTime = time || performance.now();
 
-      const deltaTime = Math.max(1 - (time - startTime) / (DURATION - 500), 0);
+      const deltaTime = Math.max(
+        1 - (time - startTime) / (DURATION - (mbps < 4 ? 300 : 500)),
+        0
+      );
       const currentPointerAngle =
         -startAngle +
         (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) +
@@ -160,7 +163,7 @@ function DrawMeterAnimate({
     }
 
     // Start of test
-    if (progress <= LOWER_BOUND && (testState === 1 || testState === 3)) {
+    if (progress <= LOWER_BOUND) {
       drawPointerStartAnimate();
     }
     // End of test
