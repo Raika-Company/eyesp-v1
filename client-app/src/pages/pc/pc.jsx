@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import React from "react";
+import {Box} from "@mui/material";
 import PcSpeedTest from "./pcSpeedTest";
 import LogoRadar from "./LogoRadar";
 
@@ -7,14 +6,10 @@ const Pc = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
-        display: "flex",
-        flexWrap: "wrap",
         direction: "ltr",
+        minHeight: "100vh",
         bgcolor: "#232323",
-        alignItems: "center",
-        justifyContent: "center",
-        p: "2rem",
+        p: "1rem",
       }}
     >
       <LogoRadar />
