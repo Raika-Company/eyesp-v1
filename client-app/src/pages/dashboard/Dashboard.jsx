@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import DoneReport from "../../app/common/DoneReport";
 // Lazy load the components
 const NewLogo = React.lazy(() => import("../../app/common/NewLogo"));
-const SendReport = React.lazy(() => import("../../app/common/SendReport"));
+const SendErrorReport = React.lazy(() =>
+  import("../../app/common/SendErrorReport")
+);
 const CustomSnackbar = React.lazy(() =>
   import("../../app/common/CustomeSnackbar")
 );
@@ -14,6 +16,7 @@ const ISPCompareTable = React.lazy(() => import("./ISPCompareTable"));
 
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import LoadingSpinner from "../../app/common/LoadingSpinner";
+import DisorderReport from "../../app/common/DisorderReport";
 
 /**
  * Dashboard component displays the main user interface of the application.
@@ -32,7 +35,8 @@ const Dashboard = () => {
 
   const [province, setProvince] = useState("");
   const [disturbance, setDisturbance] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  const [openDisorderDialog, setOpenDisorderDialog] = useState(false);
   const [openDoneReport, setOpenDoneReport] = useState(false);
 
   /**
@@ -71,17 +75,29 @@ const Dashboard = () => {
   /**
    * Opens the report dialog.
    */
-  const handleClickOpenDialog = useCallback(() => setOpenDialog(true), []);
+  const handleClickOpenErrorDialog = useCallback(
+    () => setOpenErrorDialog(true),
+    []
+  );
+  const handleClickOpenDisorderDialog = useCallback(
+    () => setOpenDisorderDialog(true),
+    []
+  );
 
   /**
    * Closes the report dialog.
    */
-  const handleCloseDialog = useCallback(() => setOpenDialog(false), []);
+  const handleCloseDialog = useCallback(() => setOpenErrorDialog(false), []);
+  const handleCloseDisorderDialog = useCallback(
+    () => setOpenDisorderDialog(false),
+    []
+  );
 
   return (
     <>
       <InternetStatusCard
-        handleClickOpenDialog={handleClickOpenDialog}
+        openErrorDialog={handleClickOpenErrorDialog}
+        openDisorderDialog={handleClickOpenDisorderDialog}
         handleDisturbanceClick={handleDisturbanceClick}
         province={province}
         handleProvinceChange={handleProvinceChange}
@@ -105,16 +121,22 @@ const Dashboard = () => {
         severity="info"
         handleClose={handleDisturbanceClose}
       />
-      <SendReport
-        openDialog={openDialog}
-        handleCloseDialog={handleCloseDialog}
+      <DisorderReport
+        openDialog={openDisorderDialog}
+        handleCloseDialog={handleCloseDisorderDialog}
+        handleDoneReportOpen={() => setOpenDoneReport(true)}
+      />
+
+      <SendErrorReport
+        openErrorDialog={openErrorDialog}
+        handleCloseErrorDialog={handleCloseDialog}
         handleDoneReportOpen={() => setOpenDoneReport(true)}
       />
       <DoneReport
         openDialog={openDoneReport}
         handleCloseDialog={() => {
           setOpenDoneReport(false);
-          setOpenDialog(true);
+          setOpenErrorDialog(true);
         }}
       />
     </>
