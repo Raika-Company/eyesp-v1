@@ -44,7 +44,6 @@ const HistoryCard = ({
       padding="1rem"
       borderRadius="1rem"
       backgroundColor={theme.palette.mode === "dark" ? "#081C30" : "#FFF"}
-      flexGrow={1}
       // boxShadow={
       //   theme.palette.mode === "dark"
       //     ? "0px 0px 5px 0px rgba(255, 255, 255, 0.40)"
