@@ -65,7 +65,7 @@ const CategorySection = ({title, category}) => {
           borderRadius: "1rem",
           width: "90%",
         }}
-        slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
+        slidesPerView={isSmScreen ? 1 : isMdScreen ? 3 : 4}
         navigation
         spaceBetween={5}
         modules={[Navigation, Scrollbar]}
@@ -73,7 +73,7 @@ const CategorySection = ({title, category}) => {
         scrollbar={{draggable: true}}
       >
         {category.slice(0, 20).map((result, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} style={{display: "flex", justifyContent: "center"}}>
             <HistoryCard {...result} />
           </SwiperSlide>
         ))}
