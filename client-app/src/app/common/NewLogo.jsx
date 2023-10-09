@@ -1,11 +1,11 @@
 import React from "react";
-import {Box, Typography} from "@mui/material";
-import {useNavigate} from "react-router-dom"; // Import useNavigate
+import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import logo from "../../app/assets/image/newLogo.svg";
 import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 
-const NewLogo = ({openNav}) => {
+const NewLogo = ({ openNav }) => {
   const navigate = useNavigate();
 
   const handleBoxClick = () => {

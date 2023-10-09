@@ -2,13 +2,13 @@
  * @file Represents the main entry point of the application.
  */
 
-import {useState, Suspense, useEffect} from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {ThemeProvider} from "@mui/material/styles";
-import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
+import { useState, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { Box, Container, CssBaseline, useMediaQuery } from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
-import {lightTheme, darkTheme} from "./layouts/Palette";
-import {mainRoutes} from "./routes/Routes";
+import { lightTheme, darkTheme } from "./layouts/Palette";
+import { mainRoutes } from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
@@ -64,7 +64,7 @@ function App() {
               element={
                 <Container
                   maxWidth={openNav ? "x1" : "100vw"}
-                  sx={{overflow: isMdUp ? "" : "hidden"}}
+                  sx={{ overflow: isMdUp ? "" : "hidden" }}
                 >
                   <Box
                     display="flex"
@@ -74,7 +74,7 @@ function App() {
                     sx={{
                       width: isLgUp
                         ? openNav
-                          ? `calc(80% + 10rem)`
+                          ? `calc(80% )`
                           : `calc(80%)`
                         : "100%",
 
