@@ -126,6 +126,7 @@ const PcspTest = () => {
     socket && socket.emit("ping_event", performance.now());
 
   const handleButtonClick = () => {
+    if (selectedServerURL==="") return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
