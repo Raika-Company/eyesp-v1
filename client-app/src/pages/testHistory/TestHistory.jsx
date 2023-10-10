@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback, useMemo, useRef} from "react";
+import {useEffect, useState, useCallback, useMemo} from "react";
 import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import HistoryCard from "./HistoryCard";
 import moment from "moment-jalaali";
@@ -7,7 +7,7 @@ import useDynamicMP from "../../app/hooks/useDynamicMP";
 import {ContainedButton} from "../../app/common/ContainedButton";
 import CardContainer from "../../app/common/CardContainer";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Scrollbar, A11y} from "swiper/modules";
+import {Navigation, Scrollbar} from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -61,11 +61,7 @@ const CategorySection = ({title, category}) => {
         {title}
       </Typography>
       <Swiper
-        style={{
-          borderRadius: "1rem",
-          width: "90%",
-        }}
-        slidesPerView={isSmScreen ? 2 : isMdScreen ? 3 : 4}
+        slidesPerView={isSmScreen ? 1 : isMdScreen ? 3 : 4}
         navigation
         spaceBetween={5}
         modules={[Navigation, Scrollbar]}
@@ -73,7 +69,10 @@ const CategorySection = ({title, category}) => {
         scrollbar={{draggable: true}}
       >
         {category.slice(0, 20).map((result, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide
+            key={index}
+            style={{display: "flex", justifyContent: "center"}}
+          >
             <HistoryCard {...result} />
           </SwiperSlide>
         ))}
@@ -82,13 +81,14 @@ const CategorySection = ({title, category}) => {
   );
 };
 
-const NewTestHistory = () => {
+const NewTestHistory = ({openNav}) => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate("/");
   };
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const cardContainerPaddingX = useDynamicMP(390, 1440, 1.75, 4);
   const cardContainerPaddingY = useDynamicMP(390, 1440, 1.19, 3.31);
 
@@ -128,7 +128,13 @@ const NewTestHistory = () => {
         marginBottom: "4rem",
         padding: "1rem",
         overflowX: "hidden",
-        position: "relative",
+        width:
+          isSm && openNav
+            ? "calc(100% + 5rem)"
+            : isMD
+            ? "calc(100% - 1rem)"
+            : "calc(100%)",
+        transition: "all .3s linear",
       }}
     >
       <Box

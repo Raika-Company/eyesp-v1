@@ -2,13 +2,13 @@
  * @file Represents the main entry point of the application.
  */
 
-import {useState, Suspense, useEffect} from "react";
+import {useState, Suspense} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
 import {lightTheme, darkTheme} from "./layouts/Palette";
-import {mainRoutes} from "./routes/Routes";
+import {mainRoutes, historyRoute} from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
@@ -16,7 +16,7 @@ import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
 import Pc from "../pages/pc/pc";
-import api from "./api";
+import NewTestHistory from "../pages/testHistory/TestHistory";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -29,8 +29,6 @@ function App() {
   const toggleOpenMenu = () => {
     setOpenNav(!openNav);
   };
-
-  useEffect(() => {});
 
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
 
@@ -51,7 +49,6 @@ function App() {
 
   const currentThemeMode = theme === lightTheme ? "light" : "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,18 +60,13 @@ function App() {
               path="/*"
               element={
                 <Container
-                  maxWidth={openNav ? "x1" : "100vw"}
-                  sx={{overflow: isMdUp ? "" : "hidden"}}
+                  maxWidth="xl"
+                  sx={{overflow: isMdUp ? "none" : "hidden"}}
                 >
                   <Box
                     display="flex"
-                    marginX={isLgUp ? "10%" : "0"}
                     justifyContent="space-between"
                     marginBottom="1rem"
-                    sx={{
-                      width: isLgUp ? `calc(80%)` : "100%",
-                      transition: "all .25s linear",
-                    }}
                   >
                     <NewNavbar
                       toggleOpenMenu={toggleOpenMenu}
@@ -84,7 +76,6 @@ function App() {
                   </Box>
                   <Box
                     display="flex"
-                    marginX={isLgUp ? "10%" : ""}
                     gap={
                       isMdUp
                         ? mpCardContainers
@@ -93,12 +84,7 @@ function App() {
                         : "0"
                     }
                   >
-                    <Box
-                      flexShrink={0}
-                      sx={{
-                        position: "fixed",
-                      }}
-                    >
+                    <Box flexShrink={0}>
                       <NavSection
                         startIndex={0}
                         endIndex={2}
@@ -117,16 +103,7 @@ function App() {
                         toggleTheme={toggleTheme}
                       />
                     </Box>
-                    <Box
-                      flexShrink={0}
-                      maxWidth={isMdUp ? `calc(100% - 6rem)` : "100%"}
-                      width="100%"
-                      sx={{
-                        marginRight: openNav ? "15rem" : isMdUp ? "5rem" : "0",
-                        transition: "all .25s linear",
-                        // background: "#232323",
-                      }}
-                    >
+                    <Box flex={1} width="calc(100% - 5rem)">
                       <Routes>
                         {mainRoutes.map((route) => (
                           <Route
@@ -135,13 +112,17 @@ function App() {
                             element={route.element}
                           />
                         ))}
+                        <Route
+                          path={historyRoute.path}
+                          element={<NewTestHistory openNav={openNav} />}
+                        />
                       </Routes>
                     </Box>
                   </Box>
                 </Container>
               }
             />
-            <Route path="/pc" element={<Pc />} />
+            <Route path="/app" element={<Pc />} />
           </Routes>
         </Suspense>
       </Router>

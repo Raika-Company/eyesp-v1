@@ -12,7 +12,7 @@
  */
 
 // Import Material-UI components and styles
-import { Box, useMediaQuery } from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 
 // Import Local components
 import MyService from "../../app/common/MyService";
@@ -46,16 +46,23 @@ const MyISP = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   return (
-    <>
+    <Box
+      sx={{
+        maxWidth: "calc(100%)",
+      }}
+    >
       <Box
         display="flex"
-        sx={{ gap: mpCardContainers, flexWrap: isMdScreen ? "wrap" : "" }}
+        sx={{
+          gap: mpCardContainers,
+          flexWrap: isMdScreen ? "wrap" : "",
+        }}
       >
         <MyService qualityPercentage={78} />
         <UserSatisfaction />
       </Box>
       <SoloChartPerformance />
-    </>
+    </Box>
   );
 };
 

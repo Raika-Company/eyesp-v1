@@ -13,7 +13,6 @@ export default defineConfig({
       manifest: "/manifest.webmanifest",
       workbox: {
         globPatterns: ["**/*"],
-        globIgnores: ["**/*.html"],
         navigateFallback: "/index.html",
         skipWaiting: true,
         clientsClaim: true,
