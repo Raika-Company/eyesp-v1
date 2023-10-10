@@ -20,7 +20,6 @@ const NewLogo = () => {
         alignItems: "center",
         paddingY: "0.75rem",
         marginTop: "2.5rem",
-        marginLeft: "1rem",
         cursor: "pointer",
       }}
     >
