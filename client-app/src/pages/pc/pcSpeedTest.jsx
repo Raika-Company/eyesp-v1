@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   useMediaQuery,
@@ -7,13 +7,11 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
-
-import { STATUS_MAP } from "./constant";
-
 import io from "socket.io-client";
 import axios from "axios";
+
+import { STATUS_MAP } from "./constant";
 import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 
 // Assets
@@ -23,7 +21,6 @@ import Ping from "../../app/assets/image/Img-SpeedTest/DownloadUp.svg";
 import PingNoColor from "../../app/assets/image/Img-SpeedTest/ping-NoColor.svg";
 import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoColor.svg";
 import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
-
 import server from "../../app/assets/image/Img-SpeedTest/server.svg";
 import client from "../../app/assets/image/Img-SpeedTest/user.svg";
 import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
@@ -71,6 +68,11 @@ const PcspTest = () => {
   const [clientIp, setClientIp] = useState("");
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const { isFetchingServers, selectBestServer } = useFetchServers();
+
+  const getValue = () => {
+    if (isStartButtonVisible) return null;
+    return isDl ? download : upload;
+  };
 
   useEffect(() => {
     axios
@@ -126,7 +128,7 @@ const PcspTest = () => {
     socket && socket.emit("ping_event", performance.now());
 
   const handleButtonClick = () => {
-    if (selectedServerURL==="") return;
+    if (selectedServerURL === "") return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
@@ -243,7 +245,6 @@ const PcspTest = () => {
           altText="before download icon"
           value={isStartButtonVisible ? null : download}
           measure="Mbps"
-          index={1}
         />
         <PcSpeedBox
           title="PING"
@@ -298,7 +299,7 @@ const PcspTest = () => {
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
               width: "clamp(21rem,21rem + 10vmin,16rem)",
-              marginBottom: "3rem"
+              marginBottom: "3rem",
             }}
           >
             <PcDrawMeter
@@ -335,7 +336,7 @@ const PcspTest = () => {
               <PcMiniSpeedBox
                 iconSrc={isDl ? Download : Upload}
                 altText="before upload icon"
-                value={isStartButtonVisible ? null : upload}
+                value={getValue()}
                 measure="Mbps"
                 opacity={isStartButtonVisible ? "0.2" : "1"}
               />
@@ -383,7 +384,9 @@ const PcspTest = () => {
         />
         <PcInformationBox
           title={selectedServerURL === "" ? "Finding Server..." : "Tehran"}
-          value={selectedServerURL === "" ? "Finding Server..." : "infrastructure"}
+          value={
+            selectedServerURL === "" ? "Finding Server..." : "infrastructure"
+          }
           iconSrc={server}
           altText="server information"
           buttonLabel={

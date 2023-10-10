@@ -26,110 +26,114 @@ import React, { useRef, useEffect } from "react";
  *
  * @returns {React.Element} Rendered DrawMeter component.
  */
-function PcDrawMeter({
-  amount,
-  bk,
-  fg,
-  progress,
-  prog,
-  mbps = 0.0001,
-  isDl,
-  theme,
-}) {
+
+// Constants
+const POINTER_LENGTH_SCALE = 1.4;
+const POINTER_WIDTH_TOP_SCALE = 9;
+const NUMBER_MAPPING = [0, 15, 30, 50, 75, 100, 125, 150, 200];
+
+/**
+ * Creates a gradient for the canvas rendering context.
+ */
+function createGradient(ctx, start, end, colors) {
+  const gradient = ctx.createLinearGradient(start.x, start.y, end.x, end.y);
+  colors.forEach((color, index) =>
+    gradient.addColorStop(index / (colors.length - 1), color)
+  );
+  return gradient;
+}
+
+/**
+ * DrawMeter Component
+ * Renders a canvas that visually represents a meter gauge to depict the speed in Mbps.
+ */
+
+function PcDrawMeter({ amount, bk, fg, mbps = 0.0001, isDl, theme }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const dp = window.devicePixelRatio || 1;
-    const cw = canvas.clientWidth * dp,
-      ch = canvas.clientHeight * dp;
+    const cw = canvas.clientWidth * dp;
+    const ch = canvas.clientHeight * dp;
     const sizScale = ch * 0.0049;
 
-    if (canvas.width === cw && canvas.height === ch) {
-      ctx.clearRect(0, 0, cw, ch);
-    } else {
-      canvas.width = cw;
-      canvas.height = ch;
-    }
-    let numberColor;
+    ctx.clearRect(0, 0, cw, ch); // Always clear to avoid residue when resizing.
+    canvas.width = cw;
+    canvas.height = ch;
 
-    if (theme == "dark") {
-      numberColor = "#45628A";
-    } else {
-      numberColor = "#8f8f8f";
-    }
-
+    const numberColor = theme === "dark" ? "#45628A" : "#8f8f8f";
     const startAngle = -Math.PI * 1.2;
     const endAngle = Math.PI * 0.2;
 
+    // Background arc
     ctx.beginPath();
     ctx.strokeStyle = bk;
     ctx.lineWidth = 20 * sizScale;
     ctx.arc(
-      canvas.width / 2,
-      canvas.height - 78 * sizScale,
-      Math.max(canvas.height / 1.5 - ctx.lineWidth, 0.1),
+      cw / 2,
+      ch - 78 * sizScale,
+      Math.max(ch / 1.5 - ctx.lineWidth, 0.1),
       startAngle,
       endAngle
     );
     ctx.stroke();
 
-    const gradient = ctx.createLinearGradient(
-      canvas.width / 2 - (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height - 78 * sizScale,
-      canvas.width / 2 + (canvas.height / 1.5 - ctx.lineWidth),
-      canvas.height - 78 * sizScale
+    // Gradient arc
+    const gradientColors = ["#1D77FF", "#5A9CFF", "#1D77FF"];
+    const gradient = createGradient(
+      ctx,
+      { x: cw / 2 - (ch / 1.5 - ctx.lineWidth), y: ch - 78 * sizScale },
+      { x: cw / 2 + (ch / 1.5 - ctx.lineWidth), y: ch - 78 * sizScale },
+      gradientColors
     );
-
-    gradient.addColorStop(0, "#1D77FF");
-    gradient.addColorStop(0.5, "#5A9CFF");
-    gradient.addColorStop(1, "#1D77FF");
-
     ctx.beginPath();
     ctx.strokeStyle = gradient;
-    ctx.lineWidth = 20 * sizScale;
     ctx.arc(
-      canvas.width / 2,
-      canvas.height - 78 * sizScale,
-      Math.max(canvas.height / 1.5 - ctx.lineWidth, 0.1),
+      cw / 2,
+      ch - 78 * sizScale,
+      Math.max(ch / 1.5 - ctx.lineWidth, 0.1),
       startAngle,
       startAngle + ((endAngle - startAngle) * mbps) / 100
     );
     ctx.stroke();
 
+    // Numbers on the meter
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = 12 * sizScale + "px PeydaBold";
+    ctx.font = `${12 * sizScale}px PeydaBold`;
 
-    const calculatePosition = (angle, distance, height, lineWidth) => {
-      return {
-        x:
-          canvas.width / 2 +
-          Math.cos(angle) * (height / 1.6 - lineWidth - distance),
-        y:
-          canvas.height -
-          78 * sizScale +
-          Math.sin(angle) * (height / 1.6 - lineWidth - distance),
-      };
-    };
+    const calculatePosition = (angle, distance) => ({
+      x: cw / 2 + Math.cos(angle) * (ch / 1.6 - ctx.lineWidth - distance),
+      y:
+        ch -
+        78 * sizScale +
+        Math.sin(angle) * (ch / 1.6 - ctx.lineWidth - distance),
+    });
 
     function drawNumber(currentNumberIndex) {
-      let angle =
-        startAngle + (endAngle - startAngle) * (currentNumberIndex / 10);
-      let distanceFromEdge = 15 * sizScale;
-      let position = calculatePosition(
+      const displayedNumber = NUMBER_MAPPING[currentNumberIndex];
+
+      if (displayedNumber === undefined) return; // Guard clause
+
+      const angle =
+        startAngle +
+        (endAngle - startAngle) *
+          (currentNumberIndex / (NUMBER_MAPPING.length - 1));
+      const distanceFromEdge = 15 * sizScale;
+      const position = calculatePosition(
         angle,
         distanceFromEdge,
         canvas.height,
         ctx.lineWidth
       );
-      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#fff" : numberColor;
-      ctx.fillText(currentNumberIndex * 10, position.x, position.y);
+      ctx.fillStyle = displayedNumber <= mbps ? "#fff" : numberColor;
+      ctx.fillText(displayedNumber, position.x, position.y);
     }
 
     // if (isDl) {
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i < NUMBER_MAPPING.length; i++) {
       drawNumber(i);
     }
     // }
@@ -137,34 +141,32 @@ function PcDrawMeter({
     // Drawing the trapezoid hand (pointer)
     function drawPointer(angle) {
       ctx.save();
-      ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
+      ctx.translate(cw / 2, ch - 78 * sizScale);
       ctx.rotate(angle);
 
-      var pointerLength = (canvas.height / 1.4 - ctx.lineWidth) * 0.6;
-      var pointerWidthTop = 9 * sizScale * 0.6;
-      var pointerWidthBottom = 15 * sizScale * 1.3;
+      const pointerLength = (ch / POINTER_LENGTH_SCALE - ctx.lineWidth) * 0.6;
+      const pointerWidthTop = POINTER_WIDTH_TOP_SCALE * sizScale * 0.6;
+      const pointerWidthBottom = POINTER_WIDTH_TOP_SCALE * sizScale * 1.9;
 
       ctx.beginPath();
-      // Start from the narrower end
       ctx.moveTo(-pointerWidthTop / 2, -pointerLength);
       ctx.lineTo(pointerWidthTop / 2, -pointerLength);
-      // Drawing the wider base
       ctx.lineTo(pointerWidthBottom / 2, 0);
       ctx.lineTo(-pointerWidthBottom / 2, 0);
       ctx.closePath();
 
       // Create the gradient
-      var gradient = ctx.createLinearGradient(0, -pointerLength, 0, 0);
-      gradient.addColorStop(0, "#7DB1FF");
-      gradient.addColorStop(1, "rgba(26, 117, 255, 0.00)");
-      ctx.fillStyle = gradient;
+      const pointerGradient = createGradient(ctx,
+        { x: 0, y: -pointerLength },
+        { x: 0, y: 0 },
+        ["#7DB1FF", "rgba(26, 117, 255, 0.00)"]
+      );
+      ctx.fillStyle = pointerGradient;
       ctx.fill();
 
       ctx.restore();
     }
-    var pointerAngle =
-      -startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3;
-    drawPointer(pointerAngle);
+    drawPointer(-startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3);
   }, [amount, bk, fg, mbps, isDl, theme]);
 
   return (
