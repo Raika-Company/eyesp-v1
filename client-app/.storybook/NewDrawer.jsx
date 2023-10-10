@@ -6,8 +6,8 @@ const NewDrawer = ({ mbps }) => {
     width: "2px",
     height: "15px",
     left: "50%",
-    top: "50%",
-    transformOrigin: "0 -100px",
+    top: "85%",
+    transformOrigin: "0 -100px ",
     transition: "background-color 1s",
   };
 
@@ -29,8 +29,8 @@ const NewDrawer = ({ mbps }) => {
   const pointerAngle = (endAngle - startAngle) * normalizedMbps;
 
   useEffect(() => {
-    const currentDegree = normalizedMbps * 360; // Calculate the degrees the mbps represents out of 360
-    const purpleLinesCount = Math.floor(currentDegree / 3); // Each line is 3 degrees, so find out how many lines to color
+    const currentDegree = normalizedMbps * 360;
+    const purpleLinesCount = Math.floor(currentDegree / 3);
     const newIsPurple = Array(TOTAL_LINES).fill(false);
 
     for (let i = 0; i < purpleLinesCount; i++) {
@@ -38,16 +38,17 @@ const NewDrawer = ({ mbps }) => {
     }
     setIsPurple(newIsPurple);
   }, [mbps]);
+
   const lines = Array.from({ length: TOTAL_LINES }).map((_, i) => {
     const degree = i * 3;
     const transitionDelay = `${i * 0.02}s`;
     const currentStyle = isPurple[i]
       ? {
           ...baseStyle,
-          backgroundColor: "purple",
+          backgroundColor: "rgb(98, 53, 194)",
           transitionDelay: transitionDelay,
         }
-      : { ...baseStyle, backgroundColor: "black" };
+      : { ...baseStyle, backgroundColor: "#1E2A37" };
 
     return (
       <div
@@ -58,7 +59,19 @@ const NewDrawer = ({ mbps }) => {
   });
 
   return (
-    <div style={{ position: "relative", width: "200px", height: "200px" }}>
+    <div
+      style={{
+        position: "absolute",
+        width: "300px",
+        height: "300px",
+        borderRadius: "11em",
+        border: "1px solid",
+        boxShadow: `
+            inset 0 0 90px rgb(101, 52, 193),  /* inner shadow */
+            0px 4px 59px 0px rgb(101, 52, 193)  /* outer shadow */
+        `,
+      }}
+    >
       {lines}
     </div>
   );
