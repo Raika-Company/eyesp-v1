@@ -300,7 +300,7 @@ const SpeedTest = () => {
             تست های گذشته
           </Button>
         </Box>
-        <NewDrawer mbps={isDl ? download : upload} />
+        {/* <NewDrawer mbps={isDl ? download : upload} /> */}
 
         <Box
           display="flex"
