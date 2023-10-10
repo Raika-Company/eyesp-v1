@@ -128,15 +128,12 @@ const SoloChartPerformance = () => {
         sx={{
           p: "1rem",
           display: "flex",
-          flexWrap: "wrap",
+          gap: "2rem",
           justifyContent: "space-between",
         }}
       >
-        <Box
-          display="flex"
-          sx={{flexBasis: isLgScreen ? "100%" : "70%", position: "relative"}}
-        >
-          <Box>
+        <Box display="flex" position="relative" marginLeft="1rem">
+          <div>
             <Box
               borderRadius="3rem"
               padding="1rem"
@@ -145,12 +142,12 @@ const SoloChartPerformance = () => {
                   theme.palette.mode === "dark"
                     ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
                     : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+                maxWidth: "calc(100% - 1rem)",
               }}
-              width="100%"
               height="100%"
             >
               {rendered && (
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer height={300}>
                   <AreaChart data={chartData}>
                     <Tooltip content={<CustomTooltip />} />
                     <defs>
@@ -179,8 +176,8 @@ const SoloChartPerformance = () => {
                 </ResponsiveContainer>
               )}
             </Box>
-            <img src={xAxis} alt="xAxis" style={{width: "100%"}} />
-          </Box>
+            <img src={xAxis} alt="xAxis" width="100%" />
+          </div>
           <YAxisLine
             max={Math.max(...chartData.map((line) => line.value))}
             unit={getChartLabel()}
@@ -189,7 +186,7 @@ const SoloChartPerformance = () => {
         </Box>
         <Box
           sx={{
-            flexBasis: isLgScreen ? "100%" : "23%",
+            minWidth: "25%",
             display: isLgScreen ? "none" : "flex",
             alignItems: "center",
             justifyContent: "center",

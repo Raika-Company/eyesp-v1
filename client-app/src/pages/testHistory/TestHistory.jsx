@@ -81,13 +81,14 @@ const CategorySection = ({title, category}) => {
   );
 };
 
-const NewTestHistory = () => {
+const NewTestHistory = ({openNav}) => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate("/");
   };
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const cardContainerPaddingX = useDynamicMP(390, 1440, 1.75, 4);
   const cardContainerPaddingY = useDynamicMP(390, 1440, 1.19, 3.31);
 
@@ -127,7 +128,13 @@ const NewTestHistory = () => {
         marginBottom: "4rem",
         padding: "1rem",
         overflowX: "hidden",
-        position: "relative",
+        width:
+          isSm && openNav
+            ? "calc(100% + 5rem)"
+            : isMD
+            ? "calc(100% - 1rem)"
+            : "calc(100%)",
+        transition: "all .3s linear",
       }}
     >
       <Box
