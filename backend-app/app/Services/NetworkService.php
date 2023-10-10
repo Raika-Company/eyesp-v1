@@ -1,8 +1,12 @@
 <?php
 namespace App\Services;
 
-use DateInterval;
-use DateTime;
+use App\Models\RstResult;
+use App\Models\RstThreshold;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 
 class NetworkService {
 
@@ -49,72 +53,113 @@ class NetworkService {
         return max($jitterValues);
     }
 
-    public static function analyzeIssues($trustedData, $userData, $thresholds)
+    public static function ThresholdsCalculation($isp)
     {
-        $report = [];
+        $data = RstResult::whereIsp($isp)
+            ->where('date', '>=', Carbon::today()->subDays(Config::get('app.thresholds_days')))
+            //->whereBetween('time', explode(',', Config::get('app.thresholds_best_time')))
+            ->get();
+        $download = $data->avg('download');
+        $upload = $data->avg('upload');
+        RstThreshold::create([
+            'isp' => $isp,
+            'download' => round($download, 2),
+            'upload' => round($upload, 2),
+            'speed_avg' => round(($download + $upload) / 2, 2),
+            'ping' => round($data->avg('ping')),
+            'packet_loss' => round($data->avg('packet_loss')),
+            'total_quality' => rand(20,100)
+        ]);
+    }
 
-        // Speed Analysis
-        $trustedSpeedAvg = array_sum($trustedData['speed']) / count($trustedData['speed']);
-        $userSpeedAvg = array_sum($userData['speed']) / count($userData['speed']);
-
-        if ($trustedSpeedAvg < $thresholds['speed'] && $userSpeedAvg < $thresholds['speed']) {
-            $report['speed'] = "ISP Issue";
-        } elseif ($userSpeedAvg < $thresholds['speed']) {
-            $report['speed'] = "User Infrastructure Issue";
-        } else {
-            $report['speed'] = "No Issue";
-        }
-
-        // Ping Analysis
-        $trustedPingAvg = array_sum($trustedData['ping']) / count($trustedData['ping']);
-        $userPingAvg = array_sum($userData['ping']) / count($userData['ping']);
-
-        if ($trustedPingAvg > $thresholds['ping'] && $userPingAvg > $thresholds['ping']) {
-            $report['ping'] = "ISP Issue";
-        } elseif ($userPingAvg > $thresholds['ping']) {
-            $report['ping'] = "User Infrastructure Issue";
-        } else {
-            $report['ping'] = "No Issue";
-        }
-
-        // Packet Loss Analysis
-        $trustedPacketLossAvg = array_sum($trustedData['packet_loss']) / count($trustedData['packet_loss']);
-        $userPacketLossAvg = array_sum($userData['packet_loss']) / count($userData['packet_loss']);
-
-        if ($trustedPacketLossAvg > $thresholds['packet_loss'] && $userPacketLossAvg > $thresholds['packet_loss']) {
-            $report['packet_loss'] = "ISP Issue";
-        } elseif ($userPacketLossAvg > $thresholds['packet_loss']) {
-            $report['packet_loss'] = "User Infrastructure Issue";
-        } else {
-            $report['packet_loss'] = "No Issue";
-        }
-
-        // Consistency Over Time
-        $timeNow = new DateTime();
-        $trustedLastHour = array_filter($trustedData, function($row) use ($timeNow) {
-            $time = new DateTime($row['time']);
-            return $time > $timeNow->sub(new DateInterval('PT1H'));
+    public static function GetThresholds($isp)
+    {
+        return Cache::remember("thresholds_$isp", 60, function () use ($isp) {
+            return RstThreshold::where('isp', $isp)
+                ->where('created_at', '>=', Carbon::today()->subDay()->toDateTimeString())
+                ->first();
         });
+    }
 
-        $userLastHour = array_filter($userData, function($row) use ($timeNow) {
-            $time = new DateTime($row['time']);
-            return $time > $timeNow->sub(new DateInterval('PT1H'));
-        });
+    static function calculateAverage(Collection $data, string $metric): float
+    {
+        return $data->average($metric);
+    }
 
-        $trustedSpeedLastHour = array_sum($trustedLastHour['speed']) / count($trustedLastHour['speed']);
-        $userSpeedLastHour = array_sum($userLastHour['speed']) / count($userLastHour['speed']);
+    static function analyzeMetric(float $trustedAvg, float $userAvg, float $threshold, string $metricName, array &$report)
+    {
+        if ($trustedAvg > $threshold && $userAvg > $threshold) {
+            $report[$metricName] = "ISP Issue";
+        } elseif ($userAvg > $threshold) {
+            $report[$metricName] = "User Infrastructure Issue";
+        } else {
+            $report[$metricName] = "No Issue";
+        }
+    }
 
-        if ($trustedSpeedLastHour < $thresholds['speed'] && $userSpeedLastHour < $thresholds['speed']) {
+    public static function CompareIspReports(Collection $reports, string $isp, string $metric)
+    {
+        $ispIssue = $userInfrastructureIssue = $noIssue = 0;
+        foreach ($reports as $report) {
+            if($reports[$isp][$metric] == 'ISP Issue' AND $report[$metric] == 'ISP Issue') {
+                $ispIssue++;
+            }elseif($reports[$isp][$metric] == 'User Infrastructure Issue' AND $report[$metric] == 'User Infrastructure Issue') {
+                $userInfrastructureIssue++;
+            }elseif($reports[$isp][$metric] == 'No Issue' AND $report[$metric] == 'No Issue') {
+                $noIssue++;
+            }
+        }
+
+        return [
+            'ISP Issue' => $ispIssue,
+            'User Infrastructure Issue' => $userInfrastructureIssue,
+            'No Issue' => $noIssue
+        ];
+    }
+
+    static function analyzeConsistency(Collection $trustedData, Collection $userData, float $speedThreshold, array &$report)
+    {
+        $timeNow = Carbon::now();
+        $trustedLastHour = $trustedData;
+        //$trustedLastHour = $trustedData->where('time', '>', $timeNow->subHour());
+        $userLastHour = $userData;
+        //$userLastHour = $userData->where('time', '>', $timeNow->subHour());
+        $trustedSpeedLastHour = self::calculateAverage($trustedLastHour, 'download');
+        $userSpeedLastHour = self::calculateAverage($userLastHour, 'download');
+
+        if ($trustedSpeedLastHour < $speedThreshold && $userSpeedLastHour < $speedThreshold) {
             $report['consistency'] = "ISP Congestion Issue";
-        } elseif ($userSpeedLastHour < $thresholds['speed']) {
+        } elseif ($userSpeedLastHour < $speedThreshold) {
             $report['consistency'] = "User Specific Congestion Issue";
         } else {
             $report['consistency'] = "No Consistency Issue";
         }
+    }
+
+    public static function GetReports($isp, $metrics)
+    {
+        $report = [];
+
+        $thresholds = NetworkService::GetThresholds($isp);
+
+        $trustedData = RstResult::where('isp', $isp)
+            ->where('data_type', 'trusted')
+            ->orderBy('date', 'desc')->take(10)->get();
+
+        $userData = RstResult::where('isp', $isp)
+            ->where('data_type', 'untrusted')
+            ->orderBy('date', 'desc')->take(10)->get();
+
+        foreach ($metrics as $metric) {
+            $trustedAvg = NetworkService::calculateAverage($trustedData, $metric);
+            $userAvg = NetworkService::calculateAverage($userData, $metric);
+            NetworkService::analyzeMetric($trustedAvg, $userAvg, $thresholds->$metric, $metric, $report);
+        }
+
+        NetworkService::analyzeConsistency($trustedData, $userData, $thresholds->download, $report);
 
         return $report;
     }
-
 }
 
 ?>

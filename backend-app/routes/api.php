@@ -31,6 +31,7 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
 
         Route::prefix('dashboard')->group(function () {
             Route::get('/isp-metrics/{city?}', [NetworkController::class, 'ispMetrics']);
+            Route::get('/report/{isp}', [NetworkController::class, 'reports']);
         });
 
         Route::prefix('client')->group(function () {

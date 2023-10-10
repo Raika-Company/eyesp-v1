@@ -31,6 +31,7 @@ class RstResult extends Model
         'upload',
         'upload_duration',
         'jitter',
+        'data_type',
     ];
 
     public static function InsertHelloRequest($ipInfo)

@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\RstIspStats;
 use App\Models\RstResult;
-use App\Services\IpInfo;
 use Illuminate\Http\Request;
 use App\Models\RstServer;
 use App\Services\NetworkService;
 use Carbon\Carbon;
-use DateInterval;
-use DateTime;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -180,28 +177,30 @@ class NetworkController extends Controller
     public function ispMetrics(Request $request)
     {
         try {
-            $isp = [0 => 'irancell', 1 => 'hamrah aval', 2 => 'shatel', 3 => 'mobinnet', 4 =>'hiweb'];
+            $isp = collect(config('app.isps'));
             $ispMetrics = RstIspStats::where('date', '>=', Carbon::today()->subDays(7))->get();
-            $totalRecord = $ispMetrics->count();
-            $data['totalQualityAverage'] = round($ispMetrics->sum('total_quality_average') / $totalRecord, 0);
+            $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
             $data['clients'] = $ispMetrics->sum('clients');
-            $data['speedAverage'] = round($ispMetrics->sum('speed_average') / $totalRecord, 0);
-            $data['pingAverage'] = round($ispMetrics->sum('ping_average') / $totalRecord, 0);
+            $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
+            $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
-            foreach ($isp as $item) {
-                $metrics = $ispMetrics->where('isp', $item);
-                $count = $metrics->count();
-                if($count < 1) {
-                    continue;
-                }
-                $data['isp'][$item] = [
-                    'downloadSpeedAverage' => round($metrics->sum('download_speed_average') / $count, 0),
-                    'uploadSpeedAverage' => round($metrics->sum('upload_speed_average') / $count, 0),
-                    'pingAverage' => round($metrics->sum('ping_average') / $count, 0),
-                    'packetLoss' => round($metrics->sum('packet_loss') / $count, 0),
-                    'totalQuality' => round($metrics->sum('total_quality_average') / $count, 0),
-                ];
-            }
+            $data['isp'] = collect($isp)
+                ->flatMap(function ($item) use ($ispMetrics) {
+                    $metrics = $ispMetrics->where('isp', $item);
+
+                    if ($metrics->isEmpty()) {
+                        return [];
+                    }
+                    return [
+                        $item => [
+                            'downloadSpeedAverage' => round($metrics->avg('download_speed_average')),
+                            'uploadSpeedAverage' => round($metrics->avg('upload_speed_average')),
+                            'pingAverage' => round($metrics->avg('ping_average')),
+                            'packetLoss' => round($metrics->avg('packet_loss')),
+                            'totalQuality' => round($metrics->avg('total_quality_average')),
+                        ],
+                    ];
+                });
 
             return response()->json([
                 'status' => true,
@@ -216,30 +215,26 @@ class NetworkController extends Controller
         }
     }
 
-    public function ana()
+    public function reports($isp)
     {
-        // Define your thresholds for the various metrics
-        $thresholds = [
-            'speed' => 10,   // example value
-            'ping' => 150,   // example value in ms
-            'packet_loss' => 2,  // example value in percentage
+        $metrics = ['download', 'ping', 'packet_loss'];
+        $isps = collect(config('app.isps'));
+
+        // Fetching reports for all ISPs
+        $reports = $isps->mapWithKeys(fn($item) => [
+            $item => NetworkService::GetReports($item, $metrics)
+        ]);
+
+        // Comparing metrics for the specified ISP
+        $comparison = collect($metrics)
+            ->mapWithKeys(fn($metric) => [
+                $metric => NetworkService::CompareIspReports($reports, $isp, $metric)
+            ])
+            ->toArray();
+
+        return [
+            'reports' => $reports->toArray(),
+            'comparison' => $comparison,
         ];
-
-        // Replace these with actual data retrieval logic
-        $trustedData = [
-            'speed' => [8, 17, 15],
-            'ping' => [70, 99, 120],
-            'packet_loss' => [18, 2, 7],
-        ];
-
-        $userData = [
-            'speed' => [10, 18, 32],
-            'ping' => [20, 15, 19],
-            'packet_loss' => [2, 4, 5],
-        ];
-
-        $report = NetworkService::analyzeIssues($trustedData, $userData, $thresholds);
-
-        dd($report);
     }
 }
