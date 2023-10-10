@@ -81,58 +81,76 @@ class NetworkService {
         });
     }
 
-    static function calculateAverage(Collection $data, string $metric): float
+    public static function calculateAverage(Collection $data, string $metric): float
     {
         return $data->average($metric);
     }
 
-    static function analyzeMetric(float $trustedAvg, float $userAvg, float $threshold, string $metricName, array &$report)
+    public static function analyzeMetric(float $trustedAvg, float $userAvg, float $threshold, string $metricName, array &$report)
     {
-        if ($trustedAvg > $threshold && $userAvg > $threshold) {
-            $report[$metricName] = "ISP Issue";
-        } elseif ($userAvg > $threshold) {
-            $report[$metricName] = "User Infrastructure Issue";
-        } else {
-            $report[$metricName] = "No Issue";
+        $conditions = [
+            ['condition' => fn() => $trustedAvg > $threshold && $userAvg > $threshold, 'issue' => "ISP Issue"],
+            ['condition' => fn() => $userAvg > $threshold, 'issue' => "User Infrastructure Issue"],
+            ['condition' => fn() => $trustedAvg > $threshold, 'issue' => "Check Trusted Data"],
+            ['condition' => fn() => true, 'issue' => "No Issue"]
+        ];
+
+        foreach ($conditions as $condition) {
+            if ($condition['condition']()) {
+                $report[$metricName] = $condition['issue'];
+                break;
+            }
         }
     }
 
     public static function CompareIspReports(Collection $reports, string $isp, string $metric)
     {
-        $ispIssue = $userInfrastructureIssue = $noIssue = 0;
+        $issueCounts = [
+            'ISP Issue' => 0,
+            'User Infrastructure Issue' => 0,
+            'Check Trusted Data' => 0,
+            'No Consistency Issue' => 0,
+            'ISP Congestion Issue' => 0,
+            'User Specific Congestion Issue' => 0,
+            'No Issue' => 0
+        ];
+
         foreach ($reports as $report) {
-            if($reports[$isp][$metric] == 'ISP Issue' AND $report[$metric] == 'ISP Issue') {
-                $ispIssue++;
-            }elseif($reports[$isp][$metric] == 'User Infrastructure Issue' AND $report[$metric] == 'User Infrastructure Issue') {
-                $userInfrastructureIssue++;
-            }elseif($reports[$isp][$metric] == 'No Issue' AND $report[$metric] == 'No Issue') {
-                $noIssue++;
-            }
+            $ispMetric = $reports[$isp][$metric];
+            $reportMetric = $report[$metric];
+
+            // Check if both ISP and report have the same issue type
+            $isSameIssue = isset($issueCounts[$ispMetric]) && $ispMetric === $reportMetric;
+
+            // If it's the same issue type, increment the counter
+            $issueCounts[$ispMetric] = $isSameIssue ? $issueCounts[$ispMetric] + 1 : $issueCounts[$ispMetric];
         }
 
-        return [
-            'ISP Issue' => $ispIssue,
-            'User Infrastructure Issue' => $userInfrastructureIssue,
-            'No Issue' => $noIssue
-        ];
+        return $issueCounts;
     }
 
-    static function analyzeConsistency(Collection $trustedData, Collection $userData, float $speedThreshold, array &$report)
+    public static function analyzeConsistency(Collection $trustedData, Collection $userData, float $speedThreshold, array &$report)
     {
         $timeNow = Carbon::now();
         $trustedLastHour = $trustedData;
-        //$trustedLastHour = $trustedData->where('time', '>', $timeNow->subHour());
+        // $trustedLastHour = $trustedData->where('time', '>', $timeNow->subHour());
         $userLastHour = $userData;
-        //$userLastHour = $userData->where('time', '>', $timeNow->subHour());
+        // $userLastHour = $userData->where('time', '>', $timeNow->subHour());
         $trustedSpeedLastHour = self::calculateAverage($trustedLastHour, 'download');
         $userSpeedLastHour = self::calculateAverage($userLastHour, 'download');
 
-        if ($trustedSpeedLastHour < $speedThreshold && $userSpeedLastHour < $speedThreshold) {
-            $report['consistency'] = "ISP Congestion Issue";
-        } elseif ($userSpeedLastHour < $speedThreshold) {
-            $report['consistency'] = "User Specific Congestion Issue";
-        } else {
-            $report['consistency'] = "No Consistency Issue";
+        $consistencyMapping = [
+            ['condition' => fn() => $trustedSpeedLastHour < $speedThreshold && $userSpeedLastHour < $speedThreshold, 'issue' => "ISP Congestion Issue"],
+            ['condition' => fn() => $userSpeedLastHour < $speedThreshold, 'issue' => "User Specific Congestion Issue"],
+            ['condition' => fn() => $trustedSpeedLastHour > $speedThreshold, 'issue' => "Check Trusted Data"],
+            ['condition' => fn() => true, 'issue' => "No Consistency Issue"]
+        ];
+
+        foreach ($consistencyMapping as $mapping) {
+            if ($mapping['condition']()) {
+                $report['consistency'] = $mapping['issue'];
+                break;
+            }
         }
     }
 

@@ -226,6 +226,7 @@ class NetworkController extends Controller
         ]);
 
         // Comparing metrics for the specified ISP
+        $metrics[] = 'consistency';
         $comparison = collect($metrics)
             ->mapWithKeys(fn($metric) => [
                 $metric => NetworkService::CompareIspReports($reports, $isp, $metric)
