@@ -8,7 +8,7 @@ import {ThemeProvider} from "@mui/material/styles";
 import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
 import {lightTheme, darkTheme} from "./layouts/Palette";
-import {mainRoutes} from "./routes/Routes";
+import {mainRoutes, historyRoute} from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
@@ -16,6 +16,7 @@ import NavSection from "./layouts/NavSection";
 import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
 import Pc from "../pages/pc/pc";
+import NewTestHistory from "../pages/testHistory/TestHistory";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -102,7 +103,7 @@ function App() {
                         toggleTheme={toggleTheme}
                       />
                     </Box>
-                    <Box flex={1} width="100%">
+                    <Box flex={1} width="calc(100% - 5rem)">
                       <Routes>
                         {mainRoutes.map((route) => (
                           <Route
@@ -111,6 +112,10 @@ function App() {
                             element={route.element}
                           />
                         ))}
+                        <Route
+                          path={historyRoute.path}
+                          element={<NewTestHistory openNav={openNav} />}
+                        />
                       </Routes>
                     </Box>
                   </Box>
