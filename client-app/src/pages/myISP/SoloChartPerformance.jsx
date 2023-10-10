@@ -132,17 +132,8 @@ const SoloChartPerformance = () => {
           justifyContent: "space-between",
         }}
       >
-        <Box
-          display="flex"
-          sx={{
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              maxWidth: "100%",
-            }}
-          >
+        <Box display="flex" position="relative" marginLeft="1rem">
+          <div>
             <Box
               borderRadius="3rem"
               padding="1rem"
@@ -151,7 +142,7 @@ const SoloChartPerformance = () => {
                   theme.palette.mode === "dark"
                     ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
                     : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-                maxWidth: "calc(100% - .1rem)",
+                maxWidth: "calc(100% - 1rem)",
               }}
               height="100%"
             >
@@ -186,7 +177,7 @@ const SoloChartPerformance = () => {
               )}
             </Box>
             <img src={xAxis} alt="xAxis" width="100%" />
-          </Box>
+          </div>
           <YAxisLine
             max={Math.max(...chartData.map((line) => line.value))}
             unit={getChartLabel()}
