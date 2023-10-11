@@ -20,6 +20,7 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import CustomSnackbar from "./CustomSnackbar";
+import NewCardContainer from "./NewCardContainer";
 
 const labels = {
   0.5: "بی فایده",
@@ -60,7 +61,7 @@ const UserSatisfaction = () => {
       setDisturbance(true);
     }, 500);
   };
-  
+
   const [disturbance, setDisturbance] = useState(false);
   const handleDisturbanceClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -85,7 +86,7 @@ const UserSatisfaction = () => {
   };
   return (
     <>
-      <CardContainer
+      <NewCardContainer
         paddingTop="3.5rem"
         paddingBottom="2.25rem"
         sx={{
@@ -93,7 +94,7 @@ const UserSatisfaction = () => {
           paddingTop: "3.5rem",
           paddingBottom: "2.25rem",
           paddingX: "5%",
-          flexBasis: isMdScreen ? "100%" : "49.5%",
+          flexBasis: isMdScreen ? "100%" : "50%",
         }}
       >
         <Typography variant="h1" color="text.textBlack" gutterBottom>
@@ -192,7 +193,7 @@ const UserSatisfaction = () => {
             />
           </Grid>
         </Grid>
-      </CardContainer>
+      </NewCardContainer>
       <Dialog
         open={openFeedBackDialog}
         onClose={handleCloseFeedbackDialog}

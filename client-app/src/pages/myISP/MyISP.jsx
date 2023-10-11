@@ -12,7 +12,7 @@
  */
 
 // Import Material-UI components and styles
-import {Box, useMediaQuery} from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 
 // Import Local components
 import MyService from "../../app/common/MyService";
@@ -54,14 +54,14 @@ const MyISP = () => {
       <Box
         display="flex"
         sx={{
+          width: "100%",
           gap: mpCardContainers,
           flexWrap: isMdScreen ? "wrap" : "",
         }}
       >
-        <MyService qualityPercentage={78} />
         <UserSatisfaction />
+        <MyService />
       </Box>
-      <SoloChartPerformance />
     </Box>
   );
 };
