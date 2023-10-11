@@ -9,14 +9,14 @@
 import React from "react";
 
 // Import Material-UI components and styles
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 
 /**
  * Radar logo image asset.
  * @type {string}
  */
 import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
-import {useMediaQuery} from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 
 /**
  * LogoRadar Component.
