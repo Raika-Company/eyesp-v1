@@ -15,11 +15,12 @@
 import { Box, useMediaQuery } from "@mui/material";
 
 // Import Local components
-import MyService from "../../app/common/MyService";
-import UserSatisfaction from "../../app/common/UserSatisfaction";
+import Charts from "../../app/common/Charts";
 import SoloChartPerformance from "./SoloChartPerformance";
 
 import useDynamicMP from "../../app/hooks/useDynamicMP";
+import OperatorProfile from "../../app/common/OperatorProfile";
+import ISPDetail from "../../app/common/ISPDetail";
 
 const MyISP = () => {
   /**
@@ -55,12 +56,20 @@ const MyISP = () => {
         display="flex"
         sx={{
           width: "100%",
-          gap: mpCardContainers,
+          gap: "1.254286rem",
           flexWrap: isMdScreen ? "wrap" : "",
         }}
       >
-        <UserSatisfaction />
-        <MyService />
+        <Box
+          display="flex"
+          flexDirection="column"
+          flexBasis={isMdScreen ? "100%" : "50%"}
+          gap={2}
+        >
+          {" "}
+          <ISPDetail />
+        </Box>
+        <Charts />
       </Box>
     </Box>
   );

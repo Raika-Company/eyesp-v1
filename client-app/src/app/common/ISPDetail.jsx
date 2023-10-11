@@ -21,6 +21,9 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import CustomSnackbar from "./CustomSnackbar";
 import NewCardContainer from "./NewCardContainer";
+import Irancell from "../assets/image/irancell.svg";
+import PerformancePercentage from "./PerformancePercentage";
+import OperatorProfile from "./OperatorProfile";
 
 const labels = {
   0.5: "بی فایده",
@@ -54,7 +57,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const UserSatisfaction = () => {
+const ISPDetail = () => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -84,116 +87,13 @@ const UserSatisfaction = () => {
   const handleCloseFeedbackDialog = () => {
     setOpenFeedBackDialog(false);
   };
+
   return (
     <>
-      <NewCardContainer
-        paddingTop="3.5rem"
-        paddingBottom="2.25rem"
-        sx={{
-          marginY: "1rem",
-          paddingTop: "3.5rem",
-          paddingBottom: "2.25rem",
-          paddingX: "5%",
-          flexBasis: isMdScreen ? "100%" : "50%",
-        }}
-      >
-        <Typography variant="h1" color="text.textBlack" gutterBottom>
-          عملکرد اپراتور
-        </Typography>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          gap="0.625rem"
-        >
-          <Typography
-            variant="h3"
-            color="text.main"
-            marginTop="2.875rem"
-            gutterBottom
-          >
-            رضایت کاربران
-          </Typography>
-          <Rating
-            value={2.5}
-            precision={0.5}
-            name="read-only"
-            readOnly
-            sx={{ direction: "ltr" }}
-          />
-          <Box display="flex" justifyContent="center" gap="2rem">
-            <Typography variant="h6" color="text.main">
-              (2.5)
-            </Typography>
-            <Typography variant="h6" color="text.main">
-              10423 نظر
-            </Typography>
-          </Box>
-          <ContainedButton
-            variant="button"
-            onClick={handleClickOpenFeedbackDialog}
-            sx={{
-              backgroundColor: "#008EDD",
-              color: "white",
-            }}
-            bgColor="#008EDD"
-            txtHover="#008EDD"
-          >
-            ثبت بازخورد
-          </ContainedButton>
-        </Box>
-        <Grid container justifyContent="space-evenly">
-          <Grid width="45%" marginY="0.875rem">
-            <StatisticBox
-              background={
-                theme.palette.mode === "light"
-                  ? "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #BDE7FF 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  : "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #236286 0%, #253644 100%)"
-              }
-              title="تعداد کاربرها"
-              unit="کاربر"
-              value="1624201"
-            />
-          </Grid>
-          <Grid width="45%" marginY="0.875rem">
-            <StatisticBox
-              background={
-                theme.palette.mode === "light"
-                  ? "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C1E0B9 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  : "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #44593E 0%, #253644 100%)"
-              }
-              title="میانگین سرعت"
-              unit="(mb/s)"
-              value="21"
-            />
-          </Grid>
-          <Grid width="45%" marginY="0.875rem">
-            <StatisticBox
-              background={
-                theme.palette.mode === "light"
-                  ? "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #C1E0B9 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  : "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #44593E 0%, #253644 100%)"
-              }
-              title="میانگین پینگ"
-              unit="ms"
-              value="43"
-            />
-          </Grid>
-          <Grid width="45%" marginY="0.875rem">
-            <StatisticBox
-              background={
-                theme.palette.mode === "light"
-                  ? "radial-gradient(467.22% 181.99% at -1.81% 6.72%, #FFCCA8 0%, rgba(205, 224, 235, 0.00) 100%)"
-                  : "radial-gradient(417.59% 139.12% at -1.81% 6.72%, #59553E 0%, #253644 100%)"
-              }
-              title="میانگین درصد عملکرد"
-              unit="%"
-              value="58"
-            />
-          </Grid>
-        </Grid>
-      </NewCardContainer>
+      <Box display="flex" gap={2}>
+        <OperatorProfile openFeedbackDialog={handleClickOpenFeedbackDialog} />
+        <PerformancePercentage />
+      </Box>
       <Dialog
         open={openFeedBackDialog}
         onClose={handleCloseFeedbackDialog}
@@ -265,4 +165,4 @@ const UserSatisfaction = () => {
   );
 };
 
-export default UserSatisfaction;
+export default ISPDetail;

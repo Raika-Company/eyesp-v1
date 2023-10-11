@@ -73,16 +73,29 @@ function GridItem({ theme, rendered, title, data, unit }) {
       item
       xs={12}
       md={12}
-      sx={{ backgroundColor: "black", padding: "1em", borderRadius: "2rem" }}
+      sx={{
+        backgroundColor: "black",
+        paddingInline: "3%",
+        paddingBottom: "2.25rem",
+        paddingTop: "1.5rem",
+        borderRadius: ".75rem",
+      }}
     >
       <Box display="flex" position="relative" width="92%">
         <Box sx={{ width: "100%" }}>
-          <Typography color="text.main" variant="h4" gutterBottom>
+          <Typography
+            color="text.main"
+            variant="h1"
+            component="h2"
+            gutterBottom
+          >
             {title}
           </Typography>
           <Box
             borderRadius="3rem"
-            padding="1rem"
+            paddingX="3%"
+            paddingBottom="2.25rem"
+            paddingTop="3.5rem"
             sx={{
               background:
                 theme.palette.mode === "dark"
@@ -150,7 +163,7 @@ function generateRandomData() {
   }
   return data;
 }
-const MyService = () => {
+const Charts = () => {
   const theme = useTheme();
   const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [rendered, setRendered] = useState(false);
@@ -185,16 +198,23 @@ const MyService = () => {
   }, []);
   const NewCard = styled(Box)(({ theme }) => ({
     maxHeight: "47em",
-    overflowY: "scroll",
+    overflowY: "auto",
     backgroundColor: "#121212",
     boxShadow: "none",
-    borderRadius: "2rem",
+    borderRadius: "0.75rem",
+
+    // For WebKit browsers (like Chrome and Safari) to hide scrollbar
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+
+    // For Firefox to hide scrollbar
+    "& scrollbarWidth": "none",
   }));
   return (
     <>
       <NewCard
         marginY="1rem"
-        paddingTop="1.5rem"
         sx={{
           marginY: "1rem",
 
@@ -227,4 +247,4 @@ const MyService = () => {
   );
 };
 
-export default MyService;
+export default Charts;

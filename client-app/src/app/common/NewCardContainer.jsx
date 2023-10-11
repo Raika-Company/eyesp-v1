@@ -1,7 +1,7 @@
 import { Card, styled } from "@mui/material";
 
 const NewCardContainer = styled(Card)(({ theme }) => ({
-  borderRadius: "2rem",
+  borderRadius: ".75rem",
   backdropFilter: "blur(35px)",
   background:
     theme.palette.mode === "dark"
@@ -11,7 +11,7 @@ const NewCardContainer = styled(Card)(({ theme }) => ({
     theme.palette.mode === "light"
       ? "0px 4px 40px 0px rgba(0, 0, 0, 0.20)"
       : "0px 4px 40px 0px rgba(255, 255, 255, 0.10)",
-  border: theme.palette.mode === "light" ? "0" : "1px solid #676767",
+  // border: theme.palette.mode === "light" ? "0" : "1px solid #676767",
 }));
 
 export default NewCardContainer;
