@@ -68,6 +68,8 @@ const PcspTest = () => {
   const [clientIp, setClientIp] = useState("");
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const { isFetchingServers, selectBestServer } = useFetchServers();
+  const [isServerSelected, setIsServerSelected] = useState(false);
+
 
   const getValue = () => {
     if (isStartButtonVisible) return null;
@@ -80,6 +82,13 @@ const PcspTest = () => {
       .then((res) => setClientIp(res.data.ip));
     // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
+
+  useEffect(() => {
+    if (selectedServerURL) {
+      setIsServerSelected(true);
+    }
+  }, [selectedServerURL]);
+
 
   useEffect(() => {
     if (selectedServerURL) return;
@@ -96,20 +105,26 @@ const PcspTest = () => {
   const PING_TIMES = 10;
 
   useEffect(() => {
-    /**
-     * Sets up the socket connection when the selected server URL changes.
-     * Disconnects the existing socket when the component unmounts.
-     */
+    if (selectedServerURL === "") {
+      return;
+    }
     const s = socket || io(selectedServerURL);
     setSocket(s);
+
+    s.on("connect", () => {
+      console.log("Socket connected");
+    });
+
+    s.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
+
     return () => s.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedServerURL]);
 
   useEffect(() => {
-    /**
-     * Listens for the "pong_event" emitted by the server to calculate latency.
-     */
-    if (!socket) return;
+    if (!socket || !isServerSelected) return;
     let pingCount = 0,
       minLatency = Infinity;
     socket.on("pong_event", async (timestamp) => {
@@ -122,13 +137,15 @@ const PcspTest = () => {
         socket.emit("ping_event", performance.now());
       }
     });
-  }, [socket]);
+  }, [socket, isServerSelected]);
 
-  const startPingTest = () =>
+  const startPingTest = () => {
+    if (!isServerSelected) return;
     socket && socket.emit("ping_event", performance.now());
+  };
 
   const handleButtonClick = () => {
-    if (selectedServerURL === "") return;
+    if (!isServerSelected) return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
