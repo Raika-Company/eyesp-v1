@@ -244,8 +244,22 @@ class NetworkController extends Controller
 
     public function reports2($isp)
     {
-        $timeFrames = config('app.ping');
-        list($analyzeType, $timeFrame, $report) = NetworkService::IspAnalyze($isp, 'download', $timeFrames);
-        dd($analyzeType, $timeFrame, $report);
+        try {
+            $timeFrames = config('app.speed');
+            list($analyzeType, $timeFrame, $report) = NetworkService::IspAnalyze($isp, 'download', $timeFrames);
+
+            return response()->json([
+                'status' => true,
+                'data' => $report,
+                //'message' => 'Compared to '.$timeFrame.' hour ago',
+                'message' => __('messages.'.$analyzeType, ['counter' => $timeFrame]),
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
