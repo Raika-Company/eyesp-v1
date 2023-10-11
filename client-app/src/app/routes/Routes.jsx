@@ -69,7 +69,7 @@ export const mainRoutes = [
   // },
   {
     path: "/my-isp",
-    element: <Dashboard />,
+    element: <MyISP />,
     title: "My ISP | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",

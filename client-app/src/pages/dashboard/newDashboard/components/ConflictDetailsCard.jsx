@@ -46,7 +46,6 @@ const ConflictDetailsCard = () => {
       sx={{
         boxShadow: "0px 0px 30px 0px rgba(255, 68, 68, 0.60)",
         borderRadius: "1rem",
-        maxWidth: "50%",
         paddingY: "1rem",
         paddingX: "2rem",
         display: "flex",

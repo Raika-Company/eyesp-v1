@@ -45,7 +45,6 @@ const AllSituationCard = () => {
       sx={{
         boxShadow: "0px 0px 30px 0px rgba(255, 255, 255, 0.20)",
         borderRadius: "1rem",
-        maxWidth: "50%",
         paddingY: "1rem",
         paddingX: "2rem",
         display: "flex",
