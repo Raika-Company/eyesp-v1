@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\IspPacketlossAnalysis;
+use App\Jobs\IspPingAnalysis;
+use App\Jobs\IspSpeedAnalysis;
 use App\Models\RstIspStats;
 use App\Models\RstResult;
 use Illuminate\Http\Request;
@@ -237,5 +240,12 @@ class NetworkController extends Controller
             'reports' => $reports->toArray(),
             'comparison' => $comparison,
         ];
+    }
+
+    public function reports2($isp)
+    {
+        $timeFrames = config('app.ping');
+        list($analyzeType, $timeFrame, $report) = NetworkService::IspAnalyze($isp, 'download', $timeFrames);
+        dd($analyzeType, $timeFrame, $report);
     }
 }

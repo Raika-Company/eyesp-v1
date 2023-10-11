@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\RstIspStats;
 use App\Models\RstResult;
 use App\Models\RstThreshold;
 use Carbon\Carbon;
@@ -116,6 +117,8 @@ class NetworkService {
         ];
 
         foreach ($reports as $report) {
+            if(!isset($report[$metric]))
+                continue;
             $ispMetric = $reports[$isp][$metric];
             $reportMetric = $report[$metric];
 
@@ -154,11 +157,14 @@ class NetworkService {
         }
     }
 
-    public static function GetReports($isp, $metrics)
+    public static function GetReports(string $isp, array $metrics)
     {
         $report = [];
 
         $thresholds = NetworkService::GetThresholds($isp);
+
+        if(!$thresholds)
+            return $report;
 
         $trustedData = RstResult::where('isp', $isp)
             ->where('data_type', 'trusted')
@@ -177,6 +183,59 @@ class NetworkService {
         NetworkService::analyzeConsistency($trustedData, $userData, $thresholds->download, $report);
 
         return $report;
+    }
+
+    public static function GetReports2(string $isp, Collection $trustedData, Collection $untrustedData, string $metric)
+    {
+        $report = [];
+
+        $thresholds = NetworkService::GetThresholds($isp);
+
+        if(!$thresholds)
+            return $report;
+
+        $trustedAvg = NetworkService::calculateAverage($trustedData, $metric);
+        $userAvg = NetworkService::calculateAverage($untrustedData, $metric);
+        NetworkService::analyzeMetric($trustedAvg, $userAvg, $thresholds->$metric, $metric, $report);
+
+        return $report;
+    }
+
+    public static function IspAnalyze(string $isp, string $metric, array $timeFrames): array
+    {
+        $result = array_reduce(array_keys($timeFrames), function ($carry, $analyzeType) use ($isp, $metric, $timeFrames) {
+            return $carry ?? array_reduce($timeFrames[$analyzeType], function ($innerCarry, $time) use ($isp, $metric, $analyzeType) {
+                if ($innerCarry !== null) {
+                    return $innerCarry;
+                }
+
+                $data = self::analyzeData($isp, $time, $analyzeType);
+                $report = self::generateReport($isp, $data, $metric);
+                return $report[$metric] !== 'No Issue' ? [$analyzeType, $time, $report] : null;
+            });
+        }, null);
+
+        return $result ?? ['', '', []];
+    }
+
+
+    private static function analyzeData(string $isp, string $timeFrame, string $analyzeType)
+    {
+        /* if($analyzeType == 'hourly')
+            $data = RstResult::$analyzeType($isp, $timeFrame);
+        else
+            $data = RstIspStats::$analyzeType($isp, $timeFrame); */
+        $data = RstResult::$analyzeType($isp, $timeFrame);
+
+        return [
+            'trusted' => $data->where('data_type', 'trusted'),
+            'untrusted' => $data->where('data_type', 'untrusted')
+        ];
+    }
+
+    private static function generateReport(string $isp, array $data, string $metric)
+    {
+        return self::GetReports2($isp, $data['trusted'], $data['untrusted'], $metric);
     }
 }
 

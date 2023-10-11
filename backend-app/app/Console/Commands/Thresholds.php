@@ -29,16 +29,17 @@ class Thresholds extends Command
      */
     public function handle()
     {
-        $data = RstResult::where('isp', $this->argument('isp'))
+        $isp = \Illuminate\Support\Str::replace('_', ' ', $this->argument('isp'));
+        $data = RstResult::where('isp', $isp)
             ->where('data_type', 'trusted')
             ->where('date', '>=', Carbon::today()->subDays(Config::get('app.thresholds_days'))->toDateString())
-            //->whereBetween('time', explode(',', Config::get('app.thresholds_best_time')))
+            ->whereBetween('time', explode(',', Config::get('app.thresholds_best_time')))
             ->get();
 
         $download = $data->avg('download');
         $upload = $data->avg('upload');
         RstThreshold::create([
-            'isp' => $this->argument('isp'),
+            'isp' => $isp,
             'download' => round($download, 2),
             'upload' => round($upload, 2),
             'speed_avg' => round(($download + $upload) / 2, 2),
