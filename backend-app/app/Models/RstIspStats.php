@@ -17,10 +17,11 @@ class RstIspStats extends Model
         'speed_average',
         'download_speed_average',
         'upload_speed_average',
-        'packet_lost',
+        'packet_loss',
         'ping_average',
         'total_quality_average',
         'disturbance',
-        'date'
+        'date',
+        'data_type'
     ];
 }
