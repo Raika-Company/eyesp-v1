@@ -1,6 +1,7 @@
 import React, {lazy} from "react";
 
 import SpeedTest from "../../pages/speedtest/SpeedTest";
+import NewDashboard from "../../pages/dashboard/newDashboard/NewDashboard";
 
 const NewSpeedTest = lazy(() => import("../../pages/speedtest/NewSpeedTest"));
 const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
@@ -43,7 +44,7 @@ export const mainRoutes = [
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <NewDashboard />,
     title: "Dashboard | TIC Radar",
     description: "Admin dashboard to manage and review system metrics.",
     keywords: "dashboard, admin panel, system metrics",
@@ -68,7 +69,7 @@ export const mainRoutes = [
   // },
   {
     path: "/my-isp",
-    element: <MyISP />,
+    element: <Dashboard />,
     title: "My ISP | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
