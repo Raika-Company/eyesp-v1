@@ -251,7 +251,6 @@ class NetworkController extends Controller
             return response()->json([
                 'status' => true,
                 'data' => $report,
-                //'message' => 'Compared to '.$timeFrame.' hour ago',
                 'message' => __('messages.'.$analyzeType, ['counter' => $timeFrame]),
             ]);
         } catch(\Exception $e) {
