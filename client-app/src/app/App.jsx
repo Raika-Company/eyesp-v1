@@ -22,6 +22,7 @@ import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
 import Pc from "../pages/pc/pc";
 import NewTestHistory from "../pages/testHistory/TestHistory";
+import BackgroundSvg from "./BackgroundSvg";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -70,16 +71,7 @@ function App() {
                 position: "relative",
               }}
             >
-              <img
-                src="/src/app/assets/image/Background_earth2.svg"
-                style={{
-                  position: "absolute",
-                  left: "0",
-                  width: "60%",
-                  zIndex: "-1",
-                  opacity: pathname === "/dashboard" ? "1" : ".2",
-                }}
-              />
+              <BackgroundSvg />
               <Box
                 display="flex"
                 justifyContent="space-between"

@@ -5,7 +5,7 @@ import CompareTable from "./components/CompareTable";
 import {ContainedSelect} from "../../../app/common/ContainedSelect";
 import provinces from "../../../../public/data/provinces.json";
 import ISPList from "../../../../public/data/RowISPData.json";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const NewDashboard = () => {
   const [province, setProvince] = useState("");
@@ -19,16 +19,33 @@ const NewDashboard = () => {
     setSelectedISP(event.target.value);
   };
 
+  // useEffect(() => {
+  //   const path = document.getElementById("iran_map_path");
+  //   if (path) {
+  //     const circle = document.createElementNS(
+  //       "http://www.w3.org/2000/svg",
+  //       "circle"
+  //     );
+  //     circle.setAttribute("cx", "299");
+  //     circle.setAttribute("cy", "502");
+  //     circle.setAttribute("r", "7");
+  //     circle.setAttribute("fill", "#FE4543");
+
+  //     path.append(circle);
+  //   }
+  // });
+
   return (
     <Box
       sx={{
+        height: "90vh",
         width: "100%",
         marginTop: "1rem",
         display: "grid",
         gridTemplateColumns: isMdScreen ? "repeat(2, 1fr)" : "1fr",
       }}
     >
-      <Stack direction="column" gap="2rem">
+      <Stack direction="column" gap="2rem" paddingBottom="1rem">
         <ConflictDetailsCard />
         <AllSituationCard />
         <Stack direction="row" gap="2rem">
@@ -93,6 +110,7 @@ const NewDashboard = () => {
             borderRadius: "1rem",
             padding: "1rem",
             background: "#0C6087",
+            whiteSpace: "nowrap",
           }}
         >
           مشاهده وضعیت

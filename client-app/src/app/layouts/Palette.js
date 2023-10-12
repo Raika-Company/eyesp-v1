@@ -241,7 +241,7 @@ export const darkTheme = createTheme({
       subTitle: "#FFF",
     },
     background: {
-      default: "#262626",
+      default: "#313131",
     },
     hover: {
       main: "#182633",
