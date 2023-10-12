@@ -12,14 +12,16 @@
  */
 
 // Import Material-UI components and styles
-import {Box, useMediaQuery} from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 
 // Import Local components
-import MyService from "../../app/common/MyService";
-import UserSatisfaction from "../../app/common/UserSatisfaction";
+import Charts from "../../app/common/Charts";
 import SoloChartPerformance from "./SoloChartPerformance";
 
 import useDynamicMP from "../../app/hooks/useDynamicMP";
+import OperatorProfile from "../../app/common/OperatorProfile";
+import ISPDetail from "../../app/common/ISPDetail";
+import MomentDisruption from "../../app/common/MomentDisruption";
 
 const MyISP = () => {
   /**
@@ -54,14 +56,23 @@ const MyISP = () => {
       <Box
         display="flex"
         sx={{
-          gap: mpCardContainers,
+          width: "100%",
+          gap: "1.19rem",
           flexWrap: isMdScreen ? "wrap" : "",
         }}
       >
-        <MyService qualityPercentage={78} />
-        <UserSatisfaction />
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={2.5}
+          flexBasis={isMdScreen ? "100%" : "50%"}
+        >
+          {" "}
+          <ISPDetail />
+          <MomentDisruption />
+        </Box>
+        <Charts />
       </Box>
-      <SoloChartPerformance />
     </Box>
   );
 };

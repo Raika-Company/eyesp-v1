@@ -9,8 +9,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
+import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import YAxisLine from "../ispCompare/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
@@ -20,11 +20,16 @@ import FormControlChart from "../../app/common/FormControlChart";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 import { CustomTooltip } from "../ispCompare/OperatorCompare";
+import NewCardContainer from "../../app/common/NewCardContainer";
 
 const SoloChartPerformance = () => {
   const theme = useTheme();
 
   const buttons = [
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
     { label: "سرعت دانلود", width: "80%" },
     { label: "سرعت آپلود", width: "80%" },
     { label: "پینگ", width: "80%" },
@@ -99,7 +104,7 @@ const SoloChartPerformance = () => {
   }, []);
 
   return (
-    <CardContainer
+    <NewCardContainer
       sx={{
         display: "flex",
         flexWrap: "wrap",
@@ -249,7 +254,7 @@ const SoloChartPerformance = () => {
           </Box>
         </Box>
       </Box>
-    </CardContainer>
+    </NewCardContainer>
   );
 };
 
