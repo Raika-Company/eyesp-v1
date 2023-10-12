@@ -17,7 +17,7 @@
 import React from "react";
 
 // Import Material-UI components and styles
-import {Box, Stack, Typography, useMediaQuery} from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 
 const PcSpeedBox = ({
   title,
@@ -26,7 +26,6 @@ const PcSpeedBox = ({
   value,
   measure,
   filter,
-  index,
   isFull,
 }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));

@@ -1,7 +1,7 @@
-import {Box, Typography} from "@mui/material";
 import React from "react";
+import { Box, Typography } from "@mui/material";
 
-const PcMiniSpeedBox = ({title, iconSrc, altText, value, measure, filter}) => {
+const PcMiniSpeedBox = ({ iconSrc, altText, value, measure }) => {
   return (
     <Box>
       <Typography color="#FFF" fontSize="1.5rem">
@@ -11,7 +11,6 @@ const PcMiniSpeedBox = ({title, iconSrc, altText, value, measure, filter}) => {
         <div>
           <img src={iconSrc} alt={altText} height="20px" width="20px" />
         </div>
-
         <Typography color="#909090" fontSize="1rem" variant="subtitle2">
           {measure}
         </Typography>

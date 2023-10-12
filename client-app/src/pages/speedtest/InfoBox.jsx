@@ -1,8 +1,8 @@
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AnimatingNumber from "./numbers/AnimatingNumber";
 import useDebounceTime from "../../app/hooks/useDebounceTime";
 
-const InfoBox = ({iconSrc, title, value, isColumn, isTestEnds, unit}) => {
+const InfoBox = ({ iconSrc, title, value, isColumn, isTestEnds, unit }) => {
   const debounceValue = useDebounceTime(value);
   return (
     <Box

@@ -11,9 +11,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
+import { useEffect, useState } from "react";
+import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import YAxisLine from "../ispCompare/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
+import { Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
@@ -26,6 +29,10 @@ const SoloChartPerformance = () => {
   const theme = useTheme();
 
   const buttons = [
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
     { label: "سرعت دانلود", width: "80%" },
     { label: "سرعت آپلود", width: "80%" },
     { label: "پینگ", width: "80%" },
@@ -118,6 +125,7 @@ const SoloChartPerformance = () => {
         color="text.textBlack"
         gutterBottom
         sx={{
+          width: "100%",
           mt: isLgScreen ? "0.4rem" : "",
           display: isLgScreen ? "none" : "flex",
         }}

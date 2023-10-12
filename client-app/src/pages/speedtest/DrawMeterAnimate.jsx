@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, {useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 /**
  * DrawMeter Component
@@ -177,7 +177,7 @@ function DrawMeterAnimate({
   }, [mbps, isDl, theme, progress, testState, isEndAnimationStarted]);
 
   return (
-    <canvas ref={canvasRef} style={{width: "100%", height: "100%"}}></canvas>
+    <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
   );
 }
 

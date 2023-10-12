@@ -6,13 +6,14 @@ import PhLink from "../../app/assets/image/imgLogoSocialM/ph_link.svg";
 import Linkedin from "../../app/assets/image/imgLogoSocialM/linkedin.svg";
 import Facebook from "../../app/assets/image/imgLogoSocialM/facebook.svg";
 import SimpleIcon from "../../app/assets/image/imgLogoSocialM/simple-icon.svg";
+import React, { useState, useEffect } from "react";
 
-import {Box, Typography, useTheme} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Fade from "@mui/material/Fade";
-import {ContainedButton} from "../../app/common/ContainedButton";
+import { ContainedButton } from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import IconLink from "./IconLInk";
 
 const SOCIAL_ICONS = [
@@ -43,7 +44,7 @@ const SOCIAL_ICONS = [
   },
 ];
 
-const FloatingResult = ({download, upload, latency, isTestEnds}) => {
+const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -61,7 +62,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
 
   return (
     <>
-      <Typography sx={{display: {md: "none"}}}>
+      <Typography sx={{ display: { md: "none" } }}>
         برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
       </Typography>
       <Box
@@ -69,7 +70,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
         width="100%"
         marginY={1}
         sx={{
-          display: {xs: "flex", md: "none"},
+          display: { xs: "flex", md: "none" },
           justifyContent: "space-between",
           alignItems: "center",
         }}
@@ -111,7 +112,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
       <Box
         borderRadius="2rem"
         sx={{
-          display: {xs: "none", md: "flex"},
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -157,6 +158,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             "ms"
           )}
         </Box>
+
         {isTestEnds && (
           <ContainedButton
             bgColor="#FF8A35"
@@ -191,7 +193,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             }}
           >
             <Typography color="#878787">به اشتراک بگذارید:</Typography>
-            {SOCIAL_ICONS.map(({iconPath, name, link}) => (
+            {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
               <IconLink iconPath={iconPath} key={name} link={link} />
             ))}
           </Box>
