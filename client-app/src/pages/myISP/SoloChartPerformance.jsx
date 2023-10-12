@@ -9,14 +9,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
-import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import YAxisLine from "../ispCompare/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
-import { Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";

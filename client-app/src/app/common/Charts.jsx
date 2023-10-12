@@ -67,7 +67,13 @@ const titlesChart = [
     unit: "Ms",
   },
 ];
-function GridItem({ theme, rendered, title, data, unit }) {
+const chartColors = [
+  { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
+  { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
+  { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
+  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
+];
+function GridItem({ theme, rendered, title, data, unit, color }) {
   return (
     <Grid
       item
@@ -96,12 +102,12 @@ function GridItem({ theme, rendered, title, data, unit }) {
             paddingX="3%"
             paddingBottom="2.25rem"
             paddingTop="3.5rem"
-            sx={{
-              background:
-                theme.palette.mode === "dark"
-                  ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
-                  : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-            }}
+            // sx={{
+            //   background:
+            //     theme.palette.mode === "dark"
+            //       ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
+            //       : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+            // }}
             width="100%"
             height="250px"
           >
@@ -111,8 +117,8 @@ function GridItem({ theme, rendered, title, data, unit }) {
                   <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip content={<CustomTooltip />} />
                     <defs>
-                      <linearGradient
-                        id="gradientChart"
+                      {/* <linearGradient
+                        id={`gradientChart${color.stroke}`}
                         x1="0"
                         y1="0"
                         x2="0"
@@ -120,17 +126,47 @@ function GridItem({ theme, rendered, title, data, unit }) {
                       >
                         <stop
                           offset="0.333333"
-                          stopColor="#0091E3"
+                          stopColor={color.gradientStart}
                           stopOpacity="0.167089"
                         />
-                        <stop offset="1" stopColor="#008EDD" stopOpacity="0" />
-                      </linearGradient>
+                        <stop
+                          offset="1"
+                          stopColor={color.gradientEnd}
+                          stopOpacity="0"
+                        />
+                      </linearGradient> */}
+                      <filter
+                        id="glow"
+                        x="-70%"
+                        y="-70%"
+                        width="200%"
+                        height="200%"
+                      >
+                        <feOffset
+                          result="offOut"
+                          in="SourceGraphic"
+                          dx="0"
+                          dy="0"
+                        />
+                        <feGaussianBlur
+                          result="blurOut"
+                          in="offOut"
+                          stdDeviation="5"
+                        />
+                        <feBlend
+                          in="SourceGraphic"
+                          in2="blurOut"
+                          mode="normal"
+                        />
+                      </filter>
                     </defs>
                     <Area
-                      type="monotone"
+                      type="linear"
                       dataKey="value"
-                      stroke="#008EDD"
-                      fill="url(#gradientChart)"
+                      stroke={color.stroke}
+                      fill={`url(#gradientChart${color.stroke})`}
+                      strokeWidth={4}
+                      filter="url(#glow)"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -197,7 +233,7 @@ const Charts = () => {
     setRendered(true);
   }, []);
   const NewCard = styled(Box)(({ theme }) => ({
-    maxHeight: "47em",
+    maxHeight: "58em",
     overflowY: "auto",
     backgroundColor: "#121212",
     boxShadow: "none",
@@ -214,9 +250,8 @@ const Charts = () => {
   return (
     <>
       <NewCard
-        marginY="1rem"
         sx={{
-          marginY: "1rem",
+          marginTop: "1rem",
 
           flexBasis: isMdScreen ? "100%" : "49.5%",
         }}
@@ -229,8 +264,8 @@ const Charts = () => {
               rendered={rendered}
               title={line.title}
               unit={line.unit}
+              color={chartColors[index]} // Passing entire color object
               data={
-                // Assign each chart a different randomChartData
                 index === 0
                   ? randomChartData1
                   : index === 1

@@ -21,6 +21,7 @@ import SoloChartPerformance from "./SoloChartPerformance";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import OperatorProfile from "../../app/common/OperatorProfile";
 import ISPDetail from "../../app/common/ISPDetail";
+import MomentDisruption from "../../app/common/MomentDisruption";
 
 const MyISP = () => {
   /**
@@ -56,18 +57,19 @@ const MyISP = () => {
         display="flex"
         sx={{
           width: "100%",
-          gap: "1.254286rem",
+          gap: "1.19rem",
           flexWrap: isMdScreen ? "wrap" : "",
         }}
       >
         <Box
           display="flex"
           flexDirection="column"
+          gap={2.5}
           flexBasis={isMdScreen ? "100%" : "50%"}
-          gap={2}
         >
           {" "}
           <ISPDetail />
+          <MomentDisruption />
         </Box>
         <Charts />
       </Box>

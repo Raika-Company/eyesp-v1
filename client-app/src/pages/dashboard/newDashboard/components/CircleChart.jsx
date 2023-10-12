@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const CircleChart = ({
   id,
@@ -31,7 +31,7 @@ const CircleChart = ({
     <div
       style={{
         position: "relative",
-        width: "100px",
+        // width: "100px",
       }}
     >
       <svg width={size} height={size}>

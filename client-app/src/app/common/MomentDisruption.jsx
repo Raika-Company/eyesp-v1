@@ -30,6 +30,7 @@ import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
 import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
+import AxisIsp from "../assets/image/AxisIsp.svg";
 const OperatorProfile = () => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
@@ -94,21 +95,18 @@ const OperatorProfile = () => {
         padding: "5px 14px;",
       },
   }));
-  let percentage = 65;
-  let gradientColors = ["#0C6087", "#0C6087"];
 
   return (
     <>
       <NewCardContainer
         sx={{
-          marginTop: "1rem",
           paddingTop: "1.5rem",
           paddingBottom: "1.5rem",
           paddingX: "3%",
-          flexBasis: isMdScreen ? "100%" : "50%",
+          flexBasis: "100%",
         }}
       >
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           {" "}
           <Typography
             variant="h1"
@@ -118,7 +116,21 @@ const OperatorProfile = () => {
           >
             درصد عملکرد{" "}
           </Typography>
-          <StyledFormControl sx={{ width: "50%" }}>
+          <ViewDetailsButton />
+        </Box>
+        <Box
+          mt={1}
+          ml={3}
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          gap={2}
+        >
+          {" "}
+          <Typography color="text.textBlack" gutterBottom>
+            نمایش تا
+          </Typography>
+          <StyledFormControl sx={{ width: "8.8125rem" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -134,44 +146,8 @@ const OperatorProfile = () => {
             </ContainedSelect>
           </StyledFormControl>
         </Box>
-        <Box display="flex" justifyContent="space-between" mt={4}>
-          <ButtonGroup
-            orientation="vertical"
-            variant="outlined"
-            aria-label="outlined button group"
-            sx={buttonGroupStyle}
-          >
-            {buttons.map((btn, index) => (
-              <Button
-                key={index}
-                onClick={() => handleButtonClick(index)}
-                style={
-                  clickedButtonIndex === index
-                    ? { ...activeButtonStyle, width: btn.width }
-                    : { ...defaultButtonStyle, width: btn.width }
-                }
-              >
-                {btn.label}
-              </Button>
-            ))}
-          </ButtonGroup>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {" "}
-            <CircleChart
-              finalPercentage={percentage}
-              gradientColors={gradientColors}
-              size={140}
-            />
-          </Box>
-        </Box>
-        <Box mt={4} display="flex" justifyContent="center">
-          <ViewDetailsButton />
+        <Box mt={3}>
+          <img src={AxisIsp} alt="" />
         </Box>
       </NewCardContainer>
     </>

@@ -1,6 +1,6 @@
-import {Box, Button, Stack, Typography, grid2Classes} from "@mui/material";
+import { Box, Button, Stack, Typography, grid2Classes } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import CircleChart from "./CircleChart";
 import Square from "./Square";
 
@@ -83,33 +83,35 @@ const AllSituationCard = () => {
           justifyContent: "space-evenly",
         }}
       >
-        {detailsData.map(({id, percentage, title, average, unit, gradient}) => (
-          <Box
-            key={id}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: ".8rem",
-            }}
-          >
-            <CircleChart
-              id={id}
-              finalPercentage={percentage}
-              gradientColors={
-                id === 2 ? ["#005E87", "rgba(44, 79, 121, 0.80)"] : undefined
-              }
-            />
-            <Typography>{title}</Typography>
-            <Square
-              value={average}
-              unit={unit}
-              title={"میانگین"}
-              background="radial-gradient(143.37% 143.37% at 10.4% -3.47%, #434544 0%, rgba(67, 69, 68, 0.00) 100%)"
-            />
-          </Box>
-        ))}
+        {detailsData.map(
+          ({ id, percentage, title, average, unit, gradient }) => (
+            <Box
+              key={id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: ".8rem",
+              }}
+            >
+              <CircleChart
+                id={id}
+                finalPercentage={percentage}
+                gradientColors={
+                  id === 2 ? ["#005E87", "rgba(44, 79, 121, 0.80)"] : undefined
+                }
+              />
+              <Typography>{title}</Typography>
+              <Square
+                value={average}
+                unit={unit}
+                title={"میانگین"}
+                background="radial-gradient(143.37% 143.37% at 10.4% -3.47%, #434544 0%, rgba(67, 69, 68, 0.00) 100%)"
+              />
+            </Box>
+          )
+        )}
       </Box>
     </Box>
   );

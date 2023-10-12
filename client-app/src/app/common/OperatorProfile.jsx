@@ -28,10 +28,9 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
   return (
     <>
       <NewCardContainer
-        paddingTop="3.5rem"
         sx={{
-          marginY: "1rem",
-          paddingTop: "2.5rem",
+          marginTop: "1rem",
+          paddingTop: "1.5rem",
           paddingBottom: "2.5rem",
           paddingX: "3%",
           flexBasis: isMdScreen ? "100%" : "50%",
@@ -94,14 +93,19 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
               precision={0.5}
               name="read-only"
               readOnly
-              sx={{ direction: "ltr" }}
+              sx={{
+                direction: "ltr",
+                "& .MuiRating-iconFilled": {
+                  color: "#E7E7E7",
+                },
+              }}
             />
             <Box display="flex" justifyContent="center" gap="2rem">
               <Typography variant="h6" color="text.main">
-                (2.5)
-              </Typography>
+                10423 کاربر
+              </Typography>{" "}
               <Typography variant="h6" color="text.main">
-                10423 نظر
+                (2.5)
               </Typography>
             </Box>
             <ContainedButton
