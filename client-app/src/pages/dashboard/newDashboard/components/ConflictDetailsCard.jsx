@@ -50,6 +50,7 @@ const ConflictDetailsCard = () => {
         paddingX: "2rem",
         display: "flex",
         flexDirection: "column",
+        background: "#1A1A1A",
         gap: "2rem",
       }}
     >

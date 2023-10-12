@@ -22,6 +22,7 @@ const NewDashboard = () => {
   return (
     <Box
       sx={{
+        width: "100%",
         marginTop: "1rem",
         display: "grid",
         gridTemplateColumns: isMdScreen ? "repeat(2, 1fr)" : "1fr",

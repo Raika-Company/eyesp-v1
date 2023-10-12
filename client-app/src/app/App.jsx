@@ -3,7 +3,12 @@
  */
 
 import {useState, Suspense} from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
@@ -25,6 +30,7 @@ import NewTestHistory from "../pages/testHistory/TestHistory";
  */
 function App() {
   const [openNav, setOpenNav] = useState(false);
+  const {pathname} = useLocation();
 
   const toggleOpenMenu = () => {
     setOpenNav(!openNav);
@@ -53,79 +59,81 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route
-              path="/*"
-              element={
-                <Container
-                  maxWidth="xl"
-                  sx={{overflow: isMdUp ? "none" : "hidden"}}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    marginBottom="1rem"
-                  >
-                    <NewNavbar
-                      toggleOpenMenu={toggleOpenMenu}
-                      openNav={openNav}
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <Container
+              maxWidth="xl"
+              sx={{
+                overflow: isMdUp ? "none" : "hidden",
+                position: "relative",
+              }}
+            >
+              <img
+                src="/src/app/assets/image/Background_earth2.svg"
+                style={{
+                  position: "absolute",
+                  left: "0",
+                  width: "60%",
+                  zIndex: "-1",
+                  opacity: pathname === "/dashboard" ? "1" : ".2",
+                }}
+              />
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                marginBottom="1rem"
+              >
+                <NewNavbar toggleOpenMenu={toggleOpenMenu} openNav={openNav} />
+                <NewLogo />
+              </Box>
+              <Box
+                display="flex"
+                gap={
+                  isMdUp ? mpCardContainers : openNav ? mpCardContainers : "0"
+                }
+              >
+                <Box flexShrink={0}>
+                  <NavSection
+                    startIndex={0}
+                    endIndex={2}
+                    openNav={openNav}
+                    setOpenNav={setOpenNav}
+                  />
+                  <NavSection
+                    startIndex={2}
+                    endIndex={undefined}
+                    openNav={openNav}
+                    setOpenNav={setOpenNav}
+                  />
+                  <ThemeSwitcher
+                    openNav={openNav}
+                    themeMode={currentThemeMode}
+                    toggleTheme={toggleTheme}
+                  />
+                </Box>
+                <Box flex={1} width="calc(100% - 5rem)">
+                  <Routes>
+                    {mainRoutes.map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={route.element}
+                      />
+                    ))}
+                    <Route
+                      path={historyRoute.path}
+                      element={<NewTestHistory openNav={openNav} />}
                     />
-                    <NewLogo />
-                  </Box>
-                  <Box
-                    display="flex"
-                    gap={
-                      isMdUp
-                        ? mpCardContainers
-                        : openNav
-                        ? mpCardContainers
-                        : "0"
-                    }
-                  >
-                    <Box flexShrink={0}>
-                      <NavSection
-                        startIndex={0}
-                        endIndex={2}
-                        openNav={openNav}
-                        setOpenNav={setOpenNav}
-                      />
-                      <NavSection
-                        startIndex={2}
-                        endIndex={undefined}
-                        openNav={openNav}
-                        setOpenNav={setOpenNav}
-                      />
-                      <ThemeSwitcher
-                        openNav={openNav}
-                        themeMode={currentThemeMode}
-                        toggleTheme={toggleTheme}
-                      />
-                    </Box>
-                    <Box flex={1} width="calc(100% - 5rem)">
-                      <Routes>
-                        {mainRoutes.map((route) => (
-                          <Route
-                            key={route.path}
-                            path={route.path}
-                            element={route.element}
-                          />
-                        ))}
-                        <Route
-                          path={historyRoute.path}
-                          element={<NewTestHistory openNav={openNav} />}
-                        />
-                      </Routes>
-                    </Box>
-                  </Box>
-                </Container>
-              }
-            />
-            <Route path="/app" element={<Pc />} />
-          </Routes>
-        </Suspense>
-      </Router>
+                  </Routes>
+                </Box>
+              </Box>
+            </Container>
+          }
+        />
+        <Route path="/app" element={<Pc />} />
+      </Routes>
     </ThemeProvider>
   );
 }
