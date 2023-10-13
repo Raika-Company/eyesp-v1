@@ -1,0 +1,54 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#effect-example-3 {
+  width: 10%;
+  max-width: 300px;
+  margin: 0 auto;
+  position: relative; /* Added for positioning the pseudo elements */
+}
+
+#effect-example-3 .column tbody {
+  aspect-ratio: 4 / 3;
+}
+
+#effect-example-3 .column tbody td {
+  margin-inline-start: 20%;
+  margin-inline-end: 20%;
+  background: radial-gradient(
+        ellipse 100% 8px at bottom,
+        red 90px,
+        transparent 90px
+      )
+      bottom,
+    radial-gradient(ellipse 100% 8px at top, red 90px, transparent 50px) top,
+    linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3));
+  position: relative; /* Added for positioning the pseudo elements */
+}
+
+/* Adding glow effect using pseudo elements */
+#effect-example-3 .column tbody td::before,
+#effect-example-3 .column tbody td::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 4px; /* Height of the glowing line */
+  background-color: red;
+  box-shadow: 0 0 10px red, 0 0 20px red; /* This creates the glow effect */
+}
+
+#effect-example-3 .column tbody td::before {
+  top: 0;
+  left: 0;
+}
+
+#effect-example-3 .column tbody td::after {
+  bottom: 0;
+  left: 0;
+}

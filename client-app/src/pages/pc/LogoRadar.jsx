@@ -15,7 +15,7 @@ import { Box } from "@mui/material";
  * Radar logo image asset.
  * @type {string}
  */
-import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
+// import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
 import { useMediaQuery } from "@mui/material";
 
 /**
