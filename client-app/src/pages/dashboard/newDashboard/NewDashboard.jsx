@@ -38,14 +38,13 @@ const NewDashboard = () => {
   return (
     <Box
       sx={{
-        height: "90vh",
         width: "100%",
         marginTop: "1rem",
         display: "grid",
         gridTemplateColumns: isMdScreen ? "repeat(2, 1fr)" : "1fr",
       }}
     >
-      <Stack direction="column" gap="2rem" paddingBottom="1rem">
+      <Stack direction="column" gap="2rem" padding="2rem" whiteSpace="nowrap">
         <ConflictDetailsCard />
         <AllSituationCard />
         <Stack direction="row" gap="2rem">
@@ -66,7 +65,7 @@ const NewDashboard = () => {
           gap: "1rem",
         }}
       >
-        <Box gap="1rem">
+        <Box>
           <ContainedSelect
             labelId="change-province-label"
             id="change-province"
@@ -84,7 +83,7 @@ const NewDashboard = () => {
             ))}
           </ContainedSelect>
         </Box>
-        <Box gap="1rem">
+        <Box>
           <ContainedSelect
             labelId="change-province-label"
             id="change-province"

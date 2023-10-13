@@ -11,7 +11,7 @@ const BackgroundSvg = ({...props}) => {
         height: "943px",
         width: "817px",
         left: "0",
-        position: "absolute",
+        position: "fixed",
         zIndex: "-1",
         opacity: pathname === "/dashboard" ? "1" : ".2",
         transition: "opacity .25s linear",
