@@ -31,6 +31,7 @@ import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
 import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
 import AxisIsp from "../assets/image/AxisIsp.svg";
+
 const OperatorProfile = () => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
@@ -95,7 +96,55 @@ const OperatorProfile = () => {
         padding: "5px 14px;",
       },
   }));
+  const StyledDiv = styled("div")({
+    width: "10%",
+    maxWidth: 300,
+    margin: "0 auto",
+    position: "relative",
+    "& .column tbody": {
+      aspectRatio: "4 / 3",
+    },
+    "& .column tbody td": {
+      marginInlineStart: "20%",
+      marginInlineEnd: "20%",
+      background:
+        "radial-gradient(ellipse 250% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 250% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
+      position: "relative",
+    },
+    "& .column tbody td::before, & .column tbody td::after": {
+      content: '""',
+      display: "block",
+      position: "absolute",
+      width: "100%",
+      height: 4,
+      backgroundColor: "red",
+      boxShadow: "0 0 10px red, 0 0 20px red",
+    },
+    "& .column tbody td::before": {
+      top: 0,
+      left: 0,
+    },
+    "& .column tbody td::after": {
+      bottom: 0,
+      left: 0,
+    },
+  });
+  const StyledTable = styled("table")({
+    "&.charts-css.column.hide-data tbody": {
+      height: "90px",
+      width: "90px",
+    },
 
+    "&.charts-css.column.hide-data span": {
+      visibility: "hidden",
+    },
+  });
+  const positions = [
+    { top: "50%", left: "50%" },
+    { top: "30%", left: "30%" },
+    { top: "60%", left: "70%" },
+    // ... more positions
+  ];
   return (
     <>
       <NewCardContainer
@@ -108,13 +157,8 @@ const OperatorProfile = () => {
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {" "}
-          <Typography
-            variant="h1"
-            component="h2"
-            color="text.textBlack"
-            gutterBottom
-          >
-            درصد عملکرد{" "}
+          <Typography m={0} variant="h1" component="h2" color="text.textBlack">
+            اختلالات لحظه ای{" "}
           </Typography>
           <ViewDetailsButton />
         </Box>
@@ -127,7 +171,7 @@ const OperatorProfile = () => {
           gap={2}
         >
           {" "}
-          <Typography color="text.textBlack" gutterBottom>
+          <Typography m={0} color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
           <StyledFormControl sx={{ width: "8.8125rem" }}>
@@ -137,7 +181,7 @@ const OperatorProfile = () => {
               value={age}
               label="سال"
               onChange={handleChange}
-              sx={{ backgroundColor: "#313131" }}
+              sx={{ backgroundColor: "#313131", border: "none" }}
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
@@ -146,8 +190,33 @@ const OperatorProfile = () => {
             </ContainedSelect>
           </StyledFormControl>
         </Box>
-        <Box mt={3}>
-          <img src={AxisIsp} alt="" />
+        <Box mt={3} position="relative">
+          <img
+            src={AxisIsp}
+            alt=""
+            style={{ width: "100%", display: "block" }}
+          />
+          {positions.map((position, index) => (
+            <StyledDiv
+              key={index}
+              style={{
+                position: "absolute",
+                top: position.top,
+                left: position.left,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <StyledTable className="charts-css column hide-data">
+                <tbody>
+                  <tr>
+                    <td style={{ "--size": 1.0 }}>
+                      <span>400000</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </StyledTable>
+            </StyledDiv>
+          ))}
         </Box>
       </NewCardContainer>
     </>

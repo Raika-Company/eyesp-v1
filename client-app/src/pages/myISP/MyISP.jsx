@@ -12,7 +12,7 @@
  */
 
 // Import Material-UI components and styles
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Typography } from "@mui/material";
 
 // Import Local components
 import Charts from "../../app/common/Charts";
@@ -51,8 +51,12 @@ const MyISP = () => {
     <Box
       sx={{
         maxWidth: "calc(100%)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
+      <Typography variant="h1">اپراتور من</Typography>
+
       <Box
         display="flex"
         sx={{

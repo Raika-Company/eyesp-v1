@@ -16,7 +16,13 @@ import {
 import React, { useEffect, useState } from "react";
 import NewCardContainer from "./NewCardContainer";
 import axios from "axios";
-import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
 
 import YAxisLine from "../../pages/ispCompare/YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
@@ -99,9 +105,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           </Typography>
           <Box
             borderRadius="3rem"
-            paddingX="3%"
-            paddingBottom="2.25rem"
-            paddingTop="3.5rem"
+            paddingRight="3%"
             // sx={{
             //   background:
             //     theme.palette.mode === "dark"
@@ -116,6 +120,12 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
                 <ResponsiveContainer width="100%" height={150}>
                   <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip content={<CustomTooltip />} />
+                    <ReferenceLine
+                      stroke="grey"
+                      strokeWidth={1}
+                      strokeDasharray="3 3"
+                    />
+
                     <defs>
                       {/* <linearGradient
                         id={`gradientChart${color.stroke}`}
@@ -233,7 +243,7 @@ const Charts = () => {
     setRendered(true);
   }, []);
   const NewCard = styled(Box)(({ theme }) => ({
-    maxHeight: "58em",
+    maxHeight: "54em",
     overflowY: "auto",
     backgroundColor: "#121212",
     boxShadow: "none",
@@ -252,11 +262,11 @@ const Charts = () => {
       <NewCard
         sx={{
           marginTop: "1rem",
-
+          backgroundColor: "transparent",
           flexBasis: isMdScreen ? "100%" : "49.5%",
         }}
       >
-        <Grid container gap={4}>
+        <Grid container gap={2.5}>
           {titlesChart.map((line, index) => (
             <GridItem
               key={index}

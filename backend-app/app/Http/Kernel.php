@@ -23,7 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
         \App\Http\Middleware\CorsPing::class,
-        \ipinfo\ipinfolaravel\ipinfolaravel::class,
+//        \ipinfo\ipinfolaravel\ipinfolaravel::class,
     ];
 
     /**
