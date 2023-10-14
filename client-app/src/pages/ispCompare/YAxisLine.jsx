@@ -1,6 +1,6 @@
-import {Box, Typography, useTheme} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
-const YAxisLine = ({max, unit, height}) => {
+const YAxisLine = ({ max, unit, height }) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
   const values = [0, 5, 10];
@@ -43,6 +43,7 @@ const YAxisLine = ({max, unit, height}) => {
         >
           {values.map((value, index) => (
             <Typography
+              data-value={value}
               key={index}
               color={theme.palette.mode === "dark" ? "#fffa" : "#777"}
             >

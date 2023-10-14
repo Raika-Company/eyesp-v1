@@ -129,6 +129,22 @@ const OperatorProfile = () => {
       left: 0,
     },
   });
+  const StyledTable = styled("table")({
+    "&.charts-css.column.hide-data tbody": {
+      height: "90px",
+      width: "90px",
+    },
+
+    "&.charts-css.column.hide-data span": {
+      visibility: "hidden",
+    },
+  });
+  const positions = [
+    { top: "50%", left: "50%" },
+    { top: "30%", left: "30%" },
+    { top: "60%", left: "70%" },
+    // ... more positions
+  ];
   return (
     <>
       <NewCardContainer
@@ -179,36 +195,33 @@ const OperatorProfile = () => {
             </ContainedSelect>
           </StyledFormControl>
         </Box>
-        <Box mt={3} position="relative" style={{ minHeight: "300px" }}>
-          {" "}
-          {/* Assuming minHeight just for safety */}
+        <Box mt={3} position="relative">
           <img
             src={AxisIsp}
             alt=""
             style={{ width: "100%", display: "block" }}
-          />{" "}
-          {/* Making sure the image covers the full width of its container */}
-          <StyledDiv
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <table className="charts-css column hide-data">
-              <tbody style={{ height: "90px", width: "90px" }}>
-                <tr>
-                  <td style={{ "--size": 1.0 }}>
-                    <span className="data" style={{ visibility: "hidden" }}>
-                      {" "}
-                      400000
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </StyledDiv>
+          />
+          {positions.map((position, index) => (
+            <StyledDiv
+              key={index}
+              style={{
+                position: "absolute",
+                top: position.top,
+                left: position.left,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <StyledTable className="charts-css column hide-data">
+                <tbody>
+                  <tr>
+                    <td style={{ "--size": 1.0 }}>
+                      <span>400000</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </StyledTable>
+            </StyledDiv>
+          ))}
         </Box>
       </NewCardContainer>
     </>
