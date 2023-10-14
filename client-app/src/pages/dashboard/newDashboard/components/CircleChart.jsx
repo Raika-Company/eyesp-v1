@@ -7,7 +7,6 @@ const CircleChart = ({
   size = 100,
   gradientColors = ["#960000", "rgba(157, 0, 0, 0.40)"],
 }) => {
-  size = (window.devicePixelRatio || 1) * size;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const [percentage, setPercentage] = useState(0);
