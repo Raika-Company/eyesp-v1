@@ -204,6 +204,11 @@ class NetworkController extends Controller
                         ],
                     ];
                 });
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => ''
+            ]);
         } catch(\Exception $e) {
             return response()->json([
                 'status' => false,
