@@ -105,9 +105,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           </Typography>
           <Box
             borderRadius="3rem"
-            paddingBottom="2.25rem"
             paddingRight="3%"
-            paddingTop="3.5rem"
             // sx={{
             //   background:
             //     theme.palette.mode === "dark"
@@ -115,13 +113,18 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
             //       : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
             // }}
             width="100%"
-            height="220px"
+            height="250px"
           >
             {rendered && (
               <Box>
                 <ResponsiveContainer width="100%" height={150}>
                   <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip content={<CustomTooltip />} />
+                    <ReferenceLine
+                      stroke="grey"
+                      strokeWidth={1}
+                      strokeDasharray="3 3"
+                    />
 
                     <defs>
                       {/* <linearGradient
