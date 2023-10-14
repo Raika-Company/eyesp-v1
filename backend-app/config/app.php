@@ -225,7 +225,7 @@ return [
     |
     */
 
-    'pocket_loss' => [
+    'packet_loss' => [
         'hourly' => [1, 2, 3, 12],
         'daily' => [1, 2, 4, 5],
         'weekly' => [1, 2, 3],
