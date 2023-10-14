@@ -86,7 +86,7 @@ const ConflictDetailsCard = () => {
             marginRight: "auto",
           }}
         >
-          سایر اپراتورها
+          مشاهده همه
           <img src={leftArrow} alt="leftArrow" />
         </Button>
       </Box>

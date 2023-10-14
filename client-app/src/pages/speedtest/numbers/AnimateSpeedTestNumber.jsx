@@ -41,7 +41,7 @@ const AnimatesSpeedTestNumber = ({value, unit}) => {
           transition: "all .25s linear",
         }}
       >
-        {value}
+        {value || 0}
       </div>
       <Typography
         sx={{
