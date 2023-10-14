@@ -317,8 +317,7 @@ const NewTestHistory = ({ openNav }) => {
   return (
     <Card
       sx={{
-        background: theme.palette.mode === "dark" ? "#121212" : "#E9E9E9",
-        marginTop: "1rem",
+        background: "transparent",        marginTop: "1rem",
         marginBottom: "4rem",
         boxShadow: "none",
         backgroundImage: "none",

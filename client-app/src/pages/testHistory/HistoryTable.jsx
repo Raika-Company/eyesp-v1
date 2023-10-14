@@ -208,7 +208,7 @@ const HistoryTable = () => {
           mt: "0.5rem",
           border: "none",
           boxShadow: "none",
-          background: isDark ? "#121212" : "#E9E9E9",
+          background: "transparent",
         }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
