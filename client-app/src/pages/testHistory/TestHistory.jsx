@@ -141,9 +141,9 @@ function GridItem({ theme, rendered, title, data, unit }) {
         {/* Shadow for the line */}
         <line
           x1={x}
-          y1={y + 6.1} // Offset for the shadow
+          y1={y + 6} // Offset for the shadow
           x2={x + width}
-          y2={y - 6.1} // Offset for the shadow
+          y2={y - 6} // Offset for the shadow
           stroke={barColorsTop[index % barColorsTop.length]}
           strokeOpacity="0.9" // Makes the shadow slightly transparent
           strokeWidth="50"
@@ -167,7 +167,7 @@ function GridItem({ theme, rendered, title, data, unit }) {
   };
 
   return (
-    <Grid item xs={12} md={6} padding="2rem 1rem" mt="1rem">
+    <Grid item xs={12} md={6} padding="2rem 0.5rem" mt="1rem">
       <Box
         display="flex"
         position="relative"
@@ -224,12 +224,18 @@ function GridItem({ theme, rendered, title, data, unit }) {
             alt="xAxis"
             style={{ width: "100%" }}
           /> */}
-        <XAxisLine
-          max={Math.max(...data.map((line) => line.value))}
-          unit={unit}
-        />
+          <XAxisLine
+            max={Math.max(...data.map((line) => line.value))}
+            unit={unit}
+          />
         </Box>
-        <Box sx={{ position: "absolute", left: "4rem", top: "1.5rem" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            left: isSmScreen ? "2.5rem" : "3rem",
+            top: "1.5rem",
+          }}
+        >
           <YAxisLine
             max={Math.max(...data.map((line) => line.value))}
             unit={unit}
