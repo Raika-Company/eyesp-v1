@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import {createTheme} from "@mui/material";
 
 var theme = createTheme();
 
@@ -241,7 +241,7 @@ export const darkTheme = createTheme({
       subTitle: "#FFF",
     },
     background: {
-      default: "#121212",
+      default: "#313131",
     },
     hover: {
       main: "#182633",
