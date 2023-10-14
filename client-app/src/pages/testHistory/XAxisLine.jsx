@@ -1,8 +1,10 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const XAxisLine = ({ max, unit, height }) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const createVlues = (time, date) => ({
     time,
@@ -38,7 +40,7 @@ const XAxisLine = ({ max, unit, height }) => {
       >
         <div
           style={{
-            width: "32.4rem",
+            width: isSmScreen ? "15.2rem" : "34rem",
             background: theme.palette.mode === "dark" ? "#C9C9C9" : "#aaaa",
             borderRadius: ".5rem",
             height: height || "0.3rem",
@@ -47,6 +49,8 @@ const XAxisLine = ({ max, unit, height }) => {
         <Box
           sx={{
             display: "flex",
+            justifyContent: "space-evenly",
+            width: "100%",
           }}
         >
           {values.map((value, index) => (
