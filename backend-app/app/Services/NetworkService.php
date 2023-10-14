@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\RstFeedback;
 use App\Models\RstIspStats;
 use App\Models\RstResult;
 use App\Models\RstThreshold;
@@ -57,7 +58,8 @@ class NetworkService
         return max($jitterValues);
     }
 
-    public static function ThresholdsCalculation($isp)
+    public static function IspMetrics(array $isp): array
+    {
         $ispMetrics = RstIspStats::whereIn('isp', $isp)
             ->where('date', '>=', Carbon::today()->subDays(7))
             ->get();
@@ -89,7 +91,7 @@ class NetworkService
         return $data;
     }
 
-    public static function analyzeIssues($trustedData, $userData, $thresholds)
+    public static function ThresholdsCalculation($isp)
     {
         $data = RstResult::whereIsp($isp)
             ->where('date', '>=', Carbon::today()->subDays(Config::get('app.thresholds_days')))
