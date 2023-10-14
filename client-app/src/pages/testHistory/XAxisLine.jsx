@@ -1,9 +1,19 @@
-import {Box, Typography, useTheme} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
-const YAxisLine = ({max, unit, height}) => {
+const XAxisLine = ({ max, unit, height }) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
-  const values = [0, 5, 10];
+
+  const createVlues = (time, date) => ({
+    time,
+    date,
+  });
+  const values = [
+    createVlues("22 تير", "12:24:45PM"),
+    createVlues("22 تير", "12:24:45PM"),
+    createVlues("22 تير", "12:24:45PM"),
+    createVlues("22 تير", "12:24:45PM"),
+  ];
   for (let i = 1; i <= 3; i++) {
     values.push(Math.floor(Math.min(i * valueOfEachRow, max)));
   }
@@ -12,42 +22,44 @@ const YAxisLine = ({max, unit, height}) => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
         gap: ".5rem",
         position: "absolute",
-        left: "-2.5rem",
+        right: "0",
+        bottom: "0.3rem",
       }}
     >
-      <Typography>{unit}</Typography>
       <Box
         sx={{
           display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
           gap: ".5rem",
         }}
       >
         <div
           style={{
-            width: ".3rem",
+            width: "32.4rem",
             background: theme.palette.mode === "dark" ? "#C9C9C9" : "#aaaa",
             borderRadius: ".5rem",
-            height: height || "16.1rem",
+            height: height || "0.3rem",
           }}
         ></div>
-
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column-reverse",
-            justifyContent: "space-around",
           }}
         >
           {values.map((value, index) => (
-            <Typography
+            <Box
               key={index}
               color={theme.palette.mode === "dark" ? "#fffa" : "#777"}
+              sx={{
+                textAlign: "center",
+              }}
             >
-              {value}
-            </Typography>
+              <Typography>{value.time}</Typography>
+              <Typography>{value.date}</Typography>
+            </Box>
           ))}
         </Box>
       </Box>
@@ -55,4 +67,4 @@ const YAxisLine = ({max, unit, height}) => {
   );
 };
 
-export default YAxisLine;
+export default XAxisLine;
