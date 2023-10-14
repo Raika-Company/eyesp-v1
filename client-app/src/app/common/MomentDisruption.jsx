@@ -108,7 +108,7 @@ const OperatorProfile = () => {
       marginInlineStart: "20%",
       marginInlineEnd: "20%",
       background:
-        "radial-gradient(ellipse 100% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 100% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
+        "radial-gradient(ellipse 250% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 250% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
       position: "relative",
     },
     "& .column tbody td::before, & .column tbody td::after": {
@@ -157,12 +157,7 @@ const OperatorProfile = () => {
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {" "}
-          <Typography
-            variant="h1"
-            component="h2"
-            color="text.textBlack"
-            gutterBottom
-          >
+          <Typography m={0} variant="h1" component="h2" color="text.textBlack">
             اختلالات لحظه ای{" "}
           </Typography>
           <ViewDetailsButton />
@@ -176,7 +171,7 @@ const OperatorProfile = () => {
           gap={2}
         >
           {" "}
-          <Typography color="text.textBlack" gutterBottom>
+          <Typography m={0} color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
           <StyledFormControl sx={{ width: "8.8125rem" }}>
@@ -186,7 +181,7 @@ const OperatorProfile = () => {
               value={age}
               label="سال"
               onChange={handleChange}
-              sx={{ backgroundColor: "#313131" }}
+              sx={{ backgroundColor: "#313131", border: "none" }}
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>

@@ -125,7 +125,7 @@ const OperatorProfile = () => {
               value={age}
               label="سال"
               onChange={handleChange}
-              sx={{ backgroundColor: "#313131" }}
+              sx={{ backgroundColor: "#313131", border: "none" }}
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
