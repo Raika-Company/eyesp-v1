@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-}); */
+}); */ِ
 
 Route::prefix('v1')->middleware(['cors'])->group(function () {
     Route::name('speed-test.')->group(function () {
@@ -31,6 +31,8 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
 
         Route::prefix('dashboard')->group(function () {
             Route::get('/isp-metrics/{city?}', [NetworkController::class, 'ispMetrics']);
+            Route::get('/report/{isp}', [NetworkController::class, 'reports']);
+            Route::get('/report2/{isp}', [NetworkController::class, 'reports2']);
             Route::get('/my-isp/{isp}', [NetworkController::class, 'myIspMetrics']);
         });
 
