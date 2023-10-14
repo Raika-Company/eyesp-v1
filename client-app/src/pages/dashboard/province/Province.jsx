@@ -29,8 +29,8 @@ import NewLogo from "../../../app/common/NewLogo";
 import frame from "../../../app/assets/image/frame.svg";
 import provinces from "../../../../public/data/provinces.json";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import SendReport from "../../../app/common/SendReport";
-import CustomSnackbar from "../../../app/common/CustomeSnackbar";
+import SendErrorReport from "../../../app/common/SendErrorReport";
+import CustomSnackbar from "../../../app/common/CustomSnackbar";
 import ISPStatistics from "../ISPStatistics";
 import ISPCompareTable from "../ISPCompareTable";
 import useDynamicMP from "../../../app/hooks/useDynamicMP";
@@ -357,7 +357,7 @@ const Province = () => {
         <ISPStatistics mpCardContainers={mpCardContainers} />
         <ISPCompareTable mpCardContainers={mpCardContainers} />
       </Box>
-      <SendReport
+      <SendErrorReport
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
       />

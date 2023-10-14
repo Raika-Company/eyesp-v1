@@ -1,6 +1,6 @@
-import {Box, Typography, useTheme} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
-const YAxisLine = ({max, unit, height}) => {
+const YAxisLine = ({ max, unit, height }) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
   const values = [0, 5, 10];
@@ -15,7 +15,7 @@ const YAxisLine = ({max, unit, height}) => {
         flexDirection: "column",
         gap: ".5rem",
         position: "absolute",
-        left: "-3rem",
+        left: "-2.5rem",
       }}
     >
       <Typography>{unit}</Typography>
@@ -30,7 +30,7 @@ const YAxisLine = ({max, unit, height}) => {
             width: ".3rem",
             background: theme.palette.mode === "dark" ? "#C9C9C9" : "#aaaa",
             borderRadius: ".5rem",
-            height: height || "14rem",
+            height: height || "16.1rem",
           }}
         ></div>
 
@@ -43,6 +43,7 @@ const YAxisLine = ({max, unit, height}) => {
         >
           {values.map((value, index) => (
             <Typography
+              data-value={value}
               key={index}
               color={theme.palette.mode === "dark" ? "#fffa" : "#777"}
             >

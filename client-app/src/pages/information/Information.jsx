@@ -4,17 +4,17 @@
  * @description This component displays new information with definitions.
  */
 // React core and hooks
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
 import axios from "axios";
-import { Box, Container, Typography, useMediaQuery } from "@mui/material";
+import {Box, Container, Typography, useMediaQuery} from "@mui/material";
 
 /**
  * A hook from Material-UI to access the current theme.
  * @function useTheme
  * @returns {Object} The current theme object.
  */
-import { useTheme } from "@mui/material/styles";
+import {useTheme} from "@mui/material/styles";
 
 // Local components
 // Importing custom LoadingSpinner component for modular structure
@@ -124,17 +124,17 @@ const Information = () => {
             }}
           >
             <InputBase
-              sx={{ mr: 1, flex: 1 }}
+              sx={{mr: 1, flex: 1}}
               placeholder="جست و جو"
-              inputProps={{ "aria-label": "جست و جو" }}
+              inputProps={{"aria-label": "جست و جو"}}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+            <IconButton type="button" sx={{p: "10px"}} aria-label="search">
               <SearchIcon />
             </IconButton>
           </Paper>
-          <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+          <IconButton sx={{p: "10px"}} aria-label="FilterListIcon">
             <FilterListIcon />
           </IconButton>
         </Box>
@@ -153,6 +153,9 @@ const Information = () => {
             width: isLgScreen ? "100%" : "60%",
             p: isSmScreen ? "0.5rem" : "1rem",
             direction: "ltr",
+            display: "flex",
+            flexDirection: "column",
+            gap: ".1rem",
           }}
         >
           {filteredDefinitions.map((definition) => (
@@ -161,11 +164,11 @@ const Information = () => {
             </DefinitionTerm>
           ))}
         </Box>
-        <Box sx={{ mx: "auto", display: isLgScreen ? "none" : "flex" }}>
+        <Box sx={{mx: "auto", display: isLgScreen ? "none" : "flex"}}>
           <img
             src={informationLogo}
             alt="information-logo"
-            style={{ opacity: "0.2" }}
+            style={{opacity: "0.2"}}
           />
         </Box>
       </Box>
@@ -180,7 +183,7 @@ const Information = () => {
  * @param {React.Node} props.children - The content of the definition.
  * @returns {React.Element} The rendered React component.
  */
-const DefinitionTerm = ({ title, children }) => {
+const DefinitionTerm = ({title, children}) => {
   const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
@@ -196,7 +199,7 @@ const DefinitionTerm = ({ title, children }) => {
           : theme.palette.mode === "dark"
           ? "transparent"
           : "rgba(255, 255, 255, 0.8)",
-        borderRadius: isSmScreen ? "" : "32px",
+        borderRadius: isSmScreen ? ".8rem" : "2rem",
         border: theme.palette.mode === "dark" ? "1px solid #FFF" : "none",
         py: "1em",
         px: "1em",
@@ -204,7 +207,10 @@ const DefinitionTerm = ({ title, children }) => {
         direction: "rtl",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
-          backgroundColor: theme.palette.mode === "light" ? "rgba(255, 255, 255, 1)" : "transparent",
+          backgroundColor:
+            theme.palette.mode === "light"
+              ? "rgba(255, 255, 255, 1)"
+              : "transparent",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
           transform: "scale(1.04)",
         },
@@ -224,7 +230,7 @@ const DefinitionTerm = ({ title, children }) => {
       <Typography
         variant="h5"
         color="text.textBlack"
-        sx={{ width: isSmScreen ? "207px" : "100%" }}
+        sx={{width: isSmScreen ? "207px" : "100%"}}
       >
         {children}
       </Typography>

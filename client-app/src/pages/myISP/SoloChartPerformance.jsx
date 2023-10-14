@@ -9,26 +9,31 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {Area, AreaChart, ResponsiveContainer} from "recharts";
+import { Area, AreaChart, ResponsiveContainer } from "recharts";
+import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
 import YAxisLine from "../ispCompare/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
-import {ContainedSelect} from "../../app/common/ContainedSelect";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
-import {CustomTooltip} from "../ispCompare/OperatorCompare";
+import { CustomTooltip } from "../ispCompare/OperatorCompare";
+import NewCardContainer from "../../app/common/NewCardContainer";
 
 const SoloChartPerformance = () => {
   const theme = useTheme();
 
   const buttons = [
-    {label: "سرعت دانلود", width: "80%"},
-    {label: "سرعت آپلود", width: "80%"},
-    {label: "پینگ", width: "80%"},
-    {label: "درصد عملکرد", width: "80%"},
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
+    { label: "سرعت دانلود", width: "80%" },
+    { label: "سرعت آپلود", width: "80%" },
+    { label: "پینگ", width: "80%" },
+    { label: "درصد عملکرد", width: "80%" },
   ];
 
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
@@ -99,7 +104,7 @@ const SoloChartPerformance = () => {
   }, []);
 
   return (
-    <CardContainer
+    <NewCardContainer
       sx={{
         display: "flex",
         flexWrap: "wrap",
@@ -117,6 +122,7 @@ const SoloChartPerformance = () => {
         color="text.textBlack"
         gutterBottom
         sx={{
+          width: "100%",
           mt: isLgScreen ? "0.4rem" : "",
           display: isLgScreen ? "none" : "flex",
         }}
@@ -128,15 +134,12 @@ const SoloChartPerformance = () => {
         sx={{
           p: "1rem",
           display: "flex",
-          flexWrap: "wrap",
+          gap: "2rem",
           justifyContent: "space-between",
         }}
       >
-        <Box
-          display="flex"
-          sx={{flexBasis: isLgScreen ? "100%" : "70%", position: "relative"}}
-        >
-          <Box>
+        <Box display="flex" position="relative" marginLeft="1rem">
+          <div>
             <Box
               borderRadius="3rem"
               padding="1rem"
@@ -145,12 +148,12 @@ const SoloChartPerformance = () => {
                   theme.palette.mode === "dark"
                     ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
                     : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
+                maxWidth: "calc(100% - 1rem)",
               }}
-              width="100%"
               height="100%"
             >
               {rendered && (
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer height={300}>
                   <AreaChart data={chartData}>
                     <Tooltip content={<CustomTooltip />} />
                     <defs>
@@ -179,8 +182,8 @@ const SoloChartPerformance = () => {
                 </ResponsiveContainer>
               )}
             </Box>
-            <img src={xAxis} alt="xAxis" style={{width: "100%"}} />
-          </Box>
+            <img src={xAxis} alt="xAxis" width="100%" />
+          </div>
           <YAxisLine
             max={Math.max(...chartData.map((line) => line.value))}
             unit={getChartLabel()}
@@ -189,7 +192,7 @@ const SoloChartPerformance = () => {
         </Box>
         <Box
           sx={{
-            flexBasis: isLgScreen ? "100%" : "23%",
+            minWidth: "25%",
             display: isLgScreen ? "none" : "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -209,15 +212,15 @@ const SoloChartPerformance = () => {
                 onClick={() => handleButtonClick(index)}
                 style={
                   clickedButtonIndex === index
-                    ? {...activeButtonStyle, width: btn.width}
-                    : {...defaultButtonStyle, width: btn.width}
+                    ? { ...activeButtonStyle, width: btn.width }
+                    : { ...defaultButtonStyle, width: btn.width }
                 }
               >
                 {btn.label}
               </Button>
             ))}
           </ButtonGroup>
-          <FormControl sx={{width: "70%"}}>
+          <FormControl sx={{ width: "70%" }}>
             <Typography
               variant="h3"
               color="text.main"
@@ -251,7 +254,7 @@ const SoloChartPerformance = () => {
           </Box>
         </Box>
       </Box>
-    </CardContainer>
+    </NewCardContainer>
   );
 };
 

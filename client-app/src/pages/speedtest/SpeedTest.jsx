@@ -38,6 +38,7 @@ import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -74,6 +75,7 @@ const AddressAndServer = ({ip, server}) => (
 const SpeedTest = () => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
   const pYCardContainers = useDynamicMP(390, 1440, 1.19, 3.5);
   const [status, setStatus] = useState(2);
@@ -377,7 +379,6 @@ const SpeedTest = () => {
                     progress={isDl ? downloadProgress : uploadProgress}
                     mbps={isDl ? download : upload}
                     isDl={isDl}
-                    testState={testStateNumber}
                     theme="light"
                   />
                 </div>
@@ -430,7 +431,11 @@ const SpeedTest = () => {
           }}
         >
           <DialogTitle
-            sx={{display: "flex", justifyContent: "space-between", gap: "4rem"}}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "4rem",
+            }}
           >
             <Box
               sx={{
@@ -495,6 +500,7 @@ const SpeedTest = () => {
           </DialogContent>
         </Dialog>
       </CardContainer>
+      {/* <AnimatesSpeedTestNumber value={download || 0} unit="Mbs" /> */}
     </>
   );
 };

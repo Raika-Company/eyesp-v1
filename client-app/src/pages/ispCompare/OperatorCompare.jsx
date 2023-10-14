@@ -1,4 +1,4 @@
-import {Box, Grid, Typography, useTheme, useMediaQuery} from "@mui/material";
+import { Box, Grid, Typography, useTheme, useMediaQuery } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
@@ -19,7 +19,7 @@ export const CustomTooltip = ({ active, payload }) => {
         style={{
           background: "#fff",
           color: "#333",
-          boxShadow: "0 3px 14px rgb(0 0 0 / 40%)",
+          boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
           padding: "1px",
           textAlign: "left",
           borderRadius: "1rem",

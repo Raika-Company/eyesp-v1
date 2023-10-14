@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, {useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 /**
  * DrawMeter Component
@@ -78,8 +78,7 @@ function DrawMeterAnimate({
       ctx.translate(canvas.width / 2, canvas.height - 78 * sizScale);
       ctx.rotate(angle);
 
-      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 0.9;
-      var pointerWidthTop = 0; // The triangle's top is a point, so width is 0
+      var pointerLength = (canvas.height / 1.6 - ctx.lineWidth) * 1.2;
       var pointerWidthBottom = 15 * sizScale * 1.5;
       var smallTriangleHeight = pointerWidthBottom / 2; // Height of the small triangle at the base
 
@@ -144,7 +143,10 @@ function DrawMeterAnimate({
     function drawPointerEndAnimate(time) {
       if (!startTime) startTime = time || performance.now();
 
-      const deltaTime = Math.max(1 - (time - startTime) / (DURATION - 500), 0);
+      const deltaTime = Math.max(
+        1 - (time - startTime) / (DURATION - (mbps < 4 ? 300 : 500)),
+        0
+      );
       const currentPointerAngle =
         -startAngle +
         (endAngle - startAngle) * (normalizeMbps(mbps) * deltaTime) +
@@ -160,7 +162,7 @@ function DrawMeterAnimate({
     }
 
     // Start of test
-    if (progress <= LOWER_BOUND && (testState === 1 || testState === 3)) {
+    if (progress <= LOWER_BOUND) {
       drawPointerStartAnimate();
     }
     // End of test
@@ -175,7 +177,7 @@ function DrawMeterAnimate({
   }, [mbps, isDl, theme, progress, testState, isEndAnimationStarted]);
 
   return (
-    <canvas ref={canvasRef} style={{width: "100%", height: "100%"}}></canvas>
+    <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
   );
 }
 

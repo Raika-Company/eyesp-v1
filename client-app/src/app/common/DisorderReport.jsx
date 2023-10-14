@@ -19,7 +19,11 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { ContainedButton } from "./ContainedButton";
 import DoneReport from "./DoneReport";
-const SendReport = ({ handleCloseDialog, openDialog }) => {
+const DisorderReport = ({
+  handleCloseDialog,
+  openDialog,
+  handleDoneReportOpen,
+}) => {
   const [openDoneReport, setOpenDoneReport] = useState(false);
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -29,12 +33,39 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
     { id: 3, label: "فلان اختلال در نقطه ای از شهر", value: "report3" },
     { id: 4, label: "فلان اختلال در نقطه ای از شهر", value: "report4" },
   ];
-  const StyledTextField = styled(TextField)({
+  const StyledTextField = styled(TextField)(({ theme }) => ({
     "& .MuiInputBase-root.MuiOutlinedInput-root": {
       borderRadius: "18px",
-      background: "white",
+      backgroundColor: theme.palette.mode === "dark" ? "#272A2F" : "white",
     },
-  });
+  }));
+  const ScrollBox = styled(Box)(({ theme }) => ({
+    height: "150px",
+    overflowY: "scroll",
+    overflowX: "none",
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-track-piece": {
+      backgroundColor: theme.palette.mode === "dark" ? "#272A2F" : "white",
+      borderRadius: "4px",
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: "4px",
+    },
+  }));
+  const buttonLabels = [
+    "قطعی اینترنت",
+    "کاهش سرعت دانلود",
+    "کاهش سرعت آپلود",
+    "افزایش پینگ",
+  ];
+  const fields = [
+    { label: "شماره تلفن همراه" },
+    { label: "اپراتور" },
+    { label: "استان" },
+    { label: "زمان مشاهده اختلال" },
+  ];
   return (
     <>
       <Dialog
@@ -42,7 +73,7 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
         open={openDialog}
         PaperProps={{
           sx: {
-            padding: "2em",
+            padding: { xs: "1em", sm: "2em" },
             borderRadius: "2rem",
             maxWidth: "900px",
             width: isMdScreen ? "80%" : "90%",
@@ -73,45 +104,51 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
           </Box>
         </Box>
         <DialogContent
-          sx={{ display: "flex", justifyContent: "start", gap: "55px" }}
+          sx={{
+            display: { xs: "block", sm: "flex" },
+            justifyContent: "start",
+            gap: "55px",
+          }}
         >
-          <Box display="flex" flexDirection="column" gap={2}>
-            <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-              <div>
-                <Typography gutterBottom variant="h4">
-                  شماره تلفن همراه
-                </Typography>
-                <StyledTextField variant="outlined" size="small" />
-              </div>
-              <div>
-                <Typography gutterBottom variant="h4">
-                  شماره تلفن همراه
-                </Typography>
-                <StyledTextField variant="outlined" size="small" />
-              </div>
-            </div>
-            <Typography>انتخاب گزارش اختلال خطا</Typography>
-            <Box
-              sx={{ height: "150px", overflowY: "scroll", overflowX: "none" }}
-            >
-              <FormControl fullWidth>
-                <RadioGroup
-                  dir="ltr"
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={2}
+            sx={{ maxWidth: { xs: "100%", sm: "60%" } }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+              {fields.slice(0, 2).map((field) => (
+                <div key={field.label}>
+                  <Typography gutterBottom variant="h4">
+                    {field.label}
+                  </Typography>
+                  <StyledTextField variant="outlined" size="small" />
+                </div>
+              ))}
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+              {fields.slice(2, 4).map((field) => (
+                <div key={field.label}>
+                  <Typography gutterBottom variant="h4">
+                    {field.label}
+                  </Typography>
+                  <StyledTextField variant="outlined" size="small" />
+                </div>
+              ))}
+            </Box>
+            <Typography>نوع اختلال (درصورت اگاهی انتخاب کنید)</Typography>
+            <Box display="flex" flexWrap="wrap" gap={1}>
+              {buttonLabels.map((label, index) => (
+                <ContainedButton
+                  key={index}
+                  variant="contained"
+                  bgColor="#293643"
+                  txtHover="#FF8A35"
+                  sx={{ fontSize: "1rem" }}
                 >
-                  {reports.map((report) => (
-                    <FormControlLabel
-                      key={report.id}
-                      sx={{ justifyContent: "space-between", margin: "0" }}
-                      value={report.value}
-                      control={<Radio />}
-                      label={report.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
+                  {label}
+                </ContainedButton>
+              ))}
             </Box>
             <Typography variant="h4">توضیح بیشتر</Typography>
             <StyledTextField
@@ -124,7 +161,12 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
               }}
             />
           </Box>
-          <Box pt={14} flexGrow={1} maxWidth="40%" position={"relative"}>
+          <Box
+            pt={{ xs: "7.25em", sm: "7em" }}
+            flexGrow={1}
+            maxWidth={{ xs: "100%", sm: "40%" }}
+            position={"relative"}
+          >
             <Typography variant="h4">توجه</Typography>
             <Typography textAlign="justify" variant="h5">
               کاربر گرامی، اطلاعات موجود در این سایت قبل از استفاده مورد صحت
@@ -134,15 +176,20 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
             <ContainedButton
               onClick={() => {
                 handleCloseDialog();
-                setTimeout(() => setOpenDoneReport(true), 300);
+                setTimeout(handleDoneReportOpen, 300);
               }}
               variant="contained"
               bgColor="#FF8A35"
               txtHover="#FF8A35"
-              sx={{ fontSize: "1rem", position: "absolute", bottom: "0" }}
+              sx={{
+                fontSize: "1rem",
+                position: "absolute",
+                bottom: { xs: "7.5em", sm: "0" },
+                width: "100%",
+              }}
             >
-              گزارش اختلال
-            </ContainedButton>{" "}
+              ثبت گزارش{" "}
+            </ContainedButton>
           </Box>
         </DialogContent>
       </Dialog>
@@ -154,4 +201,4 @@ const SendReport = ({ handleCloseDialog, openDialog }) => {
   );
 };
 
-export default SendReport;
+export default DisorderReport;

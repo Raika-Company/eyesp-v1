@@ -1,8 +1,8 @@
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AnimatingNumber from "./numbers/AnimatingNumber";
 import useDebounceTime from "../../app/hooks/useDebounceTime";
 
-const InfoBox = ({iconSrc, title, value, isColumn, isTestEnds, unit}) => {
+const InfoBox = ({ iconSrc, title, value, isColumn, isTestEnds, unit }) => {
   const debounceValue = useDebounceTime(value);
   return (
     <Box
@@ -12,7 +12,14 @@ const InfoBox = ({iconSrc, title, value, isColumn, isTestEnds, unit}) => {
       alignItems="center"
       gap="0.25rem"
     >
-      <Box display="flex">
+      <Box
+        display="flex"
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          gap: ".2rem",
+        }}
+      >
         <img src={iconSrc} alt={title} />
         <Typography variant="h5" color="text.subTitle">
           {title}

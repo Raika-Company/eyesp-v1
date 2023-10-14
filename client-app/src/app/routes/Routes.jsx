@@ -1,6 +1,7 @@
 import React, {lazy} from "react";
 
 import SpeedTest from "../../pages/speedtest/SpeedTest";
+import NewDashboard from "../../pages/dashboard/newDashboard/NewDashboard";
 
 const NewSpeedTest = lazy(() => import("../../pages/speedtest/NewSpeedTest"));
 const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
@@ -43,7 +44,7 @@ export const mainRoutes = [
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <NewDashboard />,
     title: "Dashboard | TIC Radar",
     description: "Admin dashboard to manage and review system metrics.",
     keywords: "dashboard, admin panel, system metrics",
@@ -58,14 +59,14 @@ export const mainRoutes = [
       "information, internet, internet speed, broadband speed, download speed, upload speed",
     robots: "index, follow",
   },
-  {
-    path: "/history",
-    element: <TestHistory />,
-    title: "Test History | TIC Radar",
-    description: "Review all your past internet speed tests in one place.",
-    keywords: "test history, speed results, past tests",
-    robots: "index, follow",
-  },
+  // {
+  //   path: "/history",
+  //   element: <TestHistory />,
+  //   title: "Test History | TIC Radar",
+  //   description: "Review all your past internet speed tests in one place.",
+  //   keywords: "test history, speed results, past tests",
+  //   robots: "index, follow",
+  // },
   {
     path: "/my-isp",
     element: <MyISP />,
@@ -100,9 +101,18 @@ export const mainRoutes = [
   },
 ];
 
+export const historyRoute = {
+  path: "/history",
+  element: <TestHistory />,
+  title: "Test History | TIC Radar",
+  description: "Review all your past internet speed tests in one place.",
+  keywords: "test history, speed results, past tests",
+  robots: "index, follow",
+};
+
 export const mainRoutesPc = [
   {
-    path: "/pc",
+    path: "/app",
     element: <Pc />,
     title: " pc | TIC Radar",
   },

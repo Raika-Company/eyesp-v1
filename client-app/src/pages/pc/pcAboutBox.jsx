@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 
 /**
  * A simple React component for displaying an icon.
@@ -12,12 +12,11 @@ import { Box } from "@mui/material";
  *
  * @returns {JSX.Element} - The rendered PcAboutBox component.
  */
-const PcAboutBox = ({ iconSrc, altText, index }) => {
+const PcAboutBox = ({iconSrc, altText, index}) => {
   return (
     <Box
       sx={{
         cursor: "pointer",
-        margin: index === 1 ? "0 0.8rem" : "",
         userSelect: "none",
       }}
     >

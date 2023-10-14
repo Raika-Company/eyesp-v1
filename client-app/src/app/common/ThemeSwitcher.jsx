@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
 import {
@@ -33,7 +33,7 @@ const fadeInRight = keyframes`
 const AnimatedTypography = styled(Typography)`
   animation: ${fadeInRight} 0.25s 0.25s both;
 `;
-const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
+const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
   const theme = useTheme();
   const isDarkMode = themeMode === "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -41,6 +41,16 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
 
   const [moonTranslateX, setMoonTranslateX] = useState(0);
   const [sunTranslateX, setSunTranslateX] = useState(0);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      setMoonTranslateX(46);
+      setSunTranslateX(-46);
+    } else {
+      setSunTranslateX(0);
+      setMoonTranslateX(0);
+    }
+  }, [isDarkMode]);
 
   const handleThemeChange = (mode) => {
     toggleTheme(mode);
@@ -52,9 +62,7 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
       setSunTranslateX(0);
     }
   };
-  useEffect(() => {
-    handleThemeChange("dark");
-  }, []);
+
   return (
     <Box
       display="flex"
@@ -86,7 +94,7 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
             }}
           >
             <AnimatedIconButton
-              style={{transform: `translateX(${sunTranslateX}px)`}}
+              style={{ transform: `translateX(${sunTranslateX}px)` }}
               aria-label="change to light theme"
               onClick={() => handleThemeChange("light")}
               disabled={!isDarkMode}
@@ -96,7 +104,7 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
           </span>
 
           <AnimatedIconButton
-            style={{transform: `translateX(${moonTranslateX}px)`}}
+            style={{ transform: `translateX(${moonTranslateX}px)` }}
             aria-label="change to dark theme"
             onClick={() => handleThemeChange("dark")}
             disabled={isDarkMode}
@@ -114,9 +122,9 @@ const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
           onClick={() => handleThemeChange(isDarkMode ? "light" : "dark")}
         >
           {isDarkMode ? (
-            <Icon src={moon} alt="Moon Icon" />
+            <Icon src={sun} alt="Moon Icon" />
           ) : (
-            <Icon src={sun} alt="Sun Icon" />
+            <Icon src={moon} alt="Sun Icon" />
           )}
         </AnimatedIconButton>
       )}

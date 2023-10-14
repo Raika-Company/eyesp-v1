@@ -6,12 +6,14 @@ import PhLink from "../../app/assets/image/imgLogoSocialM/ph_link.svg";
 import Linkedin from "../../app/assets/image/imgLogoSocialM/linkedin.svg";
 import Facebook from "../../app/assets/image/imgLogoSocialM/facebook.svg";
 import SimpleIcon from "../../app/assets/image/imgLogoSocialM/simple-icon.svg";
+import React, { useState, useEffect } from "react";
 
-import {Box, Typography, useTheme} from "@mui/material";
-import {ContainedButton} from "../../app/common/ContainedButton";
+import { Box, Typography, useTheme } from "@mui/material";
+import Fade from "@mui/material/Fade";
+import { ContainedButton } from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
 import ViewDetailsButton from "../../app/common/ViewDetailsButton";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import IconLink from "./IconLInk";
 
 const SOCIAL_ICONS = [
@@ -42,7 +44,7 @@ const SOCIAL_ICONS = [
   },
 ];
 
-const FloatingResult = ({download, upload, latency, isTestEnds}) => {
+const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -60,34 +62,57 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
 
   return (
     <>
-      <Typography sx={{display: {md: "none"}}}>
+      <Typography sx={{ display: { md: "none" } }}>
         برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
       </Typography>
       <Box
         justifyContent="space-evenly"
         width="100%"
         marginY={1}
-        sx={{display: {xs: "flex", md: "none"}}}
+        sx={{
+          display: { xs: "flex", md: "none" },
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
         {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
         {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
         {renderInfoBox(true, pingIcon, "پینگ", latency)}
-        {/* {isTestEnds && (
-          <ContainedButton
-            bgColor="#FF8A35"
-            txtColor="#fff"
-            txtHover="#FF8A35"
-            onClick={() => navigate(0)}
+        <Fade in={isTestEnds}>
+          <Box
+            sx={{
+              position: "absolute",
+              transition: "all .25s linear",
+              top: "25%",
+              left: "25%",
+              transform: "translateX(-12.5%)",
+              zIndex: "10",
+              height: "10rem",
+              width: "14rem",
+              borderRadius: "2rem",
+              backdropFilter: "blur(5px)",
+              background: "rgba(0, 0, 0, .4)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            تست مجدد
-          </ContainedButton>
-        )} */}
+            <ContainedButton
+              bgColor="#FF8A35"
+              txtColor="#fff"
+              txtHover="#FF8A35"
+              onClick={() => navigate(0)}
+            >
+              تست مجدد
+            </ContainedButton>
+          </Box>
+        </Fade>
       </Box>
 
       <Box
         borderRadius="2rem"
         sx={{
-          display: {xs: "none", md: "flex"},
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -133,6 +158,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             "ms"
           )}
         </Box>
+
         {isTestEnds && (
           <ContainedButton
             bgColor="#FF8A35"
@@ -140,6 +166,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             txtHover="#FF8A35"
             sx={{
               minWidth: "30%",
+              position: "absolute",
             }}
             onClick={() => navigate(0)}
           >
@@ -166,7 +193,7 @@ const FloatingResult = ({download, upload, latency, isTestEnds}) => {
             }}
           >
             <Typography color="#878787">به اشتراک بگذارید:</Typography>
-            {SOCIAL_ICONS.map(({iconPath, name, link}) => (
+            {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
               <IconLink iconPath={iconPath} key={name} link={link} />
             ))}
           </Box>

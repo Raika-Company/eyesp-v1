@@ -17,7 +17,7 @@
 import React from "react";
 
 // Import Material-UI components and styles
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 
 const PcSpeedBox = ({
   title,
@@ -26,31 +26,23 @@ const PcSpeedBox = ({
   value,
   measure,
   filter,
-  index,
+  isFull,
 }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   return (
     <Box
       sx={{
-        height: "90%",
+        flexBasis: "10rem",
         display: "flex",
         flexWrap: "wrap",
+        gap: ".5rem",
         alignItems: "center",
         justifyContent: "center",
         userSelect: "none",
       }}
     >
-      <Box
-        sx={{
-          marginX: index === 1 ? "clamp(2.3rem, 2.3rem + 1vw, 2.5rem)" : "",
-        }}
-        display="flex"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-        gap={1}
-      >
+      <Stack direction="row" gap={1} alignItems="center">
         <Box
           sx={{
             filter: filter,
@@ -78,15 +70,10 @@ const PcSpeedBox = ({
         >
           {measure}
         </Typography>
-      </Box>
-
+      </Stack>
       <Box
         sx={{
           width: "100%",
-          height: "50px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
         <Typography
@@ -94,7 +81,7 @@ const PcSpeedBox = ({
           color="#FFF"
           fontSize="clamp(2.2rem, 1em + 2vw, 3rem)"
         >
-          {value !== null ? value : "--"}
+          {value ? value : "--"}
         </Typography>
       </Box>
     </Box>

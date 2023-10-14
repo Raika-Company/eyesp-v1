@@ -15,7 +15,8 @@ import { Box } from "@mui/material";
  * Radar logo image asset.
  * @type {string}
  */
-import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
+import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-Logo.svg";
+import { useMediaQuery } from "@mui/material";
 
 /**
  * LogoRadar Component.
@@ -25,22 +26,17 @@ import RadarLogo from "../../app/assets/image/Img-SpeedTest/Radar-logo.svg";
  * @returns {JSX.Element} The RADAR GAME logo inside a styled container.
  */
 const LogoRadar = () => {
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "9%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
+        textAlign: isSmScreen ? "center" : "",
         px: "0.6rem",
-        userSelect: "none",
       }}
     >
       <img
         style={{
-          width: "auto",
-          height: "100%",
+          height: isSmScreen ? "3rem" : "4rem",
         }}
         src={RadarLogo}
         alt="Radar-Logo"

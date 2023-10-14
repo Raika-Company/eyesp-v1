@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, {forwardRef, useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -15,7 +15,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useTheme } from "@emotion/react";
+import {useTheme} from "@emotion/react";
 import axios from "axios";
 
 /**
@@ -46,13 +46,14 @@ const Transition = forwardRef(function Transition(props, ref) {
  * @returns {JSX.Element} - The rendered PcInformationBox component.
  */
 
-const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
+const PcInformationBox = ({title, value, iconSrc, altText, buttonLabel}) => {
   const theme = useTheme();
   const [servers, setServers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [openSelectServer, setOpenSelectServer] = useState(false);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const handleSelectServer = () => {
     setOpenSelectServer(true);
@@ -86,14 +87,7 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
 
   return (
     <>
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="row"
-        gap={2}
-      >
+      <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
         <Box
           sx={{
             border: "1px solid #FFF",
@@ -117,10 +111,10 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
           />
         </Box>
         <Box>
-          <Typography sx={{ color: "#FFF" }} variant="h1">
+          <Typography sx={{color: "#FFF"}} variant="h1">
             {title}
           </Typography>
-          <Typography sx={{ color: "#8d8d8d" }} variant="h6">
+          <Typography sx={{color: "#8d8d8d"}} variant="h6">
             {value}
           </Typography>
           {buttonLabel ? (
@@ -132,6 +126,7 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
                 bgcolor: "transparent",
                 outline: "none",
                 border: "none",
+                textAlign: "left",
                 cursor: "pointer",
               }}
             >
@@ -155,7 +150,7 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
         }}
       >
         <DialogTitle
-          sx={{ display: "flex", justifyContent: "space-between", gap: "4rem" }}
+          sx={{display: "flex", justifyContent: "space-between", gap: "4rem"}}
         >
           <Box
             sx={{
@@ -175,15 +170,15 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
               }}
             >
               <InputBase
-                sx={{ mr: 1, color: "#fff", mt: "0.4rem" }}
+                sx={{mr: 1, color: "#fff", mt: "0.4rem"}}
                 placeholder="Search"
-                inputProps={{ "aria-label": "Search" }}
+                inputProps={{"aria-label": "Search"}}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <IconButton
                 type="button"
-                sx={{ p: "10px", color: "#cfcfcf" }}
+                sx={{p: "10px", color: "#cfcfcf"}}
                 aria-label="search"
               >
                 <SearchIcon />
@@ -191,11 +186,11 @@ const PcInformationBox = ({ title, value, iconSrc, altText, buttonLabel }) => {
             </Paper>
           </Box>
           <Button
-            sx={{ color: "#fff" }}
+            sx={{color: "#fff"}}
             onClick={handleCloseSelectServer}
             endIcon={
               <CloseIcon
-                sx={{ marginX: "0.5rem", color: "#cfcfcf", mb: "0.3rem" }}
+                sx={{marginX: "0.5rem", color: "#cfcfcf", mb: "0.3rem"}}
               />
             }
           >

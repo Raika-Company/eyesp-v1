@@ -8,11 +8,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use DateInterval;
+use DateTime;
 
 class NetworkService
 {
 
-    public static function TakeTime($start, $end = null)
+    public static function TakeTime(string $start, $end = null): float
     {
         if (!$end) {
             $end = microtime();
@@ -44,7 +46,7 @@ class NetworkService
         return [$pingTimes, $packetLoss];
     }
 
-    public static function Jitter(array $pingTimes)
+    public static function Jitter(array $pingTimes): float
     {
         $averagePingTime = array_sum($pingTimes) / count($pingTimes);
         $jitterValues = [];
@@ -56,6 +58,38 @@ class NetworkService
     }
 
     public static function ThresholdsCalculation($isp)
+        $ispMetrics = RstIspStats::whereIn('isp', $isp)
+            ->where('date', '>=', Carbon::today()->subDays(7))
+            ->get();
+
+        $totalRecord = $ispMetrics->count();
+        $data['totalQualityAverage'] = round($ispMetrics->sum('total_quality_average') / $totalRecord, 0);
+        $data['clients'] = $ispMetrics->sum('clients');
+        $data['speedAverage'] = round($ispMetrics->sum('speed_average') / $totalRecord, 0);
+        $data['pingAverage'] = round($ispMetrics->sum('ping_average') / $totalRecord, 0);
+
+        foreach ($isp as $item) {
+            $metrics = $ispMetrics->where('isp', $item);
+            $count = $metrics->count();
+            if($count < 1) {
+                continue;
+            }
+            $feedbacks = RstFeedback::where('isp', $item)->get();
+            $feedbacksCount = $feedbacks->count();
+            $data['isp'][$item] = [
+                'downloadSpeedAverage' => round($metrics->sum('download_speed_average') / $count, 0),
+                'uploadSpeedAverage' => round($metrics->sum('upload_speed_average') / $count, 0),
+                'pingAverage' => round($metrics->sum('ping_average') / $count, 0),
+                'packetLoss' => round($metrics->sum('packet_loss') / $count, 0),
+                'totalQuality' => round($metrics->sum('total_quality_average') / $count, 0),
+                'score' => ($feedbacksCount) ? round($feedbacks->sum('score') / $feedbacksCount, 1) : 0
+            ];
+        }
+
+        return $data;
+    }
+
+    public static function analyzeIssues($trustedData, $userData, $thresholds)
     {
         $data = RstResult::whereIsp($isp)
             ->where('date', '>=', Carbon::today()->subDays(Config::get('app.thresholds_days')))

@@ -204,10 +204,21 @@ class NetworkController extends Controller
                         ],
                     ];
                 });
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
+    public function myIspMetrics(Request $request)
+    {
+        try {
+            $isp = [0 => 'irancell'];
             return response()->json([
                 'status' => true,
-                'data' => $data,
+                'data' => NetworkService::IspMetrics($isp),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
