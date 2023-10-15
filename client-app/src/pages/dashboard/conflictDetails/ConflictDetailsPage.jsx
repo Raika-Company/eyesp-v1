@@ -173,12 +173,14 @@ const ConflictDetailsPage = () => {
           display: "grid",
           gap: "1rem",
           marginTop: "2rem",
-          gridTemplateColumns: "repeat(5, auto)",
+          gridTemplateColumns: "repeat(6, auto)",
+          gridTemplateRows: "repeat(auto, 10rem)",
           gridAutoFlow: "dense",
-          alignItems: "start",
+          justifyItems: "start",
+          justifyContent: "start",
         }}
       >
-        {conflicts.map((conflict) => (
+        {conflicts.map((conflict, index) => (
           <ConflictBox
             key={conflict}
             title={conflict}

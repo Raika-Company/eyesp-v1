@@ -12,6 +12,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
         maxWidth: "12rem",
         display: "flex",
         flexDirection: "column",
+        minWidth: "12rem",
         gap: "1rem",
       }}
     >

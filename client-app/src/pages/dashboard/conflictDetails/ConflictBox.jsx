@@ -9,11 +9,16 @@ const ConflictBox = ({title, data}) => {
     <Box
       sx={{
         background: "#1A1A1A",
+        gridRowEnd:
+          keys.length > 3
+            ? `span ${Math.floor(keys.length / 2) + (keys.length % 2)}`
+            : "span 1",
+        gridColumnEnd: keys.length <= 3 ? `span ${keys.length}` : "",
         padding: ".5rem",
         borderRadius: "1rem",
         display: "flex",
         flexDirection: "column",
-        gridColumnEnd: keys.length > 2 ? "span 2" : "",
+        alignItems: "center",
         gap: "1rem",
       }}
     >
