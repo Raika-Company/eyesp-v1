@@ -60,7 +60,12 @@ const AddressAndServer = ({ ip, server }) => (
     {["آدرسIP", "سرور"].map((text, index) => (
       <Typography key={index} variant="h4" color="text.main">
         {text}:
-        <Typography component="span" variant="h5" color="text" marginX="0.5rem">
+        <Typography
+          component="span"
+          variant="h5"
+          color="text.main"
+          marginX="0.5rem"
+        >
           {text === "آدرس"
             ? ip === ""
               ? "در حال پیدا کردن ip"
@@ -356,7 +361,7 @@ const SpeedTest = () => {
             {isGoButtonVisible ? (
               <Button
                 onClick={handleButtonClick}
-                sx={{
+                sx={{                   
                   boxShadow: `
             inset 0 0 20px #9DB8C8,  /* inner shadow */
             0px 4px 59px 0px rgba(0, 163, 255, 0.22)  /* outer shadow */
