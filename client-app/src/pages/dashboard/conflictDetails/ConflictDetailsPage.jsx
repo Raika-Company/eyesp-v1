@@ -67,6 +67,28 @@ const mockDataConflict = {
       "زیکسل",
     ],
   },
+  "افزایش پکت لاس۲": {
+    بوشهر: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
+    "خراسان رضوی": [
+      "شاتل",
+      "پارس آنلاین",
+      "های وب",
+      "زیتل",
+      "آسیاتک",
+      "سمنت",
+      "مخابرات",
+      "زیکسل",
+    ],
+    خوزستان: [
+      "شاتل",
+      "پارس آنلاین",
+      "های وب",
+      "زیتل",
+      "آسیاتک",
+      "مخابرات",
+      "زیکسل",
+    ],
+  },
 };
 
 const ConflictDetailsPage = () => {
@@ -169,14 +191,11 @@ const ConflictDetailsPage = () => {
       </Box>
       <Box
         sx={{
-          maxWidth: "100%",
           display: "grid",
           gap: "1rem",
           marginTop: "2rem",
           gridTemplateColumns: "repeat(6, auto)",
-          gridTemplateRows: "repeat(auto, 10rem)",
           gridAutoFlow: "dense",
-          justifyItems: "start",
           justifyContent: "start",
         }}
       >
