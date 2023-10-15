@@ -9,6 +9,7 @@ use App\Models\RstIspStats;
 use App\Models\RstResult;
 use Illuminate\Http\Request;
 use App\Models\RstServer;
+use App\Services\ChartService;
 use App\Services\NetworkService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -212,6 +213,28 @@ class NetworkController extends Controller
         } catch(\Exception $e) {
             return response()->json([
                 'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function charts(Request $request)
+    {
+        try {
+            $type = $request->type;
+            $rstResult = RstResult::$type($request->isp, 1);
+            if($request->city) {
+                $rstResult = $rstResult->where('city', $request->city);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => ChartService::$type($rstResult),
+                'message' => '',
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
                 'message' => $e->getMessage()
             ]);
         }
