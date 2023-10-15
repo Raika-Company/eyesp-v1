@@ -4,7 +4,7 @@ import {
   MenuItem,
   Button,
   useMediaQuery,
-  keyframes,
+  useTheme,
 } from "@mui/material";
 import ConflictDetailsCard from "./components/ConflictDetailsCard";
 import AllSituationCard from "./components/AllSituationCard";
@@ -17,6 +17,7 @@ import {useState} from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
 
 const NewDashboard = () => {
+  const theme = useTheme();
   const [province, setProvince] = useState("");
   const [selectedISP, setSelectedISP] = useState("");
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -63,7 +64,10 @@ const NewDashboard = () => {
             justifySelf: isMdScreen ? "self-end" : "center",
             alignSelf: "self-start",
             display: "flex",
-            background: "rgba(55, 55, 55, 0.40)",
+            background:
+              theme.palette.mode === "dark"
+                ? "rgba(55, 55, 55, 0.40)"
+                : "paint0_radial_202_4189",
             padding: "1rem",
             borderRadius: "1rem",
             backdropFilter: "blur(18px)",
@@ -79,7 +83,11 @@ const NewDashboard = () => {
               value={province}
               onChange={handleProvinceChange}
               displayEmpty
-              sx={{paddingLeft: "2rem", minWidth: "10rem"}}
+              sx={{
+                paddingLeft: "2rem",
+                minWidth: "10rem",
+                background: theme.palette.mode === "light" ? "#FFF" : "",
+              }}
             >
               <MenuItem value="">انتخاب استان</MenuItem>
               {provinces.map((provinceItem) => (
@@ -97,7 +105,11 @@ const NewDashboard = () => {
               value={selectedISP}
               onChange={handleISPChange}
               displayEmpty
-              sx={{paddingLeft: "2rem", minWidth: "10rem"}}
+              sx={{
+                paddingLeft: "2rem",
+                minWidth: "10rem",
+                background: theme.palette.mode === "light" ? "#FFF" : "",
+              }}
             >
               <MenuItem value="">انتخاب اپراتور</MenuItem>
               {ISPList.map((isp) => (
@@ -116,6 +128,7 @@ const NewDashboard = () => {
               padding: "1rem",
               background: "#0C6087",
               whiteSpace: "nowrap",
+              color: "#FFF",
             }}
           >
             مشاهده وضعیت

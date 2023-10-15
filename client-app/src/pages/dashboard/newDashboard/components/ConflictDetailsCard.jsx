@@ -1,7 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
+import {Box, Button, Typography, useTheme} from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import Danger from "../../../../app/assets/image/danger.svg";
-import { Link } from "react-router-dom";
+import DangerDark from "../../../../app/assets/image/error_dark.svg";
+import {Link} from "react-router-dom";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
@@ -42,6 +43,7 @@ const conflictDetailsData = [
 ];
 
 const ConflictDetailsCard = () => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -51,8 +53,9 @@ const ConflictDetailsCard = () => {
         paddingX: "2rem",
         display: "flex",
         flexDirection: "column",
-        background: "#1A1A1A",
+        background: theme.palette.mode === "dark" ? "#1A1A1A" : "#FFF",
         gap: "2rem",
+        transition: "all .25s",
       }}
     >
       <Typography
@@ -65,7 +68,7 @@ const ConflictDetailsCard = () => {
         }}
       >
         اختلال‌های موجود{" "}
-        <span style={{ color: "#FE4543", fontSize: "2rem" }}>24</span>
+        <span style={{color: "#FE4543", fontSize: "2rem"}}>24</span>
       </Typography>
 
       <Box
@@ -74,8 +77,14 @@ const ConflictDetailsCard = () => {
           gap: "1rem",
         }}
       >
-        {conflictData.map(({ id, value, title }) => (
-          <Square value={value} title={title} key={id} />
+        {conflictData.map(({id, value, title}) => (
+          <Square
+            value={value}
+            title={title}
+            key={id}
+            background="radial-gradient(140.09% 140.09% at 18.63% 0%, #B40000 0%, #5D0000 100%)"
+            color="#FFF"
+          />
         ))}
 
         <Button
@@ -105,7 +114,7 @@ const ConflictDetailsCard = () => {
           gap: "1rem",
         }}
       >
-        {conflictDetailsData.map(({ id, title, values }) => (
+        {conflictDetailsData.map(({id, title, values}) => (
           <Box
             sx={{
               display: "flex",
@@ -121,7 +130,8 @@ const ConflictDetailsCard = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background: "#404040",
+                background:
+                  theme.palette.mode === "dark" ? "#404040" : "#F0F4F3",
                 border: "1px solid #F0F4F3",
                 padding: ".5rem",
                 borderRadius: ".8rem",
@@ -136,7 +146,8 @@ const ConflictDetailsCard = () => {
                   borderRadius: ".5rem",
                   padding: ".2rem",
                   fontSize: ".8rem !important",
-                  background: "#1B1B1B",
+                  background:
+                    theme.palette.mode === "dark" ? "#1B1B1B" : "#FFF",
                 }}
               >
                 مشاهده همه
@@ -168,7 +179,10 @@ const ConflictDetailsCard = () => {
           }}
         >
           گزارش خطا در اطلاعات
-          <img src={Danger} alt="leftArrow" />
+          <img
+            src={theme.palette.mode === "dark" ? Danger : DangerDark}
+            alt="leftArrow"
+          />
         </Button>
       </Box>
     </Box>
