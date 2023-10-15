@@ -55,7 +55,9 @@ const MyISP = () => {
         flexDirection: "column",
       }}
     >
-      <Typography variant="h1">اپراتور من</Typography>
+      <Typography variant="h1" component="h1">
+        اپراتور من
+      </Typography>
 
       <Box
         display="flex"

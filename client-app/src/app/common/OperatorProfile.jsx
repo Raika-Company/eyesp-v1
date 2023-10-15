@@ -53,7 +53,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography>ایرانسل</Typography>
+          <Typography variant="h2">ایرانسل</Typography>
           <img src={Irancell} alt="irnacell" />
         </Box>
         <Box
@@ -71,8 +71,12 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
               boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
             }}
           >
-            <Typography fontSize="2rem">رتبه کلی اپراتور</Typography>
-            <Typography textAlign="center" fontSize="2rem" marginTop="1rem">
+            <Typography variant="body1">رتبه کلی اپراتور</Typography>
+            <Typography
+              textAlign="center"
+              variant="mainDigits"
+              marginTop="1rem"
+            >
               #1
             </Typography>{" "}
           </Box>
