@@ -191,7 +191,12 @@ function GridItem({ theme, rendered, title, data, unit }) {
             {rendered && (
               <ResponsiveContainer width="100%" height={261}>
                 <BarChart width="100%" height="100%" data={data}>
-                  <CartesianGrid vertical={false} stroke={theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"} />
+                  <CartesianGrid
+                    vertical={false}
+                    stroke={
+                      theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"
+                    }
+                  />
                   <defs>
                     <linearGradient
                       id="gradientChart"

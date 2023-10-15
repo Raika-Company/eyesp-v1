@@ -110,13 +110,6 @@ const OperatorProfile = () => {
     setChartData(newChartData);
   };
 
-  const StyledFormControl = styled(FormControl)(({ theme }) => ({
-    "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
-      {
-        padding: "5px 14px;",
-      },
-  }));
-
   const data = [
     {
       day: "05-01",
@@ -151,25 +144,52 @@ const OperatorProfile = () => {
     return (
       <g>
         <rect x={x} y={y} width={width} height={height} fill={fill} />
+        {/* Shadow for the top line */}
+        <line
+          x1={x}
+          y1={y + 6} // Offset for the shadow
+          x2={x + width}
+          y2={y - 6} // Offset for the shadow
+          stroke="#FE4543"
+          strokeOpacity="0.9" // Makes the shadow slightly transparent
+          strokeWidth="50"
+          filter="url(#blur)"
+        />
         <line
           x1={x}
           y1={y}
           x2={x + width}
           y2={y}
-          stroke="red"
-          strokeWidth="2"
+          stroke="#FE4543"
+          strokeWidth="9"
+        />
+        <line
+          x1={x}
+          y1={y + height - 6}
+          x2={x + width}
+          y2={y + height + 6}
+          stroke="#FE4543"
+          strokeOpacity="0.9"
+          strokeWidth="50"
+          filter="url(#blur)"
         />
         <line
           x1={x}
           y1={y + height}
           x2={x + width}
           y2={y + height}
-          stroke="red"
-          strokeWidth="2"
+          stroke="#FE4543"
+          strokeWidth="9"
         />
+        <defs>
+          <filter id="blur">
+            <feGaussianBlur stdDeviation="4" />
+          </filter>
+        </defs>
       </g>
     );
   };
+
   const formatYAxisTicks = (tick) => {
     const labels = {
       "-6": "4ساعت قبل",
@@ -197,7 +217,7 @@ const OperatorProfile = () => {
           <Typography m={0} variant="h1" component="h2" color="text.textBlack">
             اختلالات لحظه ای{" "}
           </Typography>
-          <ViewDetailsButton />
+          <ViewDetailsButton target="/isp-performance" />
         </Box>
         <Box
           mt={1}
@@ -211,21 +231,20 @@ const OperatorProfile = () => {
           <Typography m={0} color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
-          <StyledFormControl sx={{ width: "8.8125rem" }}>
+          <FormControl sx={{ width: "8.8125rem" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={age}
               label="سال"
               onChange={handleChange}
-              sx={{ backgroundColor: "#313131", border: "none" }}
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
               <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
               <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
             </ContainedSelect>
-          </StyledFormControl>
+          </FormControl>
         </Box>
         <Box mt={4}>
           <BarChart

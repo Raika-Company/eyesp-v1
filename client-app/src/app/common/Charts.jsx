@@ -81,16 +81,14 @@ const chartColors = [
 ];
 function GridItem({ theme, rendered, title, data, unit, color }) {
   return (
-    <Grid
-      item
-      xs={12}
-      md={12}
+    <NewCardContainer
       sx={{
-        backgroundColor: "black",
+        display: "flex",
         paddingInline: "3%",
         paddingBottom: "2.25rem",
         paddingTop: "1.5rem",
         borderRadius: ".75rem",
+        flexBasis: "100%",
       }}
     >
       <Box display="flex" position="relative" width="92%">
@@ -195,7 +193,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           unit={unit}
         />
       </Box>
-    </Grid>
+    </NewCardContainer>
   );
 }
 
@@ -243,28 +241,15 @@ const Charts = () => {
   useEffect(() => {
     setRendered(true);
   }, []);
-  const NewCard = styled(Box)(({ theme }) => ({
-    maxHeight: "54em",
-    overflowY: "auto",
-    backgroundColor: "#121212",
-    boxShadow: "none",
-    borderRadius: "0.75rem",
 
-    // For WebKit browsers (like Chrome and Safari) to hide scrollbar
-    "&::-webkit-scrollbar": {
-      display: "none",
-    },
-
-    // For Firefox to hide scrollbar
-    "& scrollbarWidth": "none",
-  }));
   return (
     <>
-      <NewCard
+      <NewCardContainer
         sx={{
+          maxHeight: "880px",
+          overflowY: "scroll",
           marginTop: "1rem",
-          backgroundColor: "transparent",
-          flexBasis: isMdScreen ? "100%" : "49.5%",
+          flexBasis: isMdScreen ? "100%" : "50%",
         }}
       >
         <Grid container gap={2.5}>
@@ -288,7 +273,7 @@ const Charts = () => {
             />
           ))}
         </Grid>{" "}
-      </NewCard>
+      </NewCardContainer>
     </>
   );
 };
