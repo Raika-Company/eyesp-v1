@@ -1,7 +1,12 @@
 import React, {lazy} from "react";
 
-import SpeedTest from "../../pages/speedtest/SpeedTest";
-import NewDashboard from "../../pages/dashboard/newDashboard/NewDashboard";
+const SpeedTest = lazy(() => import("../../pages/speedtest/SpeedTest"));
+const NewDashboard = lazy(() =>
+  import("../../pages/dashboard/newDashboard/NewDashboard")
+);
+const ConflictDetailsPage = lazy(() =>
+  import("../../pages/dashboard/conflictDetails/ConflictDetailsPage")
+);
 
 const NewSpeedTest = lazy(() => import("../../pages/speedtest/NewSpeedTest"));
 const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
@@ -59,14 +64,14 @@ export const mainRoutes = [
       "information, internet, internet speed, broadband speed, download speed, upload speed",
     robots: "index, follow",
   },
-  // {
-  //   path: "/history",
-  //   element: <TestHistory />,
-  //   title: "Test History | TIC Radar",
-  //   description: "Review all your past internet speed tests in one place.",
-  //   keywords: "test history, speed results, past tests",
-  //   robots: "index, follow",
-  // },
+  {
+    path: "/dashboard/conflict-details",
+    element: <ConflictDetailsPage />,
+    title: "Conflict Details",
+    description: "Showing the Details off all conflicts",
+    keywords: "conflicts, provinces conflicts",
+    robots: "index, follow",
+  },
   {
     path: "/my-isp",
     element: <MyISP />,

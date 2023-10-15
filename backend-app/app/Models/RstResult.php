@@ -31,6 +31,7 @@ class RstResult extends Model
         'upload',
         'upload_duration',
         'jitter',
+        'data_type',
     ];
 
     public static function InsertHelloRequest($ipInfo)
@@ -49,5 +50,69 @@ class RstResult extends Model
             'lon' => $ipInfo->lon,
             'type' => $ipInfo->test_type,
         ]);
+    }
+
+    public static function hourly($isp = null, $hours)
+    {
+        $res = self::where('date', now()->toDateString())
+            ->where('time', '>=', now()->subHours($hours)->toTimeString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function today($isp = null, $temp)
+    {
+        $res = self::where('date', now()->toDateString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function daily($isp = null, $days)
+    {
+        $res = self::where('date', '>=', now()->subDays($days)->toDateString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function weekly($isp = null, $weeks)
+    {
+        $res = self::where('date', '>=', now()->subWeeks($weeks)->toDateString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function monthly($isp = null, $months)
+    {
+        $res = self::where('date', '>=', now()->subMonths($months)->toDateString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function year($isp = null, $years)
+    {
+        $res = self::where('date', '>=', now()->format('Y').'-01-01');
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
+    public static function yearly($isp = null, $years)
+    {
+        $res = self::where('date', now()->subYears($years)->toDateString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
     }
 }

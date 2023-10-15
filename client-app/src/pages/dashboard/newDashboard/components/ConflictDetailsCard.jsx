@@ -51,6 +51,7 @@ const ConflictDetailsCard = () => {
         paddingX: "2rem",
         display: "flex",
         flexDirection: "column",
+        background: "#1A1A1A",
         gap: "2rem",
       }}
     >
@@ -80,13 +81,13 @@ const ConflictDetailsCard = () => {
         <Button
           variant="text.main"
           component={Link}
-          to=""
+          to="/dashboard/conflict-details"
           sx={{
             textDecoration: "underline",
             marginRight: "auto",
           }}
         >
-          سایر اپراتورها
+          مشاهده همه
           <img src={leftArrow} alt="leftArrow" />
         </Button>
       </Box>

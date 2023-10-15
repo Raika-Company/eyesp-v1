@@ -3,7 +3,7 @@ import { Button, styled } from "@mui/material";
 const ContainedButton = styled(({ bgColor, txtColor, txtHover, ...other }) => <Button {...other} />)(
   ({ bgColor, txtColor, txtHover }) => ({
     boxShadow: "none",
-    borderRadius: "1.3125rem",
+    borderRadius: "1rem",
     paddingInline: "2em",
     backgroundColor: bgColor,
     borderColor: bgColor,
@@ -20,7 +20,7 @@ const ContainedButton = styled(({ bgColor, txtColor, txtHover, ...other }) => <B
 
 const OutlinedButton = styled(Button)({
   boxShadow: "none",
-  borderRadius: "1.3125rem",
+  borderRadius: "1rem",
 });
 
 export { ContainedButton, OutlinedButton };

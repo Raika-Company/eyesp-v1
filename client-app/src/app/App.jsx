@@ -3,7 +3,7 @@
  */
 
 import {useState, Suspense} from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
@@ -17,6 +17,7 @@ import useDynamicMP from "./hooks/useDynamicMP";
 import ThemeSwitcher from "./common/ThemeSwitcher";
 import Pc from "../pages/pc/pc";
 import NewTestHistory from "../pages/testHistory/TestHistory";
+import BackgroundSvg from "./common/BackgroundSvg";
 
 /**
  * Main App component rendering the layout and routing structure.
@@ -61,12 +62,19 @@ function App() {
               element={
                 <Container
                   maxWidth="xl"
-                  sx={{overflow: isMdUp ? "none" : "hidden"}}
+                  sx={{
+                    overflow: isMdUp ? "none" : "hidden",
+                    position: "relative",
+                  }}
                 >
+                  <BackgroundSvg />
                   <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    marginBottom="1rem"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                      background: "transparent",
+                    }}
                   >
                     <NewNavbar
                       toggleOpenMenu={toggleOpenMenu}

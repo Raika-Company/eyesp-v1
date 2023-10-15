@@ -31,7 +31,7 @@ const YAxisLine = ({ max, unit, height, onValuesGenerated }) => {
             width: ".3rem",
             background: theme.palette.mode === "dark" ? "#C9C9C9" : "#aaaa",
             borderRadius: ".5rem",
-            height: height || "14rem",
+            height: height || "16.1rem",
           }}
         ></div>
 

@@ -15,7 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   Radio,
-  Tooltip,
+  Card,
 } from "@mui/material";
 import {useEffect, useState} from "react";
 import moment from "moment-jalaali";
@@ -25,6 +25,8 @@ import elipseDark from "../../app/assets/image/elipse-dark.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
+import {styled} from "@mui/material/styles";
 
 import {STATUS_MAP} from "./constant";
 
@@ -55,10 +57,15 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AddressAndServer = ({ip, server}) => (
   <Box>
-    {["آدرس", "سرور"].map((text, index) => (
+    {["آدرسIP", "سرور"].map((text, index) => (
       <Typography key={index} variant="h4" color="text.main">
         {text}:
-        <Typography component="span" variant="h5" color="text" marginX="0.5rem">
+        <Typography
+          component="span"
+          variant="h5"
+          color="text.main"
+          marginX="0.5rem"
+        >
           {text === "آدرس"
             ? ip === ""
               ? "در حال پیدا کردن ip"
@@ -95,6 +102,17 @@ const SpeedTest = () => {
   const [isServerSelected, setIsServerSelected] = useState(false);
   const [openSelectServer, setOpenSelectServer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const HtmlTooltip = styled(({className, ...props}) => (
+    <Tooltip {...props} classes={{popper: className}} />
+  ))(({theme}) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#313131",
+      color: "#fff",
+      maxWidth: 145,
+      border: "1px solid #dadde9",
+    },
+  }));
 
   useEffect(() => {
     axios
@@ -275,7 +293,7 @@ const SpeedTest = () => {
 
   return (
     <>
-      <CardContainer
+      <Card
         component="main"
         sx={{
           paddingX: pXCardContainers,
@@ -283,18 +301,34 @@ const SpeedTest = () => {
           height: isMdScreen ? "calc(90vh - 10rem)" : "calc(100vh - 10rem)",
           position: "relative",
           overflow: "visible",
+          background: "transparent",
+          boxShadow: "none",
         }}
       >
         <Box display="flex" justifyContent="space-between">
-          <Typography variant="h1" color="" gutterBottom>
-            تست اینترنت
+          <Typography
+            sx={{
+              color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E",
+              pt: "0.45rem",
+            }}
+            variant="h1"
+            gutterBottom
+          >
+            تست سرعت
           </Typography>
           <Button
             component={Link}
             to="/history"
             variant="h3"
-            color="text.subHeading"
-            startIcon={<HistoryIcon sx={{mx: "0.5rem"}} />}
+            sx={{color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E"}}
+            startIcon={
+              <HistoryIcon
+                sx={{
+                  mx: "0.5rem",
+                  color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E",
+                }}
+              />
+            }
           >
             تست های گذشته
           </Button>
@@ -302,9 +336,10 @@ const SpeedTest = () => {
         <Box
           display="flex"
           flexDirection={isMdScreen ? "row" : "column"}
-          justifyContent="space-evenly"
+          justifyContent="space-between"
           alignItems="center"
           height="100%"
+          pt={isSmScreen ? "0rem" : "0.9rem"}
           paddingBottom="10%"
         >
           <Box display="flex" flexDirection="column" alignItems="flex-end">
@@ -326,7 +361,7 @@ const SpeedTest = () => {
             {isGoButtonVisible ? (
               <Button
                 onClick={handleButtonClick}
-                sx={{
+                sx={{                   
                   boxShadow: `
             inset 0 0 20px #9DB8C8,  /* inner shadow */
             0px 4px 59px 0px rgba(0, 163, 255, 0.22)  /* outer shadow */
@@ -392,18 +427,25 @@ const SpeedTest = () => {
                 display: "flex",
                 justifyContent: "space-evenly",
                 alignItems: "center",
-                mt: "0.2rem",
               }}
               variant="h5"
               color="text.main"
-              marginLeft="1rem"
             >
-              نوع تست
-              <Tooltip title="Delete">
+              <HtmlTooltip
+                title={
+                  <>
+                    <Typography color="inherit">تست فوری با یک</Typography>
+                    <Typography>
+                      {"اتصال و تست دقیق"} {"با چند اتصال انجام می شود."}
+                    </Typography>
+                  </>
+                }
+              >
+                نوع تست
                 <IconButton>
-                  <InfoOutlinedIcon sx={{mr: "0.2rem", fontSize: "1.2rem"}} />
+                  <InfoOutlinedIcon sx={{fontSize: "1rem"}} />
                 </IconButton>
-              </Tooltip>
+              </HtmlTooltip>
             </Typography>
           </Box>
           <FloatingResult
@@ -499,7 +541,7 @@ const SpeedTest = () => {
             ))}
           </DialogContent>
         </Dialog>
-      </CardContainer>
+      </Card>
       {/* <AnimatesSpeedTestNumber value={download || 0} unit="Mbs" /> */}
     </>
   );

@@ -12,24 +12,14 @@ import { Box, Typography, useTheme } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { ContainedButton } from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
-import ViewDetailsButton from "../../app/common/ViewDetailsButton";
+// import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 import { useNavigate } from "react-router-dom";
 import IconLink from "./IconLInk";
 
 const SOCIAL_ICONS = [
   {
-    name: "Instagram",
-    iconPath: Instagram,
-    link: "#",
-  },
-  {
-    name: "phLink",
-    iconPath: PhLink,
-    link: "#",
-  },
-  {
-    name: "linkedin",
-    iconPath: Linkedin,
+    name: "Simple Icon",
+    iconPath: SimpleIcon,
     link: "#",
   },
   {
@@ -38,8 +28,18 @@ const SOCIAL_ICONS = [
     link: "#",
   },
   {
-    name: "Simple Icon",
-    iconPath: SimpleIcon,
+    name: "linkedin",
+    iconPath: Linkedin,
+    link: "#",
+  },
+  {
+    name: "Instagram",
+    iconPath: Instagram,
+    link: "#",
+  },
+  {
+    name: "phLink",
+    iconPath: PhLink,
     link: "#",
   },
 ];
@@ -63,7 +63,7 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
   return (
     <>
       <Typography sx={{ display: { md: "none" } }}>
-        برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
+        برای انجام تست روی دکمه شروع کلیک کنید.{" "}
       </Typography>
       <Box
         justifyContent="space-evenly"
@@ -75,9 +75,9 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
           alignItems: "center",
         }}
       >
+        {renderInfoBox(true, pingIcon, "پینگ", latency)}
         {renderInfoBox(true, downloadIcon, "سرعت دانلود", download)}
         {renderInfoBox(true, uploadIcon, "سرعت آپلود", upload)}
-        {renderInfoBox(true, pingIcon, "پینگ", latency)}
         <Fade in={isTestEnds}>
           <Box
             sx={{
@@ -91,16 +91,16 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
               width: "14rem",
               borderRadius: "2rem",
               backdropFilter: "blur(5px)",
-              background: "rgba(0, 0, 0, .4)",
+              background: theme.palette.mode === "dark" ? "#262626" : "#fff",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
             <ContainedButton
-              bgColor="#FF8A35"
+              bgColor="#0C6087"
+              txtHover="#0C6087"
               txtColor="#fff"
-              txtHover="#FF8A35"
               onClick={() => navigate(0)}
             >
               تست مجدد
@@ -116,26 +116,74 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
           flexDirection: "column",
           justifyContent: "space-evenly",
           alignItems: "center",
-          boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
-          position: "absolute",
-          bottom: isTestEnds ? "30%" : "-10%",
-          left: isTestEnds ? "auto" : "10%",
-          transition: "all .5s linear",
-          width: isTestEnds ? "50%" : "80%",
-          marginX: "auto",
-          height: isTestEnds ? "40%" : "20%",
-          backgroundColor: "#FFF",
-          marginBottom: "1rem",
-          border: "1px solid #FFF",
-          background:
+          boxShadow:
             theme.palette.mode === "dark"
-              ? "rgba(11, 17, 19, 0.9)"
-              : "rgba(255, 255, 255, 0.5)",
+              ? "0px 0px 36px 0px rgba(255, 255, 255, 0.25)"
+              : "0px 0px 36px 0px rgba(12, 96, 135, 0.25)",
+          position: "absolute",
+          bottom: isTestEnds ? "16%" : "-5%",
+          left: isTestEnds ? "35.3%" : "30.5%",
+          transition: "all .5s linear",
+          width: isTestEnds ? "40%" : "50%",
+          height: isTestEnds ? "70%" : "25%",
+          marginX: "auto",
+          marginBottom: "1rem",
+          background: theme.palette.mode === "dark" ? "#262626" : "#fff",
           backdropFilter: "blur(10px)",
           zIndex: "5",
+          pb: "1.5rem",
         }}
       >
+        {isTestEnds && (
+          <ContainedButton
+            bgColor="#0C6087"
+            txtHover="#0C6087"
+            txtColor="#fff"
+            sx={{
+              minWidth: "30%",
+              position: "absolute",
+              bottom: "4%",
+            }}
+            onClick={() => navigate(0)}
+          >
+            تست مجدد
+          </ContainedButton>
+        )}
+        {!isTestEnds && (
+          <Typography>برای انجام تست روی دکمه شروع کلیک کنید. </Typography>
+        )}
+        {/* {!isTestEnds && (
+          <Box alignSelf="flex-end" marginLeft="2rem">
+            <ViewDetailsButton target="/history" />
+          </Box>
+        )} */}
+        {isTestEnds && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: ".5rem",
+            }}
+          >
+            <Typography
+              sx={{ color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E" }}
+            >
+              به اشتراک بگذارید:
+            </Typography>
+            {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
+              <IconLink iconPath={iconPath} key={name} link={link} />
+            ))}
+          </Box>
+        )}
         <Box display="flex" justifyContent="space-evenly" width="100%">
+          {renderInfoBox(
+            isTestEnds ? true : false,
+            pingIcon,
+            "پینگ",
+            latency,
+            "ms"
+          )}
           {renderInfoBox(
             isTestEnds ? true : false,
             downloadIcon,
@@ -150,51 +198,34 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
             upload,
             "mb/s"
           )}
-          {renderInfoBox(
-            isTestEnds ? true : false,
-            pingIcon,
-            "پینگ",
-            latency,
-            "ms"
-          )}
         </Box>
-
-        {isTestEnds && (
-          <ContainedButton
-            bgColor="#FF8A35"
-            txtColor="#fff"
-            txtHover="#FF8A35"
-            sx={{
-              minWidth: "30%",
-              position: "absolute",
-            }}
-            onClick={() => navigate(0)}
-          >
-            تست مجدد
-          </ContainedButton>
-        )}
-        {!isTestEnds && (
-          <Typography>
-            برای دریافت اطلاعات بر روی دکمه شروع کلیک کنید.
-          </Typography>
-        )}
-        {!isTestEnds && (
-          <Box alignSelf="flex-end" marginLeft="2rem">
-            <ViewDetailsButton target="/history" />
-          </Box>
-        )}
         {isTestEnds && (
           <Box
             sx={{
+              width: "40%",
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: ".5rem",
+              flexWrap: "wrap",
+              justifyContent: "flex-end",
             }}
           >
-            <Typography color="#878787">به اشتراک بگذارید:</Typography>
-            {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
-              <IconLink iconPath={iconPath} key={name} link={link} />
+            {["آدرسIP", "سرور", "نوع تست"].map((text, index) => (
+              <Typography key={index} variant="h4" color="text.main">
+                {text}:
+                <Typography
+                  component="span"
+                  variant="h5"
+                  color="text"
+                  marginX="0.5rem"
+                >
+                  {text === "آدرس"
+                    ? ip === ""
+                      ? "در حال پیدا کردن ip"
+                      : ip
+                    : server === ""
+                    ? "در حال انتخاب سرور"
+                    : "تهران - زیرساخت"}
+                </Typography>
+              </Typography>
             ))}
           </Box>
         )}

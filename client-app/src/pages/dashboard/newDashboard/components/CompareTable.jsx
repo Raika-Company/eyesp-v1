@@ -113,6 +113,7 @@ const CompareTable = ({ title, showProvince }) => {
     <Box
       sx={{
         display: "flex",
+        background: "#1A1A1A",
         flexDirection: "column",
         justifyContent: "center",
         flex: 1,
