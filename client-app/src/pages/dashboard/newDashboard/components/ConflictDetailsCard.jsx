@@ -81,13 +81,13 @@ const ConflictDetailsCard = () => {
         <Button
           variant="text.main"
           component={Link}
-          to=""
+          to="/dashboard/conflict-details"
           sx={{
             textDecoration: "underline",
             marginRight: "auto",
           }}
         >
-          سایر اپراتورها
+          مشاهده همه
           <img src={leftArrow} alt="leftArrow" />
         </Button>
       </Box>

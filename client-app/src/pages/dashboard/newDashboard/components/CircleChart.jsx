@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
 const CircleChart = ({
   id,
@@ -26,7 +26,7 @@ const CircleChart = ({
     }, 20); // Increase by 1% every 50ms
 
     return () => clearInterval(interval);
-  }, []);
+  }, [finalPercentage]);
   return (
     <div
       style={{
@@ -52,6 +52,12 @@ const CircleChart = ({
             ))}
           </linearGradient>
         </defs>
+
+        <defs>
+          <filter id="soften">
+            <feGaussianBlur stdDeviation="0.5" />
+          </filter>
+        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -59,11 +65,13 @@ const CircleChart = ({
           strokeWidth={strokeWidth}
           stroke="lightgray"
           fill="none"
+          filter="url(#soften)"
         />
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
+          filter="url(#soften)"
           strokeWidth={strokeWidth}
           stroke={`url(#circleGradient${id})`}
           fill="none"
