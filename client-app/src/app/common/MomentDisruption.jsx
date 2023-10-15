@@ -108,7 +108,7 @@ const OperatorProfile = () => {
       marginInlineStart: "20%",
       marginInlineEnd: "20%",
       background:
-        "radial-gradient(ellipse 250% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 250% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
+        "radial-gradient(ellipse 300% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 300% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
       position: "relative",
     },
     "& .column tbody td::before, & .column tbody td::after": {

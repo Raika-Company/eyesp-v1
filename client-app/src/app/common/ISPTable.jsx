@@ -36,7 +36,7 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
   background: gradient,
   paddingX: "0.94rem",
   paddingY: "0.5rem",
-  width: "80em",
+  width: "100%",
   height: "3.875rem",
   opacity: delay ? 0 : 1,
   animation: delay ? `${fadeInAnimation} 0.4s forwards ${delay}s` : "none",
@@ -103,7 +103,7 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               key={Items.rank}
               delay={index * 0.2}
               gradient={gradients[index >= 3 ? 3 : index]}
-              marginTop="1rem"
+              marginTop="0.75rem"
             >
               <Typography variant="h5">{index + 1}</Typography>
               <Typography variant="h5">{Items.ISPname}</Typography>

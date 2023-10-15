@@ -13,25 +13,25 @@ const CircleChart = ({
   const offset = circumference - (percentage / 100) * circumference;
 
   useEffect(() => {
-    // Start animation once component mounts
     const interval = setInterval(() => {
       setPercentage((prevPercentage) => {
         if (prevPercentage < finalPercentage) {
           return prevPercentage + 1;
+        } else if (prevPercentage > finalPercentage) {
+          return prevPercentage - 1;
         } else {
           clearInterval(interval);
           return prevPercentage;
         }
       });
-    }, 20); // Increase by 1% every 50ms
+    }, 20);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [finalPercentage]);
   return (
     <div
       style={{
         position: "relative",
-        // width: "100px",
       }}
     >
       <svg width={size} height={size}>

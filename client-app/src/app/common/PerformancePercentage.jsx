@@ -47,7 +47,7 @@ const OperatorProfile = () => {
 
   const buttonGroupStyle = {
     backgroundColor: theme.palette.mode === "dark" ? "#303030" : "#F4F4F4",
-    width: "44%",
+    width: "100%",
     alignItems: "center",
     gap: "11px",
     justifyContent: "center",
@@ -78,14 +78,16 @@ const OperatorProfile = () => {
     width: "60%",
     color: "#E7E7E7",
   };
+  const [percentage, setPercentage] = useState(65);
+
   const handleChange = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
 
-    const yearData = data.find((d) => d.id === selectedYear.toString());
-    if (yearData) {
-      setChartData(yearData.data);
-    }
+    // For the sake of debugging, directly set percentages based on options
+    if (selectedYear === "در حال حاضر") setPercentage(65);
+    else if (selectedYear === "1 روز قبل") setPercentage(75);
+    else if (selectedYear === "1 هفته قبل") setPercentage(85);
   };
 
   const StyledFormControl = styled(FormControl)(({ theme }) => ({
@@ -94,7 +96,6 @@ const OperatorProfile = () => {
         padding: "5px 14px;",
       },
   }));
-  let percentage = 65;
   let gradientColors = ["#0C6087", "#0C6087"];
 
   return (
@@ -134,35 +135,44 @@ const OperatorProfile = () => {
             </ContainedSelect>
           </StyledFormControl>
         </Box>
-        <Box display="flex" justifyContent="space-between" mt={4}>
-          <ButtonGroup
-            orientation="vertical"
-            variant="outlined"
-            aria-label="outlined button group"
-            sx={buttonGroupStyle}
-          >
-            {buttons.map((btn, index) => (
-              <Button
-                key={index}
-                onClick={() => handleButtonClick(index)}
-                style={
-                  clickedButtonIndex === index
-                    ? { ...activeButtonStyle, width: btn.width }
-                    : { ...defaultButtonStyle, width: btn.width }
-                }
-              >
-                {btn.label}
-              </Button>
-            ))}
-          </ButtonGroup>
+        <Box
+          display="flex"
+          justifyContent="center"
+          gap={0.5}
+          // flexWrap="wrap"
+          mt={isMdScreen ? "72px" : "32px"}
+        >
+          <Box flexBasis="50%">
+            <ButtonGroup
+              orientation="vertical"
+              variant="outlined"
+              aria-label="outlined button group"
+              sx={buttonGroupStyle}
+            >
+              {buttons.map((btn, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleButtonClick(index)}
+                  style={
+                    clickedButtonIndex === index
+                      ? { ...activeButtonStyle, width: btn.width }
+                      : { ...defaultButtonStyle, width: btn.width }
+                  }
+                >
+                  {btn.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </Box>
+
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              flexBasis: "50%",
             }}
           >
-            {" "}
             <CircleChart
               finalPercentage={percentage}
               gradientColors={gradientColors}

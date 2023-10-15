@@ -131,9 +131,6 @@ const ISPPerformance = () => {
     <NewCard
       sx={{
         backgroundColor: "transparent",
-        paddingX: mpCardContainers,
-        paddingY: "1.75rem",
-        overflow: "hidden",
       }}
     >
       <Box
@@ -145,7 +142,7 @@ const ISPPerformance = () => {
           marginBottom: "1.4rem",
           width: "100%",
           gap: "1rem",
-          paddingLeft: "1.94rem",
+          paddingLeft: isMdScreen ? "0" : "4rem",
           alignItems: "center",
         }}
       >
@@ -165,32 +162,9 @@ const ISPPerformance = () => {
           gap="0.94rem"
         >
           <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
-            انتخاب استان{" "}
+            انتخاب استان:{" "}
           </Typography>
-          {/* <Select
-            labelId="change-province-label"
-            id="change-province"
-            value={selectedProvince}
-            onChange={handleProvinceChange}
-            displayEmpty
-            sx={{
-              borderRadius: "1.25rem",
-              marginLeft: isSmScreen ? "0" : "1rem",
-              marginRight: "0.5rem",
-              border: "1px solid white",
-              width: "11.75rem",
-              fontSize: "1.25rem",
-            }}
-            renderValue={(selectedValue) =>
-              selectedValue ? selectedValue : "انتخاب کنید"
-            }
-          >
-            {provinceData.map((provinceItem) => (
-              <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                {provinceItem.name}
-              </MenuItem>
-            ))}
-          </Select> */}
+
           <StyledFormControl sx={{ width: "11.75rem" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
@@ -215,23 +189,25 @@ const ISPPerformance = () => {
               ))}
             </ContainedSelect>
           </StyledFormControl>
-        </Box>
 
-        <Typography variant="h4" whiteSpace={"nowrap"}>
-          {" "}
-          خروجی اکسل{" "}
-        </Typography>
+          <Typography variant="h4" whiteSpace={"nowrap"}>
+            {" "}
+            چینش براساس:
+          </Typography>
 
-        {/* <Select
+          <StyledFormControl sx={{ width: "11.75rem" }}>
+            <ContainedSelect
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={sortCriteria}
               onChange={(e) => setSortCriteria(e.target.value)}
-              variant="outlined"
-              color="primary"
               sx={{
-                marginRight: "0.5rem",
-                borderRadius: "1.25rem",
-                float: "left",
+                backgroundColor: "#313131",
+                border: " 1.5px solid #F0F4F3",
+                borderRadius: "1rem",
+                height: "3.25rem",
               }}
+              displayEmpty
             >
               {selectionItems.map((item) => (
                 <MenuItem
@@ -242,7 +218,14 @@ const ISPPerformance = () => {
                   {item}
                 </MenuItem>
               ))}
-            </Select> */}
+            </ContainedSelect>
+          </StyledFormControl>
+        </Box>
+
+        <Typography variant="h4" whiteSpace={"nowrap"}>
+          {" "}
+          خروجی اکسل{" "}
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -252,7 +235,9 @@ const ISPPerformance = () => {
           },
         }}
       >
-        <Box sx={{ width: isXsScreen ? "19em" : isMdScreen ? "22em" : "100%" }}>
+        <Box
+          sx={{ width: isXsScreen ? "19em" : isMdScreen ? "51.5em" : "100%" }}
+        >
           <ISPTable
             isDetail={true}
             ISPdata={sortedISPData.slice(0, visibleRows)}
