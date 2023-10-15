@@ -25,6 +25,9 @@ import Irancell from "../assets/image/irancell.svg";
 
 const OperatorProfile = ({ openFeedbackDialog }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const theme = useTheme();
+  const backgroundColor = theme.palette.mode === "dark" ? "#303030" : "#F4F4F4";
+
   return (
     <>
       <NewCardContainer
@@ -62,9 +65,10 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
           <Box
             sx={{
               borderRadius: "1rem",
-              backgroundColor: "#303030",
+              backgroundColor: backgroundColor,
               padding: "1rem",
               alignItems: "center",
+              boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
             }}
           >
             <Typography fontSize="2rem">رتبه کلی اپراتور</Typography>
@@ -96,7 +100,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
               sx={{
                 direction: "ltr",
                 "& .MuiRating-iconFilled": {
-                  color: "#E7E7E7",
+                  color: theme.palette.mode === "dark" ? "#E7E7E7" : "gold",
                 },
               }}
             />

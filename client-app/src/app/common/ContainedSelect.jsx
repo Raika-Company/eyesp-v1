@@ -3,6 +3,8 @@ import { Select, styled } from "@mui/material";
 const ContainedSelect = styled(Select)({
   borderRadius: "1.25rem",
   border: "1px solid #DDD",
+  paddingX: "0.8rem",
+  paddingY: "0.4rem",
   ".MuiSelect-icon": {
     right: "auto",
     left: "7px",
