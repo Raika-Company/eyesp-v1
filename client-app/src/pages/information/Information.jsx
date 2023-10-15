@@ -4,17 +4,24 @@
  * @description This component displays new information with definitions.
  */
 // React core and hooks
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import {Box, Container, Typography, useMediaQuery} from "@mui/material";
-
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import moreInformation from "../../app/assets/image/moreInformation.svg";
 /**
  * A hook from Material-UI to access the current theme.
  * @function useTheme
  * @returns {Object} The current theme object.
  */
-import {useTheme} from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 
 // Local components
 // Importing custom LoadingSpinner component for modular structure
@@ -37,24 +44,27 @@ import SearchIcon from "@mui/icons-material/Search";
 const Information = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
-  const bgColor = theme.palette.mode === "light" ? "#f7f9fc" : "#2a2c2f";
   const [definitionsData, setDefinitionsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const [selectedDefinition, setSelectedDefinition] = useState(null);
+
   /**
    * Fetch definitions data from the server.
    * @async
    * @function
    * @returns {Promise<void>} A promise that resolves when the data is fetched.
    */
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/data/definitions.json");
         setDefinitionsData(response.data);
+
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -80,96 +90,150 @@ const Information = () => {
     <Box
       my="1rem"
       overflow="hidden"
+      display="flex"
       sx={{
-        height: "auto",
-        padding: isSmScreen ? "0.7rem" : "3rem",
-        borderRadius: "1.2rem",
-        border: "1.468px solid rgba(0, 0, 0, 0.10)",
-        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-        backgroundColor: bgColor,
+        padding: isSmScreen ? "0.7rem" : "2rem",
+        backgroundColor: "transparent",
+        gap: "0.56rem",
       }}
     >
       <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        display="flex"
+        flexDirection="column"
+        sx={{ flexBasis: isMdScreen ? "100%" : "50%" }}
       >
-        <Typography
-          component="h2"
-          gutterBottom
-          variant="h1"
-          color="text.textBlack"
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingInline: "1rem",
+          }}
         >
-          مفاهیم
-        </Typography>
+          <Typography
+            component="h2"
+            gutterBottom
+            variant="h1"
+            color="text.textBlack"
+          >
+            مفاهیم
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: isSmScreen ? 160 : 200,
+                borderRadius: "1rem",
+                border: "1px solid #676767",
+              }}
+            >
+              <InputBase
+                sx={{ mr: 1, flex: 1 }}
+                placeholder="جست و جو"
+                inputProps={{ "aria-label": "جست و جو" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+            {/* <IconButton sx={{ p: "10px" }} aria-label="FilterListIcon">
+              <FilterListIcon />
+            </IconButton> */}
+          </Box>
+        </Box>{" "}
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-evenly",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
             alignItems: "center",
+            maxHeight: "69dvh",
+            overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
           }}
         >
-          <Paper
-            component="form"
+          <Box
             sx={{
-              p: "2px 4px",
+              overflowX: "hidden",
+              width: isLgScreen ? "100%" : "100%",
+              // p: isSmScreen ? "0.5rem" : "1rem",
+              paddingBlock: "1rem",
+              paddingInline: "1rem",
+              direction: "ltr",
               display: "flex",
-              alignItems: "center",
-              width: isSmScreen ? 160 : 200,
-              borderRadius: "25px",
+              flexDirection: "column",
+              gap: ".1rem",
             }}
           >
-            <InputBase
-              sx={{mr: 1, flex: 1}}
-              placeholder="جست و جو"
-              inputProps={{"aria-label": "جست و جو"}}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <IconButton type="button" sx={{p: "10px"}} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <IconButton sx={{p: "10px"}} aria-label="FilterListIcon">
-            <FilterListIcon />
-          </IconButton>
+            {filteredDefinitions.map((definition) => (
+              <DefinitionTerm
+                title={definition.title}
+                key={definition.title}
+                onClick={() => setSelectedDefinition(definition)}
+              >
+                {definition.definition}
+              </DefinitionTerm>
+            ))}
+          </Box>
         </Box>
       </Box>
       <Box
+        height="68dvh"
+        mt="4rem"
+        display="flex"
+        borderRadius=".75rem"
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexBasis: isMdScreen ? "100%" : "50%",
+          border: "1px solid white",
         }}
       >
         <Box
-          sx={{
-            overflowX: "hidden",
-            width: isLgScreen ? "100%" : "60%",
-            p: isSmScreen ? "0.5rem" : "1rem",
-            direction: "ltr",
-            display: "flex",
-            flexDirection: "column",
-            gap: ".1rem",
-          }}
+          display="flex"
+          flexDirection="column"
+          paddingInline={isMdScreen ? "23px" : "150px"}
+          m="auto"
+          gap={2}
         >
-          {filteredDefinitions.map((definition) => (
-            <DefinitionTerm title={definition.title} key={definition.title}>
-              {definition.definition}
-            </DefinitionTerm>
-          ))}
-        </Box>
-        <Box sx={{mx: "auto", display: isLgScreen ? "none" : "flex"}}>
-          <img
-            src={informationLogo}
-            alt="information-logo"
-            style={{opacity: "0.2"}}
-          />
+          <Typography>
+            {selectedDefinition
+              ? selectedDefinition.title
+              : definitionsData[0].title}
+          </Typography>
+          <Typography align="justify">
+            {selectedDefinition
+              ? selectedDefinition.moreInformation
+              : definitionsData[0].moreInformation}
+          </Typography>
+          <Button
+            sx={{ marginTop: "3rem", gap: "0.5rem" }}
+            variant="text.main"
+            component="a"
+            href={`https://fa.wikipedia.org/wiki/${
+              selectedDefinition
+                ? encodeURIComponent(selectedDefinition.title)
+                : encodeURIComponent(definitionsData[0].title)
+            }`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={moreInformation} alt="moreInformation" />
+            اطلاعات بیشتر
+          </Button>
         </Box>
       </Box>
     </Box>
@@ -183,13 +247,14 @@ const Information = () => {
  * @param {React.Node} props.children - The content of the definition.
  * @returns {React.Element} The rendered React component.
  */
-const DefinitionTerm = ({title, children}) => {
+const DefinitionTerm = ({ title, children, onClick }) => {
   const theme = useTheme();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
     <Typography
       component="p"
       gutterBottom
+      onClick={onClick}
       sx={{
         borderBottom: isSmScreen ? "1px solid #E2E4E7" : "none",
         display: "flex",
@@ -199,7 +264,7 @@ const DefinitionTerm = ({title, children}) => {
           : theme.palette.mode === "dark"
           ? "transparent"
           : "rgba(255, 255, 255, 0.8)",
-        borderRadius: isSmScreen ? ".8rem" : "2rem",
+        borderRadius: "0.75rem",
         border: theme.palette.mode === "dark" ? "1px solid #FFF" : "none",
         py: "1em",
         px: "1em",
@@ -230,7 +295,7 @@ const DefinitionTerm = ({title, children}) => {
       <Typography
         variant="h5"
         color="text.textBlack"
-        sx={{width: isSmScreen ? "207px" : "100%"}}
+        sx={{ width: isSmScreen ? "207px" : "100%" }}
       >
         {children}
       </Typography>

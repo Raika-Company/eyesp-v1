@@ -116,7 +116,10 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
           flexDirection: "column",
           justifyContent: "space-evenly",
           alignItems: "center",
-          boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.20)",
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0px 0px 36px 0px rgba(255, 255, 255, 0.25)"
+              : "0px 0px 36px 0px rgba(12, 96, 135, 0.25)",
           position: "absolute",
           bottom: isTestEnds ? "16%" : "-5%",
           left: isTestEnds ? "35.3%" : "30.5%",
@@ -163,7 +166,11 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
               gap: ".5rem",
             }}
           >
-            <Typography sx={{color : theme.palette.mode === "dark" ? "#fff" : "#4E4E4E",}}>به اشتراک بگذارید:</Typography>
+            <Typography
+              sx={{ color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E" }}
+            >
+              به اشتراک بگذارید:
+            </Typography>
             {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
               <IconLink iconPath={iconPath} key={name} link={link} />
             ))}

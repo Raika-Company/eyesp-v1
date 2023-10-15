@@ -1,4 +1,6 @@
-import {createTheme} from "@mui/material";
+import {
+  createTheme
+} from "@mui/material";
 
 var theme = createTheme();
 
@@ -18,87 +20,87 @@ const baseTheme = createTheme({
     h1: {
       fontSize: "18px",
       [theme.breakpoints.up("md")]: {
-        fontSize: "24px",
+        fontSize: "28px",
       },
-      fontFamily: "PeydaSemiBold",
+      fontFamily: "YekanBakhSemibold",
     },
     h2: {
       fontSize: "18px",
       [theme.breakpoints.up("md")]: {
         fontSize: "24px",
       },
-      fontFamily: "PeydaLight",
+      fontFamily: "YekanBakhRegular",
     },
     h3: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "20px",
       },
-      fontFamily: "PeydaRegular",
+      fontFamily: "YekanBakhRegular",
     },
     h4: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "16px",
       },
-      fontFamily: "PeydaSemiBold",
+      fontFamily: "YekanBakhSemibold",
     },
     h5: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "16px",
       },
-      fontFamily: "PeydaLight",
+      fontFamily: "YekanBakhLight",
     },
     h6: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "16px",
       },
-      fontFamily: "PeydaRegular",
+      fontFamily: "YekanBakhRegular",
     },
     body1: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "16px",
       },
-      fontFamily: "Peyda",
+      fontFamily: "YekanBakh",
     },
     body2: {
-      fontSize: "14px",
+      fontSize: "12px",
       [theme.breakpoints.up("md")]: {
-        fontSize: "16px",
+        fontSize: "14px",
       },
-      fontFamily: "Peyda",
+      fontFamily: "YekanBakh",
     },
     subtitle1: {
-      fontSize: "14px",
-      fontFamily: "PeydaRegular",
+      fontSize: "12px",
+      fontFamily: "YekanBakhRegular",
     },
     subtitle2: {
-      fontSize: "14px",
-      fontFamily: "PeydaLight",
+      fontSize: "10px",
+      fontFamily: "YekanBakhLight",
     },
     button: {
       fontSize: "14px",
       [theme.breakpoints.up("md")]: {
         fontSize: "16px",
       },
-      fontFamily: "PeydaSemiBold",
+      fontFamily: "YekanBakhSemibold",
     },
     mainDigits: {
       fontSize: "24px",
       [theme.breakpoints.up("md")]: {
         fontSize: "40px",
       },
-      fontFamily: "PeydaSemiBold",
+      fontFamily: "YekanBakhSemibold",
     },
     chartTitle: {
       fontSize: "16px",
       [theme.breakpoints.up("md")]: {
         fontSize: "20px",
       },
-      fontFamily: "PeydaLight",
+      fontFamily: "YekanBakhLight",
     },
     logo: {
       fontSize: "20px",
@@ -112,7 +114,7 @@ const baseTheme = createTheme({
       [theme.breakpoints.up("md")]: {
         fontSize: "1.75rem",
       },
-      fontFamily: "PeydaRegular",
+      fontFamily: "YekanBakhRegular",
     },
   },
   components: {
@@ -172,22 +174,33 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#008EDD",
+      main: "#00A4FF",
+      light: "#85CCF4",
+      dark: "#259FDA"
     },
     secondary: {
       main: "#D5E3F1",
+      light: "#D8D8D8",
+      dark: "#6A6861"
     },
     error: {
-      main: "#FF8A35",
+      main: "#B40000",
+      ligh: "#FF7A79",
+      dark: "#B72D2B"
+
     },
     warning: {
       main: "#FCD2B3",
+      light: "#F9CA32",
+      dark: "#7D6C41"
     },
     info: {
       main: "#C4E9FE",
     },
     success: {
       main: "#CAE4C4",
+      light: "#97C771",
+      dark: "#589627"
     },
     text: {
       main: "#676767",
@@ -198,11 +211,17 @@ export const lightTheme = createTheme({
       chartTitleColor: "#7D93AA",
     },
     background: {
-      default: "#E8F1F9",
+      default: "#E9E9E9",
     },
     hover: {
       main: "#E8E8E8",
     },
+    button: {
+      main: "#0C6087"
+    },
+    border: {
+      main: "#434544"
+    }
   },
 });
 
@@ -218,6 +237,8 @@ export const darkTheme = createTheme({
     mode: "dark",
     primary: {
       main: "#008EDD",
+      light: "#0C6087",
+      dark: "#259FDA"
     },
     secondary: {
       main: "#1A2D3A",
@@ -235,17 +256,23 @@ export const darkTheme = createTheme({
       main: "#83A673",
     },
     text: {
-      main: "#E8E8E8",
+      main: "#fff",
       textBlack: "#FFF",
-      textInfo: "#FFF",
+      textInfo: "#434544",
       subTitle: "#FFF",
     },
     background: {
-      default: "#313131",
+      default: "#262626",
     },
     hover: {
       main: "#182633",
     },
+    button: {
+      main: "#0C6087"
+    },
+    border: {
+      main: "#fff"
+    }
   },
   // components: {
   //   MuiDrawer: {

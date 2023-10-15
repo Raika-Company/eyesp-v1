@@ -9,13 +9,19 @@ import {
   useTheme,
 } from "@mui/material";
 import moment from "moment-jalaali";
-import xAxisLight from "../../app/assets/image/time-compare-light.svg";
-import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
+
 import axios from "axios";
 import NewSwitchBtn from "./newSwitchBtn";
 import HistoryTable from "./HistoryTable";
 import YAxisLine from "../ispCompare/YAxisLine";
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import XAxisLine from "./XAxisLine";
 
 /**
@@ -183,47 +189,41 @@ function GridItem({ theme, rendered, title, data, unit }) {
           </Typography>
           <Box borderRadius="3rem" padding="1rem" width="100%" height="321px">
             {rendered && (
-              <Box>
-                <ResponsiveContainer width="100%" height={261}>
-                  <BarChart width="100%" height="100%" data={data}>
-                    <defs>
-                      <linearGradient
-                        id="gradientChart"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop offset="1" stopColor="#008EDD" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar
-                      stackId="a"
-                      type="monotone"
-                      dataKey="value"
-                      stroke="transparent"
-                      fill="url(#gradientChart)"
-                      barSize={55}
-                      shape={<TopBorderedBar />}
+              <ResponsiveContainer width="100%" height={261}>
+                <BarChart width="100%" height="100%" data={data}>
+                  <CartesianGrid vertical={false} stroke={theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"} />
+                  <defs>
+                    <linearGradient
+                      id="gradientChart"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
                     >
-                      {data.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={barColors[index % barColors.length]}
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </Box>
+                      <stop offset="1" stopColor="#008EDD" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <Tooltip content={<CustomTooltip />} />
+                  <Bar
+                    stackId="a"
+                    type="monotone"
+                    dataKey="value"
+                    stroke="transparent"
+                    fill="url(#gradientChart)"
+                    barSize={55}
+                    shape={<TopBorderedBar />}
+                  >
+                    {data.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={barColors[index % barColors.length]}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             )}
           </Box>
-          {/* <img
-            src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
-            alt="xAxis"
-            style={{ width: "100%" }}
-          /> */}
           <XAxisLine
             max={Math.max(...data.map((line) => line.value))}
             unit={unit}
@@ -317,7 +317,8 @@ const NewTestHistory = ({ openNav }) => {
   return (
     <Card
       sx={{
-        background: "transparent",        marginTop: "1rem",
+        background: "transparent",
+        marginTop: "1rem",
         marginBottom: "4rem",
         boxShadow: "none",
         backgroundImage: "none",
