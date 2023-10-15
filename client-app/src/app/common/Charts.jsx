@@ -117,14 +117,15 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           >
             {rendered && (
               <Box>
-                <ResponsiveContainer width="100%" height={150}>
+                <ResponsiveContainer width="100%" height={220}>
                   <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip content={<CustomTooltip />} />
-                    <ReferenceLine
-                      stroke="grey"
-                      strokeWidth={1}
-                      strokeDasharray="3 3"
-                    />
+                    <ReferenceLine y={5} stroke="grey" strokeWidth={1} />
+                    <ReferenceLine y={25} stroke="grey" strokeWidth={1} />
+                    <ReferenceLine y={40} stroke="grey" strokeWidth={1} />
+                    <ReferenceLine y={60} stroke="grey" strokeWidth={1} />
+                    <ReferenceLine y={78} stroke="grey" strokeWidth={1} />
+                    <ReferenceLine y={95} stroke="grey" strokeWidth={1} />
 
                     <defs>
                       {/* <linearGradient

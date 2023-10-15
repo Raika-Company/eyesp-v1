@@ -56,14 +56,14 @@ const OperatorProfile = () => {
     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
   };
   const buttons = [
-    { label: "سرعت دانلود", width: "90%" },
-    { label: "سرعت آپلود", width: "90%" },
-    { label: "پینگ", width: "90%" },
-    { label: "درصد عملکرد", width: "90%" },
+    { label: "سرعت دانلود", width: "90%", percentage: 70 },
+    { label: "سرعت آپلود", width: "90%", percentage: 80 },
+    { label: "پینگ", width: "90%", percentage: 60 },
+    { label: "درصد عملکرد", width: "90%", percentage: 90 },
   ];
   const handleButtonClick = (index) => {
     setClickedButtonIndex(index);
-    updateChartData(index);
+    setPercentage(buttons[index].percentage);
   };
   const activeButtonStyle = {
     backgroundColor: "#0C6087",
@@ -80,7 +80,7 @@ const OperatorProfile = () => {
   };
   const [percentage, setPercentage] = useState(65);
 
-  const handleChange = (event) => {
+  const handleChangeDailyPercent = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
 
@@ -125,7 +125,7 @@ const OperatorProfile = () => {
               id="demo-simple-select"
               value={age}
               label="سال"
-              onChange={handleChange}
+              onChange={handleChangeDailyPercent}
               sx={{ backgroundColor: "#313131", border: "none" }}
               displayEmpty
             >
