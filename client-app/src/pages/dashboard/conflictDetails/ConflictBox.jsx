@@ -43,6 +43,7 @@ const ConflictBox = ({title, data}) => {
           gridTemplateColumns:
             keys.length <= 3 ? `repeat(${keys.length}, 1fr)` : "repeat(2, 1fr)",
           gridAutoFlow: "dense",
+          justifyItems: "center",
           gap: "1rem",
         }}
       >
