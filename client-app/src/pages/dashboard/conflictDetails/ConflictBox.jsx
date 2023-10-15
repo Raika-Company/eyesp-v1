@@ -41,10 +41,10 @@ const ConflictBox = ({title, data}) => {
       </Stack>
       <Box
         sx={{
-          alignSelf: "center",
           display: "grid",
           gridTemplateColumns:
             keys.length <= 3 ? `repeat(${keys.length}, 1fr)` : "repeat(2, 1fr)",
+          gridAutoFlow: "dense",
           gap: "1rem",
         }}
       >

@@ -10,6 +10,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
         borderRadius: "1rem",
         padding: ".5rem",
         maxWidth: "12rem",
+        gridRowEnd: data.length > 3 ? `span ${Math.ceil(data.length / 3)}` : "",
         display: "flex",
         flexDirection: "column",
         minWidth: "12rem",
@@ -33,26 +34,20 @@ const ConflictDetailsCard = ({title, data = []}) => {
       </Stack>
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, auto)",
-          gap: ".2rem",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: ".5rem",
         }}
       >
         {data.map((isp, idx) => (
-          <Stack
-            key={isp}
-            direction="row"
-            gap=".2rem"
-            justifyContent="center"
-            alignItems="center"
-          >
+          <>
             <Typography whiteSpace="nowrap" fontSize=".8rem !important">
               {isp}
             </Typography>
             {idx < data.length - 1 && (idx + 1) % 3 !== 0 && (
               <Typography color="#5C5C5C">|</Typography>
             )}
-          </Stack>
+          </>
         ))}
       </Box>
     </Box>
