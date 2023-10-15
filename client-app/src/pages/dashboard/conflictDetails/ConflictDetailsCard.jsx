@@ -1,12 +1,14 @@
-import {Box, Stack, Typography, Button} from "@mui/material";
+import {Box, Stack, Typography, Button, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
 import leftArrow from "../../../app/assets/image/leftArrow.svg";
 
 const ConflictDetailsCard = ({title, data = []}) => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
-        background: "#262626",
+        background: theme.palette.mode === "dark" ? "#2626262" : "#F6F6F6",
+        transition: "background .25s",
         borderRadius: "1rem",
         padding: ".5rem",
         maxWidth: "12rem",
@@ -18,7 +20,12 @@ const ConflictDetailsCard = ({title, data = []}) => {
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>{title}</Typography>
+        <Typography
+          color={theme.palette.mode === "light" && "#0C6087"}
+          fontWeight="700"
+        >
+          {title}
+        </Typography>
 
         <Button
           variant="text.main"
@@ -38,6 +45,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
           display: "flex",
           flexWrap: "wrap",
           gap: ".5rem",
+          color: theme.palette.mode === "light" && "#434544",
         }}
       >
         {data.map((isp, idx) => (
@@ -46,7 +54,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
               {isp}
             </Typography>
             {idx < data.length - 1 && (idx + 1) % 3 !== 0 && (
-              <Typography color="#5C5C5C">|</Typography>
+              <Typography color="#434544">|</Typography>
             )}
           </>
         ))}
