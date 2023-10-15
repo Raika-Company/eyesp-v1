@@ -32,10 +32,12 @@ const fadeInAnimation = keyframes`
 const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
   display: "flex",
   alignItems: "center",
-  borderRadius: "1.34375rem",
+  borderRadius: "0.75rem",
   background: gradient,
   paddingX: "0.94rem",
   paddingY: "0.5rem",
+  width: "80em",
+  height: "3.875rem",
   opacity: delay ? 0 : 1,
   animation: delay ? `${fadeInAnimation} 0.4s forwards ${delay}s` : "none",
   "& > *": {
@@ -43,19 +45,14 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
     textAlign: "center",
     fontSize: "1.25rem",
     fontFamily: "PeydaLight",
-    color: "#676767",
+    // color: "#676767",
   },
 }));
 
 /**
  * @description Array of gradient strings for styling the rows in the ISPTable.
  */
-const gradients = [
-  "linear-gradient(180deg, #BDFEAE 0%, #F2EFA5 0.01%, #F9F7EA 100%)",
-  "linear-gradient(180deg, #DADADA 0%, #E1E1E1 0.01%, #F6F6F6 100%)",
-  "linear-gradient(180deg, #D49A63 0%, #F1CBB0 0.01%, #F8F8F8 100%)",
-  "linear-gradient(180deg, #D0E3ED 0%, #D0E2EC 0.01%, #EEF4F9 100%)",
-];
+const gradients = ["#7D6C41", "#6A6861", "#6F4D25", "#404040"];
 
 /**
  * @function ISPTable
@@ -83,7 +80,7 @@ const ISPTable = ({ ISPdata, isDetail }) => {
     >
       {isDetail ? (
         <>
-          <RowBox sx={{ width: "80em" }}>
+          <RowBox>
             <Typography variant="h4">رتبه</Typography>
             <Typography variant="h4">نام</Typography>
             {rowsHead.map((row) => {
@@ -103,7 +100,6 @@ const ISPTable = ({ ISPdata, isDetail }) => {
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
-              sx={{ width: "80em" }}
               key={Items.rank}
               delay={index * 0.2}
               gradient={gradients[index >= 3 ? 3 : index]}

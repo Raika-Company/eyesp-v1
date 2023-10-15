@@ -1,8 +1,9 @@
-import {Box, Button, Typography} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import Danger from "../../../../app/assets/image/danger.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Square from "./Square";
+import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
 const conflictData = [
   {
@@ -63,7 +64,7 @@ const ConflictDetailsCard = () => {
         }}
       >
         اختلال‌های موجود{" "}
-        <span style={{color: "#FE4543", fontSize: "2rem"}}>24</span>
+        <span style={{ color: "#FE4543", fontSize: "2rem" }}>24</span>
       </Typography>
 
       <Box
@@ -72,7 +73,7 @@ const ConflictDetailsCard = () => {
           gap: "1rem",
         }}
       >
-        {conflictData.map(({id, value, title}) => (
+        {conflictData.map(({ id, value, title }) => (
           <Square value={value} title={title} key={id} />
         ))}
 
@@ -103,7 +104,7 @@ const ConflictDetailsCard = () => {
           gap: "1rem",
         }}
       >
-        {conflictDetailsData.map(({id, title, values}) => (
+        {conflictDetailsData.map(({ id, title, values }) => (
           <Box
             sx={{
               display: "flex",
@@ -149,21 +150,10 @@ const ConflictDetailsCard = () => {
           justifyContent: "space-between",
         }}
       >
-        <Button
-          variant="text.main"
-          component={Link}
-          to=""
-          sx={{
-            borderRadius: ".5rem",
-            paddingY: ".5rem",
-            paddingX: "3rem",
-            fontSize: ".8rem !important",
-            background: "#0C6087",
-          }}
-        >
-          مشاهده جزئیات
-          <img src={leftArrow} alt="leftArrow" />
-        </Button>
+        <ViewDetailsButton
+          backgroundColor="#0C6087"
+          target="/isp-performance"
+        />
 
         <Button
           variant="text.main"

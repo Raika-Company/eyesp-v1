@@ -1,9 +1,10 @@
-import {Box, Button, Typography} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
-import {useState} from "react";
-import {useMediaQuery} from "@mui/material";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useMediaQuery } from "@mui/material";
 import Table from "./Table";
+import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
 /**
  * Raw data for the ISPs for comparison.
@@ -99,7 +100,7 @@ const parseNumber = (str) => {
  * @param {Object} props - Component properties.
  * @returns {JSX.Element} The rendered component.
  */
-const CompareTable = ({title, showProvince}) => {
+const CompareTable = ({ title, showProvince }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [visibleRows, setVisibleRows] = useState(6);
@@ -157,21 +158,7 @@ const CompareTable = ({title, showProvince}) => {
         </Typography>
       )}
 
-      <Button
-        variant="text.main"
-        component={Link}
-        to=""
-        sx={{
-          borderRadius: ".5rem",
-          paddingY: ".5rem",
-          paddingX: "3rem",
-          fontSize: ".8rem !important",
-          background: "#0C6087",
-        }}
-      >
-        مشاهده جزئیات
-        <img src={leftArrow} alt="leftArrow" />
-      </Button>
+      <ViewDetailsButton backgroundColor="#0C6087" target="/isp-performance" />
     </Box>
   );
 };

@@ -6,11 +6,16 @@ import {
   Select,
   Typography,
   useMediaQuery,
+  styled,
+  FormControl,
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
 import RawISPData from "./../../../public/data/RowISPData.json";
+import NewCardContainer from "../../app/common/NewCardContainer";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
+
 /**
  * Raw data for the ISPs for comparison.
  * @type {Array<{ rank: string, ISPname: string, disturbance: string, pings: string, speed: string }>}
@@ -101,10 +106,31 @@ const ISPPerformance = () => {
     }
     return dataToSort;
   }, [sortCriteria, selectedProvince]);
+  const StyledFormControl = styled(FormControl)(({ theme }) => ({
+    "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
+      {
+        padding: "5px 14px;",
+      },
+  }));
+  const NewCard = styled(Box)(({ theme }) => ({
+    maxHeight: "54em",
+    overflowY: "auto",
+    backgroundColor: "#121212",
+    boxShadow: "none",
+    borderRadius: "0.75rem",
 
+    // For WebKit browsers (like Chrome and Safari) to hide scrollbar
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+
+    // For Firefox to hide scrollbar
+    "& scrollbarWidth": "none",
+  }));
   return (
-    <CardContainer
+    <NewCard
       sx={{
+        backgroundColor: "transparent",
         paddingX: mpCardContainers,
         paddingY: "1.75rem",
         overflow: "hidden",
@@ -115,10 +141,12 @@ const ISPPerformance = () => {
           display: "flex",
           flexDirection: isSmScreen ? "column" : "row",
           justifyContent: isSmScreen ? "center" : "space-between",
-          flexWrap: "wrap",
+          flexWrap: isSmScreen ? "wrap" : "none",
           marginBottom: "1.4rem",
           width: "100%",
           gap: "1rem",
+          paddingLeft: "1.94rem",
+          alignItems: "center",
         }}
       >
         <Typography
@@ -127,57 +155,74 @@ const ISPPerformance = () => {
           fontFamily="PeydaSemiBold"
           textAlign={isSmScreen ? "center" : "left"}
         >
-          رتبه بندی ISPها
+          رتبه بندی اپراتورها
         </Typography>
+
         <Box
           display={"flex"}
-          flexDirection={isSmScreen ? "column" : "row"}
+          justifyContent={"space-between"}
           alignItems={"center"}
-          gap={isSmScreen ? "1rem" : "0"}
+          gap="0.94rem"
         >
-          <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            width={"100%"}
+          <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
+            انتخاب استان{" "}
+          </Typography>
+          {/* <Select
+            labelId="change-province-label"
+            id="change-province"
+            value={selectedProvince}
+            onChange={handleProvinceChange}
+            displayEmpty
+            sx={{
+              borderRadius: "1.25rem",
+              marginLeft: isSmScreen ? "0" : "1rem",
+              marginRight: "0.5rem",
+              border: "1px solid white",
+              width: "11.75rem",
+              fontSize: "1.25rem",
+            }}
+            renderValue={(selectedValue) =>
+              selectedValue ? selectedValue : "انتخاب کنید"
+            }
           >
-            <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
-              استان مورد نظر:
-            </Typography>
-            <Select
-              labelId="change-province-label"
-              id="change-province"
+            {provinceData.map((provinceItem) => (
+              <MenuItem key={provinceItem.name} value={provinceItem.name}>
+                {provinceItem.name}
+              </MenuItem>
+            ))}
+          </Select> */}
+          <StyledFormControl sx={{ width: "11.75rem" }}>
+            <ContainedSelect
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={selectedProvince}
               onChange={handleProvinceChange}
-              displayEmpty
-              sx={{
-                borderRadius: "1.25rem",
-                marginLeft: isSmScreen ? "0" : "1rem",
-                marginRight: "0.5rem",
-              }}
               renderValue={(selectedValue) =>
                 selectedValue ? selectedValue : "انتخاب کنید"
               }
+              sx={{
+                backgroundColor: "#313131",
+                border: " 1.5px solid #F0F4F3",
+                borderRadius: "1rem",
+                height: "3.25rem",
+              }}
+              displayEmpty
             >
               {provinceData.map((provinceItem) => (
                 <MenuItem key={provinceItem.name} value={provinceItem.name}>
                   {provinceItem.name}
                 </MenuItem>
               ))}
-            </Select>
-          </Box>
-          <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            width={"100%"}
-          >
-            <Typography variant="h4" whiteSpace={"nowrap"}>
-              {" "}
-              چینش براساس:
-            </Typography>
+            </ContainedSelect>
+          </StyledFormControl>
+        </Box>
 
-            <Select
+        <Typography variant="h4" whiteSpace={"nowrap"}>
+          {" "}
+          خروجی اکسل{" "}
+        </Typography>
+
+        {/* <Select
               value={sortCriteria}
               onChange={(e) => setSortCriteria(e.target.value)}
               variant="outlined"
@@ -197,9 +242,7 @@ const ISPPerformance = () => {
                   {item}
                 </MenuItem>
               ))}
-            </Select>
-          </Box>
-        </Box>
+            </Select> */}
       </Box>
       <Box
         sx={{
@@ -216,7 +259,7 @@ const ISPPerformance = () => {
           />
         </Box>
       </Box>
-    </CardContainer>
+    </NewCard>
   );
 };
 
