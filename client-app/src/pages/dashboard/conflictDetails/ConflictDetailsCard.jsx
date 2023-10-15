@@ -27,6 +27,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
           sx={{
             textDecoration: "underline",
             marginRight: "auto",
+            paddingLeft: "0",
           }}
         >
           <img src={leftArrow} alt="leftArrow" />
