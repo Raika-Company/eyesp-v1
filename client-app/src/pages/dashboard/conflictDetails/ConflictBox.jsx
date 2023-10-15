@@ -2,6 +2,7 @@ import {Box, Stack, Typography, Button} from "@mui/material";
 import {Link} from "react-router-dom";
 import leftArrow from "../../../app/assets/image/leftArrow.svg";
 import ConflictDetailsCard from "./ConflictDetailsCard";
+import ViewDetailsButton from "../../../app/common/ViewDetailsButton";
 
 const ConflictBox = ({title, data}) => {
   const keys = Object.keys(data);
@@ -18,7 +19,6 @@ const ConflictBox = ({title, data}) => {
         borderRadius: "1rem",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         gap: "1rem",
       }}
     >
@@ -31,22 +31,17 @@ const ConflictBox = ({title, data}) => {
         >
           {title}
         </Typography>
-        <Button
-          variant="text.main"
-          component={Link}
-          to="/dashboard/conflict-details"
+        <ViewDetailsButton
           sx={{
-            marginRight: "auto",
-            color: "#85CCF4",
             fontSize: ".8rem !important",
+            paddingLeft: "0",
           }}
-        >
-          مشاهده جزئیات
-          <img src={leftArrow} alt="leftArrow" />
-        </Button>
+          target={"#"}
+        />
       </Stack>
       <Box
         sx={{
+          alignSelf: "center",
           display: "grid",
           gridTemplateColumns:
             keys.length <= 3 ? `repeat(${keys.length}, 1fr)` : "repeat(2, 1fr)",
