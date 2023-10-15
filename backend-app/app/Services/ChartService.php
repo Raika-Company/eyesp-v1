@@ -6,10 +6,10 @@ use Morilog\Jalali\Jalalian;
 
 class ChartService
 {
-    public static function daily($data)
+    public static function today($data)
     {
         $response = [
-            'id' => 'daily'
+            'id' => 'today'
         ];
         $now = now()->format('H');
         $j = 0;
