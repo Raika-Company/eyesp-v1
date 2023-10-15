@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   styled,
   FormControl,
+  useTheme,
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
@@ -66,7 +67,7 @@ const ISPPerformance = () => {
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
   const [provinceData, setProvinceData] = useState(ProvincesCompare);
   const [selectedProvince, setSelectedProvince] = useState("انتخاب کنید");
-
+  const theme = useTheme();
   const [visibleRows, setVisibleRows] = useState(6);
   const sortFunctions = useMemo(
     () => ({
@@ -175,10 +176,11 @@ const ISPPerformance = () => {
                 selectedValue ? selectedValue : "انتخاب کنید"
               }
               sx={{
-                backgroundColor: "#313131",
                 border: " 1.5px solid #F0F4F3",
                 borderRadius: "1rem",
                 height: "3.25rem",
+                backgroundColor:
+                  theme.palette.mode === "dark" ? "#313131" : "white",
               }}
               displayEmpty
             >
@@ -202,10 +204,11 @@ const ISPPerformance = () => {
               value={sortCriteria}
               onChange={(e) => setSortCriteria(e.target.value)}
               sx={{
-                backgroundColor: "#313131",
                 border: " 1.5px solid #F0F4F3",
                 borderRadius: "1rem",
                 height: "3.25rem",
+                backgroundColor:
+                  theme.palette.mode === "dark" ? "#313131" : "white",
               }}
               displayEmpty
             >
