@@ -31,6 +31,7 @@ import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
 import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
 import AxisIsp from "../assets/image/AxisIsp.svg";
+import { BarChart, XAxis, YAxis, Tooltip, Bar, ReferenceLine } from "recharts";
 
 const OperatorProfile = () => {
   const handleDisturbanceClick = () => {
@@ -81,13 +82,32 @@ const OperatorProfile = () => {
     color: "#E7E7E7",
   };
   const handleChange = (event) => {
-    const selectedYear = event.target.value;
-    setAge(selectedYear);
+    const selectedValue = event.target.value;
+    setAge(selectedValue);
 
-    const yearData = data.find((d) => d.id === selectedYear.toString());
-    if (yearData) {
-      setChartData(yearData.data);
+    let newChartData;
+
+    switch (selectedValue) {
+      case "1 روز قبل":
+        // Just an example, modify this data as per your requirements
+        newChartData = [
+          { day: "05-07", temperature: [2, 11] },
+          { day: "05-08", temperature: [1, 10] },
+        ];
+        break;
+      case "1 هفته قبل":
+        // Just an example, modify this data as per your requirements
+        newChartData = [
+          { day: "04-30", temperature: [1, 12] },
+          { day: "05-01", temperature: [3, 13] },
+        ];
+        break;
+      default: // "در حال حاضر"
+        newChartData = [...data];
+        break;
     }
+
+    setChartData(newChartData);
   };
 
   const StyledFormControl = styled(FormControl)(({ theme }) => ({
@@ -96,55 +116,72 @@ const OperatorProfile = () => {
         padding: "5px 14px;",
       },
   }));
-  const StyledDiv = styled("div")({
-    width: "10%",
-    maxWidth: 300,
-    margin: "0 auto",
-    position: "relative",
-    "& .column tbody": {
-      aspectRatio: "4 / 3",
-    },
-    "& .column tbody td": {
-      marginInlineStart: "20%",
-      marginInlineEnd: "20%",
-      background:
-        "radial-gradient(ellipse 300% 8px at bottom, red 90px, transparent 90px) bottom, radial-gradient(ellipse 300% 8px at top, red 90px, transparent 50px) top, linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.3))",
-      position: "relative",
-    },
-    "& .column tbody td::before, & .column tbody td::after": {
-      content: '""',
-      display: "block",
-      position: "absolute",
-      width: "100%",
-      height: 4,
-      backgroundColor: "red",
-      boxShadow: "0 0 10px red, 0 0 20px red",
-    },
-    "& .column tbody td::before": {
-      top: 0,
-      left: 0,
-    },
-    "& .column tbody td::after": {
-      bottom: 0,
-      left: 0,
-    },
-  });
-  const StyledTable = styled("table")({
-    "&.charts-css.column.hide-data tbody": {
-      height: "90px",
-      width: "90px",
-    },
 
-    "&.charts-css.column.hide-data span": {
-      visibility: "hidden",
+  const data = [
+    {
+      day: "05-01",
+      temperature: [-1, 10],
     },
-  });
-  const positions = [
-    { top: "50%", left: "50%" },
-    { top: "30%", left: "30%" },
-    { top: "60%", left: "70%" },
-    // ... more positions
+    {
+      day: "05-02",
+      temperature: [2, 15],
+    },
+    {
+      day: "05-03",
+      temperature: [3, 12],
+    },
+    {
+      day: "05-04",
+      temperature: [4, 12],
+    },
+    {
+      day: "05-05",
+      temperature: [12, 16],
+    },
+    {
+      day: "05-06",
+      temperature: [5, 16],
+    },
   ];
+  const [chartData, setChartData] = useState(data);
+
+  const CustomBarShape = (props) => {
+    const { fill, x, y, width, height } = props;
+
+    return (
+      <g>
+        <rect x={x} y={y} width={width} height={height} fill={fill} />
+        <line
+          x1={x}
+          y1={y}
+          x2={x + width}
+          y2={y}
+          stroke="red"
+          strokeWidth="2"
+        />
+        <line
+          x1={x}
+          y1={y + height}
+          x2={x + width}
+          y2={y + height}
+          stroke="red"
+          strokeWidth="2"
+        />
+      </g>
+    );
+  };
+  const formatYAxisTicks = (tick) => {
+    const labels = {
+      "-6": "4ساعت قبل",
+      0: "2 ساعت قبل",
+      6: "1 ساعت قبل",
+      12: "30 دقیقه قبل",
+      18: "حال حاضر",
+      // Add more if needed
+    };
+    return labels[tick] || "";
+  };
+
   return (
     <>
       <NewCardContainer
@@ -190,33 +227,51 @@ const OperatorProfile = () => {
             </ContainedSelect>
           </StyledFormControl>
         </Box>
-        <Box mt={3} position="relative">
-          <img
-            src={AxisIsp}
-            alt=""
-            style={{ width: "100%", display: "block" }}
-          />
-          {positions.map((position, index) => (
-            <StyledDiv
-              key={index}
-              style={{
-                position: "absolute",
-                top: position.top,
-                left: position.left,
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <StyledTable className="charts-css column hide-data">
-                <tbody>
-                  <tr>
-                    <td style={{ "--size": 1.0 }}>
-                      <span>400000</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </StyledTable>
-            </StyledDiv>
-          ))}
+        <Box mt={4}>
+          <BarChart
+            width={649}
+            height={250}
+            data={chartData}
+            margin={{ bottom: 20, left: 50 }}
+          >
+            <YAxis tickMargin={80} tickFormatter={formatYAxisTicks} />
+            <Tooltip />
+            <Bar
+              dataKey="temperature"
+              fill="rgba(255, 0, 0, 0.5)"
+              shape={<CustomBarShape />}
+            />
+            <ReferenceLine
+              y={-6}
+              stroke="grey"
+              strokeWidth={1}
+              strokeOpacity={0.5}
+            />
+            <ReferenceLine
+              y={0}
+              stroke="grey"
+              strokeWidth={1}
+              strokeOpacity={0.5}
+            />
+            <ReferenceLine
+              y={6}
+              stroke="grey"
+              strokeWidth={1}
+              strokeOpacity={0.5}
+            />
+            <ReferenceLine
+              y={12}
+              stroke="grey"
+              strokeWidth={1}
+              strokeOpacity={0.5}
+            />
+            <ReferenceLine
+              y={18}
+              stroke="#00C2FF"
+              strokeWidth={1}
+              strokeOpacity={0.5}
+            />
+          </BarChart>
         </Box>
       </NewCardContainer>
     </>
