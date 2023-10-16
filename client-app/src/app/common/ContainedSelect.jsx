@@ -1,4 +1,4 @@
-import { Select, styled } from "@mui/material";
+import {Select, styled} from "@mui/material";
 
 const ContainedSelect = styled(Select)({
   borderRadius: "1.25rem",
@@ -9,7 +9,7 @@ const ContainedSelect = styled(Select)({
     right: "auto",
     left: "7px",
   },
-  ".MuiOutlinedInput-notchedOutline": { border: 0 },
+  ".MuiOutlinedInput-notchedOutline": {border: 0},
   "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
     border: 0,
   },
@@ -22,4 +22,4 @@ const ContainedSelect = styled(Select)({
     },
 });
 
-export { ContainedSelect };
+export {ContainedSelect};
