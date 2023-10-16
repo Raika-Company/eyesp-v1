@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import sun from "../assets/image/sun.svg";
 import moon from "../assets/image/moon.svg";
 import {
@@ -33,7 +33,7 @@ const fadeInRight = keyframes`
 const AnimatedTypography = styled(Typography)`
   animation: ${fadeInRight} 0.25s 0.25s both;
 `;
-const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
+const ThemeSwitcher = ({themeMode, toggleTheme, openNav}) => {
   const theme = useTheme();
   const isDarkMode = themeMode === "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -77,10 +77,12 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
         width: openNav ? "13rem" : "4rem",
         marginRight: isMdUp || openNav ? "initial" : "-15rem",
         transition: "all .25s linear",
-        background:
-          theme.palette.mode === "light"
-            ? "white"
-            : "radial-gradient(2039.04% 152.73% at 8.42% 0%, #354E63 0%, #243441 100%)",
+        background: theme.palette.mode === "light" ? "white" : "",
+        border: theme.palette.mode === "dark" && "1.5px solid #676767",
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0px 0px 15px 1px rgba(255, 255, 255, 0.30)"
+            : "0px 0px 18px 0px rgba(0, 0, 0, 0.15)",
       }}
     >
       {openNav ? (
@@ -94,7 +96,7 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
             }}
           >
             <AnimatedIconButton
-              style={{ transform: `translateX(${sunTranslateX}px)` }}
+              style={{transform: `translateX(${sunTranslateX}px)`}}
               aria-label="change to light theme"
               onClick={() => handleThemeChange("light")}
               disabled={!isDarkMode}
@@ -104,7 +106,7 @@ const ThemeSwitcher = ({ themeMode, toggleTheme, openNav }) => {
           </span>
 
           <AnimatedIconButton
-            style={{ transform: `translateX(${moonTranslateX}px)` }}
+            style={{transform: `translateX(${moonTranslateX}px)`}}
             aria-label="change to dark theme"
             onClick={() => handleThemeChange("dark")}
             disabled={isDarkMode}
