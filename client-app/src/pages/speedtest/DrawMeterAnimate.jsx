@@ -29,7 +29,7 @@ import React, {useRef, useEffect, useState} from "react";
 
 // test debouncing for making the start and end of the test animated
 const LOWER_BOUND = 0.03;
-const UPPER_BOUND = 0.85;
+const UPPER_BOUND = 0.9;
 
 function DrawMeterAnimate({
   amount,
@@ -144,7 +144,7 @@ function DrawMeterAnimate({
       if (!startTime) startTime = time || performance.now();
 
       const deltaTime = Math.max(
-        1 - (time - startTime) / (DURATION - (mbps < 4 ? 300 : 500)),
+        1 - (time - startTime) / (DURATION - (mbps < 6 ? 200 : 400)),
         0
       );
       const currentPointerAngle =
