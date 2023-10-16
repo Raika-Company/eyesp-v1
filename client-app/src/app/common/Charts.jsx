@@ -30,6 +30,12 @@ import YAxisLine from "./YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import { ContainedSelect } from "./ContainedSelect";
+import {
+  MonthCharts,
+  TodayCharts,
+  WeekCharts,
+  YearCharts,
+} from "../api/dashboard";
 
 export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -60,7 +66,7 @@ export const CustomTooltip = ({ active, payload }) => {
 };
 const titlesChart = [
   {
-    title: " سرعت دانلود",
+    title: "سرعت دانلود",
     unit: "Mb/s",
   },
   {
@@ -115,7 +121,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
             >
               {title}
             </Typography>
-            {title === "میانگین عملکرد" && (
+            {title === "سرعت دانلود" && (
               <FormControl sx={{ width: "25%", marginLeft: "3rem" }}>
                 <ContainedSelect
                   labelId="demo-simple-select-label"
@@ -126,8 +132,9 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
                   displayEmpty
                 >
                   <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
-                  <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
-                  <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
+                  <MenuItem value="هفتگی">هفتگی</MenuItem>
+                  <MenuItem value="ماهانه">ماهانه</MenuItem>
+                  <MenuItem value="سالانه">سالانه</MenuItem>
                 </ContainedSelect>
               </FormControl>
             )}
@@ -220,7 +227,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           />
         </Box>
         <YAxisLine
-          max={Math.max(...data.map((line) => line.value))}
+          // max={Math.max(...data.map((line) => line.value))}
           unit={unit}
         />
       </Box>
@@ -241,29 +248,14 @@ function generateRandomData() {
 }
 const Charts = () => {
   const theme = useTheme();
-  const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [rendered, setRendered] = useState(false);
   const [currentChartData, setCurrentChartData] = useState({});
-  const [randomChartData1, setRandomChartData1] = useState([]);
-  const [randomChartData2, setRandomChartData2] = useState([]);
-  const [randomChartData3, setRandomChartData3] = useState([]);
-  const [randomChartData4, setRandomChartData4] = useState([]);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
-    axios
-      .get("/data/chartData.json")
+    TodayCharts()
       .then((response) => {
-        const data = response.data;
-        setIspData(data);
-        const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
-        if (defaultISPData) {
-          setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
-          setRandomChartData1(generateRandomData());
-          setRandomChartData2(generateRandomData());
-          setRandomChartData3(generateRandomData());
-          setRandomChartData4(generateRandomData());
-        }
+        console.log(response);
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
@@ -292,16 +284,8 @@ const Charts = () => {
                 rendered={rendered}
                 title={line.title}
                 unit={line.unit}
-                color={chartColors[index]} // Passing entire color object
-                data={
-                  index === 0
-                    ? randomChartData1
-                    : index === 1
-                    ? randomChartData2
-                    : index === 2
-                    ? randomChartData3
-                    : randomChartData4
-                }
+                color={chartColors[index]}
+                data={currentChartData}
               />
             </>
           ))}
