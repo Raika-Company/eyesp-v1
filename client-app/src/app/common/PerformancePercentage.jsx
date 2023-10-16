@@ -106,7 +106,7 @@ const OperatorProfile = () => {
       <NewCardContainer
         sx={{
           marginTop: "1rem",
-          paddingTop: "1.5rem",
+          paddingTop: "0.5rem",
           paddingBottom: "1.5rem",
           paddingX: "3%",
           flexBasis: isMdScreen ? "100%" : "50%",
@@ -186,7 +186,7 @@ const OperatorProfile = () => {
             />
           </Box>
         </Box>
-        <Box mt={4} display="flex" justifyContent="center">
+        <Box mt={3} display="flex" justifyContent="center">
           <ViewDetailsButton target="/isp-performance" />
         </Box>
       </NewCardContainer>

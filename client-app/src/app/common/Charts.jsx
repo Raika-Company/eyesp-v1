@@ -12,6 +12,8 @@ import {
   useTheme,
   Card,
   styled,
+  FormControl,
+  MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import NewCardContainer from "./NewCardContainer";
@@ -27,6 +29,7 @@ import {
 import YAxisLine from "../../pages/ispCompare/YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
+import { ContainedSelect } from "./ContainedSelect";
 
 export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -80,6 +83,16 @@ const chartColors = [
   { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
 ];
 function GridItem({ theme, rendered, title, data, unit, color }) {
+  const [age, setAge] = useState("در حال حاضر");
+  const handleChangeDailyPercent = (event) => {
+    const selectedYear = event.target.value;
+    setAge(selectedYear);
+
+    // For the sake of debugging, directly set percentages based on options
+    if (selectedYear === "در حال حاضر") setPercentage(65);
+    else if (selectedYear === "1 روز قبل") setPercentage(75);
+    else if (selectedYear === "1 هفته قبل") setPercentage(85);
+  };
   return (
     <NewCardContainer
       sx={{
@@ -93,14 +106,32 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
     >
       <Box display="flex" position="relative" width="92%">
         <Box sx={{ width: "100%" }}>
-          <Typography
-            color="text.main"
-            variant="h1"
-            component="h2"
-            gutterBottom
-          >
-            {title}
-          </Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Typography
+              color="text.main"
+              variant="h1"
+              component="h2"
+              gutterBottom
+            >
+              {title}
+            </Typography>
+            {title === "میانگین عملکرد" && (
+              <FormControl sx={{ width: "25%", marginLeft: "3rem" }}>
+                <ContainedSelect
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="سال"
+                  onChange={handleChangeDailyPercent}
+                  displayEmpty
+                >
+                  <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
+                  <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
+                  <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
+                </ContainedSelect>
+              </FormControl>
+            )}
+          </Box>
           <Box
             borderRadius="3rem"
             paddingRight="3%"
@@ -254,23 +285,25 @@ const Charts = () => {
       >
         <Grid container gap={2.5}>
           {titlesChart.map((line, index) => (
-            <GridItem
-              key={index}
-              theme={theme}
-              rendered={rendered}
-              title={line.title}
-              unit={line.unit}
-              color={chartColors[index]} // Passing entire color object
-              data={
-                index === 0
-                  ? randomChartData1
-                  : index === 1
-                  ? randomChartData2
-                  : index === 2
-                  ? randomChartData3
-                  : randomChartData4
-              }
-            />
+            <>
+              <GridItem
+                key={index}
+                theme={theme}
+                rendered={rendered}
+                title={line.title}
+                unit={line.unit}
+                color={chartColors[index]} // Passing entire color object
+                data={
+                  index === 0
+                    ? randomChartData1
+                    : index === 1
+                    ? randomChartData2
+                    : index === 2
+                    ? randomChartData3
+                    : randomChartData4
+                }
+              />
+            </>
           ))}
         </Grid>{" "}
       </NewCardContainer>

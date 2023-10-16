@@ -120,6 +120,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
                 color: "white",
                 fontSize: "14px !important",
                 borderRadius: "0.625rem",
+                marginTop: "1.5rem",
               }}
               bgColor="#0C6087"
               txtHover="#0C6087"
