@@ -110,11 +110,15 @@ class NetworkService
         ]);
     }
 
-    public static function GetThresholds($isp)
+    public static function GetThresholds($isp = null)
     {
-        return RstThreshold::where('isp', $isp)
-            ->where('created_at', '>=', Carbon::today()->subDay()->toDateTimeString())
-            ->first();
+        $threshold = RstThreshold::where('created_at', '>=', Carbon::today()->subDay()->toDateTimeString());
+        if($isp)
+            $threshold = $threshold->where('isp', $isp);
+        else
+            //TODO: get best
+
+        return $threshold->first();
     }
 
     public static function calculateAverage(Collection $data, string $metric): float

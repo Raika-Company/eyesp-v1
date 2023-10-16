@@ -240,6 +240,48 @@ class NetworkController extends Controller
         }
     }
 
+    public function stats()
+    {
+        try {
+            $data = RstResult::hourly(null, 3);
+            $threshold = NetworkService::GetThresholds();
+            $downloadAvg = $data->avg('download');
+            $uploadAvg = $data->avg('upload');
+            $pingAvg = $data->avg('ping');
+            $packetLossAvg = $data->avg('packet_loss');
+            $response = [
+                'download' => [
+                    'avg' => round($downloadAvg, 2),
+                    'percentage' => round($downloadAvg * 100 / $threshold->download)
+                ],
+                'upload' => [
+                    'avg' => round($uploadAvg, 2),
+                    'percentage' => round($uploadAvg * 100 / $threshold->upload)
+                ],
+                'ping' => [
+                    'avg' => round($pingAvg, 2),
+                    'percentage' => round((($pingAvg - $threshold->ping) / $threshold->ping) * 100)
+                ],
+                'packet_loss' => [
+                    'avg' => round($packetLossAvg, 2),
+                    'percentage' => round((($packetLossAvg - $threshold->packet_loss) / $threshold->packet_loss) * 100)
+                ],
+            ];
+
+            return response()->json([
+                'status' => true,
+                'data' => $response,
+                'message' => '',
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function myIspMetrics(Request $request)
     {
         try {
