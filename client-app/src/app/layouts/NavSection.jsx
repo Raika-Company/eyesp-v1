@@ -66,7 +66,7 @@ const NAV_ITEMS = [
         sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
-    path: "/operator-compare",
+    path: "/isp-summery",
     toggle: "isInformation",
   },
 ];
@@ -160,10 +160,12 @@ const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
         width: openNav ? "13rem" : isMdUp ? "4rem" : "12rem",
         marginRight: isMdUp || openNav ? "initial" : "-15rem",
         fontSize: "0.9rem",
-        background:
-          theme.palette.mode === "light"
-            ? "white"
-            : "radial-gradient(2039.04% 152.73% at 8.42% 0%, #354E63 0%, #243441 100%)",
+        background: theme.palette.mode === "light" ? "white" : "",
+        border: theme.palette.mode === "dark" && "1.5px solid #676767",
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0px 0px 15px 1px rgba(255, 255, 255, 0.30)"
+            : "0px 0px 18px 0px rgba(0, 0, 0, 0.15)",
       }}
     >
       {NAV_ITEMS.slice(startIndex, endIndex).map((item) => (

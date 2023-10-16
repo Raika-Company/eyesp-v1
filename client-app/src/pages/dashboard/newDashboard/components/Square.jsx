@@ -1,6 +1,7 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 
-const Square = ({value, unit, title, background}) => {
+const Square = ({value, unit, title, background, color}) => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -8,18 +9,18 @@ const Square = ({value, unit, title, background}) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        background: background
-          ? background
-          : "radial-gradient(140.09% 140.09% at 18.63% 0%, #B40000 0%, rgba(180, 0, 0, 0.00) 100%)",
+        background: background,
         paddingY: ".5rem",
         paddingX: "2rem",
         borderRadius: "1.5rem",
         maxWidth: "100px",
+        color: color,
       }}
     >
       <Typography
         style={{
           fontSize: "2rem",
+          fontWeight: "700",
         }}
       >
         {value}

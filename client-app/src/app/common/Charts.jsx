@@ -26,7 +26,7 @@ import {
   ReferenceLine,
 } from "recharts";
 
-import YAxisLine from "../../pages/ispCompare/YAxisLine";
+import YAxisLine from "./YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import { ContainedSelect } from "./ContainedSelect";
