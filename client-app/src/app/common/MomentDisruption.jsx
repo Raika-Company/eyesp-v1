@@ -232,7 +232,7 @@ const OperatorProfile = () => {
           gap={2}
         >
           {" "}
-          <Typography m={0} color="text.textBlack" gutterBottom>
+          <Typography m={0} variant="h6" color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
           <FormControl sx={{ width: "8.8125rem" }}>

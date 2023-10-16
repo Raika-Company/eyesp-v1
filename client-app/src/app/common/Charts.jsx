@@ -60,19 +60,19 @@ export const CustomTooltip = ({ active, payload }) => {
 };
 const titlesChart = [
   {
-    title: "میانگین عملکرد",
+    title: " سرعت دانلود",
     unit: "Mb/s",
   },
   {
-    title: "پاکت لاس",
+    title: " سرعت اپلود",
     unit: "%",
   },
   {
-    title: "میانگین سرعت",
+    title: " پینگ",
     unit: "Mb/s",
   },
   {
-    title: "پینگ",
+    title: "پکت لاس",
     unit: "Ms",
   },
 ];
