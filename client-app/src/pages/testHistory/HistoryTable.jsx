@@ -6,7 +6,6 @@
  * @requires @emotion/styled
  * @requires @emotion/react
  */
-
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,7 +14,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
@@ -24,49 +22,6 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
-/**
- * Creates a structured data object for table rows.
- *
- * @function createData
- * @param {number} id - Unique identifier for the row.
- * @param {string} TestHistory - Time when the test took place.
- * @param {string} testhour - Date when the test occurred.
- * @param {string} operator - Name of the operator.
- * @param {string} server - Server location/name.
- * @param {string} TestType - Type of test conducted.
- * @param {number} download - Download speed recorded.
- * @param {number} upload - Upload speed recorded.
- * @param {number} ping - Ping value recorded.
- * @param {string} [Comparison] - Data for comparison. Optional.
- * @param {string} [share] - Data for sharing. Optional.
- * @returns {Object} Structured data object for the table row.
- */
-const createData = (
-  id,
-  TestHistory,
-  testhour,
-  operator,
-  server,
-  TestType,
-  download,
-  upload,
-  ping,
-  Comparison,
-  share
-) => ({
-  id,
-  TestHistory,
-  testhour,
-  operator,
-  server,
-  TestType,
-  download,
-  upload,
-  ping,
-  Comparison,
-  share,
-});
 
 /**
  * Styled component representing each row in the table.
@@ -120,7 +75,6 @@ const HistoryTable = () => {
   const localStorageData = JSON.parse(
     localStorage.getItem("testResults") || "[]"
   );
-  const reversedData = [...localStorageData].reverse();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const headerBackground = isDark ? "#434544" : "#C6C6C6";
@@ -178,7 +132,7 @@ const HistoryTable = () => {
             </RowBox>
           </TableHead>
           <TableBody>
-            {reversedData.map((row, index) => (
+            {localStorageData.map((row, index) => (
               <RowBox
                 key={index}
                 sx={{
@@ -208,21 +162,19 @@ const HistoryTable = () => {
                 <TableCell align="center">{row.ping}</TableCell>
                 <TableCell align="center">
                   <FormControl sx={{ width: "73px" }}>
-                    <RadioGroup name="radio-buttons-group">
-                      <FormControlLabel
-                        value={String(row.id)}
-                        control={
-                          <Radio
-                            onClick={(e) => handleRadioClick(e, row.id)}
-                            checked={selectedValues.includes(String(row.id))}
-                            disabled={
-                              selectedValues.length >= 5 &&
-                              !selectedValues.includes(String(row.id))
-                            }
-                          />
-                        }
-                      />
-                    </RadioGroup>
+                    <FormControlLabel
+                      value={String(row.id)}
+                      control={
+                        <Radio
+                          onClick={(e) => handleRadioClick(e, row.id)}
+                          checked={selectedValues.includes(String(row.id))}
+                          disabled={
+                            selectedValues.length >= 5 &&
+                            !selectedValues.includes(String(row.id))
+                          }
+                        />
+                      }
+                    />
                   </FormControl>
                 </TableCell>
                 <TableCell align="center">

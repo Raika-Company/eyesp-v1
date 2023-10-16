@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\IspPacketlossAnalysis;
 use App\Jobs\IspPingAnalysis;
 use App\Jobs\IspSpeedAnalysis;
+use App\Models\RstDisturbance;
 use App\Models\RstIspStats;
 use App\Models\RstResult;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use App\Models\RstServer;
 use App\Services\ChartService;
 use App\Services\NetworkService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -342,5 +344,102 @@ class NetworkController extends Controller
                 'message' => $e->getMessage()
             ]);
         } */
+    }
+
+    public function getIssues(Request $request)
+    {
+        try {
+            $metrics = ['download', 'upload', 'ping', 'packet_loss'];
+            if($request->isp)
+                $isp = [$request->isp];
+            else
+                $isp = config('app.isps');
+
+            foreach($isp as $item) {
+                foreach ($metrics as $metric) {
+                    $timeFrames = config('app.packet_loss');
+                    $res = NetworkService::IspAnalyze2($item, $metric, $timeFrames);
+                    if($res == [])
+                        continue;
+                    $result[$item][$metric] = $res;
+                    $disturbance[] = $metric;
+                }
+            }
+            $ispsHasDisturbance = array_keys($result);
+            $disturbance = array_unique($disturbance);
+            RstDisturbance::create([
+                'isps' => json_encode($ispsHasDisturbance),
+                'disturbances' => json_encode($disturbance),
+                'description' => json_encode($result),
+                //'created_at' => now()->toDateTimeString(),
+            ]);
+            return response()->json([
+                'status' => true,
+                'data' => $result,
+                'message' => 'done',
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getIssueStats($type)
+    {
+        $stats = RstDisturbance::latest()->first();
+        $description = json_decode($stats->description);
+
+        switch($type) {
+            case 'stats':
+                $response['issues'] = [
+                    'count' => count(collect(json_decode($stats->disturbances))),
+                    'names' => json_decode($stats->disturbances)
+                ];
+                $response['isp'] = [
+                    'count' => count(collect(json_decode($stats->isps))),
+                    'names' => json_decode($stats->isps)
+                ];
+                foreach ($description as $isp => $ispInfos) {
+                    foreach ($ispInfos as $metric => $metricInfos) {
+                        $cities[] = key($metricInfos);
+                    }
+                }
+                $response['cities'] = [
+                    'count' => count(array_unique($cities)),
+                    'names' => array_unique($cities)
+                ];
+                break;
+            case 'issues':
+                foreach ($description as $isp => $ispInfos) {
+                    foreach ($ispInfos as $metric => $metricInfos) {
+                        $response[$metric][key($metricInfos)][] = $isp;
+                    }
+                }
+                break;
+            case 'cities':
+                foreach ($description as $isp => $ispInfos) {
+                    foreach ($ispInfos as $metric => $metricInfos) {
+                        $response[key($metricInfos)][$metric][] = $isp;
+                    }
+                }
+                break;
+            case 'isp':
+                foreach ($description as $isp => $ispInfos) {
+                    foreach ($ispInfos as $metric => $metricInfos) {
+                        $response[$isp][key($metricInfos)][] = $metric;
+                    }
+                }
+                break;
+        }
+
+
+        return response()->json([
+            'status' => true,
+            'data' => $response,
+            'message' => 'done',
+        ]);
     }
 }
