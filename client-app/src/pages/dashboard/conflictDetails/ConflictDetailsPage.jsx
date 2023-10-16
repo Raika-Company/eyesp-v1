@@ -3,7 +3,14 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import {useState} from "react";
-import {Box, Button, ButtonGroup, Divider, Typography} from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Divider,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import ConflictBox from "./ConflictBox";
 
 const conflicts = [
@@ -67,11 +74,34 @@ const mockDataConflict = {
       "زیکسل",
     ],
   },
+  "افزایش پکت لاس۲": {
+    بوشهر: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
+    "خراسان رضوی": [
+      "شاتل",
+      "پارس آنلاین",
+      "های وب",
+      "زیتل",
+      "آسیاتک",
+      "سمنت",
+      "مخابرات",
+      "زیکسل",
+    ],
+    خوزستان: [
+      "شاتل",
+      "پارس آنلاین",
+      "های وب",
+      "زیتل",
+      "آسیاتک",
+      "مخابرات",
+      "زیکسل",
+    ],
+  },
 };
 
 const ConflictDetailsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSort, setSelectedSort] = useState("conflict");
+  const theme = useTheme();
 
   return (
     <Box>
@@ -85,11 +115,12 @@ const ConflictDetailsPage = () => {
         <Box
           sx={{
             display: "flex",
+            transition: "all .25s",
             justifyContent: "center",
             alignItems: "center",
             padding: ".5rem",
             borderRadius: "1rem",
-            background: "#393939",
+            background: theme.palette.mode === "dark" ? "#393939" : "#FFF",
             gap: "1rem",
           }}
         >
@@ -105,7 +136,12 @@ const ConflictDetailsPage = () => {
             <Button
               variant="text"
               sx={{
-                color: selectedSort === "conflict" ? "#00A4FF" : "#FFF",
+                color:
+                  selectedSort === "conflict"
+                    ? "#00A4FF"
+                    : theme.palette.mode === "dark"
+                    ? "#FFF"
+                    : "initial",
               }}
               onClick={() => setSelectedSort("conflict")}
             >
@@ -121,7 +157,12 @@ const ConflictDetailsPage = () => {
               variant="text"
               onClick={() => setSelectedSort("province")}
               sx={{
-                color: selectedSort === "province" ? "#00A4FF" : "#FFF",
+                color:
+                  selectedSort === "province"
+                    ? "#00A4FF"
+                    : theme.palette.mode === "dark"
+                    ? "#FFF"
+                    : "initial",
               }}
             >
               استان
@@ -136,7 +177,12 @@ const ConflictDetailsPage = () => {
               variant="text"
               onClick={() => setSelectedSort("ISP")}
               sx={{
-                color: selectedSort === "ISP" ? "#00A4FF" : "#FFF",
+                color:
+                  selectedSort === "ISP"
+                    ? "#00A4FF"
+                    : theme.palette.mode === "dark"
+                    ? "#FFF"
+                    : "initial",
               }}
             >
               اپراتور
@@ -149,9 +195,8 @@ const ConflictDetailsPage = () => {
             p: "2px 4px",
             display: "flex",
             alignItems: "center",
-            border: " 1px solid #676767",
-            background: "#393939",
-            // width: isSmScreen ? 160 : 200,
+            border: theme.palette.mode === "dark" && "1px solid #676767",
+            // background: "#393939",
             borderRadius: "1rem",
           }}
         >
@@ -169,14 +214,11 @@ const ConflictDetailsPage = () => {
       </Box>
       <Box
         sx={{
-          maxWidth: "100%",
           display: "grid",
           gap: "1rem",
           marginTop: "2rem",
           gridTemplateColumns: "repeat(6, auto)",
-          gridTemplateRows: "repeat(auto, 10rem)",
           gridAutoFlow: "dense",
-          justifyItems: "start",
           justifyContent: "start",
         }}
       >
