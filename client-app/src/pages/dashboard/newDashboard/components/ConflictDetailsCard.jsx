@@ -44,6 +44,7 @@ const conflictDetailsData = [
 
 const ConflictDetailsCard = () => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   return (
     <Box
       sx={{
@@ -53,7 +54,7 @@ const ConflictDetailsCard = () => {
         paddingX: "2rem",
         display: "flex",
         flexDirection: "column",
-        background: theme.palette.mode === "dark" ? "#1A1A1A" : "#FFF",
+        background: isDark ? "#1A1A1A" : "#FFF",
         gap: "2rem",
         transition: "all .25s",
       }}
@@ -130,8 +131,7 @@ const ConflictDetailsCard = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background:
-                  theme.palette.mode === "dark" ? "#404040" : "#F0F4F3",
+                background: isDark ? "#404040" : "#F0F4F3",
                 border: "1px solid #F0F4F3",
                 padding: ".5rem",
                 borderRadius: ".8rem",
@@ -146,8 +146,7 @@ const ConflictDetailsCard = () => {
                   borderRadius: ".5rem",
                   padding: ".2rem",
                   fontSize: ".8rem !important",
-                  background:
-                    theme.palette.mode === "dark" ? "#1B1B1B" : "#FFF",
+                  background: isDark ? "#1B1B1B" : "#FFF",
                 }}
               >
                 مشاهده همه
@@ -179,10 +178,7 @@ const ConflictDetailsCard = () => {
           }}
         >
           گزارش خطا در اطلاعات
-          <img
-            src={theme.palette.mode === "dark" ? Danger : DangerDark}
-            alt="leftArrow"
-          />
+          <img src={isDark ? Danger : DangerDark} alt="leftArrow" />
         </Button>
       </Box>
     </Box>
