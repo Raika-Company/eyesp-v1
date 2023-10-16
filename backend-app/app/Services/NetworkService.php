@@ -112,30 +112,52 @@ class NetworkService
 
     public static function GetThresholds($isp = null)
     {
-        $threshold = RstThreshold::where('created_at', '>=', Carbon::today()->subDay()->toDateTimeString());
+        $threshold = RstThreshold::where('created_at', '>=', today()->toDateString());
+
         if($isp)
             $threshold = $threshold->where('isp', $isp);
-        else
+        else {
             //TODO: get best
+        }
 
         return $threshold->first();
     }
 
     public static function calculateAverage(Collection $data, string $metric): float
     {
-        return $data->average($metric);
+        return round($data->average($metric), 2);
     }
 
     public static function analyzeMetric(float $trustedAvg, float $userAvg, float $threshold, string $metricName, array &$report)
     {
         $conditions = [
-            ['condition' => fn() => $trustedAvg > $threshold && $userAvg > $threshold, 'issue' => "ISP Issue"],
-            ['condition' => fn() => $userAvg > $threshold, 'issue' => "User Infrastructure Issue"],
-            ['condition' => fn() => $trustedAvg > $threshold, 'issue' => "Check Trusted Data"],
-            ['condition' => fn() => true, 'issue' => "No Issue"]
+            'download' => [
+                ['condition' => fn() => $trustedAvg < $threshold && $userAvg < $threshold, 'issue' => "ISP Issue"],
+                ['condition' => fn() => $userAvg < $threshold, 'issue' => "User Infrastructure Issue"],
+                ['condition' => fn() => $trustedAvg < $threshold, 'issue' => "Check Trusted Data"],
+                ['condition' => fn() => true, 'issue' => "No Issue"]
+            ],
+            'upload' => [
+                ['condition' => fn() => $trustedAvg < $threshold && $userAvg < $threshold, 'issue' => "ISP Issue"],
+                ['condition' => fn() => $userAvg < $threshold, 'issue' => "User Infrastructure Issue"],
+                ['condition' => fn() => $trustedAvg < $threshold, 'issue' => "Check Trusted Data"],
+                ['condition' => fn() => true, 'issue' => "No Issue"]
+            ],
+            'ping' => [
+                ['condition' => fn() => $trustedAvg > $threshold && $userAvg > $threshold, 'issue' => "ISP Issue"],
+                ['condition' => fn() => $userAvg > $threshold, 'issue' => "User Infrastructure Issue"],
+                ['condition' => fn() => $trustedAvg > $threshold, 'issue' => "Check Trusted Data"],
+                ['condition' => fn() => true, 'issue' => "No Issue"]
+            ],
+            'packet_loss' => [
+                ['condition' => fn() => $trustedAvg > $threshold && $userAvg > $threshold, 'issue' => "ISP Issue"],
+                ['condition' => fn() => $userAvg > $threshold, 'issue' => "User Infrastructure Issue"],
+                ['condition' => fn() => $trustedAvg > $threshold, 'issue' => "Check Trusted Data"],
+                ['condition' => fn() => true, 'issue' => "No Issue"]
+            ]
         ];
 
-        foreach ($conditions as $condition) {
+        foreach ($conditions[$metricName] as $condition) {
             if ($condition['condition']()) {
                 $report[$metricName] = $condition['issue'];
                 break;
@@ -224,19 +246,23 @@ class NetworkService
         return $report;
     }
 
-    public static function GetReports2(string $isp, Collection $trustedData, Collection $untrustedData, string $metric)
+    public static function GetReports2($thresholds, Collection $trustedData, Collection $untrustedData, string $metric)
     {
         $report = [];
 
-        $thresholds = NetworkService::GetThresholds($isp);
-
         if (!$thresholds)
             return $report;
+        //$cities = $trustedData->groupBy('city');
+        //foreach ($cities as $city => $values) {
+            //$trustedAvg = NetworkService::calculateAverage($trustedData->where('city', $city), $metric);
+            $trustedAvg = NetworkService::calculateAverage($trustedData, $metric);
+            //$userAvg = NetworkService::calculateAverage($untrustedData->where('city', $city), $metric);
+            $userAvg = NetworkService::calculateAverage($untrustedData, $metric);
+            //NetworkService::analyzeMetric($trustedAvg, $userAvg, $thresholds->$metric, $metric, $report, $city);
+            NetworkService::analyzeMetric($trustedAvg, $userAvg, $thresholds->$metric, $metric, $report);
+       // }
 
-        $trustedAvg = NetworkService::calculateAverage($trustedData, $metric);
-        $userAvg = NetworkService::calculateAverage($untrustedData, $metric);
-        NetworkService::analyzeMetric($trustedAvg, $userAvg, $thresholds->$metric, $metric, $report);
-
+        //return [$report, 'Tehran'];
         return $report;
     }
 
@@ -259,6 +285,59 @@ class NetworkService
         return $result ?? ['', '', '', []];
     }
 
+    public static function IspAnalyze2(string $isp, string $metric, array $checkTimes)
+    {
+        $data = RstResult::recent($isp);
+        $data = self::analyzeData($isp, 15, 'recent');
+        $cities = $data['trusted']->groupBy('city');
+        $thresholds = NetworkService::GetThresholds($isp);
+        $report = [];
+        $citiesHasIssue = [];
+        foreach ($cities as $city => $values) {
+            $report2 = self::generateReport($thresholds, $data, $metric);
+            if($report2[$metric] !== 'No Issue') {
+                $citiesHasIssue[] = $city;
+                $report[$city] = $city . ' ' . $metric . ' issue: ' . $metric . ' thresholds is: '.
+                    $thresholds->$metric . ' now: '. self::calculateAverage($data['untrusted'], $metric) . ' ';
+                /* switch($report2[$metric]) {
+                    case 'ISP Issue':
+                        $isUnTrusted = $isTrusted = true;
+                        break;
+                    case 'User Infrastructure Issue':
+                        $isUnTrusted = true;
+                        break;
+                    case 'Check Trusted Data':
+                        $isTrusted = true;
+                        break;
+                } */
+
+                $report[$city] .= self::getTimeFrame($report, $isp, $checkTimes, $metric, $city, $thresholds);
+            }else {
+                //$report[$city] = $city . ' ' . $metric . ' no issue';
+                continue;
+            }
+        }
+        return $report;
+    }
+
+    public static function getTimeFrame(&$report, $isp, $checkTimes, $metric, $city, $thresholds)
+    {
+        foreach ($checkTimes as $type => $times) {
+            foreach ($times as $time) {
+                $data = self::analyzeData($isp, $time, $type);
+                if(!$data['trusted'] OR !$data['untrusted']) {
+                    continue;
+                }
+                $inTimeReport = self::generateReport($thresholds, $data, $metric);
+                $report[$city] .= $type . ' ' . $time . ' dataAvg:' . self::calculateAverage($data['untrusted'], $metric) . ' ';
+                if($inTimeReport[$metric] == 'No Issue') {
+                    return $report[$city];
+                }
+            }
+        }
+        return $report[$city];
+    }
+
 
     private static function analyzeData(string $isp, string $timeFrame, string $analyzeType)
     {
@@ -274,9 +353,9 @@ class NetworkService
         ];
     }
 
-    private static function generateReport(string $isp, array $data, string $metric)
+    private static function generateReport($thresholds, array $data, string $metric)
     {
-        return self::GetReports2($isp, $data['trusted'], $data['untrusted'], $metric);
+        return self::GetReports2($thresholds, $data['trusted'], $data['untrusted'], $metric);
     }
 
     private static function comparison($selectedIsp, $analyzeType, $time, $stat, $metric)
@@ -287,9 +366,9 @@ class NetworkService
         [$reports, $issueCounts] = self::generateReportsAndCountIssues($isp, $selectedIsp, $time, $analyzeType, $stat, $metric, $issueCounts);
 
         // Analyzing issues without looping through each issue count individually
-        $result = self::analyzeIssuesUsingMap($stat, $issueCounts, count($isp), $metric);
-
-        return [$analyzeType, $time, $stat, $result];
+        //$result = self::analyzeIssuesUsingMap($stat, $issueCounts, count($isp), $metric);
+dd($reports, $time, $analyzeType, $issueCounts);
+        return [$analyzeType, $time, $stat, null/* $result */];
     }
 
     private static function generateReportsAndCountIssues($isp, $selectedIsp, $time, $analyzeType, $stat, $metric, $issueCounts)
@@ -304,7 +383,7 @@ class NetworkService
             if ($stat[$metric] === $report[$metric]) {
                 $issueCounts[$stat[$metric]]++;
             }
-            return $report;
+            return [$report, $data];
         }, $filteredIsps);
 
         // Assuming keys from $filteredIsps and $dataReports can be matched directly
@@ -319,6 +398,7 @@ class NetworkService
             'User Infrastructure Issue' => 0,
             'ISP Congestion Issue' => 0,
             'User Specific Congestion Issue' => 0,
+            'Check Trusted Data' => 0,
         ];
     }
     private static function analyzeIssuesUsingMap($stat, $issueCounts, $ispCount, $metric)
@@ -327,7 +407,8 @@ class NetworkService
             'ISP Issue' => ['اختلال در زیر ساخت', 'اختلال در منطقه ی کاربر'],
             'User Infrastructure Issue' => ['اختلال در منطقه ی کاربر', 'اختلال در زیر ساخت کاربر'],
             'ISP Congestion Issue' => ['اختلال در زیر ساخت', 'اختلال در منطقه ی کاربر'],
-            'User Specific Congestion Issue' => ['اختلال در منطقه ی کاربر', 'اختلال در زیرساخت کاربر']
+            'User Specific Congestion Issue' => ['اختلال در منطقه ی کاربر', 'اختلال در زیرساخت کاربر'],
+            'Check Trusted Data' => ['اختلال در منطقه ی کاربر', 'اختلال در زیرساخت کاربر'],
         ];
 
         return [

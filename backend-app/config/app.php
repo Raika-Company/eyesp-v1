@@ -192,7 +192,7 @@ return [
     |
     */
 
-    'isps' => ['irancell', 'hamrah aval', 'shatel', 'mobinnet', 'hiweb'],
+    'isps' => ["Mokhaberat", "Hamraheaval", "Zitel", "Hiweb", "Mobinnet", "Samantel", "Shatel", "Irancell"],
 
     /*
     |--------------------------------------------------------------------------

@@ -35,6 +35,8 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
             Route::get('/charts/{type}/{isp?}/{city?}', [NetworkController::class, 'charts']);
             Route::get('/report/{isp}', [NetworkController::class, 'reports']);
             Route::get('/report2/{isp}', [NetworkController::class, 'reports2']);
+            Route::get('/get-issues/{isp?}', [NetworkController::class, 'getIssues']);
+            Route::get('/get-issue-stats/{type?}', [NetworkController::class, 'getIssueStats']);
             Route::get('/my-isp/{isp}', [NetworkController::class, 'myIspMetrics']);
         });
 
