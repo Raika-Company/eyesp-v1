@@ -1,23 +1,16 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const XAxisLine = ({ max, unit, height }) => {
+  const [tableData, setTableData] = useState([]);
+  useEffect(() => {
+    const localStorageData = JSON.parse(
+      localStorage.getItem("testResults") || "[]"
+    );
+    setTableData(localStorageData);
+  }, []);
   const theme = useTheme();
-  const valueOfEachRow = Math.ceil(max / 3);
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-
-  const createVlues = (time, date) => ({
-    time,
-    date,
-  });
-  const values = [
-    createVlues("22 تير", "12:24:45PM"),
-    createVlues("22 تير", "12:24:45PM"),
-    createVlues("22 تير", "12:24:45PM"),
-    createVlues("22 تير", "12:24:45PM"),
-  ];
-  for (let i = 1; i <= 3; i++) {
-    values.push(Math.floor(Math.min(i * valueOfEachRow, max)));
-  }
 
   return (
     <Box
@@ -52,7 +45,7 @@ const XAxisLine = ({ max, unit, height }) => {
             width: "100%",
           }}
         >
-          {values.map((value, index) => (
+          {tableData.map((value, index) => (
             <Box
               key={index}
               color={theme.palette.mode === "dark" ? "#fffa" : "#777"}

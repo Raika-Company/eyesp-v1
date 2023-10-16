@@ -13,7 +13,7 @@ import moment from "moment-jalaali";
 import axios from "axios";
 import NewSwitchBtn from "./newSwitchBtn";
 import HistoryTable from "./HistoryTable";
-import YAxisLine from "../ispCompare/YAxisLine";
+
 import {
   Bar,
   BarChart,
@@ -165,18 +165,6 @@ function GridItem({ theme, rendered, title, data, unit }) {
             )}
           </Box>
           <XAxisLine
-            max={Math.max(...data.map((line) => line.value))}
-            unit={unit}
-          />
-        </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            left: isSmScreen ? "2.5rem" : "3rem",
-            top: "1.5rem",
-          }}
-        >
-          <YAxisLine
             max={Math.max(...data.map((line) => line.value))}
             unit={unit}
           />
