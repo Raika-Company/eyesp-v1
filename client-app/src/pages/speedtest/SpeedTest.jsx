@@ -51,6 +51,11 @@ const wipe = keyframes`
   to {clip-path: circle(0% at 50% 50%) }
 `;
 
+const wipeOut = keyframes`
+  from { clip-path: circle(0% at 50% 50%)}
+  to {clip-path: circle(50% at 50% 50%) }
+`;
+
 const mbpsToAmount = (s) => {
   return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
 };
@@ -395,7 +400,7 @@ const SpeedTest = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
-                  animation: `${fadeIn} 1s ease-in-out`,
+                  animation: `${fadeIn} 1s ease-in-out, ${wipeOut} 1s`,
                   height: "100%",
                   width: "100%",
                 }}
