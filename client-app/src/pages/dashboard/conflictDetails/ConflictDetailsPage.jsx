@@ -102,6 +102,7 @@ const ConflictDetailsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSort, setSelectedSort] = useState("conflict");
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   return (
     <Box>
@@ -120,7 +121,7 @@ const ConflictDetailsPage = () => {
             alignItems: "center",
             padding: ".5rem",
             borderRadius: "1rem",
-            background: theme.palette.mode === "dark" ? "#393939" : "#FFF",
+            background: isDark ? "#393939" : "#FFF",
             gap: "1rem",
           }}
         >
@@ -139,7 +140,7 @@ const ConflictDetailsPage = () => {
                 color:
                   selectedSort === "conflict"
                     ? "#00A4FF"
-                    : theme.palette.mode === "dark"
+                    : isDark
                     ? "#FFF"
                     : "initial",
               }}
@@ -160,7 +161,7 @@ const ConflictDetailsPage = () => {
                 color:
                   selectedSort === "province"
                     ? "#00A4FF"
-                    : theme.palette.mode === "dark"
+                    : isDark
                     ? "#FFF"
                     : "initial",
               }}
@@ -180,7 +181,7 @@ const ConflictDetailsPage = () => {
                 color:
                   selectedSort === "ISP"
                     ? "#00A4FF"
-                    : theme.palette.mode === "dark"
+                    : isDark
                     ? "#FFF"
                     : "initial",
               }}
@@ -195,9 +196,9 @@ const ConflictDetailsPage = () => {
             p: "2px 4px",
             display: "flex",
             alignItems: "center",
-            border: theme.palette.mode === "dark" && "1px solid #676767",
-            // background: "#393939",
+            border: isDark && "1px solid #676767",
             borderRadius: "1rem",
+            boxShadow: "none",
           }}
         >
           <InputBase

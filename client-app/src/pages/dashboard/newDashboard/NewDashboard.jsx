@@ -18,6 +18,7 @@ import BackgroundSvg from "../../../app/common/BackgroundSvg";
 
 const NewDashboard = () => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [province, setProvince] = useState("");
   const [selectedISP, setSelectedISP] = useState("");
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -64,10 +65,9 @@ const NewDashboard = () => {
             justifySelf: isMdScreen ? "self-end" : "center",
             alignSelf: "self-start",
             display: "flex",
-            background:
-              theme.palette.mode === "dark"
-                ? "rgba(55, 55, 55, 0.40)"
-                : "paint0_radial_202_4189",
+            background: isDark
+              ? "rgba(55, 55, 55, 0.40)"
+              : "paint0_radial_202_4189",
             padding: "1rem",
             borderRadius: "1rem",
             backdropFilter: "blur(18px)",
@@ -86,7 +86,7 @@ const NewDashboard = () => {
               sx={{
                 paddingLeft: "2rem",
                 minWidth: "10rem",
-                background: theme.palette.mode === "light" ? "#FFF" : "",
+                background: isDark ? "" : "#FFF",
               }}
             >
               <MenuItem value="">انتخاب استان</MenuItem>
@@ -108,7 +108,7 @@ const NewDashboard = () => {
               sx={{
                 paddingLeft: "2rem",
                 minWidth: "10rem",
-                background: theme.palette.mode === "light" ? "#FFF" : "",
+                background: isDark ? "" : "#FFF",
               }}
             >
               <MenuItem value="">انتخاب اپراتور</MenuItem>

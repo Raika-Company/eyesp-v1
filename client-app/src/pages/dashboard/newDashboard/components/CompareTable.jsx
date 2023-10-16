@@ -102,6 +102,7 @@ const parseNumber = (str) => {
  */
 const CompareTable = ({title, showProvince}) => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [visibleRows, setVisibleRows] = useState(6);
@@ -114,16 +115,15 @@ const CompareTable = ({title, showProvince}) => {
     <Box
       sx={{
         display: "flex",
-        background: theme.palette.mode === "dark" ? "#1A1A1A" : "#FFF",
+        background: isDark ? "#1A1A1A" : "#FFF",
         flexDirection: "column",
         justifyContent: "center",
         flex: 1,
         padding: "1.75rem",
         width: "22.5%",
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? "0px 0px 30px 0px rgba(255, 255, 255, 0.20)"
-            : "0px 0px 30px 0px rgba(0, 0, 0, 0.20)",
+        boxShadow: isDark
+          ? "0px 0px 30px 0px rgba(255, 255, 255, 0.20)"
+          : "0px 0px 30px 0px rgba(0, 0, 0, 0.20)",
         borderRadius: "1rem",
       }}
     >
