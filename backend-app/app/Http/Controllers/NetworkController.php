@@ -367,11 +367,11 @@ class NetworkController extends Controller
             }
             $ispsHasDisturbance = array_keys($result);
             $disturbance = array_unique($disturbance);
-            DB::table('rst_disturbance')->insert([
+            RstDisturbance::create([
                 'isps' => json_encode($ispsHasDisturbance),
                 'disturbances' => json_encode($disturbance),
                 'description' => json_encode($result),
-                'created_at' => now()->toDateTimeString(),
+                //'created_at' => now()->toDateTimeString(),
             ]);
             return response()->json([
                 'status' => true,

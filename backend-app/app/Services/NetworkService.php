@@ -112,15 +112,21 @@ class NetworkService
 
     public static function GetThresholds($isp = null)
     {
-        $threshold = RstThreshold::where('created_at', '>=', today()->toDateString());
+        /* $threshold = RstThreshold::where('created_at', '>=', today()->toDateString());
 
         if($isp)
             $threshold = $threshold->where('isp', $isp);
         else {
             //TODO: get best
-        }
+        } */
 
-        return $threshold->first();
+        //return $threshold->first();
+        return (object)[
+            'download' => 13,
+            'upload' => 4,
+            'ping' => 40,
+            'packet_loss' => 5
+        ];
     }
 
     public static function calculateAverage(Collection $data, string $metric): float
@@ -287,7 +293,6 @@ class NetworkService
 
     public static function IspAnalyze2(string $isp, string $metric, array $checkTimes)
     {
-        $data = RstResult::recent($isp);
         $data = self::analyzeData($isp, 15, 'recent');
         $cities = $data['trusted']->groupBy('city');
         $thresholds = NetworkService::GetThresholds($isp);
