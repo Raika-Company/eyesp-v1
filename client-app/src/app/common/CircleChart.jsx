@@ -1,4 +1,5 @@
-import {useState, useEffect} from "react";
+import { Typography } from "@mui/material";
+import { useState, useEffect } from "react";
 
 const CircleChart = ({
   id,
@@ -6,6 +7,7 @@ const CircleChart = ({
   strokeWidth = 10,
   size = 100,
   gradientColors = ["#960000", "rgba(157, 0, 0, 0.40)"],
+  value = null,
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -83,17 +85,38 @@ const CircleChart = ({
           }}
         />
       </svg>
-      <span
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: "1.5rem",
-        }}
-      >
-        {percentage}%
-      </span>
+      {value ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "1.5rem",
+          }}
+        >
+          <Typography>{percentage}</Typography>
+          <Typography>{value}</Typography>
+        </Box>
+      ) : (
+        <Typography
+          component="span"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "1.5rem",
+          }}
+        >
+          {percentage}%
+        </Typography>
+      )}
     </div>
   );
 };

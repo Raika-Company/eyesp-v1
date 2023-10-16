@@ -88,6 +88,13 @@ const baseTheme = createTheme({
       },
       fontFamily: "YekanBakhSemibold",
     },
+    button1: {
+      fontSize: "16px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "20px",
+      },
+      fontFamily: "YekanBakhBold",
+    },
     mainDigits: {
       fontSize: "24px",
       [theme.breakpoints.up("md")]: {
@@ -116,6 +123,13 @@ const baseTheme = createTheme({
       },
       fontFamily: "YekanBakhRegular",
     },
+    boxValue: {
+      fontSize: "1.75rem",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "2.25rem",
+      },
+      fontFamily: "YekanBakhBold",
+    }
   },
   components: {
     MuiInputLabel: {
@@ -209,6 +223,7 @@ export const lightTheme = createTheme({
       subTitle: "#878787",
       subHeading: "#434544",
       chartTitleColor: "#7D93AA",
+      number: "#47A100"
     },
     background: {
       default: "#E9E9E9",
@@ -273,6 +288,7 @@ export const darkTheme = createTheme({
       textBlack: "#FFF",
       textInfo: "#FFF",
       subTitle: "#FFF",
+      number: "#70FF00" 
     },
     background: {
       default: "#262626",
