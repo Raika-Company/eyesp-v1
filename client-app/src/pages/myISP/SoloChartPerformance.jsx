@@ -12,15 +12,17 @@ import {
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import xAxis from "../../app/assets/image/xAxis.svg";
-import YAxisLine from "../ispCompare/YAxisLine";
+import YAxisLine from "../../app/common/YAxisLine";
 import leftArrow from "../../app/assets/image/leftArrow.svg";
 import { Link } from "react-router-dom";
 import data from "../../../public/data/myISPChartData.json";
 import FormControlChart from "../../app/common/FormControlChart";
 import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
-import { CustomTooltip } from "../ispCompare/OperatorCompare";
+import { CustomTooltip } from "../../app/common/Charts";
 import NewCardContainer from "../../app/common/NewCardContainer";
+
+
 
 const SoloChartPerformance = () => {
   const theme = useTheme();
