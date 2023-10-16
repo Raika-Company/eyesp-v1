@@ -174,41 +174,36 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#00A4FF",
-      light: "#85CCF4",
-      dark: "#259FDA"
+      main: "#326589",
+      light: "#0C6087",
+      dark: "#0C6087"
     },
     secondary: {
-      main: "#D5E3F1",
+      main: "#B3B3B3",
       light: "#D8D8D8",
       dark: "#6A6861"
     },
     error: {
-      main: "#B40000",
-      ligh: "#FF7A79",
+      main: "#9A0B0B",
+      light: "#FF7A79",
       dark: "#B72D2B"
-
     },
     warning: {
-      main: "#FCD2B3",
-      light: "#F9CA32",
-      dark: "#7D6C41"
+      main: "#F9CA32",
+      light: "#7D6C41",
+      dark: "#6F4D25"
     },
     info: {
       main: "#C4E9FE",
+      light: "#00C2FF"
     },
     success: {
-      main: "#CAE4C4",
-      light: "#97C771",
-      dark: "#589627"
+      main: "#97C771",
+      light: "#589627",
     },
     text: {
-      main: "#676767",
-      textBlack: "#2C2C2C",
-      textInfo: "#3E6389",
-      subTitle: "#878787",
-      subHeading: "#454545",
-      chartTitleColor: "#7D93AA",
+      main: "#434544",
+      blueText: "#0C6087",
     },
     background: {
       default: "#E9E9E9",
@@ -221,6 +216,9 @@ export const lightTheme = createTheme({
     },
     border: {
       main: "#434544"
+    },
+    Box: {
+      main: "#FFF"
     }
   },
 });
@@ -236,30 +234,36 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#008EDD",
-      light: "#0C6087",
-      dark: "#259FDA"
+      main: "#326589",
+      light: "#85CCF4",
+      dark: "#00C2FF"
     },
     secondary: {
-      main: "#1A2D3A",
+      main: "#B3B3B3",
+      light: "#404040",
+      dark: "#6A6861"
     },
     error: {
-      main: "#FF5A00",
+      main: "#9A0B0B",
+      light: "#FF7A79",
+      dark: "#FE4543"
     },
     warning: {
-      main: "#FFA341",
+      main: "#F9CA32",
+      light: "#7D6C41",
+      dark: "#6F4D25"
     },
     info: {
       main: "#86BBD8",
+      light: "#0C6087"
     },
     success: {
-      main: "#83A673",
+      main: "#97C771",
+      light: "#70FF00",
     },
     text: {
       main: "#fff",
-      textBlack: "#FFF",
-      textInfo: "#434544",
-      subTitle: "#FFF",
+      blueText: "#85CCF4",
     },
     background: {
       default: "#262626",
@@ -272,6 +276,9 @@ export const darkTheme = createTheme({
     },
     border: {
       main: "#fff"
+    },
+    Box: {
+      main: "#1A1A1A"
     }
   },
   // components: {
