@@ -31,7 +31,6 @@ import {styled} from "@mui/material/styles";
 import {STATUS_MAP} from "./constant";
 
 import io from "socket.io-client";
-import CardContainer from "../../app/common/CardContainer";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
 import useFetchServers from "../../app/hooks/useFetchServers";
 import HistoryIcon from "@mui/icons-material/History";
@@ -45,6 +44,11 @@ import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
+`;
+
+const wipe = keyframes`
+  from { clip-path: circle(50% at 50% 50%)}
+  to {clip-path: circle(0% at 50% 50%) }
 `;
 
 const mbpsToAmount = (s) => {
@@ -81,6 +85,7 @@ const AddressAndServer = ({ip, server}) => (
 
 const SpeedTest = () => {
   const theme = useTheme();
+  const [animate, setAnimate] = useState(false);
   const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
   const isSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const pXCardContainers = useDynamicMP(390, 1440, 1.81, 4);
@@ -202,10 +207,11 @@ const SpeedTest = () => {
   };
 
   const handleButtonClick = () => {
-    if (!isServerSelected) return;
-    setIsGoButtonVisible(false);
-    startPingTest();
-    handleStart();
+    setAnimate(true);
+    // if (!isServerSelected) return;
+    // setIsGoButtonVisible(false);
+    // startPingTest();
+    // handleStart();
   };
 
   let flag = true;
@@ -357,11 +363,12 @@ const SpeedTest = () => {
           <Box
             width={isMdScreen ? "25vmin" : "55vmin"}
             height={isMdScreen ? "25vmin" : "55vmin"}
+            position="relative"
           >
             {isGoButtonVisible ? (
               <Button
                 onClick={handleButtonClick}
-                sx={{                   
+                sx={{
                   boxShadow: `
             inset 0 0 20px #9DB8C8,  /* inner shadow */
             0px 4px 59px 0px rgba(0, 163, 255, 0.22)  /* outer shadow */
@@ -369,6 +376,7 @@ const SpeedTest = () => {
                   borderRadius: "50%",
                   width: "100%",
                   height: "100%",
+                  animation: animate && `${wipe} 1s forwards`,
                 }}
               >
                 <Typography
