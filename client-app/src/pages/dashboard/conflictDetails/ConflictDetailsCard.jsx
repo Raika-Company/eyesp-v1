@@ -4,10 +4,11 @@ import leftArrow from "../../../app/assets/image/leftArrow.svg";
 
 const ConflictDetailsCard = ({title, data = []}) => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   return (
     <Box
       sx={{
-        background: theme.palette.mode === "dark" ? "#2626262" : "#F6F6F6",
+        background: isDark ? "#262626aa" : "#F6F6F6",
         transition: "background .25s",
         borderRadius: "1rem",
         padding: ".5rem",
@@ -20,10 +21,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography
-          color={theme.palette.mode === "light" && "#0C6087"}
-          fontWeight="700"
-        >
+        <Typography color={!isDark && "#0C6087"} fontWeight="700">
           {title}
         </Typography>
 
@@ -45,7 +43,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
           display: "flex",
           flexWrap: "wrap",
           gap: ".5rem",
-          color: theme.palette.mode === "light" && "#434544",
+          color: !isDark && "#434544",
         }}
       >
         {data.map((isp, idx) => (

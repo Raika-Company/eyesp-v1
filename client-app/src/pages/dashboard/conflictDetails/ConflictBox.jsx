@@ -7,10 +7,11 @@ import ViewDetailsButton from "../../../app/common/ViewDetailsButton";
 const ConflictBox = ({title, data}) => {
   const keys = Object.keys(data);
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   return (
     <Box
       sx={{
-        background: theme.palette.mode === "dark" ? "#1A1A1A" : "#FFF",
+        background: isDark ? "#1A1A1A" : "#FFF",
         gridRowEnd:
           keys.length > 3 ? `span ${Math.floor(keys.length / 2)}` : "span 1",
         gridColumnEnd: keys.length <= 3 ? `span ${keys.length}` : "span 2",

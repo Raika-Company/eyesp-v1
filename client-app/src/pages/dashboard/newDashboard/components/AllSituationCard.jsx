@@ -49,6 +49,7 @@ const detailsData = [
 
 const AllSituationCard = () => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   return (
     <Box
       sx={{
@@ -56,7 +57,7 @@ const AllSituationCard = () => {
           theme.palette.mode === "dark"
             ? "0px 0px 30px 0px rgba(255, 255, 255, 0.20)"
             : "0px 0px 30px 0px rgba(0, 0, 0, 0.20)",
-        background: theme.palette.mode === "dark" ? "#1A1A1A" : "#FFF",
+        background: isDark ? "#1A1A1A" : "#FFF",
         borderRadius: "1rem",
         paddingY: "1rem",
         paddingX: "2rem",
@@ -122,7 +123,7 @@ const AllSituationCard = () => {
               unit={unit}
               title={"میانگین"}
               background={
-                theme.palette.mode === "dark"
+                isDark
                   ? "radial-gradient(143.37% 143.37% at 10.4% -3.47%, #434544 0%, rgba(67, 69, 68, 0.00) 100%)"
                   : "radial-gradient(143.37% 143.37% at 10.4% -3.47%, #E3E3E3 0%, rgba(144, 144, 144, 0.00) 100%)"
               }
