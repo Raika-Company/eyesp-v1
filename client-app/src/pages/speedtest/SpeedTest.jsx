@@ -400,7 +400,7 @@ const SpeedTest = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
-                  animation: `${fadeIn} 1s ease-in-out, ${wipeOut} 1s`,
+                  animation: `${fadeIn} 1s ease-in-out, ${wipeOut} 1s linear`,
                   height: "100%",
                   width: "100%",
                 }}
