@@ -6,6 +6,7 @@ import {
   Box,
   Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 
@@ -36,7 +37,7 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
   background: gradient,
   paddingX: "0.94rem",
   paddingY: "0.5rem",
-  width: "80em",
+  width: "100%",
   height: "3.875rem",
   opacity: delay ? 0 : 1,
   animation: delay ? `${fadeInAnimation} 0.4s forwards ${delay}s` : "none",
@@ -53,7 +54,12 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
  * @description Array of gradient strings for styling the rows in the ISPTable.
  */
 const gradients = ["#7D6C41", "#6A6861", "#6F4D25", "#404040"];
-
+const light_gradients = [
+  "linear-gradient(180deg, #BDFEAE 0%, #F2EFA5 0.01%, #F9F7EA 100%)",
+  "linear-gradient(180deg, #DADADA 0%, #E1E1E1 0.01%, #F6F6F6 100%)",
+  "linear-gradient(180deg, #D49A63 0%, #F1CBB0 0.01%, #F8F8F8 100%)",
+  "linear-gradient(180deg, #D0E3ED 0%, #D0E2EC 0.01%, #EEF4F9 100%)",
+];
 /**
  * @function ISPTable
  * @description React component for displaying a table of Internet Service Providers (ISPs).
@@ -63,6 +69,8 @@ const gradients = ["#7D6C41", "#6A6861", "#6F4D25", "#404040"];
  * @returns {JSX.Element}
  */
 const ISPTable = ({ ISPdata, isDetail }) => {
+  const theme = useTheme(); // Get the current theme
+  const isDarkMode = theme.palette.mode === "dark";
   const rowsHead = [
     { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
     { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
@@ -102,8 +110,12 @@ const ISPTable = ({ ISPdata, isDetail }) => {
             <RowBox
               key={Items.rank}
               delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
-              marginTop="1rem"
+              gradient={
+                isDarkMode
+                  ? gradients[index >= 3 ? 3 : index]
+                  : light_gradients[index >= 3 ? 3 : index]
+              } // Use the gradient based on the theme
+              marginTop="0.75rem"
             >
               <Typography variant="h5">{index + 1}</Typography>
               <Typography variant="h5">{Items.ISPname}</Typography>
@@ -140,7 +152,11 @@ const ISPTable = ({ ISPdata, isDetail }) => {
             <RowBox
               key={Items.rank}
               delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
+              gradient={
+                isDarkMode
+                  ? gradients[index >= 3 ? 3 : index]
+                  : light_gradients[index >= 3 ? 3 : index]
+              } // Use the gradient based on the theme
               marginTop="1rem"
             >
               <Typography>{index + 1}</Typography>

@@ -14,6 +14,7 @@ import {
   MenuItem,
   styled,
   CircularProgress,
+  backdropClasses,
 } from "@mui/material";
 import React, { useState } from "react";
 import { ContainedButton } from "./ContainedButton";
@@ -30,6 +31,16 @@ import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
 import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
+
+// const StyledFormControl = styled(FormControl)(({ theme }) => ({
+//   width: "50%",
+//   "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
+//     {
+//       padding: theme.palette.mode === "dark" ? "5px 14px" : "5px 14px",
+//     },
+// }));
+let gradientColors = ["#0C6087", "#0C6087"];
+
 const OperatorProfile = () => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
@@ -47,7 +58,7 @@ const OperatorProfile = () => {
 
   const buttonGroupStyle = {
     backgroundColor: theme.palette.mode === "dark" ? "#303030" : "#F4F4F4",
-    width: "44%",
+    width: "100%",
     alignItems: "center",
     gap: "11px",
     justifyContent: "center",
@@ -56,18 +67,18 @@ const OperatorProfile = () => {
     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
   };
   const buttons = [
-    { label: "سرعت دانلود", width: "90%" },
-    { label: "سرعت آپلود", width: "90%" },
-    { label: "پینگ", width: "90%" },
-    { label: "درصد عملکرد", width: "90%" },
+    { label: "سرعت دانلود", width: "90%", percentage: 70 },
+    { label: "سرعت آپلود", width: "90%", percentage: 80 },
+    { label: "پینگ", width: "90%", percentage: 60 },
+    { label: "درصد عملکرد", width: "90%", percentage: 90 },
   ];
   const handleButtonClick = (index) => {
     setClickedButtonIndex(index);
-    updateChartData(index);
+    setPercentage(buttons[index].percentage);
   };
   const activeButtonStyle = {
     backgroundColor: "#0C6087",
-    color: "white",
+    color: "white", // for readability based on theme
     borderRadius: "2rem",
     border: "none",
     width: "60%",
@@ -76,26 +87,19 @@ const OperatorProfile = () => {
     borderRadius: "2rem",
     border: "none",
     width: "60%",
-    color: "#E7E7E7",
+    color: theme.palette.mode === "dark" ? "white" : "black",
   };
-  const handleChange = (event) => {
+  const [percentage, setPercentage] = useState(65);
+
+  const handleChangeDailyPercent = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
 
-    const yearData = data.find((d) => d.id === selectedYear.toString());
-    if (yearData) {
-      setChartData(yearData.data);
-    }
+    // For the sake of debugging, directly set percentages based on options
+    if (selectedYear === "در حال حاضر") setPercentage(65);
+    else if (selectedYear === "1 روز قبل") setPercentage(75);
+    else if (selectedYear === "1 هفته قبل") setPercentage(85);
   };
-
-  const StyledFormControl = styled(FormControl)(({ theme }) => ({
-    "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
-      {
-        padding: "5px 14px;",
-      },
-  }));
-  let percentage = 65;
-  let gradientColors = ["#0C6087", "#0C6087"];
 
   return (
     <>
@@ -108,7 +112,11 @@ const OperatorProfile = () => {
           flexBasis: isMdScreen ? "100%" : "50%",
         }}
       >
-        <Box display="flex" justifyContent="space-between">
+        <Box
+          display="flex"
+          alignItems="flex-end"
+          justifyContent="space-between"
+        >
           {" "}
           <Typography
             variant="h1"
@@ -118,51 +126,59 @@ const OperatorProfile = () => {
           >
             درصد عملکرد{" "}
           </Typography>
-          <StyledFormControl sx={{ width: "50%" }}>
+          <FormControl sx={{ width: "50%" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={age}
               label="سال"
-              onChange={handleChange}
-              sx={{ backgroundColor: "#313131", border: "none" }}
+              onChange={handleChangeDailyPercent}
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
               <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
               <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
             </ContainedSelect>
-          </StyledFormControl>
+          </FormControl>
         </Box>
-        <Box display="flex" justifyContent="space-between" mt={4}>
-          <ButtonGroup
-            orientation="vertical"
-            variant="outlined"
-            aria-label="outlined button group"
-            sx={buttonGroupStyle}
-          >
-            {buttons.map((btn, index) => (
-              <Button
-                key={index}
-                onClick={() => handleButtonClick(index)}
-                style={
-                  clickedButtonIndex === index
-                    ? { ...activeButtonStyle, width: btn.width }
-                    : { ...defaultButtonStyle, width: btn.width }
-                }
-              >
-                {btn.label}
-              </Button>
-            ))}
-          </ButtonGroup>
+        <Box
+          display="flex"
+          justifyContent="center"
+          gap={0.5}
+          // flexWrap="wrap"
+          mt={isMdScreen ? "72px" : "32px"}
+        >
+          <Box flexBasis="50%">
+            <ButtonGroup
+              orientation="vertical"
+              variant="outlined"
+              aria-label="outlined button group"
+              sx={buttonGroupStyle}
+            >
+              {buttons.map((btn, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleButtonClick(index)}
+                  style={
+                    clickedButtonIndex === index
+                      ? { ...activeButtonStyle, width: btn.width }
+                      : { ...defaultButtonStyle, width: btn.width }
+                  }
+                >
+                  {btn.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </Box>
+
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              flexBasis: "50%",
             }}
           >
-            {" "}
             <CircleChart
               finalPercentage={percentage}
               gradientColors={gradientColors}
@@ -171,7 +187,7 @@ const OperatorProfile = () => {
           </Box>
         </Box>
         <Box mt={4} display="flex" justifyContent="center">
-          <ViewDetailsButton />
+          <ViewDetailsButton target="/isp-performance" />
         </Box>
       </NewCardContainer>
     </>

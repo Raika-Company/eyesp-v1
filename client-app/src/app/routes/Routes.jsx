@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import React, { lazy } from "react";
 
 const SpeedTest = lazy(() => import("../../pages/speedtest/SpeedTest"));
 const NewDashboard = lazy(() =>
@@ -11,9 +11,6 @@ const ConflictDetailsPage = lazy(() =>
 const NewSpeedTest = lazy(() => import("../../pages/speedtest/NewSpeedTest"));
 const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
 const Information = lazy(() => import("../../pages/information/Information"));
-const OperatorCompare = lazy(() =>
-  import("../../pages/ispCompare/OperatorCompare")
-);
 const ISPPerformance = lazy(() =>
   import("../../pages/ispPerformance/ISPPerformance")
 );
@@ -25,6 +22,8 @@ const MyISP = lazy(() => import("../../pages/myISP/MyISP"));
 const Province = lazy(() => import("../../pages/dashboard/province/Province"));
 
 const Pc = lazy(() => import("../../pages/pc/pc"));
+const ISPSummery = lazy(() => import("../../pages/ispSummary/ISPSummary"));
+const SafePage = lazy(() => import("../../pages/safePage/SafePage"));
 
 export const mainRoutes = [
   {
@@ -81,9 +80,9 @@ export const mainRoutes = [
     robots: "index, follow",
   },
   {
-    path: "/operator-compare",
-    element: <OperatorCompare />,
-    title: "Operator compare | TIC Radar",
+    path: "/isp-summery",
+    element: <ISPSummery />,
+    title: "Operator summery | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
     robots: "index, follow",
@@ -102,6 +101,14 @@ export const mainRoutes = [
     title: "Province Details | TIC Radar",
     description: "Detailed insights into specific province metrics and data.",
     keywords: "province, details, insights, metrics",
+    robots: "noindex, nofollow",
+  },
+  {
+    path: "/safe-page",
+    element: <SafePage />,
+    title: "isp performance | TIC Radar",
+    description: "Review all your past internet speed tests in one place.",
+    keywords: "test history, speed results, past tests",
     robots: "noindex, nofollow",
   },
 ];

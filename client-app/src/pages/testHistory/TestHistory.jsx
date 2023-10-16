@@ -13,7 +13,7 @@ import moment from "moment-jalaali";
 import axios from "axios";
 import NewSwitchBtn from "./newSwitchBtn";
 import HistoryTable from "./HistoryTable";
-
+import YAxisLine from "../../app/common/YAxisLine";
 import {
   Bar,
   BarChart,

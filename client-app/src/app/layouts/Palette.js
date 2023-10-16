@@ -204,6 +204,11 @@ export const lightTheme = createTheme({
     text: {
       main: "#434544",
       blueText: "#0C6087",
+      textBlack: "#2C2C2C",
+      textInfo: "#3E6389",
+      subTitle: "#878787",
+      subHeading: "#434544",
+      chartTitleColor: "#7D93AA",
     },
     background: {
       default: "#E9E9E9",
@@ -264,6 +269,10 @@ export const darkTheme = createTheme({
     text: {
       main: "#fff",
       blueText: "#85CCF4",
+      secondary: "#FFF",
+      textBlack: "#FFF",
+      textInfo: "#FFF",
+      subTitle: "#FFF",
     },
     background: {
       default: "#262626",

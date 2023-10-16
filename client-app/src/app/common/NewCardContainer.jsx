@@ -3,6 +3,12 @@ import { Card, styled } from "@mui/material";
 const NewCardContainer = styled(Card)(({ theme }) => ({
   borderRadius: ".75rem",
   backdropFilter: "blur(35px)",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+
+  // For Firefox to hide scrollbar
+  "& scrollbarWidth": "none",
   background:
     theme.palette.mode === "dark"
       ? "radial-gradient(214.28% 128.84% at 3.96% 11.02%, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 92%) 48.53%, rgb(0 0 0 / 82%) 100%)"

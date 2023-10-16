@@ -64,7 +64,6 @@ const ISPDetail = () => {
       setDisturbance(true);
     }, 500);
   };
-
   const [disturbance, setDisturbance] = useState(false);
   const handleDisturbanceClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -116,7 +115,7 @@ const ISPDetail = () => {
             value={value}
             precision={0.5}
             getLabelText={getLabelText}
-            icon={getIcon(value, "3rem")} // setting the icon size to 2rem as an example
+            icon={getIcon(value, "3rem")}
             emptyIcon={
               <SentimentSatisfiedIcon
                 style={{ fontSize: "3rem", opacity: 0.55 }}
