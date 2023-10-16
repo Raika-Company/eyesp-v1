@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -8,12 +8,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import moment from "moment-jalaali";
 
-import axios from "axios";
 import NewSwitchBtn from "./newSwitchBtn";
 import HistoryTable from "./HistoryTable";
 import YAxisLine from "../../app/common/YAxisLine";
+import XAxisLine from "./XAxisLine";
 import {
   Bar,
   BarChart,
@@ -22,7 +21,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import XAxisLine from "./XAxisLine";
 
 /**
  * Titles and units used for chart visualization.
@@ -36,76 +34,79 @@ const titlesChart = [
 ];
 
 /**
- * A grid item component that displays a chart for test data.
- *
- * @component
+ * Tooltip for bar chart.
+ * @param {Object} props
+ * @param {boolean} props.active - If the tooltip is active.
+ * @param {Array<Object>} props.payload - Data payload for the tooltip.
+ * @returns {JSX.Element|null}
+ */
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        style={{
+          background: "#fff",
+          color: "#333",
+          boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
+          padding: "1rem",
+          textAlign: "center",
+          borderRadius: "1rem",
+          width: "70%",
+        }}
+      >
+        <p>{`دانلود: ${payload[0].value.download} آپلود: ${payload[0].value.upload}`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+/**
+ * Represents a single grid item that displays the chart.
+ * @function
  * @param {Object} props
  * @param {Object} props.theme - Current theme object from MUI.
  * @param {boolean} props.rendered - Indicates whether the component should render the chart.
- * @param {string} props.title - The title of the chart.
- * @param {Array<Object>} props.data - The data to be visualized on the chart.
- * @param {string} props.unit - The measurement unit for the data.
- * @returns {JSX.Element} A grid item containing a chart.
+ * @param {string} props.title - Title of the chart.
+ * @param {Array<Object>} props.data - Data to be visualized on the chart.
+ * @param {string} props.unit - Measurement unit for the data.
+ * @returns {JSX.Element}
  */
-function GridItem({ theme, rendered, title, data, unit }) {
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div
-          style={{
-            background: "#fff",
-            color: "#333",
-            boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
-            padding: "1rem",
-            textAlign: "center",
-            borderRadius: "1rem",
-            width: "70%",
-          }}
-        >
-          <p>{`دانلود: ${payload[0].value.download} آپلود: ${payload[0].value.upload}`}</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
+const GridItem = ({ theme, rendered, title, data, unit }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  // Note: Moved barColors and related logic here for clarity.
   const barColors = ["#00c3ff46", "#6fff004b", "#fe464341", "#00c3ff44"];
   const barColorsTop = ["#00C2FF", "#70FF00", "#FE4543", "#00C2FF"];
-  const TopBorderedBar = (props) => {
-    const { x, y, width, height, fill, index } = props;
-
-    return (
-      <g>
-        <rect x={x} y={y} width={width} height={height} fill={fill} />
-        {/* Shadow for the line */}
-        <line
-          x1={x}
-          y1={y + 5} // Offset for the shadow
-          x2={x + width}
-          y2={y - 5} // Offset for the shadow
-          stroke={barColorsTop[index % barColorsTop.length]}
-          strokeOpacity="0.9" // Makes the shadow slightly transparent
-          strokeWidth="50"
-          filter="url(#blur)"
-        />
-        <line
-          x1={x}
-          y1={y}
-          x2={x + width}
-          y2={y}
-          stroke={barColorsTop[index % barColorsTop.length]}
-          strokeWidth="9"
-        />
-        <defs>
-          <filter id="blur">
-            <feGaussianBlur stdDeviation="4" />
-          </filter>
-        </defs>
-      </g>
-    );
-  };
+  // Separate component for clarity.
+  const TopBorderedBar = ({ x, y, width, height, fill, index }) => (
+    <g>
+      <rect x={x} y={y} width={width} height={height} fill={fill} />
+      <line
+        x1={x}
+        y1={y + 5}
+        x2={x + width}
+        y2={y - 5}
+        stroke={barColorsTop[index % barColorsTop.length]}
+        strokeOpacity="0.9"
+        strokeWidth="50"
+        filter="url(#blur)"
+      />
+      <line
+        x1={x}
+        y1={y}
+        x2={x + width}
+        y2={y}
+        stroke={barColorsTop[index % barColorsTop.length]}
+        strokeWidth="9"
+      />
+      <defs>
+        <filter id="blur">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
+      </defs>
+    </g>
+  );
 
   return (
     <Grid item xs={12} md={6} padding="2rem 0.5rem" mt="1rem">
@@ -169,18 +170,28 @@ function GridItem({ theme, rendered, title, data, unit }) {
             unit={unit}
           />
         </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            left: isSmScreen ? "2.5rem" : "3rem",
+            top: "1.5rem",
+          }}
+        >
+          <YAxisLine
+            max={Math.max(...data.map((line) => line.value))}
+            unit={unit}
+          />
+        </Box>
       </Box>
     </Grid>
   );
-}
+};
 
 /**
  * Main component that provides a UI for viewing test history and corresponding charts.
- *
- * @component
  * @param {Object} props
  * @param {boolean} props.openNav - Indicates if the navigation menu is open.
- * @returns {JSX.Element} A card component displaying test history and charts.
+ * @returns {JSX.Element}
  */
 const NewTestHistory = ({ openNav }) => {
   const [tableData, setTableData] = useState([]);
