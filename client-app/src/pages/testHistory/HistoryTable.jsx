@@ -69,68 +69,6 @@ const createData = (
 });
 
 /**
- * Sample data array for the table. Each item represents a row.
- * @constant {Array<Object>}
- */
-const rowsData = [
-  createData(
-    1,
-    "12:24:45 PM",
-    "27 مرداد",
-    "همراه اول",
-    "امام خمینی",
-    "فوری",
-    15,
-    12,
-    25
-  ),
-  createData(
-    2,
-    "13:25:56 PM",
-    "14 مرداد",
-    "زیتل",
-    "امام خمینی",
-    "فوری",
-    15,
-    12,
-    25
-  ),
-  createData(
-    3,
-    "14:14:25 PM",
-    "4 مرداد",
-    "ایرانسل",
-    "امام خمینی",
-    "فوری",
-    15,
-    12,
-    25
-  ),
-  createData(
-    4,
-    "16:54:22 PM",
-    "22 تير",
-    "مبین نت",
-    "امام خمینی",
-    "فوری",
-    15,
-    12,
-    25
-  ),
-  createData(
-    5,
-    "12:24:45 PM",
-    "22 تير",
-    "مبین نت",
-    "امام خمینی",
-    "فوری",
-    15,
-    12,
-    25
-  ),
-];
-
-/**
  * Styled component representing each row in the table.
  * @constant
  */
@@ -145,7 +83,7 @@ const RowBox = styled(Box)(({ theme }) => ({
     flex: 1,
     fontFamily: "PeydaLight",
   },
-  "& > *:first-child": {
+  "& > *:nth-of-type(1)": {
     flex: 0.2,
   },
 }));
@@ -179,6 +117,10 @@ const cellHeaders = [
  */
 
 const HistoryTable = () => {
+  const localStorageData = JSON.parse(
+    localStorage.getItem("testResults") || "[]"
+  );
+  const reversedData = [...localStorageData].reverse();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const headerBackground = isDark ? "#434544" : "#C6C6C6";
@@ -214,7 +156,7 @@ const HistoryTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead
             sx={{
-              ".css-2s229y-MuiTableCell-root,.css-lt8975-MuiTableCell-root, .css-167oed0-MuiTableCell-root,.css-o4v5rt-MuiTableCell-root":
+              ".css-2s229y-MuiTableCell-root,.css-lt8975-MuiTableCell-root, .css-167oed0-MuiTableCell-root,.css-o4v5rt-MuiTableCell-root,.css-gsxlzn-MuiTableCell-root,.css-10kadzj-MuiTableCell-root":
                 { border: "none" },
             }}
           >
@@ -236,9 +178,9 @@ const HistoryTable = () => {
             </RowBox>
           </TableHead>
           <TableBody>
-            {rowsData.map((row) => (
+            {reversedData.map((row, index) => (
               <RowBox
-                key={row.id}
+                key={index}
                 sx={{
                   "td, th": { border: 0 },
                   background: rowBackground,
@@ -254,13 +196,13 @@ const HistoryTable = () => {
                       flexDirection: "column",
                     }}
                   >
-                    <span>{row.testhour}</span>
-                    <span>{row.TestHistory}</span>
+                    <span>{row.date}</span>
+                    <span>{row.time}</span>
                   </Box>
                 </TableCell>
                 <TableCell align="center">{row.operator}</TableCell>
                 <TableCell align="center">{row.server}</TableCell>
-                <TableCell align="center">{row.TestType}</TableCell>
+                <TableCell align="center">{row.testType}</TableCell>
                 <TableCell align="center">{row.download}</TableCell>
                 <TableCell align="center">{row.upload}</TableCell>
                 <TableCell align="center">{row.ping}</TableCell>
@@ -274,7 +216,7 @@ const HistoryTable = () => {
                             onClick={(e) => handleRadioClick(e, row.id)}
                             checked={selectedValues.includes(String(row.id))}
                             disabled={
-                              selectedValues.length >= 3 &&
+                              selectedValues.length >= 5 &&
                               !selectedValues.includes(String(row.id))
                             }
                           />

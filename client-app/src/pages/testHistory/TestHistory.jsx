@@ -25,11 +25,6 @@ import {
 import XAxisLine from "./XAxisLine";
 
 /**
- * Constants
- */
-const TEST_RESULTS = "testResults";
-
-/**
  * Titles and units used for chart visualization.
  * @typedef {Object} TitleChart
  * @property {string} title - The display name of the chart.
@@ -39,66 +34,6 @@ const titlesChart = [
   { title: "سرعت دانلود", unit: "Mb/s" },
   { title: "سرعت آپلود", unit: "Mb/s" },
 ];
-
-/**
- * Categorizes an array of tests into different time intervals: last 24 hours, last week, last month, and older.
- *
- * @function
- * @param {Array} tests - List of tests each containing an `englishDate` field.
- * @returns {Object} Object containing categorized tests.
- */
-const categorizeTests = (tests) => {
-  const now = moment();
-  const categories = {
-    last24Hours: [],
-    lastWeek: [],
-    lastMonth: [],
-    older: [],
-  };
-
-  tests.forEach((test) => {
-    const testDate = moment(test.englishDate, "jYYYY/jM/jD");
-    const diffDays = now.diff(testDate, "days");
-
-    if (diffDays < 1) {
-      categories.last24Hours.push(test);
-    } else if (diffDays < 7) {
-      categories.lastWeek.push(test);
-    } else if (diffDays < 30) {
-      categories.lastMonth.push(test);
-    } else {
-      categories.older.push(test);
-    }
-  });
-
-  categories.last24Hours.sort(
-    (a, b) => new Date(a.englishDate) - new Date(b.englishDate)
-  );
-
-  return categories;
-};
-
-/**
- * Generates an array of random chart data.
- *
- * @function
- * @param {number} numberOfDataPoints - The desired length of the data array.
- * @returns {Array<Object>} Array containing randomly generated chart data.
- */
-function generateRandomChartData(numberOfDataPoints) {
-  const data = [];
-
-  for (let i = 0; i < numberOfDataPoints; i++) {
-    data.push({
-      date: `2023-${Math.ceil(Math.random() * 12)}-${Math.ceil(
-        Math.random() * 28
-      )}`,
-      value: Math.floor(Math.random() * 40),
-    });
-  }
-
-  return data;
-}
 
 /**
  * A grid item component that displays a chart for test data.
@@ -113,7 +48,7 @@ function generateRandomChartData(numberOfDataPoints) {
  * @returns {JSX.Element} A grid item containing a chart.
  */
 function GridItem({ theme, rendered, title, data, unit }) {
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
         <div
@@ -127,17 +62,17 @@ function GridItem({ theme, rendered, title, data, unit }) {
             width: "70%",
           }}
         >
-          <p>دانلود:{`${label} آپلود:${payload[0].value}`}</p>
+          <p>{`دانلود: ${payload[0].value.download} آپلود: ${payload[0].value.upload}`}</p>
         </div>
       );
     }
 
     return null;
   };
-  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const barColorsTop = ["#00C2FF", "#70FF00", "#FE4543", "#00C2FF"];
-  const barColors = ["#00c3ff46", "#6fff004b", "#fe464341", "#00c3ff44"];
 
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const barColors = ["#00c3ff46", "#6fff004b", "#fe464341", "#00c3ff44"];
+  const barColorsTop = ["#00C2FF", "#70FF00", "#FE4543", "#00C2FF"];
   const TopBorderedBar = (props) => {
     const { x, y, width, height, fill, index } = props;
 
@@ -147,9 +82,9 @@ function GridItem({ theme, rendered, title, data, unit }) {
         {/* Shadow for the line */}
         <line
           x1={x}
-          y1={y + 6} // Offset for the shadow
+          y1={y + 5} // Offset for the shadow
           x2={x + width}
-          y2={y - 6} // Offset for the shadow
+          y2={y - 5} // Offset for the shadow
           stroke={barColorsTop[index % barColorsTop.length]}
           strokeOpacity="0.9" // Makes the shadow slightly transparent
           strokeWidth="50"
@@ -234,18 +169,6 @@ function GridItem({ theme, rendered, title, data, unit }) {
             unit={unit}
           />
         </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            left: isSmScreen ? "2.5rem" : "3rem",
-            top: "1.5rem",
-          }}
-        >
-          <YAxisLine
-            max={Math.max(...data.map((line) => line.value))}
-            unit={unit}
-          />
-        </Box>
       </Box>
     </Grid>
   );
@@ -260,33 +183,18 @@ function GridItem({ theme, rendered, title, data, unit }) {
  * @returns {JSX.Element} A card component displaying test history and charts.
  */
 const NewTestHistory = ({ openNav }) => {
+  const [tableData, setTableData] = useState([]);
+
   const theme = useTheme();
   const navigate = useNavigate();
-  const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [rendered, setRendered] = useState(false);
-  const [currentChartData, setCurrentChartData] = useState([]);
-  const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const [randomChartData1, setRandomChartData1] = useState(
-    generateRandomChartData(4)
-  );
-  const [randomChartData2, setRandomChartData2] = useState(
-    generateRandomChartData(4)
-  );
 
-  const fetchChartData = async () => {
-    try {
-      const { data } = await axios.get("/data/chartData.json");
-      setIspData(data);
-      const defaultISPData = data.find((item) => item.id === "سرعت دانلود");
-      if (defaultISPData) {
-        setCurrentChartData(defaultISPData);
-        setRandomChartData1(generateRandomData());
-        setRandomChartData2(generateRandomData());
-      }
-    } catch (error) {
-      console.log("خطا در بارگذاری اطلاعات", error);
-    }
-  };
+  useEffect(() => {
+    const localStorageData = JSON.parse(
+      localStorage.getItem("testResults") || "[]"
+    );
+    setTableData(localStorageData);
+  }, []);
 
   useEffect(() => {
     setRendered(true);
@@ -298,26 +206,6 @@ const NewTestHistory = ({ openNav }) => {
 
   const isMD = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const [testHistory, setTestHistory] = useState({
-    last24Hours: [],
-    lastWeek: [],
-    lastMonth: [],
-    older: [],
-  });
-
-  const updateTestHistory = useCallback(() => {
-    const existingResults = JSON.parse(
-      localStorage.getItem(TEST_RESULTS) || "[]"
-    );
-    setTestHistory(categorizeTests(existingResults));
-  }, []);
-
-  useEffect(() => {
-    fetchChartData();
-    setRendered(true);
-    updateTestHistory();
-  }, [updateTestHistory]);
 
   return (
     <Card
@@ -374,13 +262,9 @@ const NewTestHistory = ({ openNav }) => {
             rendered={rendered}
             title={line.title}
             unit={line.unit}
-            data={
-              index === 0
-                ? randomChartData1
-                : index === 1
-                ? randomChartData2
-                : ""
-            }
+            data={tableData.map((row) => ({
+              value: { download: row.download, upload: row.upload },
+            }))}
           />
         ))}
       </Grid>
