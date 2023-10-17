@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -55,7 +56,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ProvinceDetail = () => {
+const ProvinceAndOperatorDetail = () => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -74,9 +75,11 @@ const ProvinceDetail = () => {
   const [hover, setHover] = React.useState(-1);
 
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [openFeedBackDialog, setOpenFeedBackDialog] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("مشخصات استان"); // initialize to the first button
 
   const handleClickOpenFeedbackDialog = () => {
     setOpenFeedBackDialog(true);
@@ -99,15 +102,52 @@ const ProvinceDetail = () => {
             flexBasis: isMdScreen ? "100%" : "50%",
           }}
         >
-          <Typography
-            mt={2}
-            variant="h1"
-            component="h2"
-            color="text.textBlack"
-            gutterBottom
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: backgroundColor,
+              padding: "1rem",
+              borderRadius: "1rem",
+            }}
           >
-            مشخصات اپراتور{" "}
-          </Typography>
+            <Button
+              variant="text"
+              onClick={() => setSelectedButton("مشخصات استان")}
+              sx={{
+                color:
+                  selectedButton === "مشخصات استان"
+                    ? theme.palette.text.info
+                    : isDark
+                    ? "white"
+                    : "black",
+              }}
+            >
+              مشخصات استان
+            </Button>{" "}
+            <Box
+              sx={{
+                width: "2px",
+                height: "25px",
+                background: isDark ? "#FFF" : "#000",
+              }}
+            />
+            <Button
+              variant="text"
+              onClick={() => setSelectedButton("مشخصات اپراتور")}
+              sx={{
+                color:
+                  selectedButton === "مشخصات اپراتور"
+                    ? theme.palette.text.info
+                    : isDark
+                    ? "white"
+                    : "black",
+              }}
+            >
+              مشخصات اپراتور
+            </Button>{" "}
+          </Box>
           <Box
             mt="2.13rem"
             display="flex"
@@ -268,4 +308,4 @@ const ProvinceDetail = () => {
   );
 };
 
-export default ProvinceDetail;
+export default ProvinceAndOperatorDetail;
