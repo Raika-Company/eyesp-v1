@@ -6,15 +6,15 @@ import PhLink from "../../app/assets/image/imgLogoSocialM/ph_link.svg";
 import Linkedin from "../../app/assets/image/imgLogoSocialM/linkedin.svg";
 import Facebook from "../../app/assets/image/imgLogoSocialM/facebook.svg";
 import SimpleIcon from "../../app/assets/image/imgLogoSocialM/simple-icon.svg";
-import React, { useState, useEffect } from "react";
 
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Stack, Typography, useTheme} from "@mui/material";
 import Fade from "@mui/material/Fade";
-import { ContainedButton } from "../../app/common/ContainedButton";
+import {ContainedButton} from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
 // import ViewDetailsButton from "../../app/common/ViewDetailsButton";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import IconLink from "./IconLInk";
+import RatingComponent from "./Rating";
 
 const SOCIAL_ICONS = [
   {
@@ -44,7 +44,15 @@ const SOCIAL_ICONS = [
   },
 ];
 
-const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
+const FloatingResult = ({
+  download,
+  upload,
+  latency,
+  ip,
+  server,
+  testType,
+  isTestEnds,
+}) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -62,7 +70,7 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
 
   return (
     <>
-      <Typography sx={{ display: { md: "none" } }}>
+      <Typography sx={{display: {md: "none"}}}>
         برای انجام تست روی دکمه شروع کلیک کنید.{" "}
       </Typography>
       <Box
@@ -70,7 +78,7 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
         width="100%"
         marginY={1}
         sx={{
-          display: { xs: "flex", md: "none" },
+          display: {xs: "flex", md: "none"},
           justifyContent: "space-between",
           alignItems: "center",
         }}
@@ -112,7 +120,7 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
       <Box
         borderRadius="2rem"
         sx={{
-          display: { xs: "none", md: "flex" },
+          display: {xs: "none", md: "flex"},
           flexDirection: "column",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -152,11 +160,6 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
         {!isTestEnds && (
           <Typography>برای انجام تست روی دکمه شروع کلیک کنید. </Typography>
         )}
-        {/* {!isTestEnds && (
-          <Box alignSelf="flex-end" marginLeft="2rem">
-            <ViewDetailsButton target="/history" />
-          </Box>
-        )} */}
         {isTestEnds && (
           <Box
             sx={{
@@ -167,11 +170,11 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
             }}
           >
             <Typography
-              sx={{ color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E" }}
+              sx={{color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E"}}
             >
               به اشتراک بگذارید:
             </Typography>
-            {SOCIAL_ICONS.map(({ iconPath, name, link }) => (
+            {SOCIAL_ICONS.map(({iconPath, name, link}) => (
               <IconLink iconPath={iconPath} key={name} link={link} />
             ))}
           </Box>
@@ -202,31 +205,37 @@ const FloatingResult = ({ download, upload, latency, isTestEnds }) => {
         {isTestEnds && (
           <Box
             sx={{
-              width: "40%",
               display: "flex",
+              flexDirection: "column",
               flexWrap: "wrap",
               justifyContent: "flex-end",
+              alignItems: "center",
             }}
           >
             {["آدرسIP", "سرور", "نوع تست"].map((text, index) => (
-              <Typography key={index} variant="h4" color="text.main">
-                {text}:
+              <Stack key={index} direction="row">
+                <Typography variant="h4" color="text.main">
+                  {text}:
+                </Typography>
                 <Typography
                   component="span"
                   variant="h5"
                   color="text"
                   marginX="0.5rem"
                 >
-                  {text === "آدرس"
+                  {text === "آدرسIP"
                     ? ip === ""
                       ? "در حال پیدا کردن ip"
                       : ip
-                    : server === ""
-                    ? "در حال انتخاب سرور"
-                    : "تهران - زیرساخت"}
+                    : text === "سرور"
+                    ? server === ""
+                      ? "در حال انتخاب سرور"
+                      : "تهران - زیرساخت"
+                    : testType}
                 </Typography>
-              </Typography>
+              </Stack>
             ))}
+            <RatingComponent />
           </Box>
         )}
       </Box>

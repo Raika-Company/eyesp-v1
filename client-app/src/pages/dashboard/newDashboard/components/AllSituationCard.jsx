@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import {Link} from "react-router-dom";
-import CircleChart from "./CircleChart";
+import CircleChart from "../../../../app/common/CircleChart";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 

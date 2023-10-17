@@ -1,6 +1,6 @@
-import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
-import React from "react";
+import {useTheme} from "@emotion/react";
+import {Box} from "@mui/material";
+import React, {useState} from "react";
 /**
  * SwitchBtn Component.
  *
@@ -14,8 +14,9 @@ import React from "react";
  * @param {Function} props.onChange - Callback to be called when the switch state changes.
  * @returns {JSX.Element} The rendered SwitchBtn component.
  */
-const SwitchBtn = ({ textOn, textOff, onChange }) => {
+const SwitchBtn = ({textOn, textOff, onChange}) => {
   const theme = useTheme();
+  const [on, setOn] = useState(true);
 
   return (
     <Box
@@ -96,7 +97,10 @@ const SwitchBtn = ({ textOn, textOff, onChange }) => {
         <input
           type="checkbox"
           name="color_mode"
-          onChange={onChange}
+          onChange={() => {
+            onChange(on ? textOff : textOn);
+            setOn((prev) => !prev);
+          }}
           id="color_mode"
           value="1"
         />
@@ -117,7 +121,7 @@ const SwitchBtn = ({ textOn, textOff, onChange }) => {
             left: "50%",
             transform: "translate(-50%, -50%)",
           }}
-        ></div>
+        />
       </Box>
     </Box>
   );

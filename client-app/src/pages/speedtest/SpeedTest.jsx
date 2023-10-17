@@ -16,6 +16,7 @@ import {
   DialogContentText,
   Radio,
   Card,
+  Stack,
 } from "@mui/material";
 import {useEffect, useState} from "react";
 import moment from "moment-jalaali";
@@ -64,29 +65,38 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddressAndServer = ({ip, server}) => (
-  <Box>
-    {["آدرسIP", "سرور"].map((text, index) => (
-      <Typography key={index} variant="h4" color="text.main">
-        {text}:
+const AddressAndServer = ({ip, server}) => {
+  return (
+    <Box>
+      <Stack direction="row">
+        <Typography variant="h4" color="text.main">
+          آدرس IP:
+        </Typography>
         <Typography
           component="span"
           variant="h5"
           color="text.main"
           marginX="0.5rem"
         >
-          {text === "آدرس"
-            ? ip === ""
-              ? "در حال پیدا کردن ip"
-              : ip
-            : server === ""
-            ? "در حال انتخاب سرور"
-            : "تهران - زیرساخت"}
+          {ip === "" ? "در حال پیدا کردن ip" : ip}
         </Typography>
-      </Typography>
-    ))}
-  </Box>
-);
+      </Stack>
+      <Stack direction="row">
+        <Typography variant="h4" color="text.main">
+          سرور:
+          <Typography
+            component="span"
+            variant="h5"
+            color="text.main"
+            marginX="0.5rem"
+          >
+            {server === "" ? "در حال انتخاب سرور" : "تهران - زیرساخت"}
+          </Typography>
+        </Typography>
+      </Stack>
+    </Box>
+  );
+};
 
 const SpeedTest = () => {
   const theme = useTheme();
@@ -104,6 +114,7 @@ const SpeedTest = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [upload, setUpload] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [testType, setTestType] = useState("تست دقیق");
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
@@ -169,7 +180,7 @@ const SpeedTest = () => {
     }
   }, [isFetchingServers, selectBestServer, selectedServerURL]);
 
-  const PING_TIMES = 10;
+  const PING_TIMES = 20;
 
   useEffect(() => {
     if (selectedServerURL === "") {
@@ -212,13 +223,13 @@ const SpeedTest = () => {
   };
 
   const handleButtonClick = () => {
-    setAnimate(true);
     if (!isServerSelected) return;
+    setAnimate(true);
     setTimeout(() => {
       setIsGoButtonVisible(false);
       startPingTest();
       handleStart();
-    }, 1000);
+    }, 400);
   };
 
   let flag = true;
@@ -383,7 +394,7 @@ const SpeedTest = () => {
                   borderRadius: "50%",
                   width: "100%",
                   height: "100%",
-                  animation: animate && `${wipe} 1s forwards`,
+                  animation: animate && `${wipe} .5s forwards`,
                 }}
               >
                 <Typography
@@ -400,7 +411,7 @@ const SpeedTest = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
-                  animation: `${fadeIn} 1s ease-in-out, ${wipeOut} 1s linear`,
+                  animation: `${fadeIn} 1s ease-in-out, ${wipeOut} .5s linear`,
                   height: "100%",
                   width: "100%",
                 }}
@@ -436,7 +447,11 @@ const SpeedTest = () => {
             )}
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
-            <SwitchBtn textOn="تست دقیق" textOff="تست فوری" />
+            <SwitchBtn
+              textOn="تست دقیق"
+              textOff="تست فوری"
+              onChange={setTestType}
+            />
             <Typography
               sx={{
                 display: "flex",
@@ -466,6 +481,9 @@ const SpeedTest = () => {
           <FloatingResult
             download={download}
             upload={upload}
+            ip={clientIp}
+            testType={testType}
+            server={selectedServerURL}
             latency={latency}
             isTestEnds={isTestEnds}
           />
@@ -557,7 +575,6 @@ const SpeedTest = () => {
           </DialogContent>
         </Dialog>
       </Card>
-      {/* <AnimatesSpeedTestNumber value={download || 0} unit="Mbs" /> */}
     </>
   );
 };

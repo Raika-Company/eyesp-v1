@@ -29,7 +29,7 @@ import CustomSnackbar from "./CustomSnackbar";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
-import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
+import CircleChart from "./CircleChart";
 import AxisIsp from "../assets/image/AxisIsp.svg";
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ReferenceLine } from "recharts";
 

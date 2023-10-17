@@ -52,6 +52,16 @@ class RstResult extends Model
         ]);
     }
 
+    public static function recent($isp = null, $countInMinute = 15)
+    {
+        $res = self::where('date', now()->toDateString())
+            ->where('time', '>=', now()->subMinutes($countInMinute)->toTimeString());
+        if($isp) {
+            $res = $res->where('isp', $isp);
+        }
+        return $res->get();
+    }
+
     public static function hourly($isp = null, $hours)
     {
         $res = self::where('date', now()->toDateString())
