@@ -108,13 +108,22 @@ const titlesChart = [
   },
   {
     title: " سرعت اپلود",
+    unit: "%",
+  },
+  {
+    title: " پینگ",
     unit: "Mb/s",
   },
+  {
+    title: "پکت لاس",
+    unit: "Ms",
+  },
 ];
-
 const chartColors = [
   {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
   {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
+  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
+  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
 ];
 
 const mockDataForPastPerformance = [
@@ -595,7 +604,7 @@ const ISPSummary = () => {
               title={line.title}
               unit={line.unit}
               color={chartColors[index]}
-              data={currentChartData}
+              data={generateRandomData()}
             />
           ))}
         </CardContainer>

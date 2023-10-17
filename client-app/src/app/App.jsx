@@ -2,13 +2,13 @@
  * @file Represents the main entry point of the application.
  */
 
-import { Suspense, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
-import { Box, Container, CssBaseline, useMediaQuery } from "@mui/material";
+import {Suspense, useState} from "react";
+import {Route, Routes, useLocation} from "react-router-dom";
+import {ThemeProvider} from "@mui/material/styles";
+import {Box, Container, CssBaseline, useMediaQuery} from "@mui/material";
 import NewNavbar from "./layouts/Navbar";
-import { lightTheme, darkTheme } from "./layouts/Palette";
-import { mainRoutes, historyRoute } from "./routes/Routes";
+import {lightTheme, darkTheme} from "./layouts/Palette";
+import {mainRoutes, historyRoute} from "./routes/Routes";
 import "./App.css";
 import NewLogo from "./common/NewLogo";
 import NavSection from "./layouts/NavSection";
@@ -26,7 +26,7 @@ import LoadingSpinner from "./common/LoadingSpinner";
  */
 function App() {
   const [openNav, setOpenNav] = useState(false);
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
 
   const toggleOpenMenu = () => {
     setOpenNav(!openNav);
@@ -52,6 +52,13 @@ function App() {
   const currentThemeMode = theme === lightTheme ? "light" : "dark";
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
+  const handleClick = (e) => {
+    const iranBordersRect = document
+      .getElementById("iran_borders_svg")
+      .getBoundingClientRect();
+    // console.log(iranBordersRect.left, e.clientX);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Suspense fallback={<LoadingSpinner />}>
@@ -61,6 +68,7 @@ function App() {
             path="/*"
             element={
               <Container
+                onClick={handleClick}
                 maxWidth="xl"
                 sx={{
                   overflow: isMdUp ? "none" : "hidden",
