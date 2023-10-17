@@ -40,6 +40,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
         }}
       >
         <Typography
+          mt={2}
           variant="h1"
           component="h2"
           color="text.textBlack"

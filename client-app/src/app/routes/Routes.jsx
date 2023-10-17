@@ -24,6 +24,13 @@ const Pc = lazy(() => import("../../pages/pc/pc"));
 const ISPSummery = lazy(() => import("../../pages/ispSummary/ISPSummary"));
 const SafePage = lazy(() => import("../../pages/safePage/SafePage"));
 
+const ProvinceProfile = lazy(() =>
+  import("../../pages/provinceProfile/ProvinceProfile")
+);
+const ProvinceAndOperatorProfile = lazy(() =>
+  import("../../pages/provinceAndOperatorProfile/ProvinceAndOperatorProfile")
+);
+
 export const mainRoutes = [
   {
     path: "/",
@@ -105,6 +112,22 @@ export const mainRoutes = [
   {
     path: "/safe-page",
     element: <SafePage />,
+    title: "isp performance | TIC Radar",
+    description: "Review all your past internet speed tests in one place.",
+    keywords: "test history, speed results, past tests",
+    robots: "noindex, nofollow",
+  },
+  {
+    path: "/province-profile",
+    element: <ProvinceProfile />,
+    title: "isp performance | TIC Radar",
+    description: "Review all your past internet speed tests in one place.",
+    keywords: "test history, speed results, past tests",
+    robots: "noindex, nofollow",
+  },
+  {
+    path: "/province-and-operator-profile",
+    element: <ProvinceAndOperatorProfile />,
     title: "isp performance | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
     keywords: "test history, speed results, past tests",
