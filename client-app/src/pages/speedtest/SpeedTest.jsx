@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import { forwardRef } from "react";
 import {
   Box,
   Typography,
@@ -18,18 +18,16 @@ import {
   Card,
   Stack,
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
-import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
-import elipse from "../../app/assets/image/elipse.svg";
-import elipseDark from "../../app/assets/image/elipse-dark.svg";
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
-import {styled} from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
-import {STATUS_MAP} from "./constant";
+import { STATUS_MAP } from "./constant";
 
 import io from "socket.io-client";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
@@ -37,10 +35,13 @@ import useFetchServers from "../../app/hooks/useFetchServers";
 import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
-import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
+import CircularProgressBar from "./CircularProgress";
+
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -58,14 +59,14 @@ const wipeOut = keyframes`
 `;
 
 const mbpsToAmount = (s) => {
-  return 1 - 1 / Math.pow(1.3, Math.sqrt(s));
+  return (1 - 1 / Math.pow(1.3, Math.sqrt(s))) * 100;
 };
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddressAndServer = ({ip, server}) => {
+const AddressAndServer = ({ ip, server }) => {
   return (
     <Box>
       <Stack direction="row">
@@ -118,22 +119,11 @@ const SpeedTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const { isFetchingServers, selectBestServer } = useFetchServers();
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [isServerSelected, setIsServerSelected] = useState(false);
   const [openSelectServer, setOpenSelectServer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const HtmlTooltip = styled(({className, ...props}) => (
-    <Tooltip {...props} classes={{popper: className}} />
-  ))(({theme}) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#313131",
-      color: "#fff",
-      maxWidth: 145,
-      border: "1px solid #dadde9",
-    },
-  }));
 
   useEffect(() => {
     axios
@@ -344,7 +334,7 @@ const SpeedTest = () => {
             component={Link}
             to="/history"
             variant="h3"
-            sx={{color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E"}}
+            sx={{ color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E" }}
             startIcon={
               <HistoryIcon
                 sx={{
@@ -406,43 +396,55 @@ const SpeedTest = () => {
               </Button>
             ) : (
               <Box
+                width={isMdScreen ? "25vmin" : "55vmin"}
+                height={isMdScreen ? "25vmin" : "55vmin"}
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "relative",
                   animation: `${fadeIn} 1s ease-in-out, ${wipeOut} .5s linear`,
-                  height: "100%",
-                  width: "100%",
                 }}
               >
-                <img
-                  src={theme.palette.mode === "dark" ? elipseDark : elipse}
-                  alt="speed-meter"
-                  style={{maxWidth: "100%", height: "100%", zIndex: 1}}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    zIndex: 2,
-                  }}
+                <CircularProgressBar
+                  percentage={
+                    isDl ? mbpsToAmount(download) : mbpsToAmount(upload)
+                  }
                 >
-                  <DrawMeterAnimate
-                    bk={
-                      /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                        ? "#45628A"
-                        : "#1B70EE1C"
-                    }
-                    fg={"#1B70EE1C"}
-                    progress={isDl ? downloadProgress : uploadProgress}
-                    mbps={isDl ? download : upload}
-                    isDl={isDl}
-                    theme="light"
-                  />
-                </div>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography
+                      color="primary"
+                      variant="boxValue"
+                      component="p"
+                    >
+                      {isDl ? download : upload}
+                    </Typography>
+                    <Box
+                      display="flex"
+                      justifyContent="space-evenly"
+                      width="80%"
+                    >
+                      <FileUploadOutlinedIcon
+                        color={!isDl ? "primary" : "primary.light"}
+                        fontSize="large"
+                      />
+                      <Typography>Mb/s</Typography>
+                      <FileDownloadOutlinedIcon
+                        color={isDl ? "primary" : "primary.light"}
+                        fontSize="large"
+                      />
+                    </Box>
+                  </Box>
+                </CircularProgressBar>
               </Box>
             )}
           </Box>
@@ -461,21 +463,10 @@ const SpeedTest = () => {
               variant="h5"
               color="text.main"
             >
-              <HtmlTooltip
-                title={
-                  <>
-                    <Typography color="inherit">تست فوری با یک</Typography>
-                    <Typography>
-                      {"اتصال و تست دقیق"} {"با چند اتصال انجام می شود."}
-                    </Typography>
-                  </>
-                }
-              >
-                نوع تست
-                <IconButton>
-                  <InfoOutlinedIcon sx={{fontSize: "1rem"}} />
-                </IconButton>
-              </HtmlTooltip>
+              نوع تست
+              <IconButton>
+                <InfoOutlinedIcon sx={{ fontSize: "1rem" }} />
+              </IconButton>
             </Typography>
           </Box>
           <FloatingResult
@@ -529,13 +520,17 @@ const SpeedTest = () => {
                 }}
               >
                 <InputBase
-                  sx={{mr: 1}}
+                  sx={{ mr: 1 }}
                   placeholder="جست و جو"
-                  inputProps={{"aria-label": "جست و جو"}}
+                  inputProps={{ "aria-label": "جست و جو" }}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <IconButton type="button" sx={{p: "10px"}} aria-label="search">
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -543,7 +538,7 @@ const SpeedTest = () => {
             <Button
               color="text"
               onClick={handleCloseSelectServer}
-              endIcon={<CloseIcon sx={{marginX: "0.5rem"}} />}
+              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
             >
               بستن
             </Button>
