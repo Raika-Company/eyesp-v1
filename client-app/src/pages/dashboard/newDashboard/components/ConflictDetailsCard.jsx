@@ -1,8 +1,8 @@
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import Danger from "../../../../app/assets/image/danger.svg";
 import DangerDark from "../../../../app/assets/image/error_dark.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
@@ -28,21 +28,27 @@ const conflictDetailsData = [
   {
     id: 1,
     title: "موراد اختلاف",
-    values: ["افزایش پینگ", "کاهش میانگین آپلود و دانلود"],
+    values: ["افزایش پینگ اپراتور  های وب در تهران"],
+    address:
+    "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
   },
   {
     id: 2,
     title: "استان‌ها",
-    values: ["تهران", "فارس", "خراسان رضوی", "خوزستان"],
+    values: ["کاهش سرعت دانلود در اپراتور زیتل"],
+    address:
+      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
   },
   {
     id: 3,
     title: "اپراتور‌ها",
-    values: ["ایرانسل", "همراه‌اول", "رایتل", "آسیاتک", "شاتل"],
+    values: ["اختلال و قطعی اینترنت اپراتور مخابرات در شهر تهران"],
+    address:
+      "http://localhost:3000/chat/get-issue-stats/info/Mokhaberat/packet_loss/Tehran",
   },
 ];
 
-const ConflictDetailsCard = ({onOpenModal}) => {
+const ConflictDetailsCard = ({ onOpenModal }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   return (
@@ -69,7 +75,7 @@ const ConflictDetailsCard = ({onOpenModal}) => {
         }}
       >
         اختلال‌های موجود{" "}
-        <span style={{color: "#FE4543", fontSize: "2rem"}}>24</span>
+        <span style={{ color: "#FE4543", fontSize: "2rem" }}>24</span>
       </Typography>
 
       <Box
@@ -78,7 +84,7 @@ const ConflictDetailsCard = ({onOpenModal}) => {
           gap: "1rem",
         }}
       >
-        {conflictData.map(({id, value, title}) => (
+        {conflictData.map(({ id, value, title }) => (
           <Square
             value={value}
             title={title}
@@ -115,7 +121,7 @@ const ConflictDetailsCard = ({onOpenModal}) => {
           gap: "1rem",
         }}
       >
-        {conflictDetailsData.map(({id, title, values}) => (
+        {conflictDetailsData.map(({ id, title, values, address }) => (
           <Box
             sx={{
               display: "flex",
@@ -124,10 +130,9 @@ const ConflictDetailsCard = ({onOpenModal}) => {
             }}
             key={id}
           >
-            <Typography>{title}</Typography>
             <Box
               sx={{
-                minWidth: "80%",
+                minWidth: "100%",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -137,11 +142,11 @@ const ConflictDetailsCard = ({onOpenModal}) => {
                 borderRadius: ".8rem",
               }}
             >
-              <Typography>{values.join("،")}، و...</Typography>
+              <Typography>{values}</Typography>
               <Button
                 variant="text.main"
                 component={Link}
-                to=""
+                to={address}
                 sx={{
                   borderRadius: ".5rem",
                   padding: ".2rem",
@@ -149,7 +154,7 @@ const ConflictDetailsCard = ({onOpenModal}) => {
                   background: isDark ? "#1B1B1B" : "#FFF",
                 }}
               >
-                مشاهده همه
+                کمک از هوش مصنوعی
               </Button>
             </Box>
           </Box>

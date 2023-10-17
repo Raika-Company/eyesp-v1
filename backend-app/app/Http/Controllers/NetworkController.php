@@ -188,6 +188,8 @@ class NetworkController extends Controller
             $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
             $data['clients'] = $ispMetrics->sum('clients');
             $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
+            $data['downloadAverage'] = round($ispMetrics->avg('download_speed_average'), 0);
+            $data['uploadAverage'] = round($ispMetrics->avg('upload_speed_average'), 0);
             $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
             $data['isp'] = collect($isp)
@@ -387,7 +389,7 @@ class NetworkController extends Controller
         }
     }
 
-    public function getIssueStats($type)
+    public function getIssueStats(Request $request, $type)
     {
         $stats = RstDisturbance::latest()->first();
         $description = json_decode($stats->description);
@@ -434,8 +436,15 @@ class NetworkController extends Controller
                 }
                 break;
             case 'info':
-                foreach ($description as $isp => $ispInfos) {
-                    $response[$isp] = $ispInfos;
+                if(isset($request->isp)) {
+                    $isp = $request->isp;
+                    $issue = $request->issue;
+                    $city = $request->city;
+                    $response = $description->$isp->$issue->$city;
+                }else {
+                    foreach ($description as $isp => $ispInfos) {
+                        $response[$isp] = $ispInfos;
+                    }
                 }
         }
 

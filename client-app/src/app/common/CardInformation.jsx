@@ -1,7 +1,7 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 import React from "react";
 
-const CardInformation = ({ title, value, subTitle, subValue, color }) => {
+const CardInformation = ({title, value, subTitle, subValue, color}) => {
   const theme = useTheme();
   return (
     <Box position="relative">
@@ -12,12 +12,19 @@ const CardInformation = ({ title, value, subTitle, subValue, color }) => {
         alignItems="center"
         borderRadius="0.75rem"
         padding="0.81rem"
-        backgroundColor={theme.palette.mode === "dark" ? "#262626" : "transparent"}
+        backgroundColor={
+          theme.palette.mode === "dark" ? "#262626" : "transparent"
+        }
       >
         <Typography variant="button1" component="span" color="text.main">
           {title}
         </Typography>
-        <Typography variant="boxValue" component="span" color="text.main" lineHeight="0">
+        <Typography
+          variant="boxValue"
+          component="span"
+          color="text.main"
+          lineHeight="0"
+        >
           {value}
         </Typography>
       </Box>
@@ -33,8 +40,17 @@ const CardInformation = ({ title, value, subTitle, subValue, color }) => {
         left="1rem"
         bottom="-1.2rem"
       >
-        <Typography variant="subtitle1" component="span">{subTitle}</Typography>
-        <Typography variant="button1" component="span" color={color} lineHeight="0">{subValue}</Typography>
+        <Typography variant="subtitle1" component="span">
+          {subTitle}
+        </Typography>
+        <Typography
+          variant="button1"
+          component="span"
+          color={color}
+          lineHeight="0"
+        >
+          {subValue}
+        </Typography>
       </Box>
     </Box>
   );

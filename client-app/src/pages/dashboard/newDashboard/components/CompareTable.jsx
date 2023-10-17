@@ -100,12 +100,18 @@ const parseNumber = (str) => {
  * @param {Object} props - Component properties.
  * @returns {JSX.Element} The rendered component.
  */
-const CompareTable = ({title, showProvince}) => {
+const CompareTable = ({
+  title,
+  showProvince,
+  showCount,
+  shadow = true,
+  detailsButton = true,
+}) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const [visibleRows, setVisibleRows] = useState(6);
+  const [visibleRows, setVisibleRows] = useState(showCount || 6);
 
   const handleShowMore = () => {
     setVisibleRows((prev) => prev + 2);
@@ -121,9 +127,10 @@ const CompareTable = ({title, showProvince}) => {
         flex: 1,
         padding: "1.75rem",
         width: "22.5%",
-        boxShadow: isDark
-          ? "0px 0px 30px 0px rgba(255, 255, 255, 0.20)"
-          : "0px 0px 30px 0px rgba(0, 0, 0, 0.20)",
+        boxShadow:
+          shadow && isDark
+            ? "0px 0px 30px 0px rgba(255, 255, 255, 0.20)"
+            : "0px 0px 30px 0px rgba(0, 0, 0, 0.20)",
         borderRadius: "1rem",
       }}
     >
@@ -132,7 +139,6 @@ const CompareTable = ({title, showProvince}) => {
           display: "flex",
           justifyContent: isSmScreen ? "center" : "space-between",
           flexWrap: "wrap",
-          marginBottom: "1.4rem",
         }}
       >
         <Typography variant="h1" color="text.textBlack">
@@ -149,7 +155,6 @@ const CompareTable = ({title, showProvince}) => {
           color="text.main"
           sx={{
             textAlign: "center",
-            marginY: "1rem",
             cursor: "pointer",
             width: "100%",
             display: "flex",
@@ -163,7 +168,12 @@ const CompareTable = ({title, showProvince}) => {
         </Typography>
       )}
 
-      <ViewDetailsButton backgroundColor="#0C6087" target="/isp-performance" />
+      {detailsButton && (
+        <ViewDetailsButton
+          backgroundColor="#0C6087"
+          target="/isp-performance"
+        />
+      )}
     </Box>
   );
 };

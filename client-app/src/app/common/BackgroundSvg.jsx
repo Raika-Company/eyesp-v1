@@ -1,8 +1,10 @@
 import {Fragment} from "react";
 import {SvgIcon, styled, useTheme} from "@mui/material";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import provinceCoords from "../../../public/data/provincesCoords.json";
 
 const BackgroundSvg = ({provinces = [], ...props}) => {
+  const navigate = useNavigate();
   const {pathname} = useLocation();
   const theme = useTheme();
   const fillColor = theme.palette.mode === "dark" ? "#3F3F3F" : "#DADADA";
@@ -37,7 +39,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
         top: "0",
         left: "5%",
         position: "fixed",
-        zIndex: "-1",
+        zIndex: pathname === "/dashboard" && "1",
         opacity: pathname === "/dashboard" ? "1" : ".2",
         transition: "opacity .25s linear",
       }}
@@ -1402,8 +1404,8 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
                 cx={province.x}
                 cy={province.y}
                 r="6.5"
-                radial
                 fill="#FE4543"
+                s
               />
               <AnimatedCircle
                 cx={province.x}
@@ -1413,6 +1415,19 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               />
             </Fragment>
           ))}
+        {Object.keys(provinceCoords).map((province, index) => (
+          <circle
+            key={index}
+            cx={provinceCoords[province].x}
+            cy={provinceCoords[province].y}
+            onClick={() => {
+              // TEMPORARY
+              navigate("/province/profile");
+            }}
+            r="35"
+            fill="transparent"
+          />
+        ))}
         <defs>
           <filter
             id="filter0_d_467_4701"
@@ -1477,6 +1492,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             </linearGradient>
             <path
               transform="translate(49, 306)"
+              pointerEvents="none"
               fill={
                 theme.palette.mode === "dark"
                   ? "url(#paint0_radial_467_4701)"
@@ -1867,6 +1883,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
         />
         <path
           fill="#f6f7f7"
+          id="iran_borders_svg"
           fillOpacity={theme.palette.mode === "dark" && ".5"}
           transform="translate(49, 306)"
           d="

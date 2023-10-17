@@ -75,7 +75,7 @@ const HistoryTable = (props) => {
   const onRadioClick = props.onRadioClick;
   const localStorageData = JSON.parse(
     localStorage.getItem("testResults") || "[]"
-  );
+  ).reverse();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const headerBackground = isDark ? "#434544" : "#C6C6C6";

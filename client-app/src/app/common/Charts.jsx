@@ -1,23 +1,14 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
-  Button,
-  SvgIcon,
   Typography,
-  keyframes,
   useMediaQuery,
   Grid,
   useTheme,
-  Card,
-  styled,
   FormControl,
   MenuItem,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import NewCardContainer from "./NewCardContainer";
-import axios from "axios";
 import {
   AreaChart,
   Area,
@@ -29,15 +20,11 @@ import {
 import YAxisLine from "./YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
-import { ContainedSelect } from "./ContainedSelect";
-import {
-  MonthCharts,
-  TodayCharts,
-  WeekCharts,
-  YearCharts,
-} from "../api/dashboard";
+import {ContainedSelect} from "./ContainedSelect";
+import {TodayCharts} from "../api/dashboard";
+import {useLocation} from "react-router-dom";
 
-export const CustomTooltip = ({ active, payload }) => {
+export const CustomTooltip = ({active, payload}) => {
   if (active && payload && payload.length) {
     return (
       <div
@@ -83,17 +70,27 @@ const titlesChart = [
   },
 ];
 const chartColors = [
-  { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
-  { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
-  { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
-  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
+  {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
+  {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
+  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
+  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
 ];
-function GridItem({ theme, rendered, title, data, unit, color }) {
+export function GridItem({
+  theme,
+  rendered,
+  title,
+  data,
+  unit,
+  color,
+  background,
+  handleChange,
+}) {
+  const {pathname} = useLocation();
   const [age, setAge] = useState("در حال حاضر");
   const handleChangeDailyPercent = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
-
+    handleChange();
     // For the sake of debugging, directly set percentages based on options
     if (selectedYear === "در حال حاضر") setPercentage(65);
     else if (selectedYear === "1 روز قبل") setPercentage(75);
@@ -102,6 +99,8 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
   return (
     <NewCardContainer
       sx={{
+        boxShadow: pathname === "/isp-summary" && "none",
+        background: background,
         display: "flex",
         paddingInline: "3%",
         paddingBottom: "2.25rem",
@@ -111,12 +110,8 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
       }}
     >
       <Box display="flex" position="relative" width="92%">
-        <Box sx={{ width: "100%" }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="flex-end"
-          >
+        <Box sx={{width: "100%"}}>
+          <Box display="flex" justifyContent="space-between">
             <Typography
               color="text.main"
               variant="h1"
@@ -125,8 +120,8 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
             >
               {title}
             </Typography>
-            {title === "سرعت دانلود" && (
-              <FormControl sx={{ width: "25%", marginLeft: "3rem" }}>
+            {title === "سرعت دانلود" && pathname === "/my-isp" && (
+              <FormControl sx={{width: "25%", marginLeft: "3rem"}}>
                 <ContainedSelect
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -214,8 +209,8 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
                     <Area
                       type="linear"
                       dataKey="value"
-                      stroke={color.stroke}
-                      fill={`url(#gradientChart${color.stroke})`}
+                      stroke={color && color.stroke}
+                      fill={`url(#gradientChart${color && color.stroke})`}
                       strokeWidth={4}
                       filter="url(#glow)"
                     />
@@ -227,11 +222,11 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           <img
             src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
             alt="xAxis"
-            style={{ width: "100%" }}
+            style={{width: "100%"}}
           />
         </Box>
         <YAxisLine
-          max={Math.max(...data.map((line) => line.value))}
+          // max={Math.max(...data.map((line) => line.value))}
           unit={unit}
         />
       </Box>
@@ -252,30 +247,18 @@ function generateRandomData() {
 }
 const Charts = () => {
   const theme = useTheme();
-  const [ispData, setIspData] = useState([]); // state to store the data from JSON
-
   const [rendered, setRendered] = useState(false);
-  const [currentChartData, setCurrentChartData] = useState({});
-  const [randomChartData1, setRandomChartData1] = useState([]);
-  const [randomChartData2, setRandomChartData2] = useState([]);
-  const [randomChartData3, setRandomChartData3] = useState([]);
-  const [randomChartData4, setRandomChartData4] = useState([]);
+  const [currentChartData, setCurrentChartData] = useState(generateRandomData);
+
+  const handleChangeData = () => {
+    setCurrentChartData(generateRandomData());
+  };
+
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
-    axios
-      .get("/data/chartData.json")
+    TodayCharts()
       .then((response) => {
-        const data = response.data;
-        setIspData(data);
-        const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
-        if (defaultISPData) {
-          setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
-          setRandomChartData1(generateRandomData());
-          setRandomChartData2(generateRandomData());
-          setRandomChartData3(generateRandomData());
-          setRandomChartData4(generateRandomData());
-        }
         console.log(response);
       })
       .catch((error) => {
@@ -298,25 +281,16 @@ const Charts = () => {
       >
         <Grid container gap={2.5}>
           {titlesChart.map((line, index) => (
-            <>
-              <GridItem
-                key={index}
-                theme={theme}
-                rendered={rendered}
-                title={line.title}
-                unit={line.unit}
-                color={chartColors[index]} // Passing entire color object
-                data={
-                  index === 0
-                    ? randomChartData1
-                    : index === 1
-                    ? randomChartData2
-                    : index === 2
-                    ? randomChartData3
-                    : randomChartData4
-                }
-              />
-            </>
+            <GridItem
+              key={index}
+              handleChange={handleChangeData}
+              theme={theme}
+              rendered={rendered}
+              title={line.title}
+              unit={line.unit}
+              color={chartColors[index]}
+              data={generateRandomData()}
+            />
           ))}
         </Grid>{" "}
       </NewCardContainer>

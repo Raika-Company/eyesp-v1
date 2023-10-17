@@ -11,7 +11,6 @@ import AllSituationCard from "./components/AllSituationCard";
 import CompareTable from "./components/CompareTable";
 import { ContainedSelect } from "../../../app/common/ContainedSelect";
 import provinces from "../../../../public/data/provinces.json";
-import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
 import { useState } from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
@@ -34,7 +33,7 @@ const NewDashboard = () => {
   };
 
   return (
-    <>
+    <div>
       <BackgroundSvg
         provinces={
           province
@@ -55,7 +54,13 @@ const NewDashboard = () => {
           gridTemplateColumns: isMdScreen ? "repeat(2, 1fr)" : "1fr",
         }}
       >
-        <Stack direction="column" gap="2rem" padding="2rem" whiteSpace="nowrap">
+        <Stack
+          zIndex={1}
+          direction="column"
+          gap="2rem"
+          padding="2rem"
+          whiteSpace="nowrap"
+        >
           <ConflictDetailsCard onOpenModal={() => setOpenConflictModal(true)} />
           <AllSituationCard />
           <Stack direction="row" gap="2rem">
@@ -76,6 +81,7 @@ const NewDashboard = () => {
             backdropFilter: "blur(18px)",
             alignItems: "center",
             gap: "1rem",
+            zIndex: 2,
           }}
         >
           <Box>
@@ -142,7 +148,7 @@ const NewDashboard = () => {
         open={openConflictModal}
         onClose={() => setOpenConflictModal(false)}
       />
-    </>
+    </div>
   );
 };
 

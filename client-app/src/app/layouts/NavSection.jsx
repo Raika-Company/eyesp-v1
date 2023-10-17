@@ -66,7 +66,7 @@ const NAV_ITEMS = [
         sx={{width: "24px", height: "24px", cursor: "pointer", color}}
       />
     ),
-    path: "/isp-summery",
+    path: "/isp-summary",
     toggle: "isInformation",
   },
 ];

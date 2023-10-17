@@ -3,14 +3,14 @@ import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 
-const RatingComponent = () => {
+const RatingComponent = ({readOnly = false}) => {
   const [value, setValue] = useState(2); // Default value for the rating
 
   return (
     <Box
       sx={{
         marginTop: ".5rem",
-        width: 200,
+        maxWidth: 200,
         textAlign: "center",
       }}
     >
@@ -22,6 +22,7 @@ const RatingComponent = () => {
         }}
         name="simple-controlled"
         value={value}
+        readOnly={readOnly}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
