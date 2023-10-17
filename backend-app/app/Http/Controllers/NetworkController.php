@@ -433,6 +433,10 @@ class NetworkController extends Controller
                     }
                 }
                 break;
+            case 'info':
+                foreach ($description as $isp => $ispInfos) {
+                    $response[$isp] = $ispInfos;
+                }
         }
 
 
