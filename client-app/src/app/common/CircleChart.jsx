@@ -1,13 +1,13 @@
-import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import {Box, Typography} from "@mui/material";
+import {useState, useEffect} from "react";
 
 const CircleChart = ({
   id,
   finalPercentage = 0,
   strokeWidth = 10,
   size = 100,
-  gradientColors = ["#960000", "rgba(157, 0, 0, 0.40)"],
-  value = null,
+  gradientColors = ["#960000", "rgba(157, 0, 0, 0.70)"],
+  unit = null,
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -85,7 +85,7 @@ const CircleChart = ({
           }}
         />
       </svg>
-      {value ? (
+      {unit ? (
         <Box
           sx={{
             display: "flex",
@@ -101,7 +101,7 @@ const CircleChart = ({
           }}
         >
           <Typography>{percentage}</Typography>
-          <Typography>{value}</Typography>
+          <Typography>{unit}</Typography>
         </Box>
       ) : (
         <Typography

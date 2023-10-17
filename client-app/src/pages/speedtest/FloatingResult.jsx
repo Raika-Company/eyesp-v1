@@ -11,10 +11,9 @@ import {Box, Stack, Typography, useTheme} from "@mui/material";
 import Fade from "@mui/material/Fade";
 import {ContainedButton} from "../../app/common/ContainedButton";
 import InfoBox from "./InfoBox";
-// import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 import {useNavigate} from "react-router-dom";
 import IconLink from "./IconLInk";
-import RatingComponent from "./Rating";
+import RatingComponent from "../../app/common/Rating";
 
 const SOCIAL_ICONS = [
   {

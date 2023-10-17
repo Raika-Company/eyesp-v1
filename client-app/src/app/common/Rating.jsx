@@ -10,7 +10,7 @@ const RatingComponent = () => {
     <Box
       sx={{
         marginTop: ".5rem",
-        width: 200,
+        maxWidth: 200,
         textAlign: "center",
       }}
     >

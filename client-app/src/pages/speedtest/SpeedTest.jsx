@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Radio,
   Card,
   Stack,
@@ -40,7 +39,6 @@ import FloatingResult from "./FloatingResult";
 import DrawMeterAnimate from "./DrawMeterAnimate";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -139,7 +137,6 @@ const SpeedTest = () => {
     axios
       .get("https://server1.eyesp.live/get-ip")
       .then((res) => setClientIp(res.data.ip));
-    // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
 
   const fetchServers = async () => {

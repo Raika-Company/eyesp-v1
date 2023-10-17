@@ -1,6 +1,6 @@
-import { Card, styled } from "@mui/material";
+import {Card, styled} from "@mui/material";
 
-const NewCardContainer = styled(Card)(({ theme }) => ({
+const NewCardContainer = styled(Card)(({theme}) => ({
   borderRadius: ".75rem",
   backdropFilter: "blur(35px)",
   "&::-webkit-scrollbar": {
