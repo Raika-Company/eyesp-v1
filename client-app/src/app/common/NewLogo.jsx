@@ -21,6 +21,7 @@ const NewLogo = () => {
         justifyContent: "space-evenly",
         background: isDark ? "#262626cc" : "#DADADA",
         border: isDark ? "1.5px solid #DEDEDE" : "1px solid #A0A0A0",
+        borderRadius: "2rem",
         alignItems: "center",
         paddingY: "0.75rem",
         marginTop: "2.5rem",

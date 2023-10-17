@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import {forwardRef} from "react";
 import {
   Box,
   Typography,
@@ -13,21 +13,18 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Radio,
   Card,
   Stack,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import moment from "moment-jalaali";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
 
-import { STATUS_MAP } from "./constant";
+import {STATUS_MAP} from "./constant";
 
 import io from "socket.io-client";
 import useDynamicMP from "../../app/hooks/useDynamicMP";
@@ -36,7 +33,8 @@ import HistoryIcon from "@mui/icons-material/History";
 import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+
 import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 import CircularProgressBar from "./CircularProgress";
 
@@ -66,7 +64,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddressAndServer = ({ ip, server }) => {
+const AddressAndServer = ({ip, server}) => {
   return (
     <Box>
       <Stack direction="row">
@@ -119,7 +117,7 @@ const SpeedTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const { isFetchingServers, selectBestServer } = useFetchServers();
+  const {isFetchingServers, selectBestServer} = useFetchServers();
   const [selectedServerURL, setSelectedServerURL] = useState("");
   const [isServerSelected, setIsServerSelected] = useState(false);
   const [openSelectServer, setOpenSelectServer] = useState(false);
@@ -129,7 +127,6 @@ const SpeedTest = () => {
     axios
       .get("https://server1.eyesp.live/get-ip")
       .then((res) => setClientIp(res.data.ip));
-    // .catch((error) => console.error("Error fetching client IP:", error));
   }, []);
 
   const fetchServers = async () => {
@@ -334,7 +331,7 @@ const SpeedTest = () => {
             component={Link}
             to="/history"
             variant="h3"
-            sx={{ color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E" }}
+            sx={{color: theme.palette.mode === "dark" ? "#fff" : "#4E4E4E"}}
             startIcon={
               <HistoryIcon
                 sx={{
@@ -465,7 +462,7 @@ const SpeedTest = () => {
             >
               نوع تست
               <IconButton>
-                <InfoOutlinedIcon sx={{ fontSize: "1rem" }} />
+                <InfoOutlinedIcon sx={{fontSize: "1rem"}} />
               </IconButton>
             </Typography>
           </Box>
@@ -520,17 +517,13 @@ const SpeedTest = () => {
                 }}
               >
                 <InputBase
-                  sx={{ mr: 1 }}
+                  sx={{mr: 1}}
                   placeholder="جست و جو"
-                  inputProps={{ "aria-label": "جست و جو" }}
+                  inputProps={{"aria-label": "جست و جو"}}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <IconButton
-                  type="button"
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
+                <IconButton type="button" sx={{p: "10px"}} aria-label="search">
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -538,7 +531,7 @@ const SpeedTest = () => {
             <Button
               color="text"
               onClick={handleCloseSelectServer}
-              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
+              endIcon={<CloseIcon sx={{marginX: "0.5rem"}} />}
             >
               بستن
             </Button>
