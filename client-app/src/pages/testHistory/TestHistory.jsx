@@ -282,7 +282,7 @@ const NewTestHistory = ({ openNav }) => {
       sx={{
         background: "transparent",
         marginTop: "1rem",
-        marginBottom: "4rem",
+        // marginBottom: "4rem",
         boxShadow: "none",
         backgroundImage: "none",
         padding: "1rem",
