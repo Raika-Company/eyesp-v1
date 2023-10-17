@@ -5,6 +5,7 @@ const ContainedSelect = styled(Select)({
   border: "1px solid #DDD",
   paddingX: "0.8rem",
   paddingY: "0.4rem",
+  paddingBottom: "0",
   ".MuiSelect-icon": {
     right: "auto",
     left: "7px",

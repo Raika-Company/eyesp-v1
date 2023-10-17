@@ -468,26 +468,6 @@ const ISPSummary = () => {
                   </Typography>
                   <Typography>کاربر</Typography>
                 </Stack>
-                {/* <ContainedSelect
-                  labelId="change-province-label"
-                  id="change-province"
-                  label="انتخاب اپراتور"
-                  value={selectedISP}
-                  onChange={handleISPChange}
-                  displayEmpty
-                  sx={{
-                    paddingLeft: "2rem",
-                    minWidth: "10rem",
-                    height: "2.2rem",
-                    background: isDark ? "#313131" : "#FFF",
-                  }}
-                >
-                  {ISPs.map((isp) => (
-                    <MenuItem key={isp.id} value={isp.value}>
-                      {isp.title}
-                    </MenuItem>
-                  ))}
-                </ContainedSelect> */}
                 <MenuItem
                   onClick={handleClick}
                   sx={{
@@ -529,95 +509,109 @@ const ISPSummary = () => {
             />
           </Box>
         </Box>
-        <CardContainer
+        <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
+            height: "85vh",
+            overflow: "scroll",
+            position: "relative",
           }}
         >
-          <Box
+          <CardContainer
             sx={{
-              alignSelf: "self-start",
               display: "flex",
-              padding: "1rem",
-              borderRadius: "1rem",
-              alignItems: "center",
+              flexDirection: "column",
               gap: "1rem",
             }}
           >
-            <ContainedSelect
-              labelId="change-province-label"
-              id="change-province"
-              label="انتخاب استان"
-              value={province}
-              onChange={handleProvinceChange}
-              displayEmpty
+            <Box
               sx={{
-                paddingLeft: "2rem",
-                minWidth: "10rem",
-                height: "2.2rem",
-                background: isDark ? "#313131" : "#FFF",
-              }}
-            >
-              <MenuItem value="">انتخاب استان</MenuItem>
-              {provinces.map((provinceItem) => (
-                <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                  {provinceItem.name}
-                </MenuItem>
-              ))}
-            </ContainedSelect>
-            <ContainedSelect
-              labelId="change-province-label"
-              id="change-province"
-              label="انتخاب اپراتور"
-              value={operator}
-              onChange={handleISPChangeForCharts}
-              displayEmpty
-              sx={{
-                paddingLeft: "2rem",
-                minWidth: "10rem",
-                height: "2.2rem",
-                background: isDark ? "#313131" : "#FFF",
-              }}
-            >
-              <MenuItem value="">انتخاب اپراتور</MenuItem>
-              {ISPList.map((isp) => (
-                <MenuItem key={isp.ISPname} value={isp.ISPname}>
-                  {isp.ISPname}
-                </MenuItem>
-              ))}
-            </ContainedSelect>
-            <Button
-              variant="text.main"
-              component={"button"}
-              onClick={handleShowInfo}
-              disabled={!operator || !province}
-              sx={{
-                borderRadius: "1rem",
+                alignSelf: "self-start",
+                display: "flex",
                 padding: "1rem",
-                height: "2.2rem",
-                background: "#0C6087",
-                whiteSpace: "nowrap",
-                color: "#FFF",
+                borderRadius: "1rem",
+                alignItems: "center",
+                backdropFilter: "blur(5px)",
+                zIndex: "10",
+                gap: "1rem",
+                position: "sticky",
+                top: "0",
+                left: "0",
+                right: "0",
               }}
             >
-              مشاهده وضعیت
-            </Button>
-          </Box>
-          {titlesChart.map((line, index) => (
-            <GridItem
-              background={isDark ? "#1A1A1A" : "#FFF"}
-              key={index}
-              theme={theme}
-              rendered={true}
-              title={line.title}
-              unit={line.unit}
-              color={chartColors[index]}
-              data={generateRandomData()}
-            />
-          ))}
-        </CardContainer>
+              <ContainedSelect
+                labelId="change-province-label"
+                id="change-province"
+                label="انتخاب استان"
+                value={province}
+                onChange={handleProvinceChange}
+                displayEmpty
+                sx={{
+                  paddingLeft: "2rem",
+                  minWidth: "10rem",
+                  height: "2.2rem",
+                  background: isDark ? "#313131" : "#FFF",
+                }}
+              >
+                <MenuItem value="">انتخاب استان</MenuItem>
+                {provinces.map((provinceItem) => (
+                  <MenuItem key={provinceItem.name} value={provinceItem.name}>
+                    {provinceItem.name}
+                  </MenuItem>
+                ))}
+              </ContainedSelect>
+              <ContainedSelect
+                labelId="change-province-label"
+                id="change-province"
+                label="انتخاب اپراتور"
+                value={operator}
+                onChange={handleISPChangeForCharts}
+                displayEmpty
+                sx={{
+                  paddingLeft: "2rem",
+                  minWidth: "10rem",
+                  height: "2.2rem",
+                  background: isDark ? "#313131" : "#FFF",
+                }}
+              >
+                <MenuItem value="">انتخاب اپراتور</MenuItem>
+                {ISPList.map((isp) => (
+                  <MenuItem key={isp.ISPname} value={isp.ISPname}>
+                    {isp.ISPname}
+                  </MenuItem>
+                ))}
+              </ContainedSelect>
+              <Button
+                variant="text.main"
+                component={"button"}
+                onClick={handleShowInfo}
+                disabled={!operator || !province}
+                sx={{
+                  borderRadius: "1rem",
+                  padding: "1rem",
+                  height: "2.2rem",
+                  background: "#0C6087",
+                  whiteSpace: "nowrap",
+                  color: "#FFF",
+                }}
+              >
+                مشاهده وضعیت
+              </Button>
+            </Box>
+            {titlesChart.map((line, index) => (
+              <GridItem
+                background={isDark ? "#1A1A1A" : "#FFF"}
+                key={index}
+                theme={theme}
+                rendered={true}
+                title={line.title}
+                unit={line.unit}
+                color={chartColors[index]}
+                data={generateRandomData()}
+              />
+            ))}
+          </CardContainer>
+        </Box>
       </Box>
     </Box>
   );
