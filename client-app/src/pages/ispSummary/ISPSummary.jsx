@@ -7,7 +7,7 @@ import {
   Button,
   Menu,
 } from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CardContainer from "../../app/common/CardContainer";
 import CardInformation from "../../app/common/CardInformation";
 import {ContainedSelect} from "../../app/common/ContainedSelect";
@@ -214,6 +214,17 @@ const ISPSummary = () => {
     setAnchorEl(null);
   };
 
+  // It's for the recharts to make the background of itself adaptable to the theme.
+  useEffect(() => {
+    setTimeout(() => {
+      const element = document.querySelector(
+        ".recharts-layer.recharts-treemap-depth-0 > g > g > rect"
+      );
+      if (element)
+        element.setAttribute("style", `fill: ${isDark ? "#262626" : "#fff"}`);
+      console.log(element);
+    }, 10);
+  }, [isDark]);
   const PastData = ({title, value}) => {
     return (
       <Stack
@@ -236,7 +247,6 @@ const ISPSummary = () => {
   return (
     <Box
       sx={{
-        maxHeight: "100%",
         marginBottom: "2rem",
       }}
     >
