@@ -34,6 +34,8 @@ import SwitchBtn from "../../app/common/SwitchBtn";
 import FloatingResult from "./FloatingResult";
 import axios from "axios";
 import {Link} from "react-router-dom";
+
+import AnimatesSpeedTestNumber from "./numbers/AnimateSpeedTestNumber";
 import CircularProgressBar from "./CircularProgress";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
