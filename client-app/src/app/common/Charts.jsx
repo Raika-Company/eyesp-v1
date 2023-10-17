@@ -83,13 +83,14 @@ export function GridItem({
   unit,
   color,
   background,
+  handleChange,
 }) {
   const {pathname} = useLocation();
   const [age, setAge] = useState("در حال حاضر");
   const handleChangeDailyPercent = (event) => {
     const selectedYear = event.target.value;
     setAge(selectedYear);
-
+    handleChange();
     // For the sake of debugging, directly set percentages based on options
     if (selectedYear === "در حال حاضر") setPercentage(65);
     else if (selectedYear === "1 روز قبل") setPercentage(75);
@@ -98,7 +99,7 @@ export function GridItem({
   return (
     <NewCardContainer
       sx={{
-        boxShadow: pathname === "/isp-summery" && "none",
+        boxShadow: pathname === "/isp-summary" && "none",
         background: background,
         display: "flex",
         paddingInline: "3%",
@@ -248,6 +249,11 @@ const Charts = () => {
   const theme = useTheme();
   const [rendered, setRendered] = useState(false);
   const [currentChartData, setCurrentChartData] = useState(generateRandomData);
+
+  const handleChangeData = () => {
+    setCurrentChartData(generateRandomData());
+  };
+
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   useEffect(() => {
@@ -277,12 +283,13 @@ const Charts = () => {
           {titlesChart.map((line, index) => (
             <GridItem
               key={index}
+              handleChange={handleChangeData}
               theme={theme}
               rendered={rendered}
               title={line.title}
               unit={line.unit}
               color={chartColors[index]}
-              data={currentChartData}
+              data={generateRandomData()}
             />
           ))}
         </Grid>{" "}
