@@ -70,7 +70,9 @@ const cellHeaders = [
  * @returns {JSX.Element} Returns the HistoryTable component.
  */
 
-const HistoryTable = () => {
+const HistoryTable = (props) => {
+  const setSelectedIds = props.setSelectedIds;
+  const onRadioClick = props.onRadioClick;
   const localStorageData = JSON.parse(
     localStorage.getItem("testResults") || "[]"
   );
@@ -90,13 +92,16 @@ const HistoryTable = () => {
     if (selectedRadios.includes(value)) {
       // If already selected, remove the radio value from the array
       setSelectedRadios((prev) => prev.filter((radio) => radio !== value));
+      setSelectedIds((pre) => pre.filter((radio) => radio !== value));
     } else {
       if (selectedRadios.length >= 5) {
         // Remove the first (oldest) radio from the array
         setSelectedRadios((prev) => prev.slice(1));
+        setSelectedIds((pre) => pre.slice(1));
       }
       // Add the new radio to the array
       setSelectedRadios((prev) => [...prev, value]);
+      setSelectedIds((pre) => [...pre, value]);
     }
   };
 
@@ -173,7 +178,10 @@ const HistoryTable = () => {
                       control={
                         <Radio
                           checked={selectedRadios.includes(String(index))}
-                          onChange={() => handleRadioChange(String(index))}
+                          onChange={() => {
+                            handleRadioChange(String(index));
+                            onRadioClick();
+                          }}
                         />
                       }
                     />

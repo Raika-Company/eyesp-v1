@@ -22,6 +22,30 @@ import {
   Tooltip,
 } from "recharts";
 
+const convertPersianNumbers = (persianNumber) => {
+  if (typeof persianNumber === "string") {
+    const persianToEnglishMap = {
+      "۰": "0",
+      "۱": "1",
+      "۲": "2",
+      "۳": "3",
+      "۴": "4",
+      "۵": "5",
+      "۶": "6",
+      "۷": "7",
+      "۸": "8",
+      "۹": "9",
+      ".": ".",
+    };
+    const newNum = persianNumber
+      .split("")
+      .map((i) => persianToEnglishMap[i] || i)
+      .join("");
+
+    return Number(newNum) || 0; // Default to 0 if not a number
+  } else return persianNumber;
+};
+
 /**
  * Titles and units used for chart visualization.
  * @typedef {Object} TitleChart
@@ -41,24 +65,34 @@ const titlesChart = [
  * @returns {JSX.Element|null}
  */
 const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div
-        style={{
-          background: "#fff",
-          color: "#333",
-          boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
-          padding: "1rem",
-          textAlign: "center",
-          borderRadius: "1rem",
-          width: "70%",
-        }}
-      >
-        <p>{`دانلود: ${payload[0].value.download} آپلود: ${payload[0].value.upload}`}</p>
-      </div>
-    );
-  }
+  // Logging the payload to inspect its structure:
+  console.log(payload);
 
+  if (active && payload && payload.length) {
+    // Attempting to extract the download and upload values:
+    const dataItem = payload[0]?.payload;
+    const downloadValue = dataItem?.value?.download;
+    const uploadValue = dataItem?.value?.upload;
+
+    // Only display the tooltip if both values are present:
+    if (downloadValue && uploadValue) {
+      return (
+        <div
+          style={{
+            background: "#fff",
+            color: "#333",
+            boxShadow: "0 0 14px  rgb(0 0 0 / 40%)",
+            padding: "1rem",
+            textAlign: "center",
+            borderRadius: "1rem",
+            width: "70%",
+          }}
+        >
+          <p>{`دانلود: ${downloadValue} آپلود: ${uploadValue}`}</p>
+        </div>
+      );
+    }
+  }
   return null;
 };
 
@@ -73,12 +107,22 @@ const CustomTooltip = ({ active, payload }) => {
  * @param {string} props.unit - Measurement unit for the data.
  * @returns {JSX.Element}
  */
-const GridItem = ({ theme, rendered, title, data, unit }) => {
+const GridItem = ({
+  theme,
+  rendered,
+  title,
+  data,
+  unit,
+  selectedIds,
+  type,
+  showXAxis,
+}) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   // Note: Moved barColors and related logic here for clarity.
   const barColors = ["#00c3ff46", "#6fff004b", "#fe464341", "#00c3ff44"];
   const barColorsTop = ["#00C2FF", "#70FF00", "#FE4543", "#00C2FF"];
   // Separate component for clarity.
+
   const TopBorderedBar = ({ x, y, width, height, fill, index }) => (
     <g>
       <rect x={x} y={y} width={width} height={height} fill={fill} />
@@ -107,7 +151,18 @@ const GridItem = ({ theme, rendered, title, data, unit }) => {
       </defs>
     </g>
   );
+  const computeMaxValue = (data) => {
+    const values = data.map((line) =>
+      Math.max(
+        convertPersianNumbers(line.value.download),
+        convertPersianNumbers(line.value.upload)
+      )
+    );
 
+    // Get the maximum value and check for invalid values (like Infinity or NaN)
+    const maxValue = Math.max(...values);
+    return isFinite(maxValue) && !isNaN(maxValue) ? maxValue : 0;
+  };
   return (
     <Grid item xs={12} md={6} padding="2rem 0.5rem" mt="1rem">
       <Box
@@ -148,7 +203,9 @@ const GridItem = ({ theme, rendered, title, data, unit }) => {
                   <Bar
                     stackId="a"
                     type="monotone"
-                    dataKey="value"
+                    dataKey={
+                      type === "download" ? "value.download" : "value.upload"
+                    }
                     stroke="transparent"
                     fill="url(#gradientChart)"
                     barSize={55}
@@ -165,10 +222,13 @@ const GridItem = ({ theme, rendered, title, data, unit }) => {
               </ResponsiveContainer>
             )}
           </Box>
-          <XAxisLine
-            max={Math.max(...data.map((line) => line.value))}
-            unit={unit}
-          />
+          {showXAxis && (
+            <XAxisLine
+              max={Math.max(...data.map((line) => line.value))}
+              unit={unit}
+              selectedIds={selectedIds}
+            />
+          )}
         </Box>
         <Box
           sx={{
@@ -177,10 +237,7 @@ const GridItem = ({ theme, rendered, title, data, unit }) => {
             top: "1.5rem",
           }}
         >
-          <YAxisLine
-            max={Math.max(...data.map((line) => line.value))}
-            unit={unit}
-          />
+          <YAxisLine max={computeMaxValue(data)} unit={unit} />
         </Box>
       </Box>
     </Grid>
@@ -195,6 +252,8 @@ const GridItem = ({ theme, rendered, title, data, unit }) => {
  */
 const NewTestHistory = ({ openNav }) => {
   const [tableData, setTableData] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [showXAxis, setShowXAxis] = useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -264,18 +323,31 @@ const NewTestHistory = ({ openNav }) => {
           </NewSwitchBtn>
         </Box>
       </Box>
-      <HistoryTable />
+      <HistoryTable
+        setSelectedIds={setSelectedIds}
+        onRadioClick={() => setShowXAxis(true)}
+      />
       <Grid container>
         {titlesChart.map((line, index) => (
           <GridItem
+            showXAxis={showXAxis}
+            selectedIds={selectedIds}
             key={index}
             theme={theme}
             rendered={rendered}
             title={line.title}
             unit={line.unit}
-            data={tableData.map((row) => ({
-              value: { download: row.download, upload: row.upload },
-            }))}
+            type={index === 0 ? "download" : "upload"}
+            data={tableData
+              .filter((item, index) => selectedIds.includes(String(index)))
+              .map((row, index) => {
+                return {
+                  value: {
+                    download: convertPersianNumbers(row.download),
+                    upload: convertPersianNumbers(row.upload),
+                  },
+                };
+              })}
           />
         ))}
       </Grid>
