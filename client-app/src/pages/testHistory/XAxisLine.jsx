@@ -50,7 +50,7 @@ const useStyles = (isSmScreen) => {
  * @param {string} props.height The height of the x-axis line.
  * @returns {React.ReactNode} The XAxisLine component.
  */
-const XAxisLine = ({ max, unit, height = "0.3rem" }) => {
+const XAxisLine = ({ max, unit, height = "0.3rem", selectedIds }) => {
   const [tableData, setTableData] = useState([]);
   const theme = useTheme();
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -67,7 +67,12 @@ const XAxisLine = ({ max, unit, height = "0.3rem" }) => {
     <Box sx={styles.container}>
       <Box sx={styles.innerContainer}>
         <div style={{ ...styles.line, height }}></div>
-        <ValuesDisplay data={tableData} styles={styles} />
+        <ValuesDisplay
+          data={tableData.filter((item, index) =>
+            selectedIds.includes(String(index))
+          )}
+          styles={styles}
+        />
       </Box>
     </Box>
   );

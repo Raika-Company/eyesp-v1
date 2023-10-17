@@ -183,6 +183,7 @@ const OperatorProfile = () => {
               finalPercentage={percentage}
               gradientColors={gradientColors}
               size={140}
+              lineWidth={10}
             />
           </Box>
         </Box>

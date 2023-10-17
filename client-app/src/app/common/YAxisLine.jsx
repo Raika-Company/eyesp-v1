@@ -3,11 +3,11 @@ import { Box, Typography, useTheme } from "@mui/material";
 const YAxisLine = ({ max, unit, height, onValuesGenerated }) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
-  const values = [0, 5, 10];
+
+  const values = [0];
   for (let i = 1; i <= 3; i++) {
     values.push(Math.floor(Math.min(i * valueOfEachRow, max)));
   }
-  if (onValuesGenerated) onValuesGenerated(values);
 
   return (
     <Box
@@ -44,7 +44,6 @@ const YAxisLine = ({ max, unit, height, onValuesGenerated }) => {
         >
           {values.map((value, index) => (
             <Typography
-              data-value={value}
               key={index}
               color={theme.palette.mode === "dark" ? "#fffa" : "#777"}
             >
