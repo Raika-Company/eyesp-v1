@@ -9,10 +9,11 @@ import {
 import ConflictDetailsCard from "./components/ConflictDetailsCard";
 import AllSituationCard from "./components/AllSituationCard";
 import CompareTable from "./components/CompareTable";
-import { ContainedSelect } from "../../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../../app/common/ContainedSelect";
 import provinces from "../../../../public/data/provinces.json";
+import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
-import { useState } from "react";
+import {useState} from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
 import SetConflictModal from "./components/SetConflictModal";
 
