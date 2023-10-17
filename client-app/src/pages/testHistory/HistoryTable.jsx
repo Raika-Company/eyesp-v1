@@ -49,7 +49,6 @@ const RowBox = styled(Box)(({ theme }) => ({
 const cellHeaders = [
   "",
   "تاریخ تست",
-  "اپراتور",
   "سرور",
   "نوع تست",
   "دانلود",
@@ -79,19 +78,26 @@ const HistoryTable = () => {
   const isDark = theme.palette.mode === "dark";
   const headerBackground = isDark ? "#434544" : "#C6C6C6";
   const rowBackground = isDark ? "#2D2D2D" : "#DDD";
-  const [selectedValues, setSelectedValues] = React.useState([]);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [selectedRadios, setSelectedRadios] = React.useState([]);
+
   const handleOpenSnackbar = () => {
     setOpenSnackbar(true);
   };
 
   const handleSnackbarToggle = () => setOpenSnackbar((prev) => !prev);
-
-  const handleRadioClick = (event, rowId) => {
-    const value = String(rowId);
-    setSelectedValues((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-    );
+  const handleRadioChange = (value) => {
+    if (selectedRadios.includes(value)) {
+      // If already selected, remove the radio value from the array
+      setSelectedRadios((prev) => prev.filter((radio) => radio !== value));
+    } else {
+      if (selectedRadios.length >= 5) {
+        // Remove the first (oldest) radio from the array
+        setSelectedRadios((prev) => prev.slice(1));
+      }
+      // Add the new radio to the array
+      setSelectedRadios((prev) => [...prev, value]);
+    }
   };
 
   return (
@@ -154,7 +160,7 @@ const HistoryTable = () => {
                     <span>{row.time}</span>
                   </Box>
                 </TableCell>
-                <TableCell align="center">{row.operator}</TableCell>
+                {/* <TableCell align="center">{row.operator}</TableCell> */}
                 <TableCell align="center">{row.server}</TableCell>
                 <TableCell align="center">{row.testType}</TableCell>
                 <TableCell align="center">{row.download}</TableCell>
@@ -163,15 +169,11 @@ const HistoryTable = () => {
                 <TableCell align="center">
                   <FormControl sx={{ width: "73px" }}>
                     <FormControlLabel
-                      value={String(row.id)}
+                      value={String(index)}
                       control={
                         <Radio
-                          onClick={(e) => handleRadioClick(e, row.id)}
-                          checked={selectedValues.includes(String(row.id))}
-                          disabled={
-                            selectedValues.length >= 5 &&
-                            !selectedValues.includes(String(row.id))
-                          }
+                          checked={selectedRadios.includes(String(index))}
+                          onChange={() => handleRadioChange(String(index))}
                         />
                       }
                     />

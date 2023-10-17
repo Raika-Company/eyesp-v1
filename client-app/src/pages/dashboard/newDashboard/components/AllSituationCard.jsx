@@ -10,6 +10,7 @@ import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import {Link} from "react-router-dom";
 import CircleChart from "../../../../app/common/CircleChart";
 import Square from "./Square";
+import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
 const detailsData = [
   {
@@ -78,7 +79,7 @@ const AllSituationCard = () => {
         >
           وضعیت کلی اینترنت کشور
         </Typography>
-        <Button
+        {/* <Button
           variant="text.main"
           component={Link}
           to=""
@@ -89,7 +90,8 @@ const AllSituationCard = () => {
         >
           مشاهده جزئیات
           <img src={leftArrow} alt="leftArrow" />
-        </Button>
+        </Button> */}
+        <ViewDetailsButton target="/isp-performance" />
       </Stack>
       <Box
         sx={{

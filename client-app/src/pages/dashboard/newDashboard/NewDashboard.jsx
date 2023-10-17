@@ -15,17 +15,20 @@ import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
 import {useState} from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
+import SetConflictModal from "./components/SetConflictModal";
 
 const NewDashboard = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const [province, setProvince] = useState("");
-  const [selectedISP, setSelectedISP] = useState("");
+  const [openConflictModal, setOpenConflictModal] = useState(false);
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
+  const [province, setProvince] = useState("");
   const handleProvinceChange = (event) => {
     setProvince(event.target.value);
   };
+
+  const [selectedISP, setSelectedISP] = useState("");
   const handleISPChange = (event) => {
     setSelectedISP(event.target.value);
   };
@@ -53,7 +56,7 @@ const NewDashboard = () => {
         }}
       >
         <Stack direction="column" gap="2rem" padding="2rem" whiteSpace="nowrap">
-          <ConflictDetailsCard />
+          <ConflictDetailsCard onOpenModal={() => setOpenConflictModal(true)} />
           <AllSituationCard />
           <Stack direction="row" gap="2rem">
             <CompareTable title="اپراتور‌های برتر" />
@@ -135,6 +138,10 @@ const NewDashboard = () => {
           </Button>
         </Box>
       </Box>
+      <SetConflictModal
+        open={openConflictModal}
+        onClose={() => setOpenConflictModal(false)}
+      />
     </>
   );
 };

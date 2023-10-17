@@ -91,15 +91,15 @@ const OperatorProfile = () => {
       case "1 روز قبل":
         // Just an example, modify this data as per your requirements
         newChartData = [
-          { day: "05-07", temperature: [2, 11] },
-          { day: "05-08", temperature: [1, 10] },
+          { day: "05-07", اختلال: [2, 11] },
+          { day: "05-08", اختلال: [1, 10] },
         ];
         break;
       case "1 هفته قبل":
         // Just an example, modify this data as per your requirements
         newChartData = [
-          { day: "04-30", temperature: [1, 12] },
-          { day: "05-01", temperature: [3, 13] },
+          { day: "04-30", اختلال: [1, 12] },
+          { day: "05-01", اختلال: [3, 13] },
         ];
         break;
       default: // "در حال حاضر"
@@ -113,27 +113,27 @@ const OperatorProfile = () => {
   const data = [
     {
       day: "05-01",
-      temperature: [-1, 10],
+      اختلال: [-1, 10],
     },
     {
       day: "05-02",
-      temperature: [2, 15],
+      اختلال: [2, 15],
     },
     {
       day: "05-03",
-      temperature: [3, 12],
+      اختلال: [3, 12],
     },
     {
       day: "05-04",
-      temperature: [4, 12],
+      اختلال: [4, 12],
     },
     {
       day: "05-05",
-      temperature: [12, 16],
+      اختلال: [12, 16],
     },
     {
       day: "05-06",
-      temperature: [5, 16],
+      اختلال: [5, 16],
     },
   ];
   const [chartData, setChartData] = useState(data);
@@ -151,7 +151,7 @@ const OperatorProfile = () => {
           x2={x + width}
           y2={y - 6} // Offset for the shadow
           stroke="#FE4543"
-          strokeOpacity="0.9" // Makes the shadow slightly transparent
+          strokeOpacity="0.6" // Makes the shadow slightly transparent
           strokeWidth="50"
           filter="url(#blur)"
         />
@@ -169,7 +169,7 @@ const OperatorProfile = () => {
           x2={x + width}
           y2={y + height + 6}
           stroke="#FE4543"
-          strokeOpacity="0.9"
+          strokeOpacity="0.6"
           strokeWidth="50"
           filter="url(#blur)"
         />
@@ -196,7 +196,7 @@ const OperatorProfile = () => {
       0: "2 ساعت قبل",
       6: "1 ساعت قبل",
       12: "30 دقیقه قبل",
-      18: "حال حاضر",
+      18: " در حال حاضر",
       // Add more if needed
     };
     return labels[tick] || "";
@@ -212,7 +212,11 @@ const OperatorProfile = () => {
           flexBasis: "100%",
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="flex-end"
+        >
           {" "}
           <Typography m={0} variant="h1" component="h2" color="text.textBlack">
             اختلالات لحظه ای{" "}
@@ -228,7 +232,7 @@ const OperatorProfile = () => {
           gap={2}
         >
           {" "}
-          <Typography m={0} color="text.textBlack" gutterBottom>
+          <Typography m={0} variant="h6" color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
           <FormControl sx={{ width: "8.8125rem" }}>
@@ -253,12 +257,24 @@ const OperatorProfile = () => {
             data={chartData}
             margin={{ bottom: 20, left: 50 }}
           >
-            <YAxis tickMargin={80} tickFormatter={formatYAxisTicks} />
-            <Tooltip />
+            {/* <YAxis tickMargin={80} tickFormatter={formatYAxisTicks} /> */}
+            <YAxis
+              tickMargin={80}
+              tickFormatter={formatYAxisTicks}
+              width={85} // Increase width for YAxis
+              tick={{
+                fontSize: 14, // You can adjust the font size
+                fontWeight: "bold",
+                textAnchor: "end", // Make sure text is anchored to the end
+              }}
+            />
+            {/* <Tooltip /> */}
             <Bar
-              dataKey="temperature"
-              fill="rgba(255, 0, 0, 0.5)"
+              dataKey="اختلال"
+              fill="rgba(255, 0, 0, 0.2)"
               shape={<CustomBarShape />}
+              barSize={48} // The width of the bar.
+              barGap={50}
             />
             <ReferenceLine
               y={-6}

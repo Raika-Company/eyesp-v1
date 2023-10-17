@@ -42,7 +42,7 @@ const conflictDetailsData = [
   },
 ];
 
-const ConflictDetailsCard = () => {
+const ConflictDetailsCard = ({onOpenModal}) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   return (
@@ -168,8 +168,7 @@ const ConflictDetailsCard = () => {
 
         <Button
           variant="text.main"
-          component={Link}
-          to=""
+          onClick={onOpenModal}
           sx={{
             fontSize: ".8rem !important",
             background: "",
