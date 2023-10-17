@@ -188,6 +188,8 @@ class NetworkController extends Controller
             $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
             $data['clients'] = $ispMetrics->sum('clients');
             $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
+            $data['downloadAverage'] = round($ispMetrics->avg('download_speed_average'), 0);
+            $data['uploadAverage'] = round($ispMetrics->avg('upload_speed_average'), 0);
             $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
             $data['isp'] = collect($isp)
