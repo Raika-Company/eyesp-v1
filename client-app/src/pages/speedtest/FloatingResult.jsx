@@ -14,6 +14,7 @@ import InfoBox from "./InfoBox";
 // import ViewDetailsButton from "../../app/common/ViewDetailsButton";
 import {useNavigate} from "react-router-dom";
 import IconLink from "./IconLInk";
+import RatingComponent from "./Rating";
 
 const SOCIAL_ICONS = [
   {
@@ -204,10 +205,11 @@ const FloatingResult = ({
         {isTestEnds && (
           <Box
             sx={{
-              width: "40%",
               display: "flex",
+              flexDirection: "column",
               flexWrap: "wrap",
               justifyContent: "flex-end",
+              alignItems: "center",
             }}
           >
             {["آدرسIP", "سرور", "نوع تست"].map((text, index) => (
@@ -233,6 +235,7 @@ const FloatingResult = ({
                 </Typography>
               </Stack>
             ))}
+            <RatingComponent />
           </Box>
         )}
       </Box>

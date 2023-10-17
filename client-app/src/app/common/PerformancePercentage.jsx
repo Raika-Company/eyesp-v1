@@ -16,11 +16,11 @@ import {
   CircularProgress,
   backdropClasses,
 } from "@mui/material";
-import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
+import React, {useState} from "react";
+import {ContainedButton} from "./ContainedButton";
 import StatisticBox from "./StatisticBox";
 import CardContainer from "./CardContainer";
-import { ContainedSelect } from "../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../app/common/ContainedSelect";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
@@ -30,7 +30,7 @@ import CustomSnackbar from "./CustomSnackbar";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import ViewDetailsButton from "./ViewDetailsButton";
-import CircleChart from "../../pages/dashboard/newDashboard/components/CircleChart";
+import CircleChart from "./CircleChart";
 
 // const StyledFormControl = styled(FormControl)(({ theme }) => ({
 //   width: "50%",
@@ -67,10 +67,10 @@ const OperatorProfile = () => {
     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
   };
   const buttons = [
-    { label: "سرعت دانلود", width: "90%", percentage: 70 },
-    { label: "سرعت آپلود", width: "90%", percentage: 80 },
-    { label: "پینگ", width: "90%", percentage: 60 },
-    { label: "درصد عملکرد", width: "90%", percentage: 90 },
+    {label: "سرعت دانلود", width: "90%", percentage: 70},
+    {label: "سرعت آپلود", width: "90%", percentage: 80},
+    {label: "پینگ", width: "90%", percentage: 60},
+    {label: "درصد عملکرد", width: "90%", percentage: 90},
   ];
   const handleButtonClick = (index) => {
     setClickedButtonIndex(index);
@@ -126,7 +126,7 @@ const OperatorProfile = () => {
           >
             درصد عملکرد{" "}
           </Typography>
-          <FormControl sx={{ width: "50%" }}>
+          <FormControl sx={{width: "50%"}}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -161,8 +161,8 @@ const OperatorProfile = () => {
                   onClick={() => handleButtonClick(index)}
                   style={
                     clickedButtonIndex === index
-                      ? { ...activeButtonStyle, width: btn.width }
-                      : { ...defaultButtonStyle, width: btn.width }
+                      ? {...activeButtonStyle, width: btn.width}
+                      : {...defaultButtonStyle, width: btn.width}
                   }
                 >
                   {btn.label}
