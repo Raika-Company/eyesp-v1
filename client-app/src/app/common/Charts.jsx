@@ -112,7 +112,11 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
     >
       <Box display="flex" position="relative" width="92%">
         <Box sx={{ width: "100%" }}>
-          <Box display="flex" justifyContent="space-between">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="flex-end"
+          >
             <Typography
               color="text.main"
               variant="h1"
@@ -227,7 +231,7 @@ function GridItem({ theme, rendered, title, data, unit, color }) {
           />
         </Box>
         <YAxisLine
-          // max={Math.max(...data.map((line) => line.value))}
+          max={Math.max(...data.map((line) => line.value))}
           unit={unit}
         />
       </Box>
