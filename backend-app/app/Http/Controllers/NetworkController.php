@@ -387,7 +387,7 @@ class NetworkController extends Controller
         }
     }
 
-    public function getIssueStats($type)
+    public function getIssueStats(Request $request, $type)
     {
         $stats = RstDisturbance::latest()->first();
         $description = json_decode($stats->description);
@@ -434,8 +434,15 @@ class NetworkController extends Controller
                 }
                 break;
             case 'info':
-                foreach ($description as $isp => $ispInfos) {
-                    $response[$isp] = $ispInfos;
+                if(isset($request->isp)) {
+                    $isp = $request->isp;
+                    $issue = $request->issue;
+                    $city = $request->city;
+                    $response = $description->$isp->$issue->$city;
+                }else {
+                    foreach ($description as $isp => $ispInfos) {
+                        $response[$isp] = $ispInfos;
+                    }
                 }
         }
 
