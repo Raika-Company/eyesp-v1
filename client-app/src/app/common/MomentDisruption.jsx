@@ -207,7 +207,7 @@ const OperatorProfile = () => {
       <NewCardContainer
         sx={{
           paddingTop: "1.5rem",
-          paddingBottom: "1.5rem",
+          paddingBottom: "0.5rem",
           paddingX: "3%",
           flexBasis: "100%",
         }}

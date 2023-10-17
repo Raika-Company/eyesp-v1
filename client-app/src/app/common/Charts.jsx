@@ -7,7 +7,7 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NewCardContainer from "./NewCardContainer";
 import {
   AreaChart,
@@ -20,11 +20,11 @@ import {
 import YAxisLine from "./YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
-import {ContainedSelect} from "./ContainedSelect";
-import {TodayCharts} from "../api/dashboard";
-import {useLocation} from "react-router-dom";
+import { ContainedSelect } from "./ContainedSelect";
+import { TodayCharts } from "../api/dashboard";
+import { useLocation } from "react-router-dom";
 
-export const CustomTooltip = ({active, payload}) => {
+export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
       <div
@@ -70,10 +70,10 @@ const titlesChart = [
   },
 ];
 const chartColors = [
-  {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
-  {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
-  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
-  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
+  { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
+  { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
+  { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
+  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
 ];
 export function GridItem({
   theme,
@@ -85,7 +85,7 @@ export function GridItem({
   background,
   handleChange,
 }) {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const [age, setAge] = useState("در حال حاضر");
   const handleChangeDailyPercent = (event) => {
     const selectedYear = event.target.value;
@@ -110,7 +110,7 @@ export function GridItem({
       }}
     >
       <Box display="flex" position="relative" width="92%">
-        <Box sx={{width: "100%"}}>
+        <Box sx={{ width: "100%" }}>
           <Box display="flex" justifyContent="space-between">
             <Typography
               color="text.main"
@@ -121,7 +121,7 @@ export function GridItem({
               {title}
             </Typography>
             {title === "سرعت دانلود" && pathname === "/my-isp" && (
-              <FormControl sx={{width: "25%", marginLeft: "3rem"}}>
+              <FormControl sx={{ width: "25%", marginLeft: "3rem" }}>
                 <ContainedSelect
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -222,11 +222,11 @@ export function GridItem({
           <img
             src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
             alt="xAxis"
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
           />
         </Box>
         <YAxisLine
-          // max={Math.max(...data.map((line) => line.value))}
+          max={Math.max(...data.map((line) => line.value))}
           unit={unit}
         />
       </Box>

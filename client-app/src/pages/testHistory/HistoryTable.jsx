@@ -107,18 +107,19 @@ const HistoryTable = (props) => {
 
   return (
     <>
-      <TableContainer
+      <Box
         component={Paper}
         sx={{
           //   height: "62vh",
-          height: "430px",
+          maxHeight: "430px",
+          overflowY: "auto",
           mt: "0.5rem",
           border: "none",
           boxShadow: "none",
           background: "transparent",
         }}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead
             sx={{
               ".css-2s229y-MuiTableCell-root,.css-lt8975-MuiTableCell-root, .css-167oed0-MuiTableCell-root,.css-o4v5rt-MuiTableCell-root,.css-gsxlzn-MuiTableCell-root,.css-10kadzj-MuiTableCell-root":
@@ -197,7 +198,7 @@ const HistoryTable = (props) => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </Box>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={4000}
