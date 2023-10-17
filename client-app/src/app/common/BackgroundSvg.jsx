@@ -39,7 +39,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
         top: "0",
         left: "5%",
         position: "fixed",
-        zIndex: pathname === "/dashboard" && "1",
+        zIndex: pathname === "/dashboard" ? "1" : "-1",
         opacity: pathname === "/dashboard" ? "1" : ".2",
         transition: "opacity .25s linear",
       }}
