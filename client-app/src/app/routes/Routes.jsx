@@ -118,7 +118,7 @@ export const mainRoutes = [
     robots: "noindex, nofollow",
   },
   {
-    path: "/province-profile",
+    path: "/province-profile/:provinceName",
     element: <ProvinceProfile />,
     title: "isp performance | TIC Radar",
     description: "Review all your past internet speed tests in one place.",
