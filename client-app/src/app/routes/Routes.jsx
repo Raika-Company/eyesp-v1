@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, {lazy} from "react";
 
 const SpeedTest = lazy(() => import("../../pages/speedtest/SpeedTest"));
 const NewDashboard = lazy(() =>
@@ -9,7 +9,6 @@ const ConflictDetailsPage = lazy(() =>
 );
 
 const NewSpeedTest = lazy(() => import("../../pages/speedtest/NewSpeedTest"));
-const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"));
 const Information = lazy(() => import("../../pages/information/Information"));
 const ISPPerformance = lazy(() =>
   import("../../pages/ispPerformance/ISPPerformance")
@@ -80,7 +79,7 @@ export const mainRoutes = [
     robots: "index, follow",
   },
   {
-    path: "/isp-summery",
+    path: "/isp-summary",
     element: <ISPSummery />,
     title: "Operator summery | TIC Radar",
     description: "Review all your past internet speed tests in one place.",

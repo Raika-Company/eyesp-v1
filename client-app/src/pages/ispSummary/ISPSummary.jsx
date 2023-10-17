@@ -273,7 +273,7 @@ const ISPSummary = () => {
             />
             <CardInformation
               title="میزان رضایت کاربران"
-              value={<RatingComponent />}
+              value={<RatingComponent readOnly />}
               subTitle="در هفته گذشته"
               subValue={"3+"}
               color="text.number"
