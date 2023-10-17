@@ -64,11 +64,12 @@ class NetworkService
             ->where('date', '>=', Carbon::today()->subDays(7))
             ->get();
 
-        $totalRecord = $ispMetrics->count();
-        $data['totalQualityAverage'] = round($ispMetrics->sum('total_quality_average') / $totalRecord, 0);
+        $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
         $data['clients'] = $ispMetrics->sum('clients');
-        $data['speedAverage'] = round($ispMetrics->sum('speed_average') / $totalRecord, 0);
-        $data['pingAverage'] = round($ispMetrics->sum('ping_average') / $totalRecord, 0);
+        $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
+        $data['downloadAverage'] = round($ispMetrics->avg('download_speed_average'), 0);
+        $data['uploadAverage'] = round($ispMetrics->avg('upload_speed_average'), 0);
+        $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
         foreach ($isp as $item) {
             $metrics = $ispMetrics->where('isp', $item);
@@ -79,12 +80,12 @@ class NetworkService
             $feedbacks = RstFeedback::where('isp', $item)->get();
             $feedbacksCount = $feedbacks->count();
             $data['isp'][$item] = [
-                'downloadSpeedAverage' => round($metrics->sum('download_speed_average') / $count, 0),
-                'uploadSpeedAverage' => round($metrics->sum('upload_speed_average') / $count, 0),
-                'pingAverage' => round($metrics->sum('ping_average') / $count, 0),
-                'packetLoss' => round($metrics->sum('packet_loss') / $count, 0),
-                'totalQuality' => round($metrics->sum('total_quality_average') / $count, 0),
-                'score' => ($feedbacksCount) ? round($feedbacks->sum('score') / $feedbacksCount, 1) : 0
+                'downloadSpeedAverage' => round($metrics->avg('download_speed_average'), 0),
+                'uploadSpeedAverage' => round($metrics->avg('upload_speed_average'), 0),
+                'pingAverage' => round($metrics->avg('ping_average'), 0),
+                'packetLoss' => round($metrics->avg('packet_loss'), 0),
+                'totalQuality' => round($metrics->avg('total_quality_average'), 0),
+                'score' => ($feedbacksCount) ? round($feedbacks->avg('score') / $feedbacksCount, 1) : 0
             ];
         }
 
