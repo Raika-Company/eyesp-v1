@@ -403,6 +403,7 @@ const SpeedTest = () => {
                   percentage={
                     isDl ? mbpsToAmount(download) : mbpsToAmount(upload)
                   }
+                  isDl={isDl}
                 >
                   <Box
                     sx={{
@@ -419,7 +420,7 @@ const SpeedTest = () => {
                     }}
                   >
                     <Typography
-                      color="primary"
+                      color={isDl ? "primary" : "thirdly"}
                       variant="boxValue"
                       component="p"
                     >
@@ -431,7 +432,7 @@ const SpeedTest = () => {
                       width="80%"
                     >
                       <FileUploadOutlinedIcon
-                        color={!isDl ? "primary" : "primary.light"}
+                        color={!isDl ? "thirdly" : "primary.light"}
                         fontSize="large"
                       />
                       <Typography>Mb/s</Typography>
