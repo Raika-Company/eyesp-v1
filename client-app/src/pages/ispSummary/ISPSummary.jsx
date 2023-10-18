@@ -7,15 +7,15 @@ import {
   Button,
   Menu,
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import CardContainer from "../../app/common/CardContainer";
 import CardInformation from "../../app/common/CardInformation";
-import {ContainedSelect} from "../../app/common/ContainedSelect";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CircleChart from "../../app/common/CircleChart";
 import RatingComponent from "../../app/common/Rating";
-import {Treemap, ResponsiveContainer} from "recharts";
+import { Treemap, ResponsiveContainer } from "recharts";
 import CompareTable from "../dashboard/newDashboard/components/CompareTable";
-import {GridItem} from "../../app/common/Charts";
+import { GridItem } from "../../app/common/Charts";
 import provinces from "../../../public/data/provinces.json";
 import ISPList from "../../../public/data/RowISPData.json";
 import DownArrow from "../../app/assets/image/down.svg";
@@ -71,11 +71,11 @@ const averageTimeStamp = [
 ];
 
 const dataForChart = [
-  {name: "A1", value: 30},
-  {name: "A2", value: 30},
-  {name: "B1", value: 80},
-  {name: "B2", value: 90},
-  {name: "B3", value: 10},
+  { name: "A1", value: 30 },
+  { name: "A2", value: 30 },
+  { name: "B1", value: 80 },
+  { name: "B2", value: 90 },
+  { name: "B3", value: 10 },
 ];
 
 const ISPs = [
@@ -120,10 +120,10 @@ const titlesChart = [
   },
 ];
 const chartColors = [
-  {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
-  {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
-  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
-  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
+  { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
+  { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
+  { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
+  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
 ];
 
 const mockDataForPastPerformance = [
@@ -225,7 +225,7 @@ const ISPSummary = () => {
       console.log(element);
     }, 10);
   }, [isDark]);
-  const PastData = ({title, value}) => {
+  const PastData = ({ title, value }) => {
     return (
       <Stack
         direction="row"
@@ -475,7 +475,6 @@ const ISPSummary = () => {
                     gap: ".5rem",
                     background: isDark ? "#404040" : "#40404040",
                     borderRadius: ".5rem",
-                    paddingRight: "0",
                   }}
                 >
                   <img src={DownArrow} />
@@ -497,7 +496,7 @@ const ISPSummary = () => {
                   ))}
                 </Menu>
               </Stack>
-              <CircleChart id={"this_is"} finalPercentage={26} unit={"%"} />
+              <CircleChart size={100} id={"this_is"} finalPercentage={26} />
             </Box>
           </CardContainer>
           <Box display="flex" gap="1rem">
@@ -626,7 +625,7 @@ const COLORS = [
   "#FF8042",
 ];
 const CustomizedContent = (props) => {
-  const {depth, x, y, width, height, index} = props;
+  const { depth, x, y, width, height, index } = props;
 
   return (
     <g>

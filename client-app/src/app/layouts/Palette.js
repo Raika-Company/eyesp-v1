@@ -197,6 +197,9 @@ export const lightTheme = createTheme({
       light: "#D8D8D8",
       dark: "#6A6861"
     },
+    thirdly: {
+      main: "#683C94"
+    },
     error: {
       main: "#9A0B0B",
       light: "#FF7A79",
@@ -262,6 +265,9 @@ export const darkTheme = createTheme({
       main: "#B3B3B3",
       light: "#404040",
       dark: "#6A6861"
+    },
+    thirdly: {
+      main: "#7342A3"
     },
     error: {
       main: "#9A0B0B",

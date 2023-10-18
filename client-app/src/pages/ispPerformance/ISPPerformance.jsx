@@ -94,10 +94,10 @@ const ISPPerformance = () => {
 
   const sortedISPData = useMemo(() => {
     // Find the ISPs associated with the selected province
+
     let provinceISPs = ProvincesCompare.find(
       (p) => p.name === selectedProvince
     )?.ISPs;
-
     // If there are no ISPs for the selected province or if no province is selected, fall back to RawISPData
     let dataToSort = provinceISPs || RawISPData;
 
@@ -113,6 +113,8 @@ const ISPPerformance = () => {
         padding: "5px 14px;",
       },
   }));
+  console.log("RRRRRRRr", sortedISPData);
+
   const NewCard = styled(Box)(({ theme }) => ({
     maxHeight: "54em",
     overflowY: "auto",

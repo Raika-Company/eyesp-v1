@@ -72,10 +72,13 @@ const ISPTable = ({ ISPdata, isDetail }) => {
   const theme = useTheme(); // Get the current theme
   const isDarkMode = theme.palette.mode === "dark";
   const rowsHead = [
-    { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
-    { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
+    { label: "تعداد کاربران" },
+    { label: "رضایت کاربران" },
+    { unit: "(mb/s)", label: "دانلود" },
+    { unit: "(mb/s)", label: "آپلود" },
     { unit: "(m/s)", label: "پینگ" },
     { unit: "(m/s)", label: "پکت لاس" },
+    { label: "اختلال موجود" },
     { unit: "(%)", label: "عملکرد" },
   ];
   return (
@@ -89,8 +92,12 @@ const ISPTable = ({ ISPdata, isDetail }) => {
       {isDetail ? (
         <>
           <RowBox>
-            <Typography variant="h4">رتبه</Typography>
-            <Typography variant="h4">نام</Typography>
+            <Typography variant="chartTitle" component="h4">
+              رتبه
+            </Typography>
+            <Typography variant="chartTitle" component="h4">
+              نام
+            </Typography>
             {rowsHead.map((row) => {
               return (
                 <Box
@@ -100,11 +107,15 @@ const ISPTable = ({ ISPdata, isDetail }) => {
                   justifyContent={"center"}
                 >
                   <Typography variant="h6">{row.unit}</Typography>
-                  <Typography variant="h4">{row.label}</Typography>
+                  <Typography variant="chartTitle" component="h4">
+                    {row.label}
+                  </Typography>
                 </Box>
               );
             })}
-            <Typography variant="h4">جزئیات</Typography>
+            <Typography variant="chartTitle" component="h4">
+              جزئیات
+            </Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
@@ -117,15 +128,40 @@ const ISPTable = ({ ISPdata, isDetail }) => {
               } // Use the gradient based on the theme
               marginTop="0.75rem"
             >
-              <Typography variant="h5">{index + 1}</Typography>
-              <Typography variant="h5">{Items.ISPname}</Typography>
-              <Typography variant="h5" sx={{ color: "primary" }}>
+              <Typography variant="h4" component="chartTitle">
+                {index + 1}
+              </Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.ISPname}
+              </Typography>{" "}
+              <Typography variant="h4" component="chartTitle">
+                6567
+              </Typography>{" "}
+              <Typography variant="h4" component="chartTitle">
+                3434{" "}
+              </Typography>
+              <Typography
+                variant="h4"
+                component="chartTitle"
+                sx={{ color: "primary" }}
+              >
                 {Items.disturbance}
               </Typography>
-              <Typography variant="h5">{Items.upload}</Typography>
-              <Typography variant="h5">{Items.pings}</Typography>
-              <Typography variant="h5">{Items.packet}</Typography>
-              <Typography variant="h5">{Items.performance}</Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.upload}
+              </Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.pings}
+              </Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.packet}
+              </Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.performance}
+              </Typography>
+              <Typography variant="h4" component="chartTitle">
+                {Items.disturbance}
+              </Typography>
               <IconButton aria-label={`more info about ${Items.ISPname}`}>
                 <WestIcon />
               </IconButton>

@@ -1,5 +1,5 @@
-import {Typography, useTheme} from "@mui/material";
-import {useNavigate} from "react-router-dom"; // Import useNavigate
+import { Typography, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 
@@ -26,6 +26,7 @@ const NewLogo = () => {
         paddingY: "0.75rem",
         marginTop: "2.5rem",
         cursor: "pointer",
+        zIndex: "2",
       }}
     >
       <Typography variant="logo">EYESP.LIVE</Typography>
