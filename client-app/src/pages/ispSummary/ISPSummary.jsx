@@ -268,8 +268,8 @@ const ISPSummary = () => {
             <div>
               <Typography
                 textAlign="right"
-                variant="h2"
-                component="h4"
+                variant="h1"
+                component="h2"
                 marginBottom="0.88rem"
                 marginRight="0.75rem"
               >
@@ -307,8 +307,8 @@ const ISPSummary = () => {
           >
             <Typography
               textAlign="right"
-              variant="h2"
-              component="h4"
+              variant="h1"
+              component="h2"
               marginBottom="0.88rem"
               marginRight="0.75rem"
             >
@@ -327,6 +327,9 @@ const ISPSummary = () => {
                     id={average.id}
                     finalPercentage={average.value}
                     unit={average.unit}
+                    variant="h1"
+                    bgColor={isDark ? "none" : "#313131"}
+                    textColor={isDark ? "none" : "white"}
                     gradientColors={
                       index % 2 === 0
                         ? ["#005E87", "rgba(44, 79, 121, 0.90)"]
@@ -388,8 +391,8 @@ const ISPSummary = () => {
             <Typography
               textAlign="right"
               alignSelf="flex-start"
-              variant="h2"
-              component="h4"
+              variant="h1"
+              component="h2"
               marginBottom="0.88rem"
               marginRight="0.75rem"
             >
@@ -496,7 +499,14 @@ const ISPSummary = () => {
                   ))}
                 </Menu>
               </Stack>
-              <CircleChart size={100} id={"this_is"} finalPercentage={26} />
+              <CircleChart
+                variant="h2"
+                bgColor={isDark ? "none" : "#313131"}
+                textColor={isDark ? "none" : "white"}
+                size={100}
+                id={"this_is"}
+                finalPercentage={26}
+              />
             </Box>
           </CardContainer>
           <Box display="flex" gap="1rem">

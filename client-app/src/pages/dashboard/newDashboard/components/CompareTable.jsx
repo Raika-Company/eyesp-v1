@@ -1,8 +1,8 @@
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
-import {useState} from "react";
-import {useMediaQuery} from "@mui/material";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useMediaQuery } from "@mui/material";
 import Table from "./Table";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 

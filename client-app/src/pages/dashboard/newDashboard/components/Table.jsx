@@ -1,5 +1,12 @@
-import {memo} from "react";
-import {styled, keyframes, IconButton, Box, Typography} from "@mui/material";
+import { memo } from "react";
+import {
+  styled,
+  keyframes,
+  IconButton,
+  Box,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 
 /**
@@ -22,7 +29,7 @@ const fadeInAnimation = keyframes`
  * @param {number} delay - Animation delay in seconds.
  * @param {string} gradient - Background gradient CSS.
  */
-const RowBox = styled(Box)(({delay, gradient}) => ({
+const RowBox = styled(Box)(({ delay, gradient }) => ({
   display: "flex",
   alignItems: "center",
   borderRadius: ".5rem",
@@ -37,20 +44,20 @@ const RowBox = styled(Box)(({delay, gradient}) => ({
     textAlign: "center",
     fontSize: "1rem",
     fontFamily: "PeydaLight",
-    color: "#676767",
+    // color: "#676767",
   },
 }));
 
 /**
  * @description Array of gradient strings for styling the rows in the ISPTable.
  */
-const gradients = [
+const gradients = ["#7D6C41", "#6A6861", "#6F4D25", "#404040"];
+const light_gradients = [
   "linear-gradient(180deg, #BDFEAE 0%, #F2EFA5 0.01%, #F9F7EA 100%)",
   "linear-gradient(180deg, #DADADA 0%, #E1E1E1 0.01%, #F6F6F6 100%)",
   "linear-gradient(180deg, #D49A63 0%, #F1CBB0 0.01%, #F8F8F8 100%)",
   "linear-gradient(180deg, #D0E3ED 0%, #D0E2EC 0.01%, #EEF4F9 100%)",
 ];
-
 /**
  * @function ISPTable
  * @description React component for displaying a table of Internet Service Providers (ISPs).
@@ -59,13 +66,15 @@ const gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const Table = ({ISPdata, isDetail, showProvince}) => {
+const Table = ({ ISPdata, isDetail, showProvince }) => {
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const rowsHead = [
-    {unit: "(mb/s)", label: "سرعت میانگین دانلود"},
-    {unit: "(mb/s)", label: "سرعت میانگین آپلود"},
-    {unit: "(m/s)", label: "پینگ"},
-    {unit: "(m/s)", label: "پکت لاس"},
-    {unit: "(%)", label: "عملکرد"},
+    { unit: "(mb/s)", label: "سرعت میانگین دانلود" },
+    { unit: "(mb/s)", label: "سرعت میانگین آپلود" },
+    { unit: "(m/s)", label: "پینگ" },
+    { unit: "(m/s)", label: "پکت لاس" },
+    { unit: "(%)", label: "عملکرد" },
   ];
   return (
     <Box
@@ -77,7 +86,7 @@ const Table = ({ISPdata, isDetail, showProvince}) => {
     >
       {isDetail ? (
         <>
-          <RowBox sx={{width: "80em"}}>
+          <RowBox sx={{ width: "80em" }}>
             <Typography variant="h4">رتبه</Typography>
             <Typography variant="h4">نام</Typography>
             {rowsHead.map((row) => {
@@ -97,15 +106,19 @@ const Table = ({ISPdata, isDetail, showProvince}) => {
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
-              sx={{width: "80em"}}
+              sx={{ width: "80em" }}
               key={Items.rank}
               delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
+              gradient={
+                isDarkMode
+                  ? gradients[index >= 3 ? 3 : index]
+                  : light_gradients[index >= 3 ? 3 : index]
+              }
               marginTop="1rem"
             >
               <Typography variant="h5">{index + 1}</Typography>
               <Typography variant="h5">{Items.ISPname}</Typography>
-              <Typography variant="h5" sx={{color: "primary"}}>
+              <Typography variant="h5" sx={{ color: "primary" }}>
                 {Items.disturbance}
               </Typography>
               <Typography variant="h5">{Items.upload}</Typography>
@@ -129,7 +142,11 @@ const Table = ({ISPdata, isDetail, showProvince}) => {
             <RowBox
               key={Items.rank}
               delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
+              gradient={
+                isDarkMode
+                  ? gradients[index >= 3 ? 3 : index]
+                  : light_gradients[index >= 3 ? 3 : index]
+              }
               marginTop=".3rem"
             >
               <Typography>{index + 1}</Typography>
