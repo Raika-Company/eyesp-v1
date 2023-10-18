@@ -1,7 +1,6 @@
 import {Box, Typography, useTheme} from "@mui/material";
 
 const Square = ({value, unit, title, background, color}) => {
-  const theme = useTheme();
   return (
     <Box
       sx={{

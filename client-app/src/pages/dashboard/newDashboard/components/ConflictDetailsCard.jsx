@@ -1,25 +1,36 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Skeleton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import leftArrow from "../../../../app/assets/image/leftArrow.svg";
 import Danger from "../../../../app/assets/image/danger.svg";
 import DangerDark from "../../../../app/assets/image/error_dark.svg";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
+import {useEffect, useState} from "react";
 
 const conflictData = [
   {
     id: 1,
     value: 24,
+    name: "issues",
     title: "مورد",
   },
   {
     id: 2,
     value: 16,
+    name: "cities",
     title: "استان",
   },
   {
     id: 3,
     value: 18,
+    name: "isp",
     title: "ISP",
   },
 ];
@@ -30,7 +41,7 @@ const conflictDetailsData = [
     title: "موراد اختلاف",
     values: ["افزایش پینگ اپراتور  های وب در تهران"],
     address:
-    "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
   },
   {
     id: 2,
@@ -48,9 +59,19 @@ const conflictDetailsData = [
   },
 ];
 
-const ConflictDetailsCard = ({ onOpenModal }) => {
+const ConflictDetailsCard = ({onOpenModal, globalStates}) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+
+  const [showData, setShowData] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowData(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  });
+
   return (
     <Box
       sx={{
@@ -75,7 +96,13 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
         }}
       >
         اختلال‌های موجود{" "}
-        <span style={{ color: "#FE4543", fontSize: "2rem" }}>24</span>
+        <span style={{color: "#FE4543", fontSize: "2rem"}}>
+          {globalStates && showData ? (
+            globalStates.issues.count
+          ) : (
+            <CircularProgress size="1rem" color="secondary" />
+          )}
+        </span>
       </Typography>
 
       <Box
@@ -84,11 +111,17 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
           gap: "1rem",
         }}
       >
-        {conflictData.map(({ id, value, title }) => (
+        {conflictData.map(({id, name, title}) => (
           <Square
-            value={value}
-            title={title}
             key={id}
+            value={
+              globalStates && showData ? (
+                globalStates[name].count
+              ) : (
+                <CircularProgress size="1rem" color="secondary" />
+              )
+            }
+            title={title}
             background="radial-gradient(140.09% 140.09% at 18.63% 0%, #B40000 0%, #5D0000 100%)"
             color="#FFF"
           />
@@ -121,7 +154,7 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
           gap: "1rem",
         }}
       >
-        {conflictDetailsData.map(({ id, title, values, address }) => (
+        {conflictDetailsData.map(({id, title, values, address}) => (
           <Box
             sx={{
               display: "flex",

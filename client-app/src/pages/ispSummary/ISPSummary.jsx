@@ -245,18 +245,25 @@ const ISPSummary = () => {
     );
   };
   return (
-    <Box
-      sx={{
-        marginBottom: "2rem",
-      }}
-    >
+    <Box>
       <Box display="flex" justifyContent="space-between" marginBottom="1.19rem">
         <Typography variant="h1" component="h3" color="text.secondary">
           وضعیت اپراتور ها
         </Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap="1.25rem">
-        <Box display="flex" flexDirection="column" gap="1rem">
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="1rem"
+          sx={{
+            height: "78vh",
+            overflow: "scroll",
+            "::-webkit-scrollbar": {
+              width: "0",
+            },
+          }}
+        >
           <CardContainer
             display="flex"
             flexDirection="column"
@@ -371,9 +378,14 @@ const ISPSummary = () => {
         </Box>
         <Box
           sx={{
+            height: "78vh",
+            overflow: "scroll",
             display: "flex",
             flexDirection: "column",
             gap: "1rem",
+            "::-webkit-scrollbar": {
+              width: "0",
+            },
           }}
         >
           <CardContainer
@@ -511,9 +523,13 @@ const ISPSummary = () => {
         </Box>
         <Box
           sx={{
-            height: "85vh",
+            height: "78vh",
             overflow: "scroll",
+            overflowX: "hidden",
             position: "relative",
+            "::-webkit-scrollbar": {
+              width: "0",
+            },
           }}
         >
           <CardContainer

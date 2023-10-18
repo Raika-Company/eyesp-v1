@@ -1,5 +1,5 @@
 // React core imports
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect} from "react";
 
 // MUI (Material-UI) core and component imports
 import {
@@ -8,12 +8,11 @@ import {
   AccordionSummary,
   Box,
   Button,
-  Container,
   Typography,
   useMediaQuery,
   MenuItem,
   SvgIcon,
-  keyframes
+  keyframes,
 } from "@mui/material";
 
 // MUI Icons
@@ -21,21 +20,19 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 
 // Local component and utility imports
-import { ContainedButton } from "../../../app/common/ContainedButton";
+import {ContainedButton} from "../../../app/common/ContainedButton";
 import NewIranMap from "../map/NewIranMap";
-import NewLogo from "../../../app/common/NewLogo";
 
 // Assets and data imports
-import frame from "../../../app/assets/image/frame.svg";
 import provinces from "../../../../public/data/provinces.json";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import SendErrorReport from "../../../app/common/SendErrorReport";
 import CustomSnackbar from "../../../app/common/CustomSnackbar";
 import ISPStatistics from "../ISPStatistics";
 import ISPCompareTable from "../ISPCompareTable";
 import useDynamicMP from "../../../app/hooks/useDynamicMP";
 import CardContainer from "../../../app/common/CardContainer";
-import { ContainedSelect } from "../../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../../app/common/ContainedSelect";
 
 const disorders = [
   {
@@ -63,7 +60,7 @@ const Province = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   const location = useLocation();
-  const { provinceName, provinceQuality } = location.state;
+  const {provinceName, provinceQuality} = location.state;
 
   const [province, setProvince] = useState(provinceName);
 
@@ -132,24 +129,12 @@ const Province = () => {
         }}
       >
         <Box flex={1}>
-          <Typography
-            variant="h1"
-            color="text.textBlack"
-            gutterBottom
-          >
+          <Typography variant="h1" color="text.textBlack" gutterBottom>
             وضعیت اینترنت
           </Typography>
-          <Typography
-            variant="h2"
-            color="text.main"
-            gutterBottom
-          >
+          <Typography variant="h2" color="text.main" gutterBottom>
             استان{" "}
-            <Typography
-              component="span"
-              variant="h2"
-              color="primary"
-            >
+            <Typography component="span" variant="h2" color="primary">
               {provinceName}
             </Typography>
           </Typography>
@@ -190,7 +175,7 @@ const Province = () => {
               backgroundColor="#D9D9D9"
               width="100%"
               borderRadius="0.65625rem"
-              sx={{ direction: "ltr" }}
+              sx={{direction: "ltr"}}
             >
               <Box
                 height="100%"
@@ -204,23 +189,13 @@ const Province = () => {
             </Box>
           </Box>
           <Box display="flex" justifyContent="space-between">
-            <Typography
-              variant="h5"
-              color="text.main"
-            >
+            <Typography variant="h5" color="text.main">
               وضعیت:{" "}
-              <Typography
-                component="span"
-                variant="h4"
-                color="primary"
-              >
+              <Typography component="span" variant="h4" color="primary">
                 مطلوب
               </Typography>
             </Typography>
-            <Typography
-              variant="h5"
-              color="text.main"
-            >
+            <Typography variant="h5" color="text.main">
               عملکرد کلی
             </Typography>
           </Box>
@@ -231,11 +206,7 @@ const Province = () => {
             gutterBottom
           >
             اختلالات موجود (
-            <Typography
-            component="span"
-              variant="h4"
-              color="text.main"
-            >
+            <Typography component="span" variant="h4" color="text.main">
               3 مورد
             </Typography>
             )
@@ -260,10 +231,14 @@ const Province = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography variant="h6" color="text.main">{disorder.title}</Typography>
+                  <Typography variant="h6" color="text.main">
+                    {disorder.title}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography variant="h6" color="text.main">{disorder.detail}</Typography>
+                  <Typography variant="h6" color="text.main">
+                    {disorder.detail}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
@@ -273,7 +248,7 @@ const Province = () => {
               variant="contained"
               bgColor="#FF8A35"
               txtHover="#FF8A35"
-              sx={{ fontSize: "1rem", backgroundColor: "#FF8A35" }}
+              sx={{fontSize: "1rem", backgroundColor: "#FF8A35"}}
               onClick={handleClickOpenDialog}
             >
               گزارش اختلال
@@ -311,14 +286,16 @@ const Province = () => {
               alignItems="center"
               gap="1rem"
             >
-              <Typography variant="h3" color="text.main">استان مورد نظر:</Typography>
+              <Typography variant="h3" color="text.main">
+                استان مورد نظر:
+              </Typography>
               <ContainedSelect
                 labelId="change-province-label"
                 id="change-province"
                 label={provinceName}
                 value={provinceName}
                 onChange={handleProvinceChange}
-                sx={{ borderRadius: "1.25rem", pl: "2rem" }}
+                sx={{borderRadius: "1.25rem", pl: "2rem"}}
                 displayEmpty
               >
                 {provinces.map((provinceItem) => (
@@ -337,7 +314,7 @@ const Province = () => {
                 color: "#008EDD",
                 fontFamily: "PeydaRegular",
               }}
-              endIcon={<WestIcon sx={{ mr: "0.7rem" }} />}
+              endIcon={<WestIcon sx={{mr: "0.7rem"}} />}
             >
               وضعیت کل کشور
             </Button>

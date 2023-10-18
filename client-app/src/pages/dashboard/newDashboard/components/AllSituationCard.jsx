@@ -1,55 +1,47 @@
-import {
-  Box,
-  Button,
-  Stack,
-  Typography,
-  grid2Classes,
-  useTheme,
-} from "@mui/material";
-import leftArrow from "../../../../app/assets/image/leftArrow.svg";
-import {Link} from "react-router-dom";
+import {Box, Skeleton, Stack, Typography, useTheme} from "@mui/material";
 import CircleChart from "../../../../app/common/CircleChart";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
+import {useEffect, useState} from "react";
+import services from "../../../../app/api/index";
 
-const detailsData = [
-  {
+const statesKeys = ["download", "upload", "ping", "packet_loss"];
+const statesProperties = {
+  download: {
     id: 1,
-    percentage: 59,
     title: "سرعت دانلود",
-    average: 24,
     unit: "mb/s",
-    gradient: ["#960000", "rgba(157, 0, 0, 0.40)"],
   },
-  {
+  upload: {
     id: 2,
-    percentage: 65,
     title: "سرعت آپلود",
-    average: 21,
     unit: "mb/s",
-    gradient: ["#005E87", "rgba(44, 79, 121, 0.80)"],
   },
-  {
+
+  ping: {
     id: 3,
-    percentage: 43,
     title: "پینگ",
-    average: 24,
     unit: "ms",
-    gradient: ["#960000", "rgba(157, 0, 0, 0.40)"],
   },
-  {
+
+  packet_loss: {
     id: 4,
-    percentage: 42,
     title: "پکت لاس",
-    average: 14,
     unit: "%",
-    gradient: ["#960000", "rgba(157, 0, 0, 0.40)"],
   },
-];
+};
 
 const AllSituationCard = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+
+  const [internetState, setInternetState] = useState(null);
+  useEffect(() => {
+    services.dashboard.getInternetStateForNow().then((response) => {
+      setInternetState(response.data.data);
+    });
+  }, []);
+
   return (
     <Box
       sx={{
@@ -79,18 +71,6 @@ const AllSituationCard = () => {
         >
           وضعیت کلی اینترنت کشور
         </Typography>
-        {/* <Button
-          variant="text.main"
-          component={Link}
-          to=""
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          مشاهده جزئیات
-          <img src={leftArrow} alt="leftArrow" />
-        </Button> */}
         <ViewDetailsButton target="/isp-performance" />
       </Stack>
       <Box
@@ -99,9 +79,9 @@ const AllSituationCard = () => {
           justifyContent: "space-evenly",
         }}
       >
-        {detailsData.map(({id, percentage, title, average, unit, gradient}) => (
+        {statesKeys.map((key) => (
           <Box
-            key={id}
+            key={key}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -111,16 +91,26 @@ const AllSituationCard = () => {
             }}
           >
             <CircleChart
-              id={id}
-              finalPercentage={percentage}
+              id={statesProperties[key].id}
+              finalPercentage={
+                internetState ? internetState[key].percentage : 0
+              }
               gradientColors={
-                id === 2 ? ["#005E87", "rgba(44, 79, 121, 0.80)"] : undefined
+                statesProperties[key].id === 2
+                  ? ["#005E87", "rgba(44, 79, 121, 0.80)"]
+                  : undefined
               }
             />
-            <Typography>{title}</Typography>
+            <Typography>{statesProperties[key].title}</Typography>
             <Square
-              value={average}
-              unit={unit}
+              value={
+                internetState ? (
+                  internetState[key].avg
+                ) : (
+                  <Skeleton width="2rem" height="2rem" />
+                )
+              }
+              unit={statesProperties[key].unit}
               title={"میانگین"}
               background={
                 isDark

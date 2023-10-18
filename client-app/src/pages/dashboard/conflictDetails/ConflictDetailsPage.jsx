@@ -2,101 +2,18 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
   Box,
   Button,
   ButtonGroup,
   Divider,
+  Skeleton,
   Typography,
   useTheme,
 } from "@mui/material";
 import ConflictBox from "./ConflictBox";
-
-const conflicts = [
-  "کاهش سرعت دانلود",
-  "کاهش سرعت آپلود",
-  "قطعی سرویس",
-  "افزایش پکت لاس",
-];
-const mockDataConflict = {
-  "کاهش سرعت دانلود": {
-    اصفهان: ["شاتل", "پارس آنلاین", "های وب"],
-    فارس: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
-    تهران: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
-    سمنان: [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "سمنت",
-      "مخابرات",
-      "زیکسل",
-    ],
-    مرکزی: [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "مخابرات",
-      "زیکسل",
-    ],
-  },
-  "کاهش سرعت آپلود": {
-    مرکزی: ["شاتل", "زیتل", "آسیاتک", "سمنت", "مخابرات", "زیکسل"],
-    کهگیلویه‌و‌بویراحمد: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
-  },
-  "قطعی سرویس": {
-    سمنان: ["شاتل"],
-  },
-
-  "افزایش پکت لاس": {
-    بوشهر: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
-    "خراسان رضوی": [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "سمنت",
-      "مخابرات",
-      "زیکسل",
-    ],
-    خوزستان: [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "مخابرات",
-      "زیکسل",
-    ],
-  },
-  "افزایش پکت لاس۲": {
-    بوشهر: ["شاتل", "پارس آنلاین", "های وب", "زیتل", "آسیاتک"],
-    "خراسان رضوی": [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "سمنت",
-      "مخابرات",
-      "زیکسل",
-    ],
-    خوزستان: [
-      "شاتل",
-      "پارس آنلاین",
-      "های وب",
-      "زیتل",
-      "آسیاتک",
-      "مخابرات",
-      "زیکسل",
-    ],
-  },
-};
+import services from "../../../app/api/index";
 
 const ConflictDetailsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -104,6 +21,38 @@ const ConflictDetailsPage = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    switch (selectedSort) {
+      case "conflict": {
+        services.dashboard.getIssues().then((response) => {
+          setData(response.data.data);
+          setLoading(false);
+        });
+        break;
+      }
+      case "province": {
+        services.dashboard.getIssuesForCities().then((response) => {
+          setData(response.data.data);
+          setLoading(false);
+        });
+        break;
+      }
+
+      case "ISP": {
+        services.dashboard.getIssuesForIsp().then((response) => {
+          setData(response.data.data);
+          setLoading(false);
+        });
+        break;
+      }
+    }
+  }, [selectedSort]);
+
+  console.log(data);
   return (
     <Box>
       <Box
@@ -223,13 +172,20 @@ const ConflictDetailsPage = () => {
           justifyContent: "start",
         }}
       >
-        {conflicts.map((conflict, index) => (
-          <ConflictBox
-            key={conflict}
-            title={conflict}
-            data={mockDataConflict[conflict]}
-          />
-        ))}
+        {!loading && data
+          ? Object.keys(data).map((key) => (
+              <ConflictBox key={key} title={key} data={data[key]} />
+            ))
+          : // <>
+            //   {[1, 2, 3, 4].map((key) => (
+            //     <Skeleton
+            //       key={key}
+            //       width={key === 1 ? "20rem" : key === 2 ? "30rem" : "10rem"}
+            //       height="18rem"
+            //     />
+            //   ))}
+            // </>
+            null}
       </Box>
     </Box>
   );
