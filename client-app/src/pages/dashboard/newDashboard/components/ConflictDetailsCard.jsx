@@ -30,7 +30,7 @@ const conflictDetailsData = [
     title: "موراد اختلاف",
     values: ["افزایش پینگ اپراتور  های وب در تهران"],
     address:
-    "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
   },
   {
     id: 2,
@@ -66,6 +66,7 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
       }}
     >
       <Typography
+        variant="h1"
         sx={{
           fontSize: "1.5rem",
           display: "flex",
@@ -142,7 +143,7 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
                 borderRadius: ".8rem",
               }}
             >
-              <Typography>{values}</Typography>
+              <Typography variant="body1">{values}</Typography>
               <Button
                 variant="text.main"
                 component={Link}
