@@ -244,10 +244,32 @@ class NetworkController extends Controller
         }
     }
 
-    public function stats()
+    public function stats(Request $request)
     {
         try {
-            $data = RstResult::hourly(null, 3);
+            switch ($request->type) {
+                case 'recent':
+                    $data = RstResult::recent();
+                    break;
+                case 'today':
+                    $data = RstResult::today();
+                    break;
+                case 'yesterday':
+                    $data = RstResult::daily(null, 1);
+                    break;
+                case 'week':
+                    $data = RstResult::weekly(null, 1);
+                    break;
+                case 'month':
+                    $data = RstResult::monthly(null, 1);
+                    break;
+                case 'year':
+                    $data = RstResult::year(null, 1);
+                    break;
+                default:
+                    $data = RstResult::hourly(null, 3);
+                    break;
+            }
             $threshold = NetworkService::GetThresholds();
             $downloadAvg = $data->avg('download');
             $uploadAvg = $data->avg('upload');
