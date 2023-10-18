@@ -1,7 +1,7 @@
 // NavSection.js
-import {useEffect} from "react";
-import {Box} from "@mui/system";
-import {IconButton, Typography, useMediaQuery, useTheme} from "@mui/material";
+import { useEffect } from "react";
+import { Box } from "@mui/system";
+import { IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
   Home as HomeIcon,
   Speed as SpeedIcon,
@@ -9,14 +9,14 @@ import {
   InfoOutlined as InfoOutlinedIcon,
   SignalCellularAltOutlined as SignalCellularAltOutlinedIcon,
 } from "@mui/icons-material";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ISP from "./ISP";
 const NAV_ITEMS = [
   {
     label: "صفحه اصلی",
     icon: (color) => (
       <HomeIcon
-        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/dashboard",
@@ -27,7 +27,7 @@ const NAV_ITEMS = [
     label: "تست سرعت",
     icon: (color) => (
       <SpeedIcon
-        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/",
@@ -37,7 +37,7 @@ const NAV_ITEMS = [
     label: "تست های گذشته",
     icon: (color) => (
       <HistoryIcon
-        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/history",
@@ -53,7 +53,7 @@ const NAV_ITEMS = [
     label: "اطلاعات شبکه من",
     icon: (color) => (
       <InfoOutlinedIcon
-        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/information",
@@ -63,7 +63,7 @@ const NAV_ITEMS = [
     label: "گزارش ها",
     icon: (color) => (
       <SignalCellularAltOutlinedIcon
-        sx={{width: "24px", height: "24px", cursor: "pointer", color}}
+        sx={{ width: "24px", height: "24px", cursor: "pointer", color }}
       />
     ),
     path: "/isp-summary",
@@ -74,7 +74,7 @@ const NAV_ITEMS = [
 const iconColor = (path, location) =>
   location.pathname === path ? "#00A3FF" : "inherit";
 
-const NavItem = ({item, openNav, setOpenNav, toggleNavState, location}) => {
+const NavItem = ({ item, openNav, setOpenNav, toggleNavState, location }) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -130,7 +130,7 @@ const NavItem = ({item, openNav, setOpenNav, toggleNavState, location}) => {
   );
 };
 
-const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
+const NavSection = ({ startIndex, setOpenNav, endIndex, openNav }) => {
   const history = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -140,7 +140,7 @@ const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
     history(path);
   };
 
-  const {key} = useLocation();
+  const { key } = useLocation();
   useEffect(() => {
     !isMdUp && setOpenNav(false);
 
@@ -160,7 +160,7 @@ const NavSection = ({startIndex, setOpenNav, endIndex, openNav}) => {
         width: openNav ? "13rem" : isMdUp ? "4rem" : "12rem",
         marginRight: isMdUp || openNav ? "initial" : "-15rem",
         fontSize: "0.9rem",
-        background: theme.palette.mode === "light" ? "white" : "",
+        background: theme.palette.mode === "light" ? "#fff" : "",
         border: theme.palette.mode === "dark" && "1.5px solid #676767",
         boxShadow:
           theme.palette.mode === "dark"

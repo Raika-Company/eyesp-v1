@@ -1,4 +1,17 @@
+<<<<<<< HEAD
 import {Box, Skeleton, Stack, Typography, useTheme} from "@mui/material";
+=======
+import {
+  Box,
+  Button,
+  Stack,
+  Typography,
+  grid2Classes,
+  useTheme,
+} from "@mui/material";
+import leftArrow from "../../../../app/assets/image/leftArrow.svg";
+import { Link } from "react-router-dom";
+>>>>>>> remotes/origin/develop
 import CircleChart from "../../../../app/common/CircleChart";
 import Square from "./Square";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
@@ -61,6 +74,7 @@ const AllSituationCard = () => {
     >
       <Stack direction="row" justifyContent="space-between">
         <Typography
+          variant="h1"
           sx={{
             fontSize: "1.5rem",
             display: "flex",
@@ -79,6 +93,7 @@ const AllSituationCard = () => {
           justifyContent: "space-evenly",
         }}
       >
+<<<<<<< HEAD
         {statesKeys.map((key) => (
           <Box
             key={key}
@@ -120,6 +135,43 @@ const AllSituationCard = () => {
             />
           </Box>
         ))}
+=======
+        {detailsData.map(
+          ({ id, percentage, title, average, unit, gradient }) => (
+            <Box
+              key={id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: ".8rem",
+              }}
+            >
+              <CircleChart
+                id={id}
+                finalPercentage={percentage}
+                gradientColors={
+                  id === 2 ? ["#005E87", "rgba(44, 79, 121, 0.80)"] : undefined
+                }
+              />
+              <Typography variant="h3" component="h2">
+                {title}
+              </Typography>
+              <Square
+                value={average}
+                unit={unit}
+                title={"میانگین"}
+                background={
+                  isDark
+                    ? "radial-gradient(143.37% 143.37% at 10.4% -3.47%, #434544 0%, rgba(67, 69, 68, 0.00) 100%)"
+                    : "radial-gradient(143.37% 143.37% at 10.4% -3.47%, #E3E3E3 0%, rgba(144, 144, 144, 0.00) 100%)"
+                }
+              />
+            </Box>
+          )
+        )}
+>>>>>>> remotes/origin/develop
       </Box>
     </Box>
   );

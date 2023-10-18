@@ -11,7 +11,7 @@ const Navbar = ({toggleOpenMenu, openNav}) => {
       borderRadius="50%"
       marginTop="2.3rem"
       sx={{
-        background: theme.palette.mode === "light" ? "white" : "#242525",
+        background: theme.palette.mode === "light" ? "#fff" : "#242525",
         border: theme.palette.mode === "dark" && "1.5px solid #676767",
         boxShadow:
           theme.palette.mode === "dark"

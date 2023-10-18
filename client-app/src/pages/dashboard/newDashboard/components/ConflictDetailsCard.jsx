@@ -41,21 +41,25 @@ const conflictDetailsData = [
     title: "موراد اختلاف",
     values: ["افزایش پینگ اپراتور  های وب در تهران"],
     address:
+<<<<<<< HEAD
       "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+=======
+    "https://chat.eyesp.live/chat/Hiweb/ping/Tehran",
+>>>>>>> remotes/origin/develop
   },
   {
     id: 2,
     title: "استان‌ها",
     values: ["کاهش سرعت دانلود در اپراتور زیتل"],
     address:
-      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+      "https://chat.eyesp.live/chat/Zitel/download/Tehran",
   },
   {
     id: 3,
     title: "اپراتور‌ها",
     values: ["اختلال و قطعی اینترنت اپراتور مخابرات در شهر تهران"],
     address:
-      "http://localhost:3000/chat/get-issue-stats/info/Mokhaberat/packet_loss/Tehran",
+      "https://chat.eyesp.live/chat/Mokhaberat/packet_loss/Tehran",
   },
 ];
 
@@ -87,6 +91,7 @@ const ConflictDetailsCard = ({onOpenModal, globalStates}) => {
       }}
     >
       <Typography
+        variant="h1"
         sx={{
           fontSize: "1.5rem",
           display: "flex",
@@ -175,7 +180,7 @@ const ConflictDetailsCard = ({onOpenModal, globalStates}) => {
                 borderRadius: ".8rem",
               }}
             >
-              <Typography>{values}</Typography>
+              <Typography variant="body1">{values}</Typography>
               <Button
                 variant="text.main"
                 component={Link}

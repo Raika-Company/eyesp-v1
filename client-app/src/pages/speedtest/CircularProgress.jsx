@@ -1,28 +1,24 @@
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-// Styles
-const styles = {
-  svg: {
-    transform: "rotate(-270deg)",
-  },
-  line: {
-    stroke: "#326589",
-    strokeWidth: "4",
-  },
-  lineActive: {
-    stroke: "#57B1F0",
-    strokeWidth: "6",
-  },
-  row: {
-    padding: "50px",
-  },
-};
-
 const toRadians = (angle) => angle * (Math.PI / 180);
 
-const CircularProgressBar = ({ percentage, children }) => {
+const CircularProgressBar = ({ percentage, children, isDl }) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
+
+  const styles = {
+    line: {
+      stroke: isDl? "#326589" : "#4A2A69",
+      strokeWidth: "4",
+    },
+    lineActive: {
+      stroke: isDl ? "#57B1F0" : "#683C94",
+      strokeWidth: "6",
+    },
+    row: {
+      padding: "50px",
+    },
+  };
 
   useEffect(() => {
     const animationDuration = 0.2 * 1000; // in ms
@@ -81,16 +77,22 @@ const CircularProgressBar = ({ percentage, children }) => {
       position="relative"
       borderRadius="50%"
       padding="0.5rem"
-      border="2px solid #326589"
+      border={isDl ? "2px solid #326589" : "2px solid #683C94"}
       boxShadow={
+        isDl ?
         animatedPercentage
           ? `inset 0 0 ${animatedPercentage / 2}px #326589, 0px 0px ${
               animatedPercentage / 2
             }px #326589`
+          : "none" :
+          animatedPercentage
+          ? `inset 0 0 ${animatedPercentage / 2}px #683C94, 0px 0px ${
+              animatedPercentage / 2
+            }px #683C94`
           : "none"
       }
     >
-      <svg viewBox="0 0 500 500" style={styles.svg}>
+      <svg viewBox="0 0 500 500" style={{transform: "rotate(-270deg)"}}>
         {renderLines()}
       </svg>
       {children}

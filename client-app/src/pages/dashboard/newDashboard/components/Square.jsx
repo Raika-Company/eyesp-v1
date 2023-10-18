@@ -16,12 +16,7 @@ const Square = ({value, unit, title, background, color}) => {
         color: color,
       }}
     >
-      <Typography
-        style={{
-          fontSize: "2rem",
-          fontWeight: "700",
-        }}
-      >
+      <Typography variant="h1">
         {value}
         {unit ? (
           <span
@@ -34,7 +29,7 @@ const Square = ({value, unit, title, background, color}) => {
           </span>
         ) : null}
       </Typography>
-      <Typography>{title}</Typography>
+      <Typography variant="body2">{title}</Typography>
     </Box>
   );
 };
