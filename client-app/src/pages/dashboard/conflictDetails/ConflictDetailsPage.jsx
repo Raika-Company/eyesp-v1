@@ -52,7 +52,6 @@ const ConflictDetailsPage = () => {
     }
   }, [selectedSort]);
 
-  console.log(data);
   return (
     <Box>
       <Box
