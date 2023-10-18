@@ -32,6 +32,8 @@ const convertToPersian = (value) => {
       return "شاتل";
     case "zitel":
       return "زی تل";
+    default:
+      return value;
   }
 };
 
