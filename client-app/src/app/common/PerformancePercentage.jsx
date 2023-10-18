@@ -1,10 +1,5 @@
 import {
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Grid,
-  Rating,
   Typography,
   useMediaQuery,
   useTheme,
@@ -12,33 +7,16 @@ import {
   Button,
   FormControl,
   MenuItem,
-  styled,
-  CircularProgress,
-  backdropClasses,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
-import StatisticBox from "./StatisticBox";
-import CardContainer from "./CardContainer";
+
 import { ContainedSelect } from "../../app/common/ContainedSelect";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
-import CustomSnackbar from "./CustomSnackbar";
+
 import NewCardContainer from "./NewCardContainer";
-import Irancell from "../assets/image/irancell.svg";
+
 import ViewDetailsButton from "./ViewDetailsButton";
 import CircleChart from "./CircleChart";
 
-// const StyledFormControl = styled(FormControl)(({ theme }) => ({
-//   width: "50%",
-//   "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
-//     {
-//       padding: theme.palette.mode === "dark" ? "5px 14px" : "5px 14px",
-//     },
-// }));
 let gradientColors = ["#0C6087", "#0C6087"];
 
 const OperatorProfile = () => {
@@ -58,7 +36,7 @@ const OperatorProfile = () => {
 
   const buttonGroupStyle = {
     backgroundColor: theme.palette.mode === "dark" ? "#303030" : "#F4F4F4",
-    width: "80%",
+    width: "85%",
     alignItems: "center",
     gap: "11px",
     justifyContent: "center",
@@ -112,21 +90,17 @@ const OperatorProfile = () => {
           flexBasis: isMdScreen ? "100%" : "50%",
         }}
       >
-        <Box
-          display="flex"
-          alignItems="flex-end"
-          justifyContent="space-between"
-        >
-          {" "}
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography
             variant="h1"
             component="h2"
             color="text.textBlack"
             gutterBottom
+            mb={2}
           >
-            درصد عملکرد{" "}
+            درصد عملکرد
           </Typography>
-          <FormControl sx={{ width: "50%" }}>
+          <FormControl sx={{ width: "50%", height: "60px" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
