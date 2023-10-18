@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
+import IrancellLight from "../assets/image/LogoOperator/irancell-logo-light.svg";
 
 const OperatorProfile = ({ openFeedbackDialog }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -41,7 +42,10 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
           alignItems="center"
         >
           <Typography variant="h2">ایرانسل</Typography>
-          <img src={Irancell} alt="irnacell" />
+          <img
+            src={theme.palette.mode === "dark" ? Irancell : IrancellLight}
+            alt="irnacell"
+          />
         </Box>
         <Box
           mt={1}
