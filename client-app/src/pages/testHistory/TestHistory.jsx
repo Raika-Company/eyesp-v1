@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   Box,
   Card,
@@ -9,7 +9,6 @@ import {
   useTheme,
 } from "@mui/material";
 
-import NewSwitchBtn from "./newSwitchBtn";
 import HistoryTable from "./HistoryTable";
 import YAxisLine from "../../app/common/YAxisLine";
 import XAxisLine from "./XAxisLine";
@@ -21,6 +20,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { ContainedButton } from "../../app/common/ContainedButton";
 
 const convertPersianNumbers = (persianNumber) => {
   if (typeof persianNumber === "string") {
@@ -66,7 +66,7 @@ const titlesChart = [
  */
 const CustomTooltip = ({ active, payload }) => {
   // Logging the payload to inspect its structure:
-  console.log(payload);
+  // console.log(payload);
 
   if (active && payload && payload.length) {
     // Attempting to extract the download and upload values:
@@ -308,19 +308,17 @@ const NewTestHistory = ({ openNav }) => {
           تست های گذشته
         </Typography>
         <Box display="flex" alignItems="center" gap="1.19rem">
-          <NewSwitchBtn
-            textOn="خروجی اکسل"
-            textOff="انجام تست"
-            onClick={handleButtonClick}
-            variant="contained"
-            bgColor=" #0C6087"
-            txtHover=" #0C6087"
-            sx={{
-              fontSize: "1rem",
-            }}
-          >
+          <ContainedButton txtHover="#0C6087" txtColor="#fff">
             خروجی اکسل
-          </NewSwitchBtn>
+          </ContainedButton>
+          <ContainedButton
+            onClick={handleButtonClick}
+            bgColor="#0C6087"
+            txtHover="#0C6087"
+            txtColor="#fff"
+          >
+            انجام تست
+          </ContainedButton>
         </Box>
       </Box>
       <HistoryTable

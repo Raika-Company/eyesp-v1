@@ -1,8 +1,9 @@
-import {Box, Typography, useTheme} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 
-const CardInformation = ({title, value, subTitle, subValue, color}) => {
+const CardInformation = ({ title, value, subTitle, subValue, color }) => {
   const theme = useTheme();
+  const isdark = theme.palette.mode === "dark";
   return (
     <Box position="relative">
       <Box
@@ -12,9 +13,8 @@ const CardInformation = ({title, value, subTitle, subValue, color}) => {
         alignItems="center"
         borderRadius="0.75rem"
         padding="0.81rem"
-        backgroundColor={
-          theme.palette.mode === "dark" ? "#262626" : "transparent"
-        }
+        border={isdark ? "none" : "1px solid #DADADA"}
+        backgroundColor={isdark ? "#262626" : "transparent"}
       >
         <Typography variant="button1" component="span" color="text.main">
           {title}

@@ -1422,7 +1422,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             cy={provinceCoords[province].y}
             onClick={() => {
               // TEMPORARY
-              navigate("/province-profile");
+              navigate("/province-profile/" + province);
             }}
             r="35"
             fill="transparent"

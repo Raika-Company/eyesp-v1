@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, Typography } from "@mui/material";
+import {Box, useMediaQuery, Typography} from "@mui/material";
 
 import Charts from "../../app/common/Charts";
 
@@ -7,9 +7,11 @@ import OperatorProfile from "../../app/common/OperatorProfile";
 import ISPDetail from "../../app/common/ISPDetail";
 import MomentDisruption from "../../app/common/MomentDisruption";
 import ProvinceDetail from "./ProvinceDetail";
+import {useParams} from "react-router-dom";
 
 const ProvinceProfile = () => {
   const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
+  const {provinceName} = useParams();
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
@@ -22,7 +24,7 @@ const ProvinceProfile = () => {
       }}
     >
       <Typography variant="h1" component="h1">
-        استان تهران{" "}
+        {provinceName}
       </Typography>
 
       <Box

@@ -66,6 +66,7 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
       }}
     >
       <Typography
+        variant="h1"
         sx={{
           fontSize: "1.5rem",
           display: "flex",
@@ -142,7 +143,7 @@ const ConflictDetailsCard = ({ onOpenModal }) => {
                 borderRadius: ".8rem",
               }}
             >
-              <Typography>{values}</Typography>
+              <Typography variant="body1">{values}</Typography>
               <Button
                 variant="text.main"
                 component={Link}

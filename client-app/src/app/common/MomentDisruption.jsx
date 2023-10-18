@@ -1,37 +1,20 @@
 import {
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Grid,
-  Rating,
   Typography,
   useMediaQuery,
   useTheme,
-  ButtonGroup,
-  Button,
   FormControl,
   MenuItem,
-  styled,
-  CircularProgress,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
-import StatisticBox from "./StatisticBox";
-import CardContainer from "./CardContainer";
+
 import { ContainedSelect } from "../../app/common/ContainedSelect";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
-import CustomSnackbar from "./CustomSnackbar";
+
 import NewCardContainer from "./NewCardContainer";
-import Irancell from "../assets/image/irancell.svg";
+
 import ViewDetailsButton from "./ViewDetailsButton";
-import CircleChart from "./CircleChart";
-import AxisIsp from "../assets/image/AxisIsp.svg";
-import { BarChart, XAxis, YAxis, Tooltip, Bar, ReferenceLine } from "recharts";
+
+import { BarChart, YAxis, Bar, ReferenceLine, CartesianGrid } from "recharts";
 
 const OperatorProfile = () => {
   const handleDisturbanceClick = () => {
@@ -192,11 +175,13 @@ const OperatorProfile = () => {
 
   const formatYAxisTicks = (tick) => {
     const labels = {
-      "-6": "4ساعت قبل",
-      0: "2 ساعت قبل",
-      6: "1 ساعت قبل",
-      12: "30 دقیقه قبل",
-      18: " در حال حاضر",
+      "-18": "هشت ساعت قبل",
+      "-12": "چهار ساعت قبل",
+      "-6": "دو ساعت قبل",
+      0: "یک ساعت قبل",
+      6: "30 دقیقه قبل",
+      12: "15 دقیقه قبل",
+      18: "حال",
       // Add more if needed
     };
     return labels[tick] || "";
@@ -217,7 +202,6 @@ const OperatorProfile = () => {
           justifyContent="space-between"
           alignItems="flex-end"
         >
-          {" "}
           <Typography m={0} variant="h1" component="h2" color="text.textBlack">
             اختلالات لحظه ای{" "}
           </Typography>
@@ -231,11 +215,10 @@ const OperatorProfile = () => {
           alignItems="center"
           gap={2}
         >
-          {" "}
-          <Typography m={0} variant="h6" color="text.textBlack" gutterBottom>
+          <Typography mb={2.5} variant="h6" color="text.textBlack" gutterBottom>
             نمایش تا
           </Typography>
-          <FormControl sx={{ width: "8.8125rem" }}>
+          <FormControl sx={{ width: "8.8125rem", height: "60px" }}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -245,15 +228,15 @@ const OperatorProfile = () => {
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
-              <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
-              <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
+              <MenuItem value="یک روز قبل">یک روز قبل</MenuItem>
+              <MenuItem value="یک هفته قبل">یک هفته قبل</MenuItem>
             </ContainedSelect>
           </FormControl>
         </Box>
         <Box mt={4}>
           <BarChart
             width={649}
-            height={250}
+            height={246}
             data={chartData}
             margin={{ bottom: 20, left: 50 }}
           >
@@ -269,36 +252,16 @@ const OperatorProfile = () => {
               }}
             />
             {/* <Tooltip /> */}
+            <CartesianGrid
+              vertical={false}
+              stroke={theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"}
+            />
             <Bar
               dataKey="اختلال"
-              fill="rgba(255, 0, 0, 0.2)"
+              fill="rgba(255, 0, 0, 0.1)"
               shape={<CustomBarShape />}
               barSize={48} // The width of the bar.
               barGap={50}
-            />
-            <ReferenceLine
-              y={-6}
-              stroke="grey"
-              strokeWidth={1}
-              strokeOpacity={0.5}
-            />
-            <ReferenceLine
-              y={0}
-              stroke="grey"
-              strokeWidth={1}
-              strokeOpacity={0.5}
-            />
-            <ReferenceLine
-              y={6}
-              stroke="grey"
-              strokeWidth={1}
-              strokeOpacity={0.5}
-            />
-            <ReferenceLine
-              y={12}
-              stroke="grey"
-              strokeWidth={1}
-              strokeOpacity={0.5}
             />
             <ReferenceLine
               y={18}
