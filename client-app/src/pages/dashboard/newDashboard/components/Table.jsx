@@ -134,9 +134,9 @@ const Table = ({ ISPdata, isDetail, showProvince }) => {
       ) : (
         <>
           <RowBox>
-            <Typography>رتبه</Typography>
-            <Typography>نام</Typography>
-            <Typography>درصد عملکرد</Typography>
+            <Typography variant="body1">رتبه</Typography>
+            <Typography variant="body1">نام</Typography>
+            <Typography variant="body1">درصد عملکرد</Typography>
           </RowBox>
           {ISPdata.map((Items, index) => (
             <RowBox
@@ -150,10 +150,10 @@ const Table = ({ ISPdata, isDetail, showProvince }) => {
               marginTop=".3rem"
             >
               <Typography>{index + 1}</Typography>
-              <Typography>
+              <Typography variant="h3">
                 {showProvince ? Items.province : Items.ISPname}
               </Typography>
-              <Typography>{Items.performance}</Typography>
+              <Typography variant="h3">{Items.performance}</Typography>
             </RowBox>
           ))}
         </>
