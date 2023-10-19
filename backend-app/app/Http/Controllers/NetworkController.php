@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\IspPacketlossAnalysis;
 use App\Jobs\IspPingAnalysis;
 use App\Jobs\IspSpeedAnalysis;
+use App\Models\RstCityStats;
 use App\Models\RstDisturbance;
 use App\Models\RstIspStats;
 use App\Models\RstResult;
@@ -222,6 +223,47 @@ class NetworkController extends Controller
         }
     }
 
+    public function cityMetrics(Request $request)
+    {
+        try {
+            $ispMetrics = RstCityStats::where('city', $request->city)
+                ->where('date', '>=', Carbon::today()->subDays(7))->get();
+
+            $stats = RstDisturbance::latest()->first();
+            $description = json_decode($stats->description);
+            $issues = [];
+            foreach ($description as $ispInfos) {
+                foreach ($ispInfos as $metric => $metricInfos) {
+                    if(Str::lower(key($metricInfos)) == Str::lower($request->city)) {
+                        $issues[] = $metric;
+                    }
+                }
+            }
+
+            $data = [
+                'totalQualityAverage' => round($ispMetrics->avg('total_quality_average'), 0),
+                'clients' => $ispMetrics->sum('clients'),
+                'speedAverage' => round($ispMetrics->avg('speed_average'), 0),
+                'downloadAverage' => round($ispMetrics->avg('download_speed_average'), 0),
+                'uploadAverage' => round($ispMetrics->avg('upload_speed_average'), 0),
+                'pingAverage' => round($ispMetrics->avg('ping_average'), 0),
+                'issuesCount' => count(array_unique($issues)),
+                'issues' => array_unique($issues)
+            ];
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => ''
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function charts(Request $request)
     {
         try {
@@ -372,6 +414,7 @@ class NetworkController extends Controller
 
     public function getIssues(Request $request)
     {
+        set_time_limit(3600);
         try {
             $metrics = ['download', 'upload', 'ping', 'packet_loss'];
             if($request->isp)
