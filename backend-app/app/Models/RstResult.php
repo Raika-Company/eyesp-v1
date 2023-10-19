@@ -72,7 +72,7 @@ class RstResult extends Model
         return $res->get();
     }
 
-    public static function today($isp = null, $temp)
+    public static function today($isp = null, $temp = null)
     {
         $res = self::where('date', now()->toDateString());
         if($isp) {

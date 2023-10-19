@@ -30,21 +30,21 @@ const conflictDetailsData = [
     title: "موراد اختلاف",
     values: ["افزایش پینگ اپراتور  های وب در تهران"],
     address:
-      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+    "https://chat.eyesp.live/chat/Hiweb/ping/Tehran",
   },
   {
     id: 2,
     title: "استان‌ها",
     values: ["کاهش سرعت دانلود در اپراتور زیتل"],
     address:
-      "http://localhost:3000/chat/get-issue-stats/info/Zitel/download/Tehran",
+      "https://chat.eyesp.live/chat/Zitel/download/Tehran",
   },
   {
     id: 3,
     title: "اپراتور‌ها",
     values: ["اختلال و قطعی اینترنت اپراتور مخابرات در شهر تهران"],
     address:
-      "http://localhost:3000/chat/get-issue-stats/info/Mokhaberat/packet_loss/Tehran",
+      "https://chat.eyesp.live/chat/Mokhaberat/packet_loss/Tehran",
   },
 ];
 

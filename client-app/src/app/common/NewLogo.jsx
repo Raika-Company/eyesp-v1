@@ -23,14 +23,14 @@ const NewLogo = () => {
         border: isDark ? "1.5px solid #DEDEDE" : "1px solid #A0A0A0",
         borderRadius: "2rem",
         alignItems: "center",
-        paddingY: "0.75rem",
         marginTop: "2.5rem",
         cursor: "pointer",
         zIndex: "2",
       }}
     >
-      <Typography variant="logo">EYESP.LIVE</Typography>
-
+      <Typography sx={{ mt: "0.5rem" }} variant="logo">
+        EYESP.LIVE
+      </Typography>
       <Logo />
     </CardContainer>
   );

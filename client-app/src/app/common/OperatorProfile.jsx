@@ -1,27 +1,14 @@
 import {
   Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Grid,
   Rating,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
-import StatisticBox from "./StatisticBox";
-import CardContainer from "./CardContainer";
-
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
-import CustomSnackbar from "./CustomSnackbar";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
+import IrancellLight from "../assets/image/LogoOperator/irancell-logo-light.svg";
 
 const OperatorProfile = ({ openFeedbackDialog }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -33,8 +20,8 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
       <NewCardContainer
         sx={{
           marginTop: "1rem",
-          paddingTop: "1.5rem",
-          paddingBottom: "2.5rem",
+          paddingTop: "2rem",
+          paddingBottom: "2rem",
           paddingX: "3%",
           flexBasis: isMdScreen ? "100%" : "50%",
         }}
@@ -51,11 +38,14 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
         <Box
           mt="2.13rem"
           display="flex"
-          justifyContent="space-between"
+          justifyContent="space-evenly"
           alignItems="center"
         >
           <Typography variant="h2">ایرانسل</Typography>
-          <img src={Irancell} alt="irnacell" />
+          <img
+            src={theme.palette.mode === "dark" ? Irancell : IrancellLight}
+            alt="irnacell"
+          />
         </Box>
         <Box
           mt={1}
@@ -67,26 +57,25 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
             sx={{
               borderRadius: "1rem",
               backgroundColor: backgroundColor,
-              padding: "1rem",
-              alignItems: "center",
+              padding: "1.6rem 0.3rem",
+              mt: "1.6rem",
               boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Typography variant="body1">رتبه کلی اپراتور</Typography>
-            <Typography
-              textAlign="center"
-              variant="mainDigits"
-              marginTop="1rem"
-            >
+            <Typography variant="h3">رتبه کلی اپراتور</Typography>
+            <Typography variant="mainDigits" marginTop="1rem">
               #1
-            </Typography>{" "}
+            </Typography>
           </Box>
           <Box
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            gap="0.625rem"
             flexBasis={isMdScreen ? "100%" : "50%"}
           >
             <Typography
@@ -98,7 +87,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
               بازخورد کاربران
             </Typography>
             <Rating
-              value={2.5}
+              value={4}
               precision={0.5}
               name="read-only"
               readOnly
@@ -109,30 +98,15 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
                 },
               }}
             />
-            <Box display="flex" justifyContent="center" gap="2rem">
+            <Box display="flex" justifyContent="center" gap="1rem">
               <Typography variant="h6" color="text.main">
-                10423 کاربر
-              </Typography>{" "}
+                120135 کاربر
+              </Typography>
               <Typography variant="h6" color="text.main">
-                (2.5)
+                (4.1)
               </Typography>
             </Box>
-            <ContainedButton
-              variant="button"
-              onClick={openFeedbackDialog}
-              sx={{
-                backgroundColor: "#0C6087",
-                color: "white",
-                fontSize: "14px !important",
-                borderRadius: "0.625rem",
-                marginTop: "1.5rem",
-              }}
-              bgColor="#0C6087"
-              txtHover="#0C6087"
-            >
-              ثبت بازخورد
-            </ContainedButton>
-          </Box>{" "}
+          </Box>
         </Box>
       </NewCardContainer>
     </>
