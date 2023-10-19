@@ -1,5 +1,5 @@
-import { Typography, useTheme, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Typography, useTheme, Box, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 import AILogo from "../../app/assets/image/AiLogo.svg";
@@ -15,7 +15,8 @@ const AIButton = () => {
 
   return (
     <CardContainer
-      onClick={handleBoxClick}
+      component={Link}
+      to="https://chat.eyesp.live/chat"
       sx={{
         width: "12.5625rem",
         display: "flex",
@@ -27,7 +28,8 @@ const AIButton = () => {
         cursor: "pointer",
         zIndex: "2",
         boxShadow: "0 0 15px rgba(255,255,255,0.8)", // white box shadow
-        animation: "ringing 1s infinite", // Add this line for the animation
+        textDecoration: "none",
+        animation: "ringing 2s infinite", // Add this line for the animation
         "@keyframes ringing": {
           // Define the keyframes for ringing
           "0%, 100%": {
@@ -47,11 +49,13 @@ const AIButton = () => {
         flexDirection="column"
         justifyContent="start"
         alignItems="center"
-        mt={0.5}
+        color="white"
+        // mt={0.3}
+        height="50px"
       >
         {" "}
         <Typography variant="AI">EYESP AI</Typography>{" "}
-        <Typography variant="h4" sx={{ transform: "translateY(-6px)" }}>
+        <Typography variant="h5" sx={{ transform: "translateY(-10px)" }}>
           هوش مصنوعی{" "}
         </Typography>
       </Box>
