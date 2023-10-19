@@ -4,9 +4,9 @@ import config from "./config";
 const { rootAddress } = config;
 const axios = new ClientApi();
 
-// Getting isp information
+// Getting Metrics Information information
 export const getIspMetrics = async () =>
-  await axios.http.get(rootAddress + "/dashboard/isp-metrics/tehran");
+  await axios.http.get(rootAddress + "/dashboard/isp-metrics");
 
 export const getMyIspMetrics = async (myIsp: string) =>
   await axios.http.get(rootAddress + "/dashboard/my-isp/" + myIsp);

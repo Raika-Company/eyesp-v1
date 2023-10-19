@@ -621,7 +621,7 @@ const ISPSummary = () => {
                 title={line.title}
                 unit={line.unit}
                 color={chartColors[index]}
-                data={generateRandomData()}
+                data={currentChartData}
               />
             ))}
           </CardContainer>

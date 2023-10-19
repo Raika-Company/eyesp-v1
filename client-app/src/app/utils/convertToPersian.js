@@ -14,7 +14,6 @@ const convertToPersian = (value) => {
 
   if (conflictKeys[lowerCaseValue]) return conflictKeys[lowerCaseValue];
 
-  console.log(lowerCaseValue);
   switch (lowerCaseValue) {
     case "hamraheaval":
       return "همراه اول";
