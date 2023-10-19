@@ -1,6 +1,7 @@
 import {Box, Stack, Typography, Button, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
 import leftArrow from "../../../app/assets/image/leftArrow.svg";
+import convertToPersian from "../../../app/utils/convertToPersian";
 
 const ConflictDetailsCard = ({title, data = []}) => {
   const theme = useTheme();
@@ -22,7 +23,7 @@ const ConflictDetailsCard = ({title, data = []}) => {
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography color={!isDark && "#0C6087"} fontWeight="700">
-          {title}
+          {convertToPersian(title)}
         </Typography>
 
         <Button
@@ -46,10 +47,10 @@ const ConflictDetailsCard = ({title, data = []}) => {
           color: !isDark && "#434544",
         }}
       >
-        {data.map((isp, idx) => (
+        {data.map((value, idx) => (
           <>
             <Typography whiteSpace="nowrap" fontSize=".8rem !important">
-              {isp}
+              {convertToPersian(value)}
             </Typography>
             {idx < data.length - 1 && (idx + 1) % 3 !== 0 && (
               <Typography color="#434544">|</Typography>

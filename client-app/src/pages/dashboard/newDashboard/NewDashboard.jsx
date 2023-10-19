@@ -9,13 +9,13 @@ import {
 import ConflictDetailsCard from "./components/ConflictDetailsCard";
 import AllSituationCard from "./components/AllSituationCard";
 import CompareTable from "./components/CompareTable";
-import { ContainedSelect } from "../../../app/common/ContainedSelect";
-import provinces from "../../../../public/data/provinces.json";
+import {ContainedSelect} from "../../../app/common/ContainedSelect";
 import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
 import SetConflictModal from "./components/SetConflictModal";
+import services from "../../../app/api/index";
 
 const NewDashboard = () => {
   const theme = useTheme();
@@ -33,18 +33,29 @@ const NewDashboard = () => {
     setSelectedISP(event.target.value);
   };
 
+  const [globalStates, setGlobalStates] = useState(null);
+  useEffect(() => {
+    services.dashboard
+      .getGlobalStates()
+      .then((response) => {
+        setGlobalStates(response.data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <div>
       <BackgroundSvg
         provinces={
           province
-            ? [provincesCoords[province]]
-            : [
-                provincesCoords["تهران"],
-                provincesCoords["خوزستان"],
-                provincesCoords["قم"],
-                provincesCoords["یزد"],
-              ]
+            ? [provincesCoords[province.toLowerCase()]]
+            : globalStates
+            ? globalStates.cities.names.map(
+                (cityName) => provincesCoords[cityName.toLowerCase()]
+              )
+            : []
         }
       />
       <Box
@@ -62,7 +73,10 @@ const NewDashboard = () => {
           padding="2rem"
           whiteSpace="nowrap"
         >
-          <ConflictDetailsCard onOpenModal={() => setOpenConflictModal(true)} />
+          <ConflictDetailsCard
+            onOpenModal={() => setOpenConflictModal(true)}
+            globalStates={globalStates}
+          />
           <AllSituationCard />
           <Stack direction="row" gap="2rem">
             <CompareTable title="اپراتور‌های برتر" />
@@ -100,9 +114,12 @@ const NewDashboard = () => {
               }}
             >
               <MenuItem value="">انتخاب استان</MenuItem>
-              {provinces.map((provinceItem) => (
-                <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                  {provinceItem.name}
+              {Object.keys(provincesCoords).map((provinceName) => (
+                <MenuItem
+                  key={provincesCoords[provinceName]}
+                  value={provinceName}
+                >
+                  {provincesCoords[provinceName].name}
                 </MenuItem>
               ))}
             </ContainedSelect>
