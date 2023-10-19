@@ -47,11 +47,12 @@ const AIButton = () => {
         flexDirection="column"
         justifyContent="start"
         alignItems="center"
-        mt={0.5}
+        // mt={0.3}
+        height="50px"
       >
         {" "}
         <Typography variant="AI">EYESP AI</Typography>{" "}
-        <Typography variant="h4" sx={{ transform: "translateY(-6px)" }}>
+        <Typography variant="h5" sx={{ transform: "translateY(-10px)" }}>
           هوش مصنوعی{" "}
         </Typography>
       </Box>
