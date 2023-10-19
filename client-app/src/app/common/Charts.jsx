@@ -15,6 +15,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
+  CartesianGrid,
 } from "recharts";
 
 import YAxisLine from "./YAxisLine";
@@ -111,17 +112,18 @@ export function GridItem({
     >
       <Box display="flex" position="relative" width="92%">
         <Box sx={{ width: "100%" }}>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex">
             <Typography
               color="text.main"
               variant="h1"
               component="h2"
               gutterBottom
+              ml="1rem"
             >
               {title}
             </Typography>
             {title === "سرعت دانلود" && pathname === "/my-isp" && (
-              <FormControl sx={{ width: "25%", marginLeft: "3rem" }}>
+              <FormControl sx={{ width: "25%", marginLeft: "3rem", height:'60px' }}>
                 <ContainedSelect
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -141,12 +143,6 @@ export function GridItem({
           <Box
             borderRadius="3rem"
             paddingRight="3%"
-            // sx={{
-            //   background:
-            //     theme.palette.mode === "dark"
-            //       ? "radial-gradient(646.45% 156.82% at 1.67% -6.71%, rgba(103, 154, 202, 0.23) 0.31%, rgba(104, 137, 151, 0.00) 100%)"
-            //       : "radial-gradient(646.45% 156.82% at 1.67% -6.71%, #E2F7FF 0.31%, rgba(188, 203, 209, 0.00) 100%)",
-            // }}
             width="100%"
             height="250px"
           >
@@ -155,32 +151,13 @@ export function GridItem({
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart width="100%" height="100%" data={data}>
                     <Tooltip content={<CustomTooltip />} />
-                    <ReferenceLine y={5} stroke="grey" strokeWidth={1} />
-                    <ReferenceLine y={25} stroke="grey" strokeWidth={1} />
-                    <ReferenceLine y={40} stroke="grey" strokeWidth={1} />
-                    <ReferenceLine y={60} stroke="grey" strokeWidth={1} />
-                    <ReferenceLine y={78} stroke="grey" strokeWidth={1} />
-                    <ReferenceLine y={95} stroke="grey" strokeWidth={1} />
-
+                    <CartesianGrid
+                      vertical={false}
+                      stroke={
+                        theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"
+                      }
+                    />
                     <defs>
-                      {/* <linearGradient
-                        id={`gradientChart${color.stroke}`}
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0.333333"
-                          stopColor={color.gradientStart}
-                          stopOpacity="0.167089"
-                        />
-                        <stop
-                          offset="1"
-                          stopColor={color.gradientEnd}
-                          stopOpacity="0"
-                        />
-                      </linearGradient> */}
                       <filter
                         id="glow"
                         x="-70%"

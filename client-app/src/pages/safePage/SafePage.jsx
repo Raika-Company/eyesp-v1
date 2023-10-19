@@ -249,7 +249,7 @@ const SpeedTest = () => {
             user_request: false,
           };
           axios
-            .post("http://2.189.59.243:8000/api/v1/speed-test/", testResults)
+            .post("https://speed-api.eyesp.live/api/v1/speed-test/", testResults)
             .then((response) => {
               console.log("Response:", response.data);
               setIsTestEnds(true);

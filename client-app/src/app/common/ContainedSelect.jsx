@@ -1,6 +1,7 @@
 import {Select, styled} from "@mui/material";
 
 const ContainedSelect = styled(Select)({
+  height:"60%",
   borderRadius: "1.25rem",
   border: "1px solid #DDD",
   paddingX: "0.8rem",
