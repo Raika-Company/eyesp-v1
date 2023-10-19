@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
 import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
-import RawISPData from "./../../../public/data/RowISPData.json";
 import {ContainedSelect} from "../../app/common/ContainedSelect";
 import services from "../../app/api/index";
+import convertToPersian from "../../app/utils/convertToPersian";
 
 /**
  * Raw data for the ISPs for comparison.
@@ -63,44 +63,11 @@ const ISPPerformance = () => {
   const [provinceData, setProvinceData] = useState(ProvincesCompare);
   const [selectedProvince, setSelectedProvince] = useState("همه استان‌ها");
   const theme = useTheme();
-  const [visibleRows, setVisibleRows] = useState(6);
-  const sortFunctions = useMemo(
-    () => ({
-      "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
-      "بیشترین اختلال": (a, b) =>
-        parseNumber(b.disturbance) - parseNumber(a.disturbance),
-      "کمترین اختلال": (a, b) =>
-        parseNumber(a.disturbance) - parseNumber(b.disturbance),
-      "بیشترین میانگین پینگ": (a, b) =>
-        parseNumber(b.pings) - parseNumber(a.pings),
-      "کمترین میانگین پینگ": (a, b) =>
-        parseNumber(a.pings) - parseNumber(b.pings),
-      "بیشترین میانگین سرعت": (a, b) =>
-        parseNumber(b.speed) - parseNumber(a.speed),
-      "کمترین میانگین سرعت": (a, b) =>
-        parseNumber(a.speed) - parseNumber(b.speed),
-    }),
-    []
-  );
+
   const handleProvinceChange = (e) => {
     setSelectedProvince((prevState) => e.target.value);
   };
 
-  const sortedISPData = useMemo(() => {
-    // Find the ISPs associated with the selected province
-
-    let provinceISPs = ProvincesCompare.find(
-      (p) => p.name === selectedProvince
-    )?.ISPs;
-    // If there are no ISPs for the selected province or if no province is selected, fall back to RawISPData
-    let dataToSort = provinceISPs || RawISPData;
-
-    const sortFunction = sortFunctions[sortCriteria];
-    if (sortFunction) {
-      return [...dataToSort].sort(sortFunction);
-    }
-    return dataToSort;
-  }, [sortCriteria, selectedProvince]);
   const StyledFormControl = styled(FormControl)(({theme}) => ({
     "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
       {
@@ -126,6 +93,29 @@ const ISPPerformance = () => {
 
   // Getting the data for chart
   const [chartData, setChartData] = useState(null);
+  const sortFunctions = useMemo(
+    () => ({
+      "نام ISP": (a, b) =>
+        convertToPersian(a).localeCompare(convertToPersian(b)),
+      "بیشترین اختلال": (a, b) =>
+        (chartData.isp[b]?.disturbance || 0) -
+        (chartData.isp[a]?.disturbance || 0),
+      "کمترین اختلال": (a, b) =>
+        (chartData.isp[a]?.disturbance || 0) -
+        (chartData.isp[b]?.disturbance || 0),
+      "بیشترین میانگین پینگ": (a, b) =>
+        chartData.isp[b].pingAverage - chartData.isp[a].pingAverage,
+      "کمترین میانگین پینگ": (a, b) =>
+        chartData.isp[a].pingAverage - chartData.isp[b].pingAverage,
+      "بیشترین میانگین سرعت": (a, b) =>
+        chartData.isp[b].downloadSpeedAverage -
+        chartData.isp[a].downloadSpeedAverage,
+      "کمترین میانگین سرعت": (a, b) =>
+        chartData.isp[a].downloadSpeedAverage -
+        chartData.isp[b].downloadSpeedAverage,
+    }),
+    [chartData]
+  );
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -134,6 +124,13 @@ const ISPPerformance = () => {
       setLoading(false);
     });
   }, []);
+
+  const [sortedKeys, setSortedKeys] = useState([]);
+  useEffect(() => {
+    if (!chartData) return;
+    const sortFunction = sortFunctions[sortCriteria];
+    setSortedKeys(Object.keys(chartData.isp).sort(sortFunction));
+  }, [chartData, sortCriteria, sortFunctions]);
 
   return (
     <NewCard
@@ -247,7 +244,7 @@ const ISPPerformance = () => {
           <Box
             sx={{width: isXsScreen ? "19em" : isMdScreen ? "51.5em" : "100%"}}
           >
-            <ISPTable ISPData={chartData} />
+            <ISPTable ISPData={chartData} sortedKeys={sortedKeys} />
           </Box>
         )}
       </Box>
