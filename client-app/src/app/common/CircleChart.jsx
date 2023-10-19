@@ -8,6 +8,9 @@ const CircleChart = ({
   size = 100,
   gradientColors = ["#960000", "rgba(157, 0, 0, 0.70)"],
   unit = null,
+  variant = "h4",
+  bgColor = "none",
+  textColor = "none",
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -66,7 +69,7 @@ const CircleChart = ({
           r={radius}
           strokeWidth={strokeWidth}
           stroke="lightgray"
-          fill="none"
+          fill={bgColor}
           filter="url(#soften)"
         />
         <circle
@@ -87,25 +90,26 @@ const CircleChart = ({
       </svg>
       {unit ? (
         <Box
+          color={textColor}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "0.5rem",
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            fontSize: "1.5rem",
           }}
         >
-          <Typography>{percentage}</Typography>
+          <Typography variant={variant}>{percentage}</Typography>
           <Typography>{unit}</Typography>
         </Box>
       ) : (
         <Typography
+          color={textColor}
           component="span"
+          variant={variant}
           sx={{
             position: "absolute",
             top: "50%",
