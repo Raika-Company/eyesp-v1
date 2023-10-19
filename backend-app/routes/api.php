@@ -30,7 +30,8 @@ Route::prefix('v1')->middleware(['cors'])->group(function () {
         Route::get('/upload-speed', [NetworkController::class, 'uploadSpeed']);
 
         Route::prefix('dashboard')->group(function () {
-            Route::get('/isp-metrics/{city?}', [NetworkController::class, 'ispMetrics']);
+            Route::get('/isp-metrics', [NetworkController::class, 'ispMetrics']);
+            Route::get('/city-metrics/{city}', [NetworkController::class, 'cityMetrics']);
             Route::get('/stats/{type?}', [NetworkController::class, 'stats']);
             Route::get('/charts/{type}/{isp?}/{city?}', [NetworkController::class, 'charts']);
             Route::get('/report/{isp}', [NetworkController::class, 'reports']);
