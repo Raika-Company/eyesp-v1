@@ -1,7 +1,7 @@
 import { Typography, useTheme, Box, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import CardContainer from "./CardContainer";
-import AILogo from "../../app/assets/image/AiLogo.svg";
+import AILogo from "../../app/assets/image/AILogo.svg";
 
 const AIButton = () => {
   const theme = useTheme();

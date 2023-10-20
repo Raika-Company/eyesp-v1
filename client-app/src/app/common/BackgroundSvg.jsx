@@ -1,7 +1,9 @@
-import {Fragment} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {SvgIcon, styled, useTheme} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import provinceCoords from "../../../public/data/provincesCoords.json";
+import services from "../api/index";
+import convertToPersian from "../utils/convertToPersian";
 
 const BackgroundSvg = ({provinces = [], ...props}) => {
   const navigate = useNavigate();
@@ -29,6 +31,22 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
     },
   }));
 
+  const [selectedProvince, setSelectedProvicne] = useState(null);
+  const [provinceData, setProvinceData] = useState(null);
+  useEffect(() => {
+    if (!selectedProvince) return;
+    services.dashboard.getCityMetrics(selectedProvince).then((response) => {
+      setProvinceData(response.data.data);
+    });
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSelectedProvicne(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [selectedProvince]);
   return (
     <SvgIcon
       {...props}
@@ -1424,7 +1442,10 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               // TEMPORARY
               navigate("/province-profile/" + provinceCoords[province].name);
             }}
-            r="35"
+            onMouseOver={() => {
+              setSelectedProvicne(province);
+            }}
+            r={provinceCoords[province]?.size || 35}
             fill="transparent"
           />
         ))}
@@ -1498,6 +1519,9 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
                   ? "url(#paint0_radial_467_4701)"
                   : "url(#SVGID_1_)"
               }
+              onMouseLeave={() => {
+                setSelectedProvicne(null);
+              }}
               d="M639.2,549.8c-0.2,0.3-0.4,0.3-0.6,0l-2.4-2.8c-0.2-0.2-0.5-0.3-0.7-0.2l-7.1,1.8c-0.4,0.1-0.7,0-1-0.2
 			c-1.3-0.8-2.6-0.8-4,0c-0.3,0.2-0.7,0.1-0.9-0.2c-1-1.7-2.1-3.3-3.1-4.9c-1.3-2-3.3-3-4.6-5.1c-1.3-2.2-0.2-4.4-2-6.4
 			c-1.9-2.1-3.6-4.3-5.1-6.7c-0.9-1.4-2-3.9-3.2-7.4c-1.2-3.3-2.7-6.5-4.6-9.6c-1.6-2.6-4.3-5.1-6-8.4c-0.2-0.3-0.4-0.5-0.7-0.6
@@ -4438,6 +4462,58 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
           rx="1.57"
           ry="1.13"
         />
+        {provinceData && selectedProvince && (
+          <g>
+            <rect
+              x={provinceCoords[selectedProvince].x - 100}
+              y={provinceCoords[selectedProvince].y - 120}
+              width={200}
+              height={100}
+              fill="url(#tooltip_gradient)"
+              rx={15}
+            />
+            <text
+              x={provinceCoords[selectedProvince].x + 90}
+              y={provinceCoords[selectedProvince].y - 90}
+              fontFamily="Arial"
+              fontSize="28"
+              fill="white"
+            >
+              {convertToPersian(selectedProvince)}
+            </text>
+            <text
+              x={provinceCoords[selectedProvince].x + 90}
+              y={provinceCoords[selectedProvince].y - 40}
+              fontFamily="Arial"
+              fontSize="38"
+              fill="red"
+            >
+              {provinceData ? provinceData.issues.length : "-"}
+            </text>
+            <text
+              x={provinceCoords[selectedProvince].x + 60}
+              y={provinceCoords[selectedProvince].y - 45}
+              fontFamily="Arial"
+              fontSize="20"
+              fill="white"
+            >
+              مورد اختلاف
+            </text>
+          </g>
+        )}
+        <defs>
+          <radialGradient
+            id="tooltip_gradient"
+            cx="19.58%"
+            cy="-10.78%"
+            r="225.55%"
+            fx="19.58%"
+            fy="-10.78%"
+          >
+            <stop offset="0%" stopColor="#333" stopOpacity="1" />
+            <stop offset="100%" stopColor="#181818" stopOpacity="0.69" />
+          </radialGradient>
+        </defs>
       </svg>
     </SvgIcon>
   );
