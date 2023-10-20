@@ -1445,7 +1445,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             onMouseOver={() => {
               setSelectedProvicne(province);
             }}
-            r="35"
+            r={provinceCoords[province]?.size || 35}
             fill="transparent"
           />
         ))}
