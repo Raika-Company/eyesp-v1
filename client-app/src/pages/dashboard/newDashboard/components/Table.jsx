@@ -91,7 +91,7 @@ const Table = ({ showProvince }) => {
           <Typography>نام</Typography>
           <Typography>درصد عملکرد</Typography>
         </RowBox>
-        {sortedKeys.map((key, index) => (
+        {sortedKeys.slice(0, visibleRows + 1).map((key, index) => (
           <RowBox
             key={index}
             delay={index * 0.2}
@@ -101,7 +101,7 @@ const Table = ({ showProvince }) => {
             <Typography>{index + 1}</Typography>
             <Typography>
               {/* {showProvince */}
-              {/* // ? convertToPersian(chartData.isp[key].province) */}:
+              {/* // ? convertToPersian(chartData.isp[key].province) */}
               {convertToPersian(key)}
               {/* } */}
             </Typography>

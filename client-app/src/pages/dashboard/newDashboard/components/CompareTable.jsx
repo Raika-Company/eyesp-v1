@@ -1,8 +1,6 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import leftArrow from "../../../../app/assets/image/leftArrow.svg";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useMediaQuery } from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
+import {useState} from "react";
+import {useMediaQuery} from "@mui/material";
 import Table from "./Table";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 
@@ -111,7 +109,7 @@ const CompareTable = ({
   const isDark = theme.palette.mode === "dark";
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  const [visibleRows, setVisibleRows] = useState(showCount || 6);
+  const [visibleRows, setVisibleRows] = useState(showCount || 5);
 
   const handleShowMore = () => {
     setVisibleRows((prev) => prev + 2);
@@ -145,10 +143,7 @@ const CompareTable = ({
           {title}
         </Typography>
       </Box>
-      <Table
-        ISPdata={RawISPData.slice(0, visibleRows)}
-        showProvince={showProvince}
-      />
+      <Table visibleRows={visibleRows} showProvince={showProvince} />
       {visibleRows < RawISPData.length && (
         <Typography
           variant="body1"

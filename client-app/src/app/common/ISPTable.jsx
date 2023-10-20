@@ -1,4 +1,3 @@
-import React from "react";
 import {
   styled,
   keyframes,
@@ -68,7 +67,7 @@ const light_gradients = [
  * @param {Array} ISPData - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const ISPTable = ({ISPData}) => {
+const ISPTable = ({ISPData, sortedKeys}) => {
   if (!ISPData) return;
   const theme = useTheme(); // Get the current theme
   const isDarkMode = theme.palette.mode === "dark";
@@ -93,12 +92,8 @@ const ISPTable = ({ISPData}) => {
       {/* {isDetail ? ( */}
       <>
         <RowBox>
-          <Typography variant="chartTitle" component="h4">
-            رتبه
-          </Typography>
-          <Typography variant="chartTitle" component="h4">
-            نام
-          </Typography>
+          <Typography component="h4">رتبه</Typography>
+          <Typography component="h4">نام</Typography>
           {rowsHead.map((row) => {
             return (
               <Box
@@ -108,17 +103,13 @@ const ISPTable = ({ISPData}) => {
                 justifyContent={"center"}
               >
                 <Typography variant="h6">{row.unit}</Typography>
-                <Typography variant="chartTitle" component="h4">
-                  {row.label}
-                </Typography>
+                <Typography component="h4">{row.label}</Typography>
               </Box>
             );
           })}
-          <Typography variant="chartTitle" component="h4">
-            جزئیات
-          </Typography>
+          <Typography component="h4">جزئیات</Typography>
         </RowBox>
-        {Object.keys(ISPData.isp).map((key, index) => (
+        {sortedKeys.map((key, index) => (
           <RowBox
             key={key}
             delay={index * 0.2}
@@ -129,38 +120,22 @@ const ISPTable = ({ISPData}) => {
             } // Use the gradient based on the theme
             marginTop="0.75rem"
           >
-            <Typography variant="h4" component="chartTitle">
-              {index + 1}
-            </Typography>
-            <Typography variant="h4" component="chartTitle">
-              {convertToPersian(key)}
-            </Typography>{" "}
-            <Typography variant="h4" component="chartTitle">
-              {ISPData.clients}
-            </Typography>{" "}
-            <Typography variant="h4" component="chartTitle">
-              {ISPData.totalQualityAverage}
-            </Typography>
-            <Typography
-              variant="h4"
-              component="chartTitle"
-              sx={{color: "primary"}}
-            >
+            <Typography variant="h4">{index + 1}</Typography>
+            <Typography variant="h4">{convertToPersian(key)}</Typography>{" "}
+            <Typography variant="h4">{ISPData.clients}</Typography>{" "}
+            <Typography variant="h4">{ISPData.totalQualityAverage}</Typography>
+            <Typography variant="h4" sx={{color: "primary"}}>
               {ISPData.isp[key].downloadSpeedAverage}
             </Typography>
-            <Typography variant="h4" component="chartTitle">
+            <Typography variant="h4">
               {ISPData.isp[key].uploadSpeedAverage}
             </Typography>
-            <Typography variant="h4" component="chartTitle">
-              {ISPData.isp[key].pingAverage}
-            </Typography>
-            <Typography variant="h4" component="chartTitle">
-              {ISPData.isp[key].packetLoss}
-            </Typography>
-            <Typography variant="h4" component="chartTitle">
+            <Typography variant="h4">{ISPData.isp[key].pingAverage}</Typography>
+            <Typography variant="h4">{ISPData.isp[key].packetLoss}</Typography>
+            <Typography variant="h4">
               {ISPData.isp[key]?.disturbance || 10}
             </Typography>
-            <Typography variant="h4" component="chartTitle">
+            <Typography variant="h4">
               {ISPData.isp[key].totalQuality}
             </Typography>
             <IconButton aria-label={`more info about ${convertToPersian(key)}`}>
