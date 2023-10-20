@@ -33,10 +33,13 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
 
   const [selectedProvince, setSelectedProvicne] = useState(null);
   const [provinceData, setProvinceData] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (!selectedProvince) return;
+    setLoading(true);
     services.dashboard.getCityMetrics(selectedProvince).then((response) => {
       setProvinceData(response.data.data);
+      setLoading(false);
     });
   }, [selectedProvince]);
 
@@ -4488,7 +4491,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               fontSize="38"
               fill="red"
             >
-              {provinceData ? provinceData.issues.length : "-"}
+              {loading ? "-" : provinceData ? provinceData.issues.length : "-"}
             </text>
             <text
               x={provinceCoords[selectedProvince].x + 60}
