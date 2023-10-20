@@ -1,22 +1,16 @@
 import { Typography, useTheme, Box, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import Logo from "../layouts/Logo";
 import CardContainer from "./CardContainer";
 import AILogo from "../../app/assets/image/AiLogo.svg";
 
 const AIButton = () => {
-  const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-
-  const handleBoxClick = () => {
-    navigate("https://chat.eyesp.live/chat");
-  };
 
   return (
     <CardContainer
       component={Link}
-      to="https://chat.eyesp.live/chat"
+      to="https://chat.eyesp.live"
       sx={{
         width: "12.5625rem",
         display: "flex",
