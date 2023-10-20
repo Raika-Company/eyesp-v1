@@ -467,7 +467,7 @@ class NetworkController extends Controller
                 ];
                 $response['isp'] = [
                     'count' => count(collect($description)),
-                    'names' => array_keys($description)
+                    'names' => array_keys((array)$description)
                 ];
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
