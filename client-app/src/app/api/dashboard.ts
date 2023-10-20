@@ -33,8 +33,8 @@ export const getGlobalStates = async () =>
 export const getIssues = async () =>
   await axios.http.get(rootAddress + '/dashboard/get-issue-stats/issues')
 
-export const getIssuesForCities = async () =>
-  await axios.http.get(rootAddress + '/dashboard/get-issue-stats/cities')
+// export const getIssuesForCities = async () =>
+//   await axios.http.get(rootAddress + '/dashboard/get-issue-stats/cities')
 
 export const getIssuesForIsp = async () =>
   await axios.http.get(rootAddress + '/dashboard/get-issue-stats/isp')
@@ -43,3 +43,7 @@ export const getIssuesForIsp = async () =>
 // Getting the states of internet
 export const getInternetStateForNow = async () =>
   await axios.http.get(rootAddress + '/dashboard/stats/now')
+
+// Getting information for city
+export const getCityMetrics = async (city) =>
+  await axios.http.get(rootAddress + '/dashboard/city-metrics/' + city)

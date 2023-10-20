@@ -57,6 +57,7 @@ const NewDashboard = () => {
               )
             : []
         }
+        selectedProvince={province}
       />
       <Box
         sx={{

@@ -1,9 +1,11 @@
-import {Fragment} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {SvgIcon, styled, useTheme} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import provinceCoords from "../../../public/data/provincesCoords.json";
+import services from "../api/index";
+import convertToPersian from "../utils/convertToPersian";
 
-const BackgroundSvg = ({provinces = [], ...props}) => {
+const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   const theme = useTheme();
@@ -28,6 +30,14 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
       },
     },
   }));
+
+  const [provinceData, setProvinceData] = useState(null);
+  useEffect(() => {
+    if (!selectedProvince) return;
+    services.dashboard.getCityMetrics(selectedProvince).then((response) => {
+      setProvinceData(response.data.data);
+    });
+  }, [selectedProvince]);
 
   return (
     <SvgIcon
@@ -4438,6 +4448,58 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
           rx="1.57"
           ry="1.13"
         />
+        {provinceData && selectedProvince && (
+          <g>
+            <rect
+              x={provinceCoords[selectedProvince].x - 100}
+              y={provinceCoords[selectedProvince].y - 120}
+              width={200}
+              height={100}
+              fill="url(#tooltip_gradient)"
+              rx={15}
+            />
+            <text
+              x={provinceCoords[selectedProvince].x + 90}
+              y={provinceCoords[selectedProvince].y - 90}
+              fontFamily="Arial"
+              fontSize="28"
+              fill="white"
+            >
+              {convertToPersian(selectedProvince)}
+            </text>
+            <text
+              x={provinceCoords[selectedProvince].x + 90}
+              y={provinceCoords[selectedProvince].y - 40}
+              fontFamily="Arial"
+              fontSize="38"
+              fill="red"
+            >
+              {provinceData ? provinceData.issues.length : "-"}
+            </text>
+            <text
+              x={provinceCoords[selectedProvince].x + 60}
+              y={provinceCoords[selectedProvince].y - 45}
+              fontFamily="Arial"
+              fontSize="20"
+              fill="white"
+            >
+              مورد اختلاف
+            </text>
+          </g>
+        )}
+        <defs>
+          <radialGradient
+            id="tooltip_gradient"
+            cx="19.58%"
+            cy="-10.78%"
+            r="225.55%"
+            fx="19.58%"
+            fy="-10.78%"
+          >
+            <stop offset="0%" stopColor="#333" stopOpacity="1" />
+            <stop offset="100%" stopColor="#181818" stopOpacity="0.69" />
+          </radialGradient>
+        </defs>
       </svg>
     </SvgIcon>
   );
