@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {styled, keyframes, Box, Typography} from "@mui/material";
+import { useEffect, useState } from "react";
+import { styled, keyframes, Box, Typography } from "@mui/material";
 import services from "../../../../app/api/index";
 import convertToPersian from "../../../../app/utils/convertToPersian";
 
@@ -23,7 +23,7 @@ const fadeInAnimation = keyframes`
  * @param {number} delay - Animation delay in seconds.
  * @param {string} gradient - Background gradient CSS.
  */
-const RowBox = styled(Box)(({delay, gradient}) => ({
+const RowBox = styled(Box)(({ delay, gradient }) => ({
   display: "flex",
   alignItems: "center",
   borderRadius: ".5rem",
@@ -60,7 +60,7 @@ const light_gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const Table = ({showProvince, visibleRows}) => {
+const Table = ({ showProvince }) => {
   const [chartData, setChartData] = useState(null);
   const [sortedKeys, setSortedKeys] = useState([]);
   useEffect(() => {

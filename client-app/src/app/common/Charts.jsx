@@ -22,8 +22,8 @@ import YAxisLine from "./YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import { ContainedSelect } from "./ContainedSelect";
-import { TodayCharts } from "../api/dashboard";
 import { useLocation } from "react-router-dom";
+import services from "../../app/api/index";
 
 export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -52,24 +52,7 @@ export const CustomTooltip = ({ active, payload }) => {
 
   return null;
 };
-const titlesChart = [
-  {
-    title: "سرعت دانلود",
-    unit: "Mb/s",
-  },
-  {
-    title: " سرعت اپلود",
-    unit: "%",
-  },
-  {
-    title: " پینگ",
-    unit: "Mb/s",
-  },
-  {
-    title: "پکت لاس",
-    unit: "Ms",
-  },
-];
+
 const chartColors = [
   { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
   { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
@@ -84,19 +67,11 @@ export function GridItem({
   unit,
   color,
   background,
-  handleChange,
+  selectValue,
+  handleChangeDailyPercent,
 }) {
   const { pathname } = useLocation();
-  const [age, setAge] = useState("در حال حاضر");
-  const handleChangeDailyPercent = (event) => {
-    const selectedYear = event.target.value;
-    setAge(selectedYear);
-    handleChange();
-    // For the sake of debugging, directly set percentages based on options
-    if (selectedYear === "در حال حاضر") setPercentage(65);
-    else if (selectedYear === "1 روز قبل") setPercentage(75);
-    else if (selectedYear === "1 هفته قبل") setPercentage(85);
-  };
+
   return (
     <NewCardContainer
       sx={{
@@ -123,11 +98,13 @@ export function GridItem({
               {title}
             </Typography>
             {title === "سرعت دانلود" && pathname === "/my-isp" && (
-              <FormControl sx={{ width: "25%", marginLeft: "3rem", height:'60px' }}>
+              <FormControl
+                sx={{ width: "25%", marginLeft: "3rem", height: "60px" }}
+              >
                 <ContainedSelect
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  value={selectValue}
                   label="سال"
                   onChange={handleChangeDailyPercent}
                   displayEmpty
@@ -150,7 +127,7 @@ export function GridItem({
               <Box>
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart width="100%" height="100%" data={data}>
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip />
                     <CartesianGrid
                       vertical={false}
                       stroke={
@@ -203,7 +180,7 @@ export function GridItem({
           />
         </Box>
         <YAxisLine
-          max={Math.max(...data.map((line) => line.value))}
+          max={Math.max(...data?.map((line) => line.value))}
           unit={unit}
         />
       </Box>
@@ -211,37 +188,58 @@ export function GridItem({
   );
 }
 
-function generateRandomData() {
-  // Generate random data for the chart
-  const data = [];
-  for (let i = 1; i <= 12; i++) {
-    data.push({
-      month: `${i} ماه`,
-      value: Math.floor(Math.random() * 100), // Adjust the range as needed
-    });
-  }
-  return data;
-}
 const Charts = () => {
   const theme = useTheme();
   const [rendered, setRendered] = useState(false);
-  const [currentChartData, setCurrentChartData] = useState(generateRandomData);
-
-  const handleChangeData = () => {
-    setCurrentChartData(generateRandomData());
-  };
+  const [selectValue, setSelectValue] = useState("در حال حاضر"); // Change 'age' to a more appropriate name: 'selectValue'
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const [chartData, setChartData] = useState([]);
 
-  useEffect(() => {
-    TodayCharts()
+  const handleChangeDailyPercent = (event) => {
+    const selectedValue = event.target.value;
+    setSelectValue(selectedValue);
+  };
+  const fetchChartData = (type) => {
+    let requestEndpoint;
+
+    switch (type) {
+      case "در حال حاضر":
+        requestEndpoint = services.dashboard.TodayCharts;
+        break;
+      case "هفتگی":
+        requestEndpoint = services.dashboard.WeekCharts;
+        break;
+      case "ماهانه":
+        requestEndpoint = services.dashboard.MonthCharts;
+        break;
+      case "سالانه":
+        requestEndpoint = services.dashboard.YearCharts;
+        break;
+      default:
+        requestEndpoint = services.dashboard.TodayCharts;
+    }
+    requestEndpoint()
       .then((response) => {
-        console.log(response);
+        const receivedData = response.data.data.data;
+        console.log("hahahahahahaha", receivedData);
+        const mappedData = [
+          { title: "سرعت دانلود", data: receivedData.download },
+          { title: "سرعت اپلود", data: receivedData.upload },
+          { title: "پینگ", data: receivedData.ping },
+          { title: "پکت لاس", data: receivedData.packet_loss },
+        ];
+        setChartData(mappedData);
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchChartData(selectValue);
+  }, [selectValue]);
+
   useEffect(() => {
     setRendered(true);
   }, []);
@@ -257,19 +255,21 @@ const Charts = () => {
         }}
       >
         <Grid container gap={2.5}>
-          {titlesChart.map((line, index) => (
+          {chartData?.map((item, index) => (
             <GridItem
               key={index}
-              handleChange={handleChangeData}
+              // handleChange={handleChangeData}
               theme={theme}
               rendered={rendered}
-              title={line.title}
-              unit={line.unit}
+              title={item.title}
+              unit={item.unit}
               color={chartColors[index]}
-              data={generateRandomData()}
+              data={item.data}
+              handleChangeDailyPercent={handleChangeDailyPercent}
+              selectValue={selectValue}
             />
           ))}
-        </Grid>{" "}
+        </Grid>
       </NewCardContainer>
     </>
   );
