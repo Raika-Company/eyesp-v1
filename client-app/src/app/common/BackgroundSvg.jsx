@@ -5,7 +5,7 @@ import provinceCoords from "../../../public/data/provincesCoords.json";
 import services from "../api/index";
 import convertToPersian from "../utils/convertToPersian";
 
-const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
+const BackgroundSvg = ({provinces = [], ...props}) => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   const theme = useTheme();
@@ -31,6 +31,7 @@ const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
     },
   }));
 
+  const [selectedProvince, setSelectedProvicne] = useState(null);
   const [provinceData, setProvinceData] = useState(null);
   useEffect(() => {
     if (!selectedProvince) return;
@@ -39,6 +40,13 @@ const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
     });
   }, [selectedProvince]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSelectedProvicne(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [selectedProvince]);
   return (
     <SvgIcon
       {...props}
@@ -1434,6 +1442,9 @@ const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
               // TEMPORARY
               navigate("/province-profile/" + provinceCoords[province].name);
             }}
+            onMouseOver={() => {
+              setSelectedProvicne(province);
+            }}
             r="35"
             fill="transparent"
           />
@@ -1508,6 +1519,9 @@ const BackgroundSvg = ({provinces = [], selectedProvince, ...props}) => {
                   ? "url(#paint0_radial_467_4701)"
                   : "url(#SVGID_1_)"
               }
+              onMouseLeave={() => {
+                setSelectedProvicne(null);
+              }}
               d="M639.2,549.8c-0.2,0.3-0.4,0.3-0.6,0l-2.4-2.8c-0.2-0.2-0.5-0.3-0.7-0.2l-7.1,1.8c-0.4,0.1-0.7,0-1-0.2
 			c-1.3-0.8-2.6-0.8-4,0c-0.3,0.2-0.7,0.1-0.9-0.2c-1-1.7-2.1-3.3-3.1-4.9c-1.3-2-3.3-3-4.6-5.1c-1.3-2.2-0.2-4.4-2-6.4
 			c-1.9-2.1-3.6-4.3-5.1-6.7c-0.9-1.4-2-3.9-3.2-7.4c-1.2-3.3-2.7-6.5-4.6-9.6c-1.6-2.6-4.3-5.1-6-8.4c-0.2-0.3-0.4-0.5-0.7-0.6
