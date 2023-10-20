@@ -1,6 +1,6 @@
-import {Box, Typography, useTheme} from "@mui/material";
-import {useState} from "react";
-import {useMediaQuery} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useMediaQuery } from "@mui/material";
 import Table from "./Table";
 import ViewDetailsButton from "../../../../app/common/ViewDetailsButton";
 

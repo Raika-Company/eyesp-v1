@@ -222,7 +222,6 @@ const Charts = () => {
     requestEndpoint()
       .then((response) => {
         const receivedData = response.data.data.data;
-        console.log("hahahahahahaha", receivedData);
         const mappedData = [
           { title: "سرعت دانلود", data: receivedData.download },
           { title: "سرعت اپلود", data: receivedData.upload },

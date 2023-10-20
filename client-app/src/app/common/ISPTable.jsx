@@ -29,7 +29,7 @@ const fadeInAnimation = keyframes`
  * @param {number} delay - Animation delay in seconds.
  * @param {string} gradient - Background gradient CSS.
  */
-const RowBox = styled(Box)(({theme, delay, gradient}) => ({
+const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
   display: "flex",
   alignItems: "center",
   borderRadius: "0.75rem",
@@ -67,19 +67,19 @@ const light_gradients = [
  * @param {Array} ISPData - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const ISPTable = ({ISPData, sortedKeys}) => {
+const ISPTable = ({ ISPData, sortedKeys }) => {
   if (!ISPData) return;
   const theme = useTheme(); // Get the current theme
   const isDarkMode = theme.palette.mode === "dark";
   const rowsHead = [
-    {label: "تعداد کاربران"},
-    {label: "رضایت کاربران"},
-    {unit: "(mb/s)", label: "دانلود"},
-    {unit: "(mb/s)", label: "آپلود"},
-    {unit: "(m/s)", label: "پینگ"},
-    {unit: "(m/s)", label: "پکت لاس"},
-    {label: "اختلال موجود"},
-    {unit: "(%)", label: "عملکرد"},
+    { label: "تعداد کاربران" },
+    { label: "رضایت کاربران" },
+    { unit: "(mb/s)", label: "دانلود" },
+    { unit: "(mb/s)", label: "آپلود" },
+    { unit: "(m/s)", label: "پینگ" },
+    { unit: "(m/s)", label: "پکت لاس" },
+    { label: "اختلال موجود" },
+    { unit: "(%)", label: "عملکرد" },
   ];
   return (
     <Box
@@ -103,11 +103,11 @@ const ISPTable = ({ISPData, sortedKeys}) => {
                 justifyContent={"center"}
               >
                 <Typography variant="h6">{row.unit}</Typography>
-                <Typography component="h4">{row.label}</Typography>
+                <Typography variant="h4">{row.label}</Typography>
               </Box>
             );
           })}
-          <Typography component="h4">جزئیات</Typography>
+          <Typography variant="h4">جزئیات</Typography>
         </RowBox>
         {sortedKeys.map((key, index) => (
           <RowBox
@@ -120,22 +120,34 @@ const ISPTable = ({ISPData, sortedKeys}) => {
             } // Use the gradient based on the theme
             marginTop="0.75rem"
           >
-            <Typography variant="h4">{index + 1}</Typography>
-            <Typography variant="h4">{convertToPersian(key)}</Typography>{" "}
-            <Typography variant="h4">{ISPData.clients}</Typography>{" "}
-            <Typography variant="h4">{ISPData.totalQualityAverage}</Typography>
-            <Typography variant="h4" sx={{color: "primary"}}>
+            <Typography component="h3" variant="h3">
+              {index + 1}
+            </Typography>
+            <Typography component="h3" variant="h3">
+              {convertToPersian(key)}
+            </Typography>{" "}
+            <Typography component="h3" variant="h3">
+              {ISPData.clients}
+            </Typography>{" "}
+            <Typography component="h3" variant="h3">
+              {ISPData.totalQualityAverage}
+            </Typography>
+            <Typography component="h3" variant="h3" sx={{ color: "primary" }}>
               {ISPData.isp[key].downloadSpeedAverage}
             </Typography>
-            <Typography variant="h4">
+            <Typography component="h3" variant="h3">
               {ISPData.isp[key].uploadSpeedAverage}
             </Typography>
-            <Typography variant="h4">{ISPData.isp[key].pingAverage}</Typography>
-            <Typography variant="h4">{ISPData.isp[key].packetLoss}</Typography>
-            <Typography variant="h4">
+            <Typography component="h3" variant="h3">
+              {ISPData.isp[key].pingAverage}
+            </Typography>
+            <Typography component="h3" variant="h3">
+              {ISPData.isp[key].packetLoss}
+            </Typography>
+            <Typography component="h3" variant="h3">
               {ISPData.isp[key]?.disturbance || 10}
             </Typography>
-            <Typography variant="h4">
+            <Typography variant="h3" component="h3">
               {ISPData.isp[key].totalQuality}
             </Typography>
             <IconButton aria-label={`more info about ${convertToPersian(key)}`}>
