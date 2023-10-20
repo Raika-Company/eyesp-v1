@@ -303,7 +303,7 @@ class NetworkService
             $report2 = self::generateReport($thresholds, $data, $metric);
             if($report2[$metric] !== 'No Issue') {
                 $citiesHasIssue[] = $city;
-                $report[$city] = $city . ' ' . $metric . ' issue: ' . $metric . ' thresholds is: '.
+                $report[$city] = $city . ', ' . $isp . ' isp ' . $metric . ' issue: ' . $metric . ' thresholds is: '.
                     $thresholds->$metric . ' now: '. self::calculateAverage($data['untrusted'], $metric) . ' ';
                 /* switch($report2[$metric]) {
                     case 'ISP Issue':

@@ -466,8 +466,8 @@ class NetworkController extends Controller
                     'names' => json_decode($stats->disturbances)
                 ];
                 $response['isp'] = [
-                    'count' => count(collect(json_decode($stats->isps))),
-                    'names' => json_decode($stats->isps)
+                    'count' => count(collect($description)),
+                    'names' => array_keys($description)
                 ];
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
