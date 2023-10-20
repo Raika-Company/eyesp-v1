@@ -39,20 +39,20 @@ const conflictDetailsData = [
   {
     id: 1,
     title: "موراد اختلاف",
-    values: ["افزایش پینگ اپراتور  های وب در تهران"],
-    address: "https://chat.eyesp.live/Hiweb/ping/Tehran",
+    values: ["افزایش پینگ اپراتور ایرانسل به 80 در استان تهران"],
+    address: "https://chat.eyesp.live/Irancell/ping/Tehran",
   },
   {
     id: 2,
     title: "استان‌ها",
-    values: ["کاهش سرعت دانلود در اپراتور زیتل"],
-    address: "https://chat.eyesp.live/Zitel/download/Tehran",
+    values: ["کاهش سرعت دانلوداپراتور مخابرات به 10 در استان تهران"],
+    address: "https://chat.eyesp.live/Mokhaberat/download/Tehran",
   },
   {
     id: 3,
     title: "اپراتور‌ها",
-    values: ["اختلال و قطعی اینترنت اپراتور مخابرات در شهر تهران"],
-    address: "https://chat.eyesp.live/Mokhaberat/packet_loss/Tehran",
+    values: ["افزایش پینگ اپراتور همراه اول به 90 در استان تهران"],
+    address: "https://chat.eyesp.live/Hamraheaval/ping/Tehran",
   },
 ];
 

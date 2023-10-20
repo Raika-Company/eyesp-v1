@@ -60,7 +60,7 @@ const light_gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const Table = ({ showProvince }) => {
+const Table = ({ showProvince, visibleRows }) => {
   const [chartData, setChartData] = useState(null);
   const [sortedKeys, setSortedKeys] = useState([]);
   useEffect(() => {
