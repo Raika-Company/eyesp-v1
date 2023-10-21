@@ -4290,7 +4290,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               fontSize="38"
               fill="red"
             >
-              {loading ? "-" : provinceData.issues.length}
+              {loading ? "-" : Object.keys(provinceData.issues).length}
             </text>
             <text
               x={provinceCoords[selectedProvince].x + 60}

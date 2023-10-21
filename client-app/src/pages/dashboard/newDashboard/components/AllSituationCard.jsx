@@ -37,7 +37,7 @@ const AllSituationCard = () => {
 
   const [internetState, setInternetState] = useState(null);
   useEffect(() => {
-    services.dashboard.getInternetStateForNow().then((response) => {
+    services.dashboard.getInternetState("now").then((response) => {
       setInternetState(response.data.data);
     });
   }, []);

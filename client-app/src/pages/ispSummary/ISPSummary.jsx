@@ -15,58 +15,75 @@ import CircleChart from "../../app/common/CircleChart";
 import RatingComponent from "../../app/common/Rating";
 import {Treemap, ResponsiveContainer} from "recharts";
 import CompareTable from "../dashboard/newDashboard/components/CompareTable";
-import {GridItem} from "../../app/common/Charts";
+import Charts from "../../app/common/Charts";
 import provinces from "../../../public/data/provinces.json";
 import ISPList from "../../../public/data/RowISPData.json";
 import DownArrow from "../../app/assets/image/down.svg";
+import provincesCoords from "../../../public/data/provincesCoords.json";
+import services from "../../app/api/index";
 
 let averageMockData = [
   {
     id: 10,
-    value: 34,
     unit: "mb/s",
     title: "سرعت دانلود",
+    name: "download",
   },
   {
     id: 20,
-    value: 26,
     unit: "mb/s",
     title: "سرعت آپلود",
+    name: "upload",
   },
   {
     id: 30,
-    value: 45,
     unit: "ms",
     title: "پینگ",
+    name: "ping",
   },
   {
     id: 40,
-    value: 11,
     unit: "%",
     title: "پکت لاس",
+    name: "packet_loss",
   },
 ];
 
 const averageTimeStamp = [
   {
     id: 1,
-    value: 1,
+    value: "now",
     title: "حال حاضر",
   },
   {
     id: 2,
-    value: 7,
-    title: "هفته گذشته",
+    value: "",
+    title: "سه ساعت پیش",
   },
   {
     id: 3,
-    value: 30,
-    title: "ماه گذشته",
+    value: "today",
+    title: "امروز",
   },
   {
     id: 4,
-    value: 90,
-    title: "سه ماه گذشته",
+    value: "yesterday",
+    title: "دیروز",
+  },
+  {
+    id: 5,
+    value: "week",
+    title: "هفته گذشته",
+  },
+  {
+    id: 6,
+    value: "month",
+    title: "ماه گذشته",
+  },
+  {
+    id: 6,
+    value: "year",
+    title: "سال گذشته",
   },
 ];
 
@@ -99,31 +116,6 @@ const ISPs = [
     value: "shatel",
     title: "شاتل",
   },
-];
-
-const titlesChart = [
-  {
-    title: "سرعت دانلود",
-    unit: "Mb/s",
-  },
-  {
-    title: " سرعت اپلود",
-    unit: "%",
-  },
-  {
-    title: " پینگ",
-    unit: "Mb/s",
-  },
-  {
-    title: "پکت لاس",
-    unit: "Ms",
-  },
-];
-const chartColors = [
-  {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
-  {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
-  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
-  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
 ];
 
 const mockDataForPastPerformance = [
@@ -170,7 +162,7 @@ const ISPSummary = () => {
     setCurrentChartData(generateRandomData());
   };
 
-  const [province, setProvince] = useState("");
+  const [province, setProvince] = useState("تهران");
   const handleProvinceChange = (event) => {
     setProvince(event.target.value);
   };
@@ -179,27 +171,20 @@ const ISPSummary = () => {
   const [dataForTreeChar, setDataForTreeChart] = useState(dataForChart);
   const handleISPChange = (event) => {
     setSelectedISP(event.target.value);
-    setDataForTreeChart(
-      dataForChart.map((prevData) => ({
-        ...prevData,
-        value: Math.floor(Math.random() * 100),
-      }))
-    );
   };
 
-  const [averageTime, setAverageTime] = useState(1);
-  const [averageTimeData, setAverageTimeDate] = useState(averageMockData);
+  const [averageTime, setAverageTime] = useState("");
+  const [averageTimeData, setAverageTimeDate] = useState(null);
   const handleTimeStampChange = (event) => {
-    setAverageTimeDate(
-      averageMockData.map((prevData) => ({
-        ...prevData,
-        value: Math.floor(Math.random() * 100),
-      }))
-    );
     setAverageTime(event.target.value);
   };
+  useEffect(() => {
+    services.dashboard.getInternetState(averageTime).then((response) => {
+      setAverageTimeDate(response.data.data);
+    });
+  }, [averageTime]);
 
-  const [operator, setOperator] = useState("");
+  const [operator, setOperator] = useState("ایرانسل");
   const handleISPChangeForCharts = (event) => {
     setOperator(event.target.value);
   };
@@ -327,11 +312,13 @@ const ISPSummary = () => {
                 rowGap: "1rem",
               }}
             >
-              {averageTimeData.map((average, index) => (
+              {averageMockData.map((average, index) => (
                 <Stack key={average.id} alignItems="center">
                   <CircleChart
                     id={average.id}
-                    finalPercentage={average.value}
+                    finalPercentage={
+                      averageTimeData?.[average.name].percentage || 0
+                    }
                     unit={average.unit}
                     variant="h1"
                     bgColor={isDark ? "none" : "#313131"}
@@ -609,7 +596,7 @@ const ISPSummary = () => {
                 variant="text.main"
                 component={"button"}
                 onClick={handleShowInfo}
-                disabled={!operator || !province}
+                disabled={!operator && !province}
                 sx={{
                   borderRadius: "1rem",
                   padding: "1rem",
@@ -622,18 +609,15 @@ const ISPSummary = () => {
                 مشاهده وضعیت
               </Button>
             </Box>
-            {titlesChart.map((line, index) => (
-              <GridItem
-                background={isDark ? "#1A1A1A" : "#FFF"}
-                key={index}
-                theme={theme}
-                rendered={true}
-                title={line.title}
-                unit={line.unit}
-                color={chartColors[index]}
-                data={currentChartData}
-              />
-            ))}
+            <Charts
+              province={Object.keys(provincesCoords).find(
+                (key) => provincesCoords[key].name === province
+              )}
+              isp={
+                ISPList.find((isp) => isp.ISPname === operator).ISPEnglishName
+              }
+              maxWidth="33rem"
+            />
           </CardContainer>
         </Box>
       </Box>
