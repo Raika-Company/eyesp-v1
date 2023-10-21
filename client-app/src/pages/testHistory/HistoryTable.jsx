@@ -22,7 +22,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Checkbox } from "@mui/material";
 
 /**
  * Styled component representing each row in the table.
@@ -86,7 +86,7 @@ const HistoryTable = (props) => {
   const [selectedRadios, setSelectedRadios] = useState(
     initialSelectedIds || []
   );
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
 
   useEffect(() => {
     if (initialSelectedIds) {
@@ -107,17 +107,17 @@ const HistoryTable = (props) => {
     if (reason === "clickaway") {
       return;
     }
-    setSnackbarOpen(false);
+    setErrorSnackbar(false);
   };
-  const handleRadioChange = (value) => {
+
+  const handleCheckboxChange = (value, isSixthItem = false) => {
     if (selectedRadios.includes(value)) {
       setSelectedRadios((prev) => prev.filter((radio) => radio !== value));
       setSelectedIds((pre) => pre.filter((radio) => radio !== value));
     } else {
-      if (selectedRadios.length >= 5) {
-        // If already 5 selected, open snackbar and don't add the value
-        setSnackbarOpen(true);
-        return;
+      if (selectedRadios.length >= 5 && !isSixthItem) {
+        setErrorSnackbar(true); // Show the snackbar error
+        return; // Don't allow more selections
       }
       setSelectedRadios((prev) => [...prev, value]);
       setSelectedIds((pre) => [...pre, value]);
@@ -196,11 +196,19 @@ const HistoryTable = (props) => {
                     <FormControlLabel
                       value={String(index)}
                       control={
-                        <Radio
+                        <Checkbox
                           checked={selectedRadios.includes(String(index))}
-                          onChange={() => {
-                            handleRadioChange(String(index));
-                            onRadioClick();
+                          onChange={
+                            () =>
+                              handleCheckboxChange(String(index), index === 4) // Add this condition
+                          }
+                          onClick={() => {
+                            if (
+                              selectedRadios.length >= 5 &&
+                              !selectedRadios.includes(String(index))
+                            ) {
+                              setErrorSnackbar(true);
+                            }
                           }}
                         />
                       }
@@ -231,7 +239,7 @@ const HistoryTable = (props) => {
         </Alert>
       </Snackbar> */}
       <Snackbar
-        open={snackbarOpen}
+        open={errorSnackbar}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }} // Add this prop
