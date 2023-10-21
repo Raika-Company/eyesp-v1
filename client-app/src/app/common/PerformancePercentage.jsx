@@ -8,7 +8,8 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import services from "../../app/api/index";
 
 import { ContainedSelect } from "../../app/common/ContainedSelect";
 
@@ -20,19 +21,68 @@ import CircleChart from "./CircleChart";
 let gradientColors = ["#0C6087", "#0C6087"];
 
 const OperatorProfile = () => {
-  const handleDisturbanceClick = () => {
-    setOpenFeedBackDialog(false);
-    setTimeout(() => {
-      setDisturbance(true);
-    }, 500);
-  };
-
   const theme = useTheme();
-
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const [openFeedBackDialog, setOpenFeedBackDialog] = useState(false);
+  const [percentage, setPercentage] = useState(65);
+
   const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
   const [age, setAge] = useState("در حال حاضر");
+
+  useEffect(() => {
+    services.myISP
+      .nowPercentage()
+      .then((response) => {
+        setPercentage(response.data.data.download);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
+
+  const handleChangeDailyPercent = (event) => {
+    const selectedOption = event.target.value;
+    setAge(selectedOption);
+    setClickedButtonIndex(0);
+
+    let apiFunction;
+
+    switch (selectedOption) {
+      case "در حال حاضر":
+        apiFunction = services.myISP.nowPercentage;
+        break;
+      case "۳ ساعت پیش":
+        apiFunction = services.myISP.HoursAgoPercentage;
+        break;
+      case "امروز":
+        apiFunction = services.myISP.TodayPercentage;
+        break;
+      case "دیروز":
+        apiFunction = services.myISP.YesterDayPercentage;
+        break;
+      case "هفتگی":
+        apiFunction = services.myISP.WeekPercentage;
+        break;
+      case "ماهانه":
+        apiFunction = services.myISP.MonthPercentage;
+        break;
+      case "سالانه":
+        apiFunction = services.myISP.YearPercentage;
+        break;
+      default:
+        console.error("Unknown selection");
+        return;
+    }
+
+    apiFunction()
+      .then((response) => {
+        //should be change .darsadamalkard
+        setPercentage(response.data.data.download);
+        // console.log(":::::", response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const buttonGroupStyle = {
     backgroundColor: theme.palette.mode === "dark" ? "#303030" : "#F4F4F4",
@@ -45,15 +95,62 @@ const OperatorProfile = () => {
     boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
   };
   const buttons = [
-    { label: "عملکرد کلی", width: "90%", percentage: 70 },
-    { label: "دانلود", width: "90%", percentage: 80 },
-    { label: "آپلود", width: "90%", percentage: 90 },
-    { label: "پینگ", width: "90%", percentage: 60 },
+    { label: "عملکرد کلی", width: "90%", dataType: "download", percentage: 70 }, // Assuming 'overall' as a placeholder for default value
+    { label: "دانلود", width: "90%", dataType: "download", percentage: 80 },
+    { label: "آپلود", width: "90%", dataType: "upload", percentage: 90 },
+    { label: "پینگ", width: "90%", dataType: "ping", percentage: 60 },
+    { label: "پاکت", width: "90%", dataType: "packet_loss", percentage: 60 },
   ];
   const handleButtonClick = (index) => {
     setClickedButtonIndex(index);
-    setPercentage(buttons[index].percentage);
+
+    // Get the selected data type from the button
+    const selectedDataType = buttons[index].dataType;
+
+    // Based on the selected option from ContainedSelect, decide the API function to call
+    let apiFunction;
+    switch (
+      age // Using 'age' since that's your state variable for the dropdown selection
+    ) {
+      case "در حال حاضر":
+        apiFunction = services.myISP.nowPercentage;
+        break;
+      case "۳ ساعت پیش":
+        apiFunction = services.myISP.HoursAgoPercentage;
+        break;
+      case "امروز":
+        apiFunction = services.myISP.TodayPercentage;
+        break;
+      case "دیروز":
+        apiFunction = services.myISP.YesterDayPercentage;
+        break;
+      case "هفتگی":
+        apiFunction = services.myISP.WeekPercentage;
+        break;
+      case "ماهانه":
+        apiFunction = services.myISP.MonthPercentage;
+        break;
+      case "سالانه":
+        apiFunction = services.myISP.YearPercentage;
+        break;
+      default:
+        console.error("Unknown selection");
+        return;
+    }
+
+    // Make the API call
+    apiFunction()
+      .then((response) => {
+        // Get the correct data based on the button clicked
+        const newPercentage = response.data.data[selectedDataType];
+
+        setPercentage(newPercentage);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
   const activeButtonStyle = {
     backgroundColor: "#0C6087",
     color: "white", // for readability based on theme
@@ -66,17 +163,6 @@ const OperatorProfile = () => {
     border: "none",
     width: "60%",
     color: theme.palette.mode === "dark" ? "white" : "black",
-  };
-  const [percentage, setPercentage] = useState(65);
-
-  const handleChangeDailyPercent = (event) => {
-    const selectedYear = event.target.value;
-    setAge(selectedYear);
-
-    // For the sake of debugging, directly set percentages based on options
-    if (selectedYear === "در حال حاضر") setPercentage(65);
-    else if (selectedYear === "1 روز قبل") setPercentage(75);
-    else if (selectedYear === "1 هفته قبل") setPercentage(85);
   };
 
   return (
@@ -110,8 +196,12 @@ const OperatorProfile = () => {
               displayEmpty
             >
               <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
-              <MenuItem value="1 روز قبل">1 روز قبل</MenuItem>
-              <MenuItem value="1 هفته قبل">1 هفته قبل</MenuItem>
+              <MenuItem value="۳ ساعت پیش">۳ ساعت پیش</MenuItem>
+              <MenuItem value="امروز">امروز</MenuItem>
+              <MenuItem value="دیروز">دیروز</MenuItem>
+              <MenuItem value="هفتگی">هفتگی</MenuItem>
+              <MenuItem value="ماهانه">ماهانه</MenuItem>
+              <MenuItem value="سالانه">سالانه</MenuItem>
             </ContainedSelect>
           </FormControl>
         </Box>
@@ -154,10 +244,11 @@ const OperatorProfile = () => {
             }}
           >
             <CircleChart
-              finalPercentage={percentage}
+              finalPercentage={percentage.percentage}
               gradientColors={gradientColors}
               size={140}
               lineWidth={10}
+              variant="h1"
             />
           </Box>
         </Box>

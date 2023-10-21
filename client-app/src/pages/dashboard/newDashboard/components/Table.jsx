@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {styled, keyframes, Box, Typography} from "@mui/material";
+import { useEffect, useState } from "react";
+import { styled, keyframes, Box, Typography } from "@mui/material";
 import services from "../../../../app/api/index";
 import convertToPersian from "../../../../app/utils/convertToPersian";
 
@@ -23,7 +23,7 @@ const fadeInAnimation = keyframes`
  * @param {number} delay - Animation delay in seconds.
  * @param {string} gradient - Background gradient CSS.
  */
-const RowBox = styled(Box)(({delay, gradient}) => ({
+const RowBox = styled(Box)(({ delay, gradient }) => ({
   display: "flex",
   alignItems: "center",
   borderRadius: ".5rem",
@@ -60,7 +60,7 @@ const light_gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const Table = ({showProvince, visibleRows}) => {
+const Table = ({ showProvince, visibleRows }) => {
   const [chartData, setChartData] = useState(null);
   const [sortedKeys, setSortedKeys] = useState([]);
   useEffect(() => {
@@ -87,9 +87,9 @@ const Table = ({showProvince, visibleRows}) => {
     >
       <>
         <RowBox>
-          <Typography>رتبه</Typography>
-          <Typography>نام</Typography>
-          <Typography>درصد عملکرد</Typography>
+          <Typography variant="h4">رتبه</Typography>
+          <Typography variant="h4">نام</Typography>
+          <Typography variant="h4">درصد عملکرد</Typography>
         </RowBox>
         {sortedKeys.slice(0, visibleRows + 1).map((key, index) => (
           <RowBox
@@ -98,14 +98,18 @@ const Table = ({showProvince, visibleRows}) => {
             gradient={gradients[index >= 3 ? 3 : index]}
             marginTop=".3rem"
           >
-            <Typography>{index + 1}</Typography>
-            <Typography>
+            <Typography variant="h3" component="h3">
+              {index + 1}
+            </Typography>
+            <Typography variant="h3" component="h3">
               {/* {showProvince */}
               {/* // ? convertToPersian(chartData.isp[key].province) */}
               {convertToPersian(key)}
               {/* } */}
             </Typography>
-            <Typography>{chartData.isp[key].totalQuality}</Typography>
+            <Typography variant="h3" component="h3">
+              {chartData.isp[key].totalQuality}
+            </Typography>
           </RowBox>
         ))}
       </>
