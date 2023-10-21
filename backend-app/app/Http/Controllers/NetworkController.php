@@ -320,19 +320,19 @@ class NetworkController extends Controller
             $response = [
                 'download' => [
                     'avg' => round($downloadAvg, 2),
-                    'percentage' => round($downloadAvg * 100 / $threshold->download)
+                    'percentage' => round(100 / (1 + exp(-0.2334 * ($downloadAvg - 12.81)))),
                 ],
                 'upload' => [
                     'avg' => round($uploadAvg, 2),
-                    'percentage' => round($uploadAvg * 100 / $threshold->upload)
+                    'percentage' => round(100 / (1 + exp(-0.2334 * ($downloadAvg - 12.81))))
                 ],
                 'ping' => [
                     'avg' => round($pingAvg, 2),
-                    'percentage' => round((($pingAvg - $threshold->ping) / $threshold->ping) * 100)
+                    'percentage' => round(107.33 * exp(-0.0155 * $pingAvg))
                 ],
                 'packet_loss' => [
                     'avg' => round($packetLossAvg, 2),
-                    'percentage' => round((($packetLossAvg - $threshold->packet_loss) / $threshold->packet_loss) * 100)
+                    'percentage' => round(107.33 * exp(-0.0155 * $packetLossAvg))
                 ],
             ];
 
