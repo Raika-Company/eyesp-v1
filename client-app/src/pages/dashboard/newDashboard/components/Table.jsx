@@ -36,9 +36,6 @@ const RowBox = styled(Box)(({ delay, gradient }) => ({
   "& > *": {
     flex: 1,
     textAlign: "center",
-    fontSize: "1rem",
-    fontFamily: "PeydaLight",
-    // color: "#676767",
   },
 }));
 
@@ -102,10 +99,7 @@ const Table = ({ showProvince, visibleRows }) => {
               {index + 1}
             </Typography>
             <Typography variant="h3" component="h3">
-              {/* {showProvince */}
-              {/* // ? convertToPersian(chartData.isp[key].province) */}
               {convertToPersian(key)}
-              {/* } */}
             </Typography>
             <Typography variant="h3" component="h3">
               {chartData.isp[key].totalQuality}
