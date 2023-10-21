@@ -125,6 +125,18 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             <stop stopColor="#4B788B" />
             <stop offset="1" stopColor="#1D576F" stopOpacity="0" />
           </radialGradient>
+
+          <radialGradient
+            id="tooltip_gradient"
+            cx="19.58%"
+            cy="-10.78%"
+            r="225.55%"
+            fx="19.58%"
+            fy="-10.78%"
+          >
+            <stop offset="0%" stopColor="#333" stopOpacity="1" />
+            <stop offset="100%" stopColor="#181818" stopOpacity="0.69" />
+          </radialGradient>
         </defs>
         <g>
           {provinces &&
@@ -154,7 +166,6 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               </Fragment>
             ))}
         </g>
-        <g></g>
         {Object.keys(provinceCoords).map((province, index) => (
           <circle
             key={index}
@@ -171,82 +182,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             fill="transparent"
           />
         ))}
-        <defs>
-          <filter
-            id="filter0_d_467_4701"
-            x="-2783"
-            y="-601"
-            width="4277"
-            height="4441.78"
-            filterUnits="userSpaceOnUse"
-            colorInterpolationFilters="sRGB"
-          >
-            <feFlood floodOpacity="0" result="BackgroundImageFix" />
-            <feColorMatrix
-              in="SourceAlpha"
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-              result="hardAlpha"
-            />
-            <feOffset />
-            <feGaussianBlur stdDeviation="39" />
-            <feComposite in2="hardAlpha" operator="out" />
-            <feColorMatrix
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0.556863 0 0 0 0 0.866667 0 0 0 0.4 0"
-            />
-            <feBlend
-              mode="normal"
-              in2="BackgroundImageFix"
-              result="effect1_dropShadow_467_4701"
-            />
-            <feBlend
-              mode="normal"
-              in="SourceGraphic"
-              in2="effect1_dropShadow_467_4701"
-              result="shape"
-            />
-          </filter>
-          <pattern
-            id="pattern0"
-            patternContentUnits="objectBoundingBox"
-            width="1"
-            height="1"
-          >
-            <use
-              xlinkHref="#image0_467_4701"
-              transform="matrix(0.00129199 0 0 0.00178418 0 -0.00581395)"
-            />
-          </pattern>
-        </defs>
-        <g id="XMLID_00000105408151236523578030000016764436316977395331_">
-          <linearGradient
-            id="SVGID_1_"
-            gradientUnits="userSpaceOnUse"
-            x1="193.2682"
-            y1="466.957"
-            x2="736.2739"
-            y2="-76.0486"
-          >
-            <stop offset="0" stopColor="#53A2D9" stopOpacity=".7" />
-            <stop offset="0.1217" stopColor="#4A91C3" stopOpacity=".6197" />
-            <stop offset="1" stopColor="#07172B" stopOpacity="4.000000e-02" />
-          </linearGradient>
-
-          <radialGradient
-            id="paint0_radial_681_3994"
-            cx="0"
-            cy="0"
-            r="1"
-            gradientUnits="userSpaceOnUse"
-            gradientTransform="translate(261.5 206.5) rotate(43.4986) scale(796.122 877.716)"
-          >
-            <stop stopColor="#293B43" />
-            <stop offset="1" stopColor="#102D3B" stopOpacity="0.4" />
-            <stop offset="1" stopColor="#162932" stopOpacity="0" />
-          </radialGradient>
-          <MapShapes />
-        </g>
+        <MapShapes />
         {provinceData && selectedProvince && (
           <g>
             <rect
@@ -286,19 +222,6 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             </text>
           </g>
         )}
-        <defs>
-          <radialGradient
-            id="tooltip_gradient"
-            cx="19.58%"
-            cy="-10.78%"
-            r="225.55%"
-            fx="19.58%"
-            fy="-10.78%"
-          >
-            <stop offset="0%" stopColor="#333" stopOpacity="1" />
-            <stop offset="100%" stopColor="#181818" stopOpacity="0.69" />
-          </radialGradient>
-        </defs>
       </svg>
     </SvgIcon>
   );

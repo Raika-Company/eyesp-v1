@@ -4,16 +4,91 @@ import {memo} from "react";
 const MapShapes = () => {
   const theme = useTheme();
   return (
-    <g>
-      <path
-        transform="translate(49, 306)"
-        pointerEvents="none"
-        fill={
-          theme.palette.mode === "dark"
-            ? "url(#paint0_radial_467_4701)"
-            : "url(#SVGID_1_)"
-        }
-        d="M639.2,549.8c-0.2,0.3-0.4,0.3-0.6,0l-2.4-2.8c-0.2-0.2-0.5-0.3-0.7-0.2l-7.1,1.8c-0.4,0.1-0.7,0-1-0.2
+    <>
+      <defs>
+        <filter
+          id="filter0_d_467_4701"
+          x="-2783"
+          y="-601"
+          width="4277"
+          height="4441.78"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="39" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0.556863 0 0 0 0 0.866667 0 0 0 0.4 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_467_4701"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_467_4701"
+            result="shape"
+          />
+        </filter>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use
+            xlinkHref="#image0_467_4701"
+            transform="matrix(0.00129199 0 0 0.00178418 0 -0.00581395)"
+          />
+        </pattern>
+      </defs>
+      <g id="XMLID_00000105408151236523578030000016764436316977395331_">
+        <linearGradient
+          id="SVGID_1_"
+          gradientUnits="userSpaceOnUse"
+          x1="193.2682"
+          y1="466.957"
+          x2="736.2739"
+          y2="-76.0486"
+        >
+          <stop offset="0" stopColor="#53A2D9" stopOpacity=".7" />
+          <stop offset="0.1217" stopColor="#4A91C3" stopOpacity=".6197" />
+          <stop offset="1" stopColor="#07172B" stopOpacity="4.000000e-02" />
+        </linearGradient>
+
+        <radialGradient
+          id="paint0_radial_681_3994"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(261.5 206.5) rotate(43.4986) scale(796.122 877.716)"
+        >
+          <stop stopColor="#293B43" />
+          <stop offset="1" stopColor="#102D3B" stopOpacity="0.4" />
+          <stop offset="1" stopColor="#162932" stopOpacity="0" />
+        </radialGradient>
+        <g>
+          <path
+            transform="translate(49, 306)"
+            pointerEvents="none"
+            fill={
+              theme.palette.mode === "dark"
+                ? "url(#paint0_radial_467_4701)"
+                : "url(#SVGID_1_)"
+            }
+            d="M639.2,549.8c-0.2,0.3-0.4,0.3-0.6,0l-2.4-2.8c-0.2-0.2-0.5-0.3-0.7-0.2l-7.1,1.8c-0.4,0.1-0.7,0-1-0.2
 			c-1.3-0.8-2.6-0.8-4,0c-0.3,0.2-0.7,0.1-0.9-0.2c-1-1.7-2.1-3.3-3.1-4.9c-1.3-2-3.3-3-4.6-5.1c-1.3-2.2-0.2-4.4-2-6.4
 			c-1.9-2.1-3.6-4.3-5.1-6.7c-0.9-1.4-2-3.9-3.2-7.4c-1.2-3.3-2.7-6.5-4.6-9.6c-1.6-2.6-4.3-5.1-6-8.4c-0.2-0.3-0.4-0.5-0.7-0.6
 			l-1.2-0.3c-0.3-0.1-0.5-0.2-0.7-0.5c-3.8-5.5-7.8-3.7-13.1-3.9c-2.2-0.1-4.4-0.1-6.6-0.1c-0.4,0-0.7,0.1-1,0.3l-5.2,3.1
@@ -120,75 +195,75 @@ const MapShapes = () => {
 			c-0.4-0.1-0.8,0-1.1,0.2l-1.7,1.7c-0.3,0.3-0.6,0.3-0.9,0c-0.2-0.2-0.4-0.5-0.7-0.7c-0.5,0.4-1.1,0.6-1.7,0.8c0.2,0.7,0,1.5-0.5,2
 			c-1.4,1.4-3.1,2-5,1.9c-0.4,0-0.7-0.2-1-0.5c-4.1-5-8.3-4.3-14.2-3.9c-1.9,0.1-3.6,1.2-6,0.1c-0.3-0.1-0.7-0.1-0.9,0.2
 			c-3,3-5.7,7.1-9.9,2.5c-1.3-1.4-2.8-2.5-4.5-3.4c-0.4-0.2-0.7-0.1-0.9,0.2L639.2,549.8z"
-      />
-      <path
-        className="st1"
-        d="M344.7,442.2c-0.1-0.1,0-0.2,0-0.3l0.1-0.1c1-0.7,2.4-0.5,3.2,0.5c0,0,0,0,0,0l0.2,0.2c0.7,1,0.5,2.4-0.6,3.1
+          />
+          <path
+            className="st1"
+            d="M344.7,442.2c-0.1-0.1,0-0.2,0-0.3l0.1-0.1c1-0.7,2.4-0.5,3.2,0.5c0,0,0,0,0,0l0.2,0.2c0.7,1,0.5,2.4-0.6,3.1
 	l-0.1,0.1c-0.1,0.1-0.2,0-0.3,0L344.7,442.2z"
-      />
-      <ellipse
-        transform="matrix(0.8846 -0.4664 0.4664 0.8846 -166.3045 327.0146)"
-        className="st1"
-        cx="577.5"
-        cy="499.5"
-        rx="1.5"
-        ry="2"
-      />
-      <ellipse
-        transform="matrix(0.2062 -0.9785 0.9785 0.2062 -40.0011 969.2908)"
-        className="st1"
-        cx="577.4"
-        cy="509.3"
-        rx="2.3"
-        ry="1.6"
-      />
-      <path
-        className="st1"
-        d="M484.8,531.4C484.8,531.4,484.9,531.4,484.8,531.4L484.8,531.4L484.8,531.4c-0.1,1.9-2.2,3.3-4.8,3.2l-0.3,0
+          />
+          <ellipse
+            transform="matrix(0.8846 -0.4664 0.4664 0.8846 -166.3045 327.0146)"
+            className="st1"
+            cx="577.5"
+            cy="499.5"
+            rx="1.5"
+            ry="2"
+          />
+          <ellipse
+            transform="matrix(0.2062 -0.9785 0.9785 0.2062 -40.0011 969.2908)"
+            className="st1"
+            cx="577.4"
+            cy="509.3"
+            rx="2.3"
+            ry="1.6"
+          />
+          <path
+            className="st1"
+            d="M484.8,531.4C484.8,531.4,484.9,531.4,484.8,531.4L484.8,531.4L484.8,531.4c-0.1,1.9-2.2,3.3-4.8,3.2l-0.3,0
 	c-2.5-0.1-4.6-1.7-4.5-3.6c0,0,0,0,0,0l0,0c0,0,0,0,0,0L484.8,531.4z"
-      />
-      <path
-        className="st1"
-        d="M494.5,538.3c-0.8-0.2-1.5-0.8-1.9-1.6c-0.3-0.6-0.1-1.4,0.6-1.7c0.6-0.3,1.2-0.1,1.6,0.4
+          />
+          <path
+            className="st1"
+            d="M494.5,538.3c-0.8-0.2-1.5-0.8-1.9-1.6c-0.3-0.6-0.1-1.4,0.6-1.7c0.6-0.3,1.2-0.1,1.6,0.4
 	c0.5,0.7,0.7,1.5,0.6,2.4C495.3,538.2,495,538.4,494.5,538.3z"
-      />
-      <path
-        className="st1"
-        d="M510.8,541.8c-0.4,1.2-2.2,1.7-3.9,1.1c0,0,0,0,0,0c-1.8-0.6-2.9-2.1-2.5-3.3c0,0,0,0,0,0
+          />
+          <path
+            className="st1"
+            d="M510.8,541.8c-0.4,1.2-2.2,1.7-3.9,1.1c0,0,0,0,0,0c-1.8-0.6-2.9-2.1-2.5-3.3c0,0,0,0,0,0
 	c0.4-1.2,2.2-1.7,3.9-1.1c0,0,0,0,0,0C510.1,539.1,511.2,540.6,510.8,541.8C510.8,541.8,510.8,541.8,510.8,541.8z M508.6,542
 	c0.4-0.3,0.3-1.2-0.3-1.8c0,0,0,0,0,0c-0.6-0.7-1.4-0.9-1.8-0.6l0,0c-0.4,0.3-0.3,1.2,0.3,1.8l0,0
 	C507.4,542.1,508.2,542.4,508.6,542z"
-      />
-      <ellipse
-        transform="matrix(0.9272 -0.3746 0.3746 0.9272 -166.5995 237.6998)"
-        className="st1"
-        cx="528.1"
-        cy="547.4"
-        rx="1.4"
-        ry="2.3"
-      />
-      <ellipse
-        transform="matrix(0.8652 -0.5015 0.5015 0.8652 -207.5177 351.948)"
-        className="st1"
-        cx="550.7"
-        cy="561.9"
-        rx="1"
-        ry="1.7"
-      />
-      <ellipse
-        transform="matrix(0.8755 -0.4833 0.4833 0.8755 -206.0017 328.4532)"
-        className="st1"
-        cx="534.3"
-        cy="563.9"
-        rx="1.1"
-        ry="1.6"
-      />
-      <path
-        fill="#f6f7f7"
-        id="iran_borders_svg"
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        transform="translate(49, 306)"
-        d="
+          />
+          <ellipse
+            transform="matrix(0.9272 -0.3746 0.3746 0.9272 -166.5995 237.6998)"
+            className="st1"
+            cx="528.1"
+            cy="547.4"
+            rx="1.4"
+            ry="2.3"
+          />
+          <ellipse
+            transform="matrix(0.8652 -0.5015 0.5015 0.8652 -207.5177 351.948)"
+            className="st1"
+            cx="550.7"
+            cy="561.9"
+            rx="1"
+            ry="1.7"
+          />
+          <ellipse
+            transform="matrix(0.8755 -0.4833 0.4833 0.8755 -206.0017 328.4532)"
+            className="st1"
+            cx="534.3"
+            cy="563.9"
+            rx="1.1"
+            ry="1.6"
+          />
+          <path
+            fill="#f6f7f7"
+            id="iran_borders_svg"
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            transform="translate(49, 306)"
+            d="
   M 713.70 545.74
   L 713.50 548.01
   Q 713.45 548.47 712.99 548.50
@@ -2632,12 +2707,12 @@ const MapShapes = () => {
   Q 562.16 520.13 563.35 517.06
   A 0.59 0.59 0.0 0 1 564.35 516.90
   Z"
-      />
-      <path
-        fill="#f6f7f7"
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        transform="translate(45, 304)"
-        d="
+          />
+          <path
+            fill="#f6f7f7"
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            transform="translate(45, 304)"
+            d="
   M 344.72 442.21
   A 0.21 0.21 0.0 0 1 344.76 441.92
   L 344.85 441.85
@@ -2648,30 +2723,30 @@ const MapShapes = () => {
   A 0.21 0.21 0.0 0 1 347.25 445.76
   L 344.72 442.21
   Z"
-      />
-      <ellipse
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        fill="#f6f7f7"
-        cx="0.00"
-        cy="0.00"
-        transform="translate(622.55,803.51) rotate(62.2)"
-        rx="2.00"
-        ry="1.54"
-      />
-      <ellipse
-        fill="#f6f7f7"
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        cx="0.00"
-        cy="0.00"
-        transform="translate(622.42,813.30) rotate(101.9)"
-        rx="2.31"
-        ry="1.58"
-      />
-      <path
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        transform="translate(45, 304)"
-        fill="#f6f7f7"
-        d="
+          />
+          <ellipse
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            fill="#f6f7f7"
+            cx="0.00"
+            cy="0.00"
+            transform="translate(622.55,803.51) rotate(62.2)"
+            rx="2.00"
+            ry="1.54"
+          />
+          <ellipse
+            fill="#f6f7f7"
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            cx="0.00"
+            cy="0.00"
+            transform="translate(622.42,813.30) rotate(101.9)"
+            rx="2.31"
+            ry="1.58"
+          />
+          <path
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            transform="translate(45, 304)"
+            fill="#f6f7f7"
+            d="
   M 484.84 531.41
   A 0.01 0.01 0.0 0 1 484.85 531.42
   L 484.85 531.46
@@ -2682,24 +2757,24 @@ const MapShapes = () => {
   A 0.01 0.01 0.0 0 1 475.33 531.01
   L 484.84 531.41
   Z"
-      />
-      <path
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        transform="translate(45, 304)"
-        fill="#f6f7f7"
-        d="
+          />
+          <path
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            transform="translate(45, 304)"
+            fill="#f6f7f7"
+            d="
   M 494.53 538.26
   Q 493.26 537.92 492.64 536.69
   A 1.28 1.28 0.0 0 1 494.81 535.35
   Q 495.59 536.40 495.39 537.70
   Q 495.28 538.46 494.53 538.26
   Z"
-      />
-      <path
-        fill="#f6f7f7"
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        transform="translate(45, 304)"
-        d="
+          />
+          <path
+            fill="#f6f7f7"
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            transform="translate(45, 304)"
+            d="
   M 510.7821 541.8205
   A 3.37 2.31 18.7 0 1 506.8494 542.9281
   A 3.37 2.31 18.7 0 1 504.3979 539.6595
@@ -2712,35 +2787,37 @@ const MapShapes = () => {
   A 1.60 0.97 49.8 0 0 506.8591 541.4261
   A 1.60 0.97 49.8 0 0 508.6327 542.0221
   Z"
-      />
-      <ellipse
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        fill="#f6f7f7"
-        cx="0.00"
-        cy="0.00"
-        transform="translate(573.13,851.39) rotate(68.0)"
-        rx="2.32"
-        ry="1.42"
-      />
-      <ellipse
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        fill="#f6f7f7"
-        cx="0.00"
-        cy="0.00"
-        transform="translate(595.70,865.86) rotate(59.9)"
-        rx="1.72"
-        ry="1.01"
-      />
-      <ellipse
-        fillOpacity={theme.palette.mode === "dark" && ".5"}
-        fill="#f6f7f7"
-        cx="0.00"
-        cy="0.00"
-        transform="translate(579.31,867.94) rotate(61.1)"
-        rx="1.57"
-        ry="1.13"
-      />
-    </g>
+          />
+          <ellipse
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            fill="#f6f7f7"
+            cx="0.00"
+            cy="0.00"
+            transform="translate(573.13,851.39) rotate(68.0)"
+            rx="2.32"
+            ry="1.42"
+          />
+          <ellipse
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            fill="#f6f7f7"
+            cx="0.00"
+            cy="0.00"
+            transform="translate(595.70,865.86) rotate(59.9)"
+            rx="1.72"
+            ry="1.01"
+          />
+          <ellipse
+            fillOpacity={theme.palette.mode === "dark" && ".5"}
+            fill="#f6f7f7"
+            cx="0.00"
+            cy="0.00"
+            transform="translate(579.31,867.94) rotate(61.1)"
+            rx="1.57"
+            ry="1.13"
+          />
+        </g>
+      </g>
+    </>
   );
 };
 
