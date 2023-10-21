@@ -12,31 +12,22 @@
  */
 
 // Import Material-UI components and styles
-import { Box, useMediaQuery, Typography } from "@mui/material";
+import {
+  Box,
+  useMediaQuery,
+  Typography,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 
 // Import Local components
 import Charts from "../../app/common/Charts";
-import SoloChartPerformance from "./SoloChartPerformance";
-
-import useDynamicMP from "../../app/hooks/useDynamicMP";
-import OperatorProfile from "../../app/common/OperatorProfile";
 import ISPDetail from "../../app/common/ISPDetail";
 import MomentDisruption from "../../app/common/MomentDisruption";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
+import { useState } from "react";
 
 const MyISP = () => {
-  /**
-   * Calculate the dynamic margin and padding values for card containers based on screen width.
-   *
-   * @function
-   * @name useDynamicMP
-   * @param {number} minWidth - The minimum width for which the calculation is valid.
-   * @param {number} maxWidth - The maximum width for which the calculation is valid.
-   * @param {number} minMargin - The minimum margin value.
-   * @param {number} maxMargin - The maximum margin value.
-   * @returns {number} - The calculated margin and padding value.
-   */
-  const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
-
   /**
    * Check if the screen size matches the medium breakpoint.
    *
@@ -46,7 +37,19 @@ const MyISP = () => {
    * @returns {boolean} - True if the screen size matches the medium breakpoint, false otherwise.
    */
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-
+  const [operator, setOperator] = useState("ایرانسل");
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    setOperator(selectedValue);
+  };
+  const operatorOptions = [
+    // "انتخاب اپراتور",
+    "ایرانسل",
+    "همراه اول",
+    "زی تل",
+    "مخابرات",
+    "مبین نت",
+  ];
   return (
     <Box
       sx={{
@@ -55,9 +58,35 @@ const MyISP = () => {
         flexDirection: "column",
       }}
     >
-      <Typography variant="h1" component="h1">
-        اپراتور من
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
+        <Typography
+          variant="h1"
+          component="h1"
+          mt={isMdScreen ? "0.6rem" : "0.2rem"}
+        >
+          وضعیت اپراتور
+        </Typography>
+        <FormControl sx={{ width: "10rem", mr: "1rem", height: "60px" }}>
+          <ContainedSelect
+            onChange={handleChange}
+            value={operator}
+            displayEmpty
+          >
+            <MenuItem disabled>
+              <span>انتخاب اپراتور</span>
+            </MenuItem>
+            {operatorOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </ContainedSelect>
+        </FormControl>
+      </Box>
 
       <Box
         display="flex"
@@ -73,8 +102,7 @@ const MyISP = () => {
           gap={2.5}
           flexBasis={isMdScreen ? "100%" : "50%"}
         >
-          {" "}
-          <ISPDetail />
+          <ISPDetail operator={operator} />
           <MomentDisruption />
         </Box>
         <Charts />

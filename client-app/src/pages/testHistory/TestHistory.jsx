@@ -178,7 +178,7 @@ const GridItem = ({
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
-          <Box borderRadius="3rem" padding="1rem" width="100%" height="321px">
+          <Box borderRadius="3rem" padding="1rem" width="100%" height="360px">
             {rendered && (
               <ResponsiveContainer width="100%" height={261}>
                 <BarChart width="100%" height="100%" data={data}>

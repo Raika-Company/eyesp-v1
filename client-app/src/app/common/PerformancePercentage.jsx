@@ -210,7 +210,7 @@ const OperatorProfile = () => {
           justifyContent="center"
           gap={0.5}
           // flexWrap="wrap"
-          mt={isMdScreen ? "72px" : "32px"}
+          mt={isMdScreen ? "1rem" : "0.6rem"}
         >
           <Box flexBasis="50%">
             <ButtonGroup
@@ -238,6 +238,7 @@ const OperatorProfile = () => {
           <Box
             sx={{
               display: "flex",
+              flexWrap: "wrap",
               justifyContent: "center",
               alignItems: "center",
               flexBasis: "50%",
@@ -250,10 +251,10 @@ const OperatorProfile = () => {
               lineWidth={10}
               variant="h1"
             />
+            <Box mt={3} display="flex" justifyContent="center">
+              <ViewDetailsButton target="/isp-performance" />
+            </Box>
           </Box>
-        </Box>
-        <Box mt={3} display="flex" justifyContent="center">
-          <ViewDetailsButton target="/isp-performance" />
         </Box>
       </NewCardContainer>
     </>
