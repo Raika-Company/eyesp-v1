@@ -1,6 +1,6 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 
-const YAxisLine = ({ max, unit, height, onValuesGenerated }) => {
+const YAxisLine = ({max, unit, height, onValuesGenerated}) => {
   const theme = useTheme();
   const valueOfEachRow = Math.ceil(max / 3);
 

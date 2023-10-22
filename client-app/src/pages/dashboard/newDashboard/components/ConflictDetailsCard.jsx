@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Skeleton,
   Typography,
   useTheme,
 } from "@mui/material";

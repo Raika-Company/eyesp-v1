@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 
 /**
  * Generates styles for the XAxisLine component.
@@ -50,7 +50,7 @@ const useStyles = (isSmScreen) => {
  * @param {string} props.height The height of the x-axis line.
  * @returns {React.ReactNode} The XAxisLine component.
  */
-const XAxisLine = ({ max, unit, height = "0.3rem", selectedIds }) => {
+const XAxisLine = ({max, unit, height = "0.3rem", selectedIds}) => {
   const [tableData, setTableData] = useState([]);
   const theme = useTheme();
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -66,7 +66,7 @@ const XAxisLine = ({ max, unit, height = "0.3rem", selectedIds }) => {
   return (
     <Box sx={styles.container}>
       <Box sx={styles.innerContainer}>
-        <div style={{ ...styles.line, height }}></div>
+        <div style={{...styles.line, height}}></div>
         <ValuesDisplay
           data={tableData.filter((item, index) =>
             selectedIds.includes(String(index))
@@ -78,7 +78,7 @@ const XAxisLine = ({ max, unit, height = "0.3rem", selectedIds }) => {
   );
 };
 
-const ValuesDisplay = ({ data, styles }) => (
+const ValuesDisplay = ({data, styles}) => (
   <Box sx={styles.valuesContainer}>
     {data.map((value) => (
       <Box key={value.time + value.date} sx={styles.valueBox}>

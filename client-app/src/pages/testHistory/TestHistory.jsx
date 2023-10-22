@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
 import {
   Box,
   Card,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import HistoryTable from "./HistoryTable";
-import YAxisLine from "../../app/common/YAxisLine";
+import AxisLine from "../../app/common/AxisLine";
 import XAxisLine from "./XAxisLine";
 import {
   Bar,
@@ -20,7 +20,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { ContainedButton } from "../../app/common/ContainedButton";
+import {ContainedButton} from "../../app/common/ContainedButton";
 
 const convertPersianNumbers = (persianNumber) => {
   if (typeof persianNumber === "string") {
@@ -53,8 +53,8 @@ const convertPersianNumbers = (persianNumber) => {
  * @property {string} unit - The measurement unit for the chart data.
  */
 const titlesChart = [
-  { title: "سرعت دانلود", unit: "Mb/s" },
-  { title: "سرعت آپلود", unit: "Mb/s" },
+  {title: "سرعت دانلود", unit: "Mb/s"},
+  {title: "سرعت آپلود", unit: "Mb/s"},
 ];
 
 /**
@@ -64,7 +64,7 @@ const titlesChart = [
  * @param {Array<Object>} props.payload - Data payload for the tooltip.
  * @returns {JSX.Element|null}
  */
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({active, payload}) => {
   // Logging the payload to inspect its structure:
   // console.log(payload);
 
@@ -122,7 +122,7 @@ const GridItem = ({
   const barColorsTop = ["#00C2FF", "#70FF00", "#FE4543", "#00C2FF"];
   // Separate component for clarity.
 
-  const TopBorderedBar = ({ x, y, width, height, fill, index }) => (
+  const TopBorderedBar = ({x, y, width, height, fill, index}) => (
     <g>
       <rect x={x} y={y} width={width} height={height} fill={fill} />
       <line
@@ -173,7 +173,7 @@ const GridItem = ({
           borderRadius: "1.2rem",
         }}
       >
-        <Box sx={{ width: isSmScreen ? "100%" : "94.4%", padding: "1rem" }}>
+        <Box sx={{width: isSmScreen ? "100%" : "94.4%", padding: "1rem"}}>
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
@@ -234,7 +234,12 @@ const GridItem = ({
             top: "1.5rem",
           }}
         >
-          <YAxisLine max={computeMaxValue(data)} unit={unit} />
+          <AxisLine
+            max={Math.ceil(computeMaxValue(data))}
+            unit={unit}
+            direction="Y"
+            height="16rem"
+          />
         </Box>
       </Box>
     </Grid>
@@ -247,7 +252,7 @@ const GridItem = ({
  * @param {boolean} props.openNav - Indicates if the navigation menu is open.
  * @returns {JSX.Element}
  */
-const NewTestHistory = ({ openNav }) => {
+const NewTestHistory = ({openNav}) => {
   const [tableData, setTableData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
 
