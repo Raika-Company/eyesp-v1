@@ -74,6 +74,7 @@ export function GridItem({
 }) {
   const {pathname} = useLocation();
 
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
     <NewCardContainer
       sx={{
@@ -89,7 +90,7 @@ export function GridItem({
     >
       <Box display="flex" position="relative" width="92%">
         <Box sx={{width: "100%"}}>
-          <Box display="flex">
+          <Box sx={{display: "flex", height: isSmScreen ? "12.9%" : "11%"}}>
             <Typography
               color="text.main"
               variant="h1"

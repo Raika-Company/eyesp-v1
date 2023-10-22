@@ -57,7 +57,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ISPDetail = () => {
+const ISPDetail = ({operator}) => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -90,7 +90,7 @@ const ISPDetail = () => {
   return (
     <>
       <Box display="flex" gap={2}>
-        <OperatorProfile openFeedbackDialog={handleClickOpenFeedbackDialog} />
+        <OperatorProfile operator={operator} openFeedbackDialog={handleClickOpenFeedbackDialog} />
         <PerformancePercentage />
       </Box>
       <Dialog

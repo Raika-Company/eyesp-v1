@@ -184,9 +184,9 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
         {provinceData && selectedProvince && (
           <g>
             <rect
-              x={provinceCoords[selectedProvince].x - 100}
+              x={provinceCoords[selectedProvince].x - 130}
               y={provinceCoords[selectedProvince].y - 120}
-              width={200}
+              width={230}
               height={100}
               fill="url(#tooltip_gradient)"
               rx={15}
@@ -194,7 +194,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             <text
               x={provinceCoords[selectedProvince].x + 90}
               y={provinceCoords[selectedProvince].y - 90}
-              fontFamily="Arial"
+              // fontFamily="Arial"
               fontSize="28"
               fill="white"
             >
@@ -203,7 +203,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             <text
               x={provinceCoords[selectedProvince].x + 90}
               y={provinceCoords[selectedProvince].y - 40}
-              fontFamily="Arial"
+              // fontFamily="Arial"
               fontSize="38"
               fill="red"
             >
@@ -212,7 +212,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             <text
               x={provinceCoords[selectedProvince].x + 60}
               y={provinceCoords[selectedProvince].y - 45}
-              fontFamily="Arial"
+              // fontFamily="Arial"
               fontSize="20"
               fill="white"
             >

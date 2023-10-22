@@ -43,9 +43,6 @@ const RowBox = styled(Box)(({ theme, delay, gradient }) => ({
   "& > *": {
     flex: 1,
     textAlign: "center",
-    fontSize: "1.25rem",
-    fontFamily: "PeydaLight",
-    // color: "#676767",
   },
 }));
 
