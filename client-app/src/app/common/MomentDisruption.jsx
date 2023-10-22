@@ -193,6 +193,7 @@ const OperatorProfile = () => {
         sx={{
           paddingTop: "1.5rem",
           paddingBottom: "0.5rem",
+          mb: "1rem",
           paddingX: "3%",
           flexBasis: "100%",
         }}
@@ -244,7 +245,7 @@ const OperatorProfile = () => {
             <YAxis
               tickMargin={80}
               tickFormatter={formatYAxisTicks}
-              width={85} // Increase width for YAxis
+              width={90} // Increase width for YAxis
               tick={{
                 fontSize: 14, // You can adjust the font size
                 fontWeight: "bold",

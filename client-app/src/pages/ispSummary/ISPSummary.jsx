@@ -6,20 +6,25 @@ import {
   useTheme,
   Button,
   Menu,
+  useMediaQuery,
+  Tooltip,
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import CardContainer from "../../app/common/CardContainer";
 import CardInformation from "../../app/common/CardInformation";
-import {ContainedSelect} from "../../app/common/ContainedSelect";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CircleChart from "../../app/common/CircleChart";
 import RatingComponent from "../../app/common/Rating";
-import {Treemap, ResponsiveContainer} from "recharts";
+import { Treemap, ResponsiveContainer, AreaChart, CartesianGrid, Area } from "recharts";
 import CompareTable from "../dashboard/newDashboard/components/CompareTable";
-import {GridItem} from "../../app/common/Charts";
 import provinces from "../../../public/data/provinces.json";
 import ISPList from "../../../public/data/RowISPData.json";
 import DownArrow from "../../app/assets/image/down.svg";
-
+import NewCardContainer from "../../app/common/NewCardContainer";
+import { useLocation } from "react-router-dom";
+import YAxisLine from "../../app/common/YAxisLine";
+import xAxisLight from "../../app/assets/image/time-compare-light.svg";
+import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 let averageMockData = [
   {
     id: 10,
@@ -71,11 +76,11 @@ const averageTimeStamp = [
 ];
 
 const dataForChart = [
-  {name: "A1", value: 30},
-  {name: "A2", value: 30},
-  {name: "B1", value: 80},
-  {name: "B2", value: 90},
-  {name: "B3", value: 10},
+  { name: "A1", value: 30 },
+  { name: "A2", value: 30 },
+  { name: "B1", value: 80 },
+  { name: "B2", value: 90 },
+  { name: "B3", value: 10 },
 ];
 
 const ISPs = [
@@ -104,11 +109,11 @@ const ISPs = [
 const titlesChart = [
   {
     title: "سرعت دانلود",
-    unit: "Mb/s",
+    unit: "%",
   },
   {
     title: " سرعت اپلود",
-    unit: "%",
+    unit: "Mb/s",
   },
   {
     title: " پینگ",
@@ -120,10 +125,10 @@ const titlesChart = [
   },
 ];
 const chartColors = [
-  {stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD"},
-  {stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700"},
-  {stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000"},
-  {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
+  { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
+  { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
+  { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
+  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
 ];
 
 const mockDataForPastPerformance = [
@@ -159,6 +164,135 @@ function generateRandomData() {
     });
   }
   return data;
+}
+
+export function GridItem({
+  theme,
+  rendered,
+  title,
+  data,
+  unit,
+  color,
+  background,
+  selectValue,
+  handleChangeDailyPercent,
+}) {
+  const { pathname } = useLocation();
+  const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  return (
+    <NewCardContainer
+      sx={{
+        boxShadow: pathname === "/isp-summary" && "none",
+        background: background,
+        display: "flex",
+        paddingInline: "3%",
+        paddingBottom: "2.25rem",
+        paddingTop: "1.5rem",
+        borderRadius: ".75rem",
+        flexBasis: "100%",
+      }}
+    >
+      <Box display="flex" position="relative" width="92%">
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ display: "flex", height: isSmScreen ? "12.9%" : "19%" }}>
+            <Typography
+              color="text.main"
+              variant="h1"
+              component="h2"
+              gutterBottom
+              ml="1rem"
+            >
+              {title}
+            </Typography>
+            {title === "سرعت دانلود" && pathname === "/my-isp" && (
+              <FormControl
+                sx={{ width: "25%", marginLeft: "3rem", height: "60px" }}
+              >
+                <ContainedSelect
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectValue}
+                  label="سال"
+                  onChange={handleChangeDailyPercent}
+                  displayEmpty
+                >
+                  <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
+                  <MenuItem value="هفتگی">هفتگی</MenuItem>
+                  <MenuItem value="ماهانه">ماهانه</MenuItem>
+                  <MenuItem value="سالانه">سالانه</MenuItem>
+                </ContainedSelect>
+              </FormControl>
+            )}
+          </Box>
+          <Box
+            borderRadius="3rem"
+            paddingRight="3%"
+            width="100%"
+            height="250px"
+          >
+            {rendered && (
+              <Box>
+                <ResponsiveContainer width="100%" height={220}>
+                  <AreaChart width="100%" height="100%" data={data}>
+                    <Tooltip />
+                    <CartesianGrid
+                      vertical={false}
+                      stroke={
+                        theme.palette.mode === "dark" ? "#2e2e2e" : "#E9E9E9"
+                      }
+                    />
+                    <defs>
+                      <filter
+                        id="glow"
+                        x="-70%"
+                        y="-70%"
+                        width="200%"
+                        height="200%"
+                      >
+                        <feOffset
+                          result="offOut"
+                          in="SourceGraphic"
+                          dx="0"
+                          dy="0"
+                        />
+                        <feGaussianBlur
+                          result="blurOut"
+                          in="offOut"
+                          stdDeviation="5"
+                        />
+                        <feBlend
+                          in="SourceGraphic"
+                          in2="blurOut"
+                          mode="normal"
+                        />
+                      </filter>
+                    </defs>
+                    <Area
+                      type="linear"
+                      dataKey="value"
+                      stroke={color && color.stroke}
+                      fill={`url(#gradientChart${color && color.stroke})`}
+                      strokeWidth={4}
+                      filter="url(#glow)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </Box>
+            )}
+          </Box>
+          <img
+            src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
+            alt="xAxis"
+            style={{ width: "100%" }}
+          />
+        </Box>
+        <YAxisLine
+          max={Math.max(...data?.map((line) => line.value))}
+          unit={unit}
+        />
+      </Box>
+    </NewCardContainer>
+  );
 }
 
 const ISPSummary = () => {
@@ -224,7 +358,7 @@ const ISPSummary = () => {
         element.setAttribute("style", `fill: ${isDark ? "#262626" : "#fff"}`);
     }, 10);
   }, [isDark]);
-  const PastData = ({title, value}) => {
+  const PastData = ({ title, value }) => {
     return (
       <Stack
         direction="row"
@@ -235,7 +369,7 @@ const ISPSummary = () => {
         <Typography>{title}</Typography>
         <Typography
           sx={{
-            color: value > 0 ? "#70FF00" : "#FE4543",
+            color: value > 0 ? "text.number" : "text.number",
           }}
         >
           {value > 0 ? value + "+" : value}
@@ -531,7 +665,7 @@ const ISPSummary = () => {
         </Box>
         <Box
           sx={{
-            height: "78vh",
+            height: "76.5vh",
             overflow: "scroll",
             overflowX: "hidden",
             position: "relative",
@@ -650,7 +784,7 @@ const COLORS = [
   "#FF8042",
 ];
 const CustomizedContent = (props) => {
-  const {depth, x, y, width, height, index} = props;
+  const { depth, x, y, width, height, index } = props;
 
   return (
     <g>

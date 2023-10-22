@@ -9,11 +9,35 @@ import React, { useState } from "react";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import IrancellLight from "../assets/image/LogoOperator/irancell-logo-light.svg";
+import tci from "../assets/image/LogoOperator/tci.webp";
+import mobinnet from "../assets/image/LogoOperator/MOBINnet-removebg-preview.webp";
+import hamrahaval from "../assets/image/LogoOperator/MCI-removebg-preview.webp";
+import zitel from "../assets/image/LogoOperator/Zitel.webp";
 
-const OperatorProfile = ({ openFeedbackDialog }) => {
-  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+const getOperatorImage = (operator) => {
   const theme = useTheme();
+
+  switch (operator) {
+    case "ایرانسل":
+      return theme.palette.mode === "dark" ? Irancell : IrancellLight;
+    case "همراه اول":
+      return hamrahaval;
+    case "زی تل":
+      return zitel;
+    case "مخابرات":
+      return tci;
+    case "مبین نت":
+      return mobinnet;
+    default:
+      return null;
+  }
+};
+
+const OperatorProfile = ({ operator, openFeedbackDialog }) => {
+  const theme = useTheme();
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const backgroundColor = theme.palette.mode === "dark" ? "#303030" : "#F4F4F4";
+  const operatorImage = getOperatorImage(operator, theme);
 
   return (
     <>
@@ -27,13 +51,12 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
         }}
       >
         <Typography
-          mt={2}
           variant="h1"
           component="h2"
           color="text.textBlack"
           gutterBottom
         >
-          مشخصات اپراتور{" "}
+          مشخصات اپراتور
         </Typography>
         <Box
           mt="2.13rem"
@@ -41,11 +64,17 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
           justifyContent="space-evenly"
           alignItems="center"
         >
-          <Typography variant="h2">ایرانسل</Typography>
+          <Typography variant="h2">{operator}</Typography>
           <img
+            style={{ width: "30%", height: "30%" }}
+            src={operatorImage}
+            alt={operator}
+          />
+
+          {/* <img
             src={theme.palette.mode === "dark" ? Irancell : IrancellLight}
             alt="irnacell"
-          />
+          /> */}
         </Box>
         <Box
           mt={1}
