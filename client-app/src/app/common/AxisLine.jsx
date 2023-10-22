@@ -17,13 +17,15 @@ const AxisLine = ({max, unit, height, direction, xAxisValues}) => {
         flexDirection: "column",
         gap: ".5rem",
         position: "absolute",
-        left: direction === "Y" ? "-105%" : "",
-        top: direction === "Y" ? "-1rem" : "95%",
+        left: direction === "Y" ? "-103%" : "",
+        top: direction === "Y" ? "0" : "95%",
         width: "100%",
         height: "100%",
       }}
     >
-      <Typography>{unit}</Typography>
+      <Typography whiteSpace="nowrap" fontSize=".8rem !important">
+        {unit}
+      </Typography>
       <Box
         sx={{
           display: "flex",
@@ -33,8 +35,9 @@ const AxisLine = ({max, unit, height, direction, xAxisValues}) => {
       >
         <div
           style={{
+            position: "absolute",
             width: direction === "Y" ? ".3rem" : "100%",
-            height: direction === "Y" ? "100%" : ".3rem",
+            height: direction === "Y" ? "16rem" : ".3rem",
             background: theme.palette.mode === "dark" ? "#C9C9C9" : "#aaaa",
             borderRadius: ".5rem",
           }}
@@ -43,13 +46,13 @@ const AxisLine = ({max, unit, height, direction, xAxisValues}) => {
         <Box
           sx={{
             width: "100%",
-            height: "100%",
+            height: height || "100%",
             position: "absolute",
             display: "flex",
             right: direction === "Y" && "1rem",
             top: direction === "X" && "1rem",
             flexDirection: direction === "Y" ? "column-reverse" : "row-reverse",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
           }}
         >
           {direction === "Y" &&

@@ -237,7 +237,12 @@ const GridItem = ({
             top: "1.5rem",
           }}
         >
-          <AxisLine max={computeMaxValue(data)} unit={unit} direction="Y" />
+          <AxisLine
+            max={Math.ceil(computeMaxValue(data))}
+            unit={unit}
+            direction="Y"
+            height="16rem"
+          />
         </Box>
       </Box>
     </Grid>

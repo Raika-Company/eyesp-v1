@@ -217,10 +217,10 @@ const Charts = ({province, isp, maxWidth}) => {
           receivedData.packet_loss.reverse();
         }
         const mappedData = [
-          {title: "سرعت دانلود", data: receivedData.download},
-          {title: "سرعت اپلود", data: receivedData.upload},
-          {title: "پینگ", data: receivedData.ping},
-          {title: "پکت لاس", data: receivedData.packet_loss},
+          {title: "سرعت دانلود", unit: "Mb/s", data: receivedData.download},
+          {title: "سرعت اپلود", unit: "Mb/s", data: receivedData.upload},
+          {title: "پینگ", unit: "Ms", data: receivedData.ping},
+          {title: "پکت لاس", unit: "%", data: receivedData.packet_loss},
         ];
         setChartData(mappedData);
       })
