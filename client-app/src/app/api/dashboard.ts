@@ -12,18 +12,9 @@ export const getMyIspMetrics = async (myIsp: string) =>
   await axios.http.get(rootAddress + "/dashboard/my-isp/" + myIsp);
 
 // Getting Chart information
-export const TodayCharts = async (province = 'Tehran', isp = 'irancell') =>
-  await axios.http.get(rootAddress + `/dashboard/charts/today/${isp}/${province}`);
+export const GetCharts = async (province = 'Tehran', isp = 'irancell', time = 'today') =>
+  await axios.http.get(rootAddress + `/dashboard/charts/${time}/${isp}/${province}`);
 
-export const WeekCharts = async (province = 'Tehran', isp = 'irancell') =>
-  await axios.http.get(
-    rootAddress + `/dashboard/charts/weekly/${isp}/${province}`
-  );
-export const MonthCharts = async (province = 'Tehran', isp = 'irancell') =>
-  await axios.http.get(rootAddress + `/dashboard/charts/month/${isp}/${province}`);
-
-export const YearCharts = async (province = 'Tehran', isp = 'irancell') =>
-  await axios.http.get(rootAddress + `/dashboard/charts/year/${isp}/${province}`);
 
 // Getting Issues states
 export const getGlobalStates = async () =>
@@ -32,8 +23,8 @@ export const getGlobalStates = async () =>
 export const getIssues = async () =>
   await axios.http.get(rootAddress + "/dashboard/get-issue-stats/issues");
 
-// export const getIssuesForCities = async () =>
-//   await axios.http.get(rootAddress + '/dashboard/get-issue-stats/cities')
+export const getIssuesForCities = async () =>
+  await axios.http.get(rootAddress + '/dashboard/get-issue-stats/cities')
 
 
 export const getIssuesForIsp = async () =>

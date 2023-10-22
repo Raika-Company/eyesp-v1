@@ -138,34 +138,32 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
             <stop offset="100%" stopColor="#181818" stopOpacity="0.69" />
           </radialGradient>
         </defs>
-        <g>
-          {provinces &&
-            provinces.map((province, index) => (
-              <Fragment key={index}>
-                <AnimatedCircle
-                  cx={province.x}
-                  cy={province.y}
-                  r="7"
-                  index={index}
-                  pulse
-                  stroke="#FE4543"
-                />
-                <AnimatedCircle
-                  cx={province.x}
-                  cy={province.y}
-                  r="6.5"
-                  fill="#FE4543"
-                  s
-                />
-                <AnimatedCircle
-                  cx={province.x}
-                  cy={province.y}
-                  r="25"
-                  fill={"url(#animatedGradient)"}
-                />
-              </Fragment>
-            ))}
-        </g>
+        {provinces &&
+          provinces.map((province, index) => (
+            <Fragment key={index}>
+              <AnimatedCircle
+                cx={province.x}
+                cy={province.y}
+                r="7"
+                index={index}
+                pulse
+                stroke="#FE4543"
+              />
+              <AnimatedCircle
+                cx={province.x}
+                cy={province.y}
+                r="6.5"
+                fill="#FE4543"
+                s
+              />
+              <AnimatedCircle
+                cx={province.x}
+                cy={province.y}
+                r="25"
+                fill={"url(#animatedGradient)"}
+              />
+            </Fragment>
+          ))}
         {Object.keys(provinceCoords).map((province, index) => (
           <circle
             key={index}
@@ -175,7 +173,7 @@ const BackgroundSvg = ({provinces = [], ...props}) => {
               // TEMPORARY
               navigate("/province-profile/" + provinceCoords[province].name);
             }}
-            onMouseOver={() => {
+            onMouseEnter={() => {
               setSelectedProvicne(province);
             }}
             r={provinceCoords[province]?.size || 35}

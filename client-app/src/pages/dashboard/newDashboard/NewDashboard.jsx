@@ -38,7 +38,6 @@ const NewDashboard = () => {
     services.dashboard
       .getGlobalStates()
       .then((response) => {
-        console.log("RRRRRRRRr", response.data.data);
         setGlobalStates(response.data.data);
       })
       .catch((e) => {

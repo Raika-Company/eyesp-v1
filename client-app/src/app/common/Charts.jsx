@@ -14,11 +14,10 @@ import {
   Area,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
   CartesianGrid,
 } from "recharts";
 
-import YAxisLine from "./YAxisLine";
+import AxisLine from "./AxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import {ContainedSelect} from "./ContainedSelect";
@@ -112,10 +111,10 @@ export function GridItem({
                   onChange={handleChangeDailyPercent}
                   displayEmpty
                 >
-                  <MenuItem value="در حال حاضر">درحال حاضر</MenuItem>
-                  <MenuItem value="هفتگی">هفتگی</MenuItem>
-                  <MenuItem value="ماهانه">ماهانه</MenuItem>
-                  <MenuItem value="سالانه">سالانه</MenuItem>
+                  <MenuItem value="today">درحال حاضر</MenuItem>
+                  <MenuItem value="weekly">هفتگی</MenuItem>
+                  <MenuItem value="monthly">ماهانه</MenuItem>
+                  <MenuItem value="year">سالانه</MenuItem>
                 </ContainedSelect>
               </FormControl>
             )}
@@ -176,15 +175,12 @@ export function GridItem({
               </Box>
             )}
           </Box>
-          <img
-            src={theme.palette.mode === "light" ? xAxisLight : xAxisDark}
-            alt="xAxis"
-            style={{width: "100%"}}
-          />
         </Box>
-        <YAxisLine
+        <AxisLine xAxisValues={data.map((obj) => obj.name)} direction="X" />
+        <AxisLine
           max={Math.max(...data?.map((line) => line.value))}
           unit={unit}
+          direction="Y"
         />
       </Box>
     </NewCardContainer>
@@ -194,67 +190,27 @@ export function GridItem({
 const Charts = ({province, isp, maxWidth}) => {
   const theme = useTheme();
   const [rendered, setRendered] = useState(false);
-  const [selectValue, setSelectValue] = useState("در حال حاضر"); // Change 'age' to a more appropriate name: 'selectValue'
+  const [selectedTime, setSelectedTime] = useState("today"); // Change 'age' to a more appropriate name: 'selectValue'
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [chartData, setChartData] = useState([]);
 
   const handleChangeDailyPercent = (event) => {
     const selectedValue = event.target.value;
-    setSelectValue(selectedValue);
+    setSelectedTime(selectedValue);
   };
   const fetchChartData = (type) => {
-    let requestEndpoint;
-
-    switch (type) {
-      case "در حال حاضر":
-        requestEndpoint = () =>
-          services.dashboard.TodayCharts(
-            province
-              ? `${province[0].toUpperCase()}${province?.slice(1)}`
-              : undefined,
-            isp
-          );
-        break;
-      case "هفتگی":
-        requestEndpoint = () =>
-          services.dashboard.WeekCharts(
-            province
-              ? `${province[0].toUpperCase()}${province?.slice(1)}`
-              : undefined,
-            isp
-          );
-        break;
-      case "ماهانه":
-        requestEndpoint = () =>
-          services.dashboard.MonthCharts(
-            province
-              ? `${province[0].toUpperCase()}${province?.slice(1)}`
-              : undefined,
-            isp
-          );
-        break;
-      case "سالانه":
-        requestEndpoint = () =>
-          services.dashboard.YearCharts(
-            province
-              ? `${province[0].toUpperCase()}${province?.slice(1)}`
-              : undefined,
-            isp
-          );
-        break;
-      default:
-        requestEndpoint = services.dashboard.TodayCharts(
-          province
-            ? `${province[0].toUpperCase()}${province?.slice(1)}`
-            : undefined,
-          isp
-        );
-    }
-    requestEndpoint()
+    services.dashboard
+      .GetCharts(
+        province
+          ? `${province[0].toUpperCase()}${province?.slice(1)}`
+          : undefined,
+        isp,
+        selectedTime
+      )
       .then((response) => {
         const receivedData = response.data.data.data;
-        if (selectValue === "سالانه") {
+        if (selectedTime === "year") {
           receivedData.download.reverse();
           receivedData.upload.reverse();
           receivedData.ping.reverse();
@@ -274,8 +230,8 @@ const Charts = ({province, isp, maxWidth}) => {
   };
 
   useEffect(() => {
-    fetchChartData(selectValue);
-  }, [selectValue, province, isp]);
+    fetchChartData(selectedTime);
+  }, [selectedTime, province, isp]);
 
   useEffect(() => {
     setRendered(true);
@@ -303,7 +259,7 @@ const Charts = ({province, isp, maxWidth}) => {
               color={chartColors[index]}
               data={item.data}
               handleChangeDailyPercent={handleChangeDailyPercent}
-              selectValue={selectValue}
+              selectValue={selectedTime}
             />
           ))}
         </Grid>

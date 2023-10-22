@@ -538,9 +538,11 @@ const ISPSummary = () => {
               sx={{
                 alignSelf: "self-start",
                 display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "center",
                 padding: "1rem",
                 borderRadius: "1rem",
-                alignItems: "center",
                 backdropFilter: "blur(5px)",
                 zIndex: "10",
                 gap: "1rem",
