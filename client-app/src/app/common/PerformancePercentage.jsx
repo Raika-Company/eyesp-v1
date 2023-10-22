@@ -88,7 +88,6 @@ const OperatorProfile = () => {
     backgroundColor: theme.palette.mode === "dark" ? "#303030" : "#F4F4F4",
     width: "85%",
     alignItems: "center",
-    gap: "11px",
     justifyContent: "center",
     borderRadius: " 0.9375rem",
     paddingY: "1rem",
@@ -252,7 +251,7 @@ const OperatorProfile = () => {
             />
           </Box>
         </Box>
-        <Box mt={3} display="flex" justifyContent="center">
+        <Box mt={2} display="flex" justifyContent="center">
           <ViewDetailsButton target="/isp-performance" />
         </Box>
       </NewCardContainer>

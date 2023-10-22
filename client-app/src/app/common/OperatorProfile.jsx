@@ -20,7 +20,7 @@ const OperatorProfile = ({ openFeedbackDialog }) => {
       <NewCardContainer
         sx={{
           marginTop: "1rem",
-          paddingTop: "2rem",
+          paddingTop: "1rem",
           paddingBottom: "2rem",
           paddingX: "3%",
           flexBasis: isMdScreen ? "100%" : "50%",

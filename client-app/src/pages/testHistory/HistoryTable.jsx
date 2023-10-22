@@ -198,9 +198,8 @@ const HistoryTable = (props) => {
                       control={
                         <Checkbox
                           checked={selectedRadios.includes(String(index))}
-                          onChange={
-                            () =>
-                              handleCheckboxChange(String(index), index === 4) // Add this condition
+                          onChange={() =>
+                            handleCheckboxChange(String(index), index === 4)
                           }
                           onClick={() => {
                             if (
