@@ -115,7 +115,6 @@ const GridItem = ({
   unit,
   selectedIds,
   type,
-  showXAxis,
 }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   // Note: Moved barColors and related logic here for clarity.
@@ -222,13 +221,11 @@ const GridItem = ({
               </ResponsiveContainer>
             )}
           </Box>
-          {showXAxis && (
-            <XAxisLine
-              max={Math.max(...data.map((line) => line.value))}
-              unit={unit}
-              selectedIds={selectedIds}
-            />
-          )}
+          <XAxisLine
+            max={Math.max(...data.map((line) => line.value))}
+            unit={unit}
+            selectedIds={selectedIds}
+          />
         </Box>
         <Box
           sx={{
@@ -253,7 +250,6 @@ const GridItem = ({
 const NewTestHistory = ({ openNav }) => {
   const [tableData, setTableData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  const [showXAxis, setShowXAxis] = useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -264,6 +260,10 @@ const NewTestHistory = ({ openNav }) => {
       localStorage.getItem("testResults") || "[]"
     );
     setTableData(localStorageData);
+
+    if (localStorageData.length >= 4) {
+      setSelectedIds(["0", "1", "2", "3"]);
+    }
   }, []);
 
   useEffect(() => {
@@ -323,12 +323,11 @@ const NewTestHistory = ({ openNav }) => {
       </Box>
       <HistoryTable
         setSelectedIds={setSelectedIds}
-        onRadioClick={() => setShowXAxis(true)}
+        initialSelectedIds={selectedIds}
       />
       <Grid container>
         {titlesChart.map((line, index) => (
           <GridItem
-            showXAxis={showXAxis}
             selectedIds={selectedIds}
             key={index}
             theme={theme}

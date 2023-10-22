@@ -100,7 +100,7 @@ const ProvinceDetail = () => {
           }}
         >
           <Typography
-            mt={2}
+            mt={1}
             variant="h1"
             component="h2"
             color="text.textBlack"

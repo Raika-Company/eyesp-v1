@@ -223,12 +223,16 @@ const Information = () => {
             sx={{ marginTop: "3rem", gap: "0.5rem" }}
             variant="text.main"
             component="a"
-            href={`https://fa.wikipedia.org/wiki/${
-              selectedDefinition
-                ? encodeURIComponent(selectedDefinition.title)
-                : encodeURIComponent(definitionsData[0].title)
-            }`}
-            target="_blank"
+            href={
+              selectedDefinition && selectedDefinition.title === "پینگ"
+                ? "https://fa.wikipedia.org/wiki/%D9%BE%DB%8C%D9%86%DA%AF"
+                : `https://fa.wikipedia.org/wiki/${encodeURIComponent(
+                    selectedDefinition
+                      ? selectedDefinition.dic
+                      : definitionsData[0].dic
+                  )}`
+            }
+            target="_blank" // to open the link in a new tab
             rel="noopener noreferrer"
           >
             <img src={moreInformation} alt="moreInformation" />

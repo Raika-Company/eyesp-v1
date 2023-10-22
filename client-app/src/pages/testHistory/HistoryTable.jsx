@@ -6,7 +6,7 @@
  * @requires @emotion/styled
  * @requires @emotion/react
  */
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,6 +22,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Checkbox } from "@mui/material";
 
 /**
  * Styled component representing each row in the table.
@@ -73,6 +74,7 @@ const cellHeaders = [
 const HistoryTable = (props) => {
   const setSelectedIds = props.setSelectedIds;
   const onRadioClick = props.onRadioClick;
+  const initialSelectedIds = props.initialSelectedIds;
   const localStorageData = JSON.parse(
     localStorage.getItem("testResults") || "[]"
   ).reverse();
@@ -80,26 +82,43 @@ const HistoryTable = (props) => {
   const isDark = theme.palette.mode === "dark";
   const headerBackground = isDark ? "#434544" : "#C6C6C6";
   const rowBackground = isDark ? "#2D2D2D" : "#DDD";
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [selectedRadios, setSelectedRadios] = React.useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [selectedRadios, setSelectedRadios] = useState(
+    initialSelectedIds || []
+  );
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
 
-  const handleOpenSnackbar = () => {
-    setOpenSnackbar(true);
-  };
+  useEffect(() => {
+    if (initialSelectedIds) {
+      setSelectedIds(initialSelectedIds);
+      setSelectedRadios(initialSelectedIds);
+    } else {
+      // Select the first four items by default
+      const firstFourIds = localStorageData
+        .slice(0, 4)
+        .map((item, idx) => String(idx));
+      setSelectedRadios(firstFourIds);
+      setSelectedIds(firstFourIds);
+    }
+  }, [initialSelectedIds, localStorageData, setSelectedIds]);
 
   const handleSnackbarToggle = () => setOpenSnackbar((prev) => !prev);
-  const handleRadioChange = (value) => {
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorSnackbar(false);
+  };
+
+  const handleCheckboxChange = (value, isSixthItem = false) => {
     if (selectedRadios.includes(value)) {
-      // If already selected, remove the radio value from the array
       setSelectedRadios((prev) => prev.filter((radio) => radio !== value));
       setSelectedIds((pre) => pre.filter((radio) => radio !== value));
     } else {
-      if (selectedRadios.length >= 5) {
-        // Remove the first (oldest) radio from the array
-        setSelectedRadios((prev) => prev.slice(1));
-        setSelectedIds((pre) => pre.slice(1));
+      if (selectedRadios.length >= 5 && !isSixthItem) {
+        setErrorSnackbar(true); // Show the snackbar error
+        return; // Don't allow more selections
       }
-      // Add the new radio to the array
       setSelectedRadios((prev) => [...prev, value]);
       setSelectedIds((pre) => [...pre, value]);
     }
@@ -177,11 +196,18 @@ const HistoryTable = (props) => {
                     <FormControlLabel
                       value={String(index)}
                       control={
-                        <Radio
+                        <Checkbox
                           checked={selectedRadios.includes(String(index))}
-                          onChange={() => {
-                            handleRadioChange(String(index));
-                            onRadioClick();
+                          onChange={() =>
+                            handleCheckboxChange(String(index), index === 4)
+                          }
+                          onClick={() => {
+                            if (
+                              selectedRadios.length >= 5 &&
+                              !selectedRadios.includes(String(index))
+                            ) {
+                              setErrorSnackbar(true);
+                            }
                           }}
                         />
                       }
@@ -199,7 +225,7 @@ const HistoryTable = (props) => {
           </TableBody>
         </Table>
       </Box>
-      <Snackbar
+      {/* <Snackbar
         open={openSnackbar}
         autoHideDuration={4000}
         onClose={handleSnackbarToggle}
@@ -209,6 +235,16 @@ const HistoryTable = (props) => {
           onClose={handleSnackbarToggle}
         >
           لینک شما کپی شد !
+        </Alert>
+      </Snackbar> */}
+      <Snackbar
+        open={errorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Add this prop
+      >
+        <Alert onClose={handleClose} severity="error">
+          شما نمیتوانید بیشتر از ۵ تا مورد انتخاب بکنید
         </Alert>
       </Snackbar>
     </>

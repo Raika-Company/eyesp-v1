@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { styled, keyframes, Box, Typography } from "@mui/material";
+import { styled, keyframes, Box, Typography, useTheme } from "@mui/material";
 import services from "../../../../app/api/index";
 import convertToPersian from "../../../../app/utils/convertToPersian";
 
@@ -36,9 +36,6 @@ const RowBox = styled(Box)(({ delay, gradient }) => ({
   "& > *": {
     flex: 1,
     textAlign: "center",
-    fontSize: "1rem",
-    fontFamily: "PeydaLight",
-    // color: "#676767",
   },
 }));
 
@@ -61,6 +58,8 @@ const light_gradients = [
  * @returns {JSX.Element}
  */
 const Table = ({ showProvince, visibleRows }) => {
+  const theme = useTheme(); // Get the current theme
+  const isDarkMode = theme.palette.mode === "dark";
   const [chartData, setChartData] = useState(null);
   const [sortedKeys, setSortedKeys] = useState([]);
   useEffect(() => {
@@ -95,17 +94,18 @@ const Table = ({ showProvince, visibleRows }) => {
           <RowBox
             key={index}
             delay={index * 0.2}
-            gradient={gradients[index >= 3 ? 3 : index]}
+            gradient={
+              isDarkMode
+                ? gradients[index >= 3 ? 3 : index]
+                : light_gradients[index >= 3 ? 3 : index]
+            }
             marginTop=".3rem"
           >
             <Typography variant="h3" component="h3">
               {index + 1}
             </Typography>
             <Typography variant="h3" component="h3">
-              {/* {showProvince */}
-              {/* // ? convertToPersian(chartData.isp[key].province) */}
               {convertToPersian(key)}
-              {/* } */}
             </Typography>
             <Typography variant="h3" component="h3">
               {chartData.isp[key].totalQuality}
