@@ -83,7 +83,7 @@ const HistoryTable = (props) => {
   const headerBackground = isDark ? "#434544" : "#C6C6C6";
   const rowBackground = isDark ? "#2D2D2D" : "#DDD";
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [selectedRadios, setSelectedRadios] = useState(
+  const [selectedCheckBox, setSelectedCheckBox] = useState(
     initialSelectedIds || []
   );
   const [errorSnackbar, setErrorSnackbar] = useState(false);
@@ -91,13 +91,13 @@ const HistoryTable = (props) => {
   useEffect(() => {
     if (initialSelectedIds) {
       setSelectedIds(initialSelectedIds);
-      setSelectedRadios(initialSelectedIds);
+      setSelectedCheckBox(initialSelectedIds);
     } else {
       // Select the first four items by default
       const firstFourIds = localStorageData
         .slice(0, 4)
         .map((item, idx) => String(idx));
-      setSelectedRadios(firstFourIds);
+      setSelectedCheckBox(firstFourIds);
       setSelectedIds(firstFourIds);
     }
   }, [initialSelectedIds, localStorageData, setSelectedIds]);
@@ -111,15 +111,15 @@ const HistoryTable = (props) => {
   };
 
   const handleCheckboxChange = (value, isSixthItem = false) => {
-    if (selectedRadios.includes(value)) {
-      setSelectedRadios((prev) => prev.filter((radio) => radio !== value));
+    if (selectedCheckBox.includes(value)) {
+      setSelectedCheckBox((prev) => prev.filter((radio) => radio !== value));
       setSelectedIds((pre) => pre.filter((radio) => radio !== value));
     } else {
-      if (selectedRadios.length >= 5 && !isSixthItem) {
+      if (selectedCheckBox.length >= 5 && !isSixthItem) {
         setErrorSnackbar(true); // Show the snackbar error
         return; // Don't allow more selections
       }
-      setSelectedRadios((prev) => [...prev, value]);
+      setSelectedCheckBox((prev) => [...prev, value]);
       setSelectedIds((pre) => [...pre, value]);
     }
   };
@@ -197,14 +197,14 @@ const HistoryTable = (props) => {
                       value={String(index)}
                       control={
                         <Checkbox
-                          checked={selectedRadios.includes(String(index))}
+                          checked={selectedCheckBox.includes(String(index))}
                           onChange={() =>
                             handleCheckboxChange(String(index), index === 4)
                           }
                           onClick={() => {
                             if (
-                              selectedRadios.length >= 5 &&
-                              !selectedRadios.includes(String(index))
+                              selectedCheckBox.length >= 5 &&
+                              !selectedCheckBox.includes(String(index))
                             ) {
                               setErrorSnackbar(true);
                             }
