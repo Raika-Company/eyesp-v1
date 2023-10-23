@@ -8,6 +8,7 @@ import {
   Menu,
   useMediaQuery,
   Tooltip,
+  DialogContent,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import CardContainer from "../../app/common/CardContainer";
@@ -36,6 +37,8 @@ import YAxisLine from "../../app/common/YAxisLine";
 import xAxisLight from "../../app/assets/image/time-compare-light.svg";
 import xAxisDark from "../../app/assets/image/time-compare-dark.svg";
 import OperatorCompareModal from "../../app/common/OperatorCompareModal";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 let averageMockData = [
   {
     id: 10,
@@ -801,7 +804,8 @@ const ISPSummary = () => {
             onClose={handleCloseModal}
             maxWidth="lg" // Customize the modal size as needed
           >
-            <OperatorCompareModal />{" "}
+            {" "}
+            <OperatorCompareModal handleCloseModal={handleCloseModal} />{" "}
           </Dialog>
         </Box>
       </Box>

@@ -1,4 +1,11 @@
-import { Box, Grid, Typography, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import {
@@ -19,6 +26,7 @@ import { useLocation } from "react-router-dom";
 import AxisLine from "./AxisLine";
 import NewCardContainer from "./NewCardContainer";
 import services from "../../app/api/index";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -54,9 +62,10 @@ export const CustomTooltip = ({ active, payload }) => {
 const chartColors = [
   { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
   { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
+  { stroke: "#FFFFFF", gradientStart: "#FFFFFF", gradientEnd: "#FFFFFF" },
   { stroke: "#FF0000", gradientStart: "#FF4040", gradientEnd: "#FF0000" },
-  { stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000" },
 ];
+
 function GridItem({
   theme,
   rendered,
@@ -134,7 +143,7 @@ function GridItem({
               </Box>
             )}
           </Box>
-          {/* <AxisLine xAxisValues={data.map((obj) => obj.name)} direction="X" /> */}
+          <AxisLine xAxisValues={data?.map((obj) => obj.name)} direction="X" />
         </Box>
         <AxisLine
           max={Math.max(...data?.map((line) => line.value))}
@@ -175,7 +184,12 @@ function generateRandomData() {
   }
   return data;
 }
-const OperatorCompareModal = ({ province, isp, maxWidth }) => {
+const OperatorCompareModal = ({
+  province,
+  isp,
+  maxWidth,
+  handleCloseModal,
+}) => {
   const theme = useTheme();
   const [rendered, setRendered] = useState(false);
   const [selectedTime, setSelectedTime] = useState("today"); // Change 'age' to a more appropriate name: 'selectValue'
@@ -229,11 +243,9 @@ const OperatorCompareModal = ({ province, isp, maxWidth }) => {
     <>
       <NewCardContainer
         sx={{
-          maxHeight: "880px",
-          overflowY: "scroll",
-          marginTop: "1rem",
           flexBasis: isMdScreen ? "100%" : "50%",
           maxWidth: maxWidth,
+          borderRadius: "0",
         }}
       >
         <Box
@@ -241,15 +253,22 @@ const OperatorCompareModal = ({ province, isp, maxWidth }) => {
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
-            justifyContent: "space-evenly",
+            justifyContent: "space-between",
+            paddingRight: "2rem",
+            marginTop: "1rem",
           }}
         >
-          <Typography color="text.textBlack" variant="h1">
-            نمودار عملکرد اپراتور
-          </Typography>
           <Box
-            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
+            <Typography color="text.textBlack" variant="h1" ml={2}>
+              نمودار{" "}
+            </Typography>
             {FormControlItems.map((items, index) => (
               <FormControl
                 key={index}
@@ -283,9 +302,17 @@ const OperatorCompareModal = ({ province, isp, maxWidth }) => {
               </FormControl>
             ))}
           </Box>
-          <Box sx={{ display: isMdScreen ? "none" : " flex" }}></Box>
+          <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Button
+              color="text"
+              endIcon={<CloseIcon sx={{ marginX: "0.5rem" }} />}
+              onClick={handleCloseModal}
+            >
+              بستن
+            </Button>{" "}
+          </Box>
         </Box>
-        <Grid container>
+        <Grid container width="97%" pb={2}>
           {chartData?.map((item, index) => (
             <GridItem
               key={index}
