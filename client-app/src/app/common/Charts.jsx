@@ -188,7 +188,7 @@ export function GridItem({
   );
 }
 
-const Charts = () => {
+const Charts = ({data}) => {
   const theme = useTheme();
   const [rendered, setRendered] = useState(false);
   const [selectValue, setSelectValue] = useState("در حال حاضر"); // Change 'age' to a more appropriate name: 'selectValue'

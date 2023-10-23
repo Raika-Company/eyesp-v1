@@ -57,7 +57,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ISPDetail = ({operator}) => {
+const ISPDetail = ({operator, data}) => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
