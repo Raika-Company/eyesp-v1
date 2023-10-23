@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, { useRef, useEffect } from "react";
+import React, {useRef, useEffect} from "react";
 
 /**
  * DrawMeter Component
@@ -82,9 +82,9 @@ function PcDrawMeter({
       canvas.height - 78 * sizScale
     );
 
-    gradient.addColorStop(0, "#1D77FF");
-    gradient.addColorStop(0.5, "#5A9CFF");
-    gradient.addColorStop(1, "#1D77FF");
+    gradient.addColorStop(0, isDl ? "rgba(250, 83, 86, 1)" : "#1D77FF");
+    gradient.addColorStop(0.5, isDl ? "rgba(186, 40, 40, 1)" : "#5A9CFF");
+    gradient.addColorStop(1, isDl ? "rgba(186, 10, 10, 1)" : "#1D77FF");
 
     ctx.beginPath();
     ctx.strokeStyle = gradient;
@@ -155,8 +155,11 @@ function PcDrawMeter({
 
       // Create the gradient
       var gradient = ctx.createLinearGradient(0, -pointerLength, 0, 0);
-      gradient.addColorStop(0, "#7DB1FF");
-      gradient.addColorStop(1, "rgba(26, 117, 255, 0.00)");
+      gradient.addColorStop(0, isDl ? "rgba(250, 13, 16, 1)" : "#7DB1FF");
+      gradient.addColorStop(
+        1,
+        isDl ? "rgba(250, 83, 86, 1)" : "rgba(26, 117, 255, 0.00)"
+      );
       ctx.fillStyle = gradient;
       ctx.fill();
 
@@ -168,7 +171,7 @@ function PcDrawMeter({
   }, [amount, bk, fg, mbps, isDl, theme]);
 
   return (
-    <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }}></canvas>
+    <canvas ref={canvasRef} style={{width: "100%", height: "100%"}}></canvas>
   );
 }
 

@@ -55,9 +55,11 @@ const fadeIn = keyframes`
 const PcspTest = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [testAgain, setTestAgain] = useState(storage.get("testAgain", true));
   const {startAgain} = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [testAgain, setTestAgain] = useState(storage.get("testAgain", true));
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
   const [status, setStatus] = useState(2);
@@ -258,7 +260,13 @@ const PcspTest = () => {
           flexWrap: "wrap",
           textAlign: "center",
           justifyContent: "center",
-          gap: "1rem",
+          gap: isSmScreen
+            ? "3rem"
+            : isMdScreen
+            ? "4rem"
+            : isLgScreen
+            ? "8rem"
+            : "3rem",
         }}
       >
         <PcSpeedBox
@@ -303,18 +311,21 @@ const PcspTest = () => {
               border: "5.529px solid transparent",
 
               background:
-                " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                "linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+
+              padding: "5px",
+              transition: "background .25s",
               borderRadius: "50em",
               paddingTop: "1.8rem",
               color: "#FFF",
               textAlign: "center",
               cursor: "pointer",
               userSelect: "none",
-              ":hover": {
-                border: "5.529px solid transparent",
+              position: "relative",
+              zIndex: "10",
+              "&:hover": {
                 background:
-                  " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
-                borderRadius: "50em",
+                  "linear-gradient(#232323bb, #232323cc) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box ",
               },
             }}
           >
@@ -335,7 +346,11 @@ const PcspTest = () => {
             <PcDrawMeter
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                  ? "#45628A"
+                  ? isDl
+                    ? "rgba(250, 113, 116, .1)"
+                    : "#45628A"
+                  : isDl
+                  ? "rgba(250, 113, 116, .1)"
                   : "#1B70EE1C"
               }
               fg={"#1B70EE1C"}
