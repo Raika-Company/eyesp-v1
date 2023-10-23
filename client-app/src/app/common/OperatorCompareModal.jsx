@@ -17,6 +17,8 @@ import { ContainedSelect } from "../../app/common/ContainedSelect";
 import CardContainer from "../../app/common/CardContainer";
 import { useLocation } from "react-router-dom";
 import AxisLine from "./AxisLine";
+import NewCardContainer from "./NewCardContainer";
+import services from "../../app/api/index";
 
 export const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -34,10 +36,13 @@ export const CustomTooltip = ({ active, payload }) => {
         <div
           style={{
             margin: "13px 19px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
-          <p>month: {payload[0].payload.month.split(" ")[0]}</p>
-          <p>value: {payload[0].payload.value}</p>
+          <p>زمان: {payload[0].payload.name}</p>
+          <p>مقدار: {payload[0].payload.value}</p>
         </div>
       </div>
     );
@@ -45,24 +50,7 @@ export const CustomTooltip = ({ active, payload }) => {
 
   return null;
 };
-const titlesChart = [
-  {
-    title: "میانگین عملکرد",
-    unit: "Mb/s",
-  },
-  {
-    title: "پاکت لاس",
-    unit: "%",
-  },
-  {
-    title: "میانگین سرعت",
-    unit: "Mb/s",
-  },
-  {
-    title: "پینگ",
-    unit: "Ms",
-  },
-];
+
 const chartColors = [
   { stroke: "#008EDD", gradientStart: "#0091E3", gradientEnd: "#008EDD" },
   { stroke: "#FFD700", gradientStart: "#FFD740", gradientEnd: "#FFD700" },
@@ -187,84 +175,65 @@ function generateRandomData() {
   }
   return data;
 }
-const OperatorCompareModal = () => {
+const OperatorCompareModal = ({ province, isp, maxWidth }) => {
   const theme = useTheme();
-  const [ispData, setIspData] = useState([]); // state to store the data from JSON
   const [rendered, setRendered] = useState(false);
-  const [formControlItems, setFormControlItems] = useState("");
-  const [currentChartData, setCurrentChartData] = useState({});
-  const [randomChartData1, setRandomChartData1] = useState([]);
-  const [randomChartData2, setRandomChartData2] = useState([]);
-  const [randomChartData3, setRandomChartData3] = useState([]);
-  const [randomChartData4, setRandomChartData4] = useState([]);
-  const [chartData, setChartData] = useState([]);
-
+  const [selectedTime, setSelectedTime] = useState("today"); // Change 'age' to a more appropriate name: 'selectValue'
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const [chartData, setChartData] = useState([]);
 
-  const handleChange = (event) => {
-    setFormControlItems(event.target.value);
-    const selectedISPData = ispData.find(
-      (item) => item.id === event.target.value
-    );
-    if (selectedISPData) {
-      setCurrentChartData(selectedISPData);
-      setRandomChartData1(generateRandomData());
-      setRandomChartData2(generateRandomData());
-      setRandomChartData3(generateRandomData());
-      setRandomChartData4(generateRandomData());
-    }
+  const handleChangeDailyPercent = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedTime(selectedValue);
   };
-
-  useEffect(() => {
-    axios
-      .get("/data/chartData.json")
+  const fetchChartData = (type) => {
+    services.dashboard
+      .GetCharts(
+        province
+          ? `${province[0].toUpperCase()}${province?.slice(1)}`
+          : undefined,
+        isp,
+        selectedTime
+      )
       .then((response) => {
-        const data = response.data;
-        setIspData(data);
-        const defaultISPData = data.find((item) => item.id === "ایرانسل"); // find "ایرانسل" data
-        if (defaultISPData) {
-          setCurrentChartData(defaultISPData); // set "ایرانسل" data as default chart data
-          setRandomChartData1(generateRandomData());
-          setRandomChartData2(generateRandomData());
-          setRandomChartData3(generateRandomData());
-          setRandomChartData4(generateRandomData());
+        const receivedData = response.data.data.data;
+        if (selectedTime === "year") {
+          receivedData.download.reverse();
+          receivedData.upload.reverse();
+          receivedData.ping.reverse();
+          receivedData.packet_loss.reverse();
         }
+        const mappedData = [
+          { title: "سرعت دانلود", unit: "Mb/s", data: receivedData.download },
+          { title: "سرعت اپلود", unit: "Mb/s", data: receivedData.upload },
+          { title: "پینگ", unit: "Ms", data: receivedData.ping },
+          { title: "پکت لاس", unit: "%", data: receivedData.packet_loss },
+        ];
+        setChartData(mappedData);
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchChartData(selectedTime);
+  }, [selectedTime, province, isp]);
+
   useEffect(() => {
     setRendered(true);
   }, []);
+
   return (
     <>
-      <Box
+      <NewCardContainer
         sx={{
-          display: isMdScreen ? "flex" : " none",
-          width: "100%",
-          height: "78px",
-          borderRadius: "2rem",
-          alignItems: "center",
-          justifyContent: "center",
-          //   boxShadow: "0 4px 20px 0 rgba(0, 0, 0, 0.10)",
-          background:
-            theme.palette.mode === "dark"
-              ? "radial-gradient(214.28% 128.84% at 3.96% 11.02%, rgba(58, 73, 88, 0.82) 0%, rgba(35, 52, 69, 0.82) 48.53%, rgba(9, 25, 39, 0.82) 100%)"
-              : "radial-gradient(232.71% 140.09% at 3.96% 11.02%, rgba(255, 255, 255, 0.71) 0%, rgba(255, 255, 255, 0.80) 43.38%, rgba(255, 255, 255, 0.51) 100%)",
-          boxShadow:
-            theme.palette.mode === "light"
-              ? "0px 4px 40px 0px rgba(0, 0, 0, 0.20)"
-              : "0px 4px 40px 0px rgba(255, 255, 255, 0.10)",
-        }}
-      ></Box>
-      <CardContainer
-        sx={{
-          mt: "1rem",
-          mb: "2rem",
-          p: "2rem",
+          maxHeight: "880px",
+          overflowY: "scroll",
+          marginTop: "1rem",
+          flexBasis: isMdScreen ? "100%" : "50%",
+          maxWidth: maxWidth,
         }}
       >
         <Box
@@ -295,7 +264,7 @@ const OperatorCompareModal = () => {
                   labelId={`demo-select-small-label-${index}`}
                   id={`demo-select-small-${index}`}
                   label={items}
-                  onChange={handleChange}
+                  //   onChange={handleChange}
                   displayEmpty
                 >
                   <MenuItem disabled>
@@ -314,21 +283,24 @@ const OperatorCompareModal = () => {
               </FormControl>
             ))}
           </Box>
-          <Box sx={{ display: isMdScreen ? "none" : " flex" }}> </Box>
+          <Box sx={{ display: isMdScreen ? "none" : " flex" }}></Box>
         </Box>
         <Grid container>
-          {titlesChart.map((line, index) => (
+          {chartData?.map((item, index) => (
             <GridItem
               key={index}
               theme={theme}
               rendered={rendered}
-              title={line.title}
-              unit={line.unit}
-              data={randomChartData4}
+              title={item.title}
+              unit={item.unit}
+              color={chartColors[index]}
+              data={item.data}
+              handleChangeDailyPercent={handleChangeDailyPercent}
+              selectValue={selectedTime}
             />
           ))}
         </Grid>
-      </CardContainer>
+      </NewCardContainer>
     </>
   );
 };
