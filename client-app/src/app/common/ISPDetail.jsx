@@ -3,16 +3,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  Grid,
   Rating,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
-import StatisticBox from "./StatisticBox";
-import CardContainer from "./CardContainer";
+import React, {useState} from "react";
 
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
@@ -20,8 +16,6 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import CustomSnackbar from "./CustomSnackbar";
-import NewCardContainer from "./NewCardContainer";
-import Irancell from "../assets/image/irancell.svg";
 import PerformancePercentage from "./PerformancePercentage";
 import OperatorProfile from "./OperatorProfile";
 
@@ -44,7 +38,7 @@ function getLabelText(value) {
 
 function getIcon(value, size = "default") {
   // default value if no size is specified
-  const commonStyle = { fontSize: size };
+  const commonStyle = {fontSize: size};
 
   if (value <= 1)
     return <SentimentVeryDissatisfiedIcon style={commonStyle} color="error" />;
@@ -57,7 +51,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ISPDetail = ({operator}) => {
+const ISPDetail = ({operator, data}) => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -90,7 +84,10 @@ const ISPDetail = ({operator}) => {
   return (
     <>
       <Box display="flex" gap={2}>
-        <OperatorProfile operator={operator} openFeedbackDialog={handleClickOpenFeedbackDialog} />
+        <OperatorProfile
+          operator={operator}
+          openFeedbackDialog={handleClickOpenFeedbackDialog}
+        />
         <PerformancePercentage />
       </Box>
       <Dialog
@@ -118,7 +115,7 @@ const ISPDetail = ({operator}) => {
             icon={getIcon(value, "3rem")}
             emptyIcon={
               <SentimentSatisfiedIcon
-                style={{ fontSize: "3rem", opacity: 0.55 }}
+                style={{fontSize: "3rem", opacity: 0.55}}
               />
             }
             onChange={(event, newValue) => {
@@ -129,7 +126,7 @@ const ISPDetail = ({operator}) => {
             }}
           />
           {value !== null && (
-            <Box sx={{ ml: "1rem", fontSize: "1.3rem", userSelect: "none" }}>
+            <Box sx={{ml: "1rem", fontSize: "1.3rem", userSelect: "none"}}>
               {labels[hover !== -1 ? hover : value]}
             </Box>
           )}
@@ -139,7 +136,7 @@ const ISPDetail = ({operator}) => {
             variant="button"
             color="success.main"
             onClick={handleDisturbanceClick}
-            sx={{ cursor: "pointer" }}
+            sx={{cursor: "pointer"}}
           >
             ثبت بازخورد
           </Typography>
@@ -148,7 +145,7 @@ const ISPDetail = ({operator}) => {
             color="error.main"
             autoFocus
             onClick={handleCloseFeedbackDialog}
-            sx={{ cursor: "pointer", pr: "1rem" }}
+            sx={{cursor: "pointer", pr: "1rem"}}
           >
             لغو
           </Typography>

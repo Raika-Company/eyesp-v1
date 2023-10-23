@@ -5,7 +5,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import NewCardContainer from "./NewCardContainer";
 import Irancell from "../assets/image/irancell.svg";
 import IrancellLight from "../assets/image/LogoOperator/irancell-logo-light.svg";
@@ -13,24 +13,40 @@ import tci from "../assets/image/LogoOperator/tci.webp";
 import mobinnet from "../assets/image/LogoOperator/MOBINnet-removebg-preview.webp";
 import hamrahaval from "../assets/image/LogoOperator/MCI-removebg-preview.webp";
 import zitel from "../assets/image/LogoOperator/Zitel.webp";
+import hiweb from "../assets/image/LogoOperator/hiwebLogo.webp";
+import shatel from "../assets/image/LogoOperator/shatelLogo.webp";
+import samantel from "../assets/image/LogoOperator/samsantelLogo.webp";
+import ISPs from "../../../public/data/ISPs.json";
 
 const getOperatorImage = (operator) => {
   const theme = useTheme();
-
   switch (operator) {
-    case "ایرانسل":
+    case "Irancell":
       return theme.palette.mode === "dark" ? Irancell : IrancellLight;
-    case "همراه اول":
+    case "Hamraheaval":
       return hamrahaval;
-    case "زی تل":
-      return zitel;
-    case "مخابرات":
+    case "Mokhaberat":
       return tci;
-    case "مبین نت":
+    case "Zitel":
+      return zitel;
+    case "Shatel":
+      return shatel;
+    case "Hiweb":
+      return hiweb;
+    case "Samantel":
+      return samantel;
+    case "Mobinnet":
       return mobinnet;
     default:
       return null;
   }
+};
+
+const getLocalOperatorName = (internationalName) => {
+  const operator = ISPs.find(
+    (op) => op.internationalName === internationalName
+  );
+  return operator ? operator.localName : "";
 };
 
 const OperatorProfile = ({ operator, openFeedbackDialog }) => {
@@ -38,6 +54,7 @@ const OperatorProfile = ({ operator, openFeedbackDialog }) => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const backgroundColor = theme.palette.mode === "dark" ? "#303030" : "#F4F4F4";
   const operatorImage = getOperatorImage(operator, theme);
+  const localName = getLocalOperatorName(operator);
 
   return (
     <>
@@ -58,23 +75,13 @@ const OperatorProfile = ({ operator, openFeedbackDialog }) => {
         >
           مشخصات اپراتور
         </Typography>
-        <Box
-          mt="2.13rem"
-          display="flex"
-          justifyContent="space-evenly"
-          alignItems="center"
-        >
-          <Typography variant="h2">{operator}</Typography>
+        <Box display="flex" justifyContent="space-evenly" alignItems="center">
+          <Typography variant="h2">{localName}</Typography>
           <img
             style={{ width: "30%", height: "30%" }}
             src={operatorImage}
-            alt={operator}
+            alt={localName}
           />
-
-          {/* <img
-            src={theme.palette.mode === "dark" ? Irancell : IrancellLight}
-            alt="irnacell"
-          /> */}
         </Box>
         <Box
           mt={1}

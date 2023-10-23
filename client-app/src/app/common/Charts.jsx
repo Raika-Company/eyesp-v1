@@ -6,6 +6,8 @@ import {
   useTheme,
   FormControl,
   MenuItem,
+  CircularProgress,
+  Stack,
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import NewCardContainer from "./NewCardContainer";
@@ -62,6 +64,7 @@ const chartColors = [
   {stroke: "#008000", gradientStart: "#00A000", gradientEnd: "#008000"},
 ];
 export function GridItem({
+  loading,
   theme,
   rendered,
   title,
@@ -101,23 +104,33 @@ export function GridItem({
               {title}
             </Typography>
             {title === "سرعت دانلود" && pathname === "/my-isp" && (
-              <FormControl
-                sx={{width: "25%", marginLeft: "3rem", height: "60px"}}
-              >
-                <ContainedSelect
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={selectValue}
-                  label="سال"
-                  onChange={handleChangeDailyPercent}
-                  displayEmpty
+              <>
+                <FormControl
+                  sx={{width: "25%", marginLeft: "3rem", height: "60px"}}
                 >
-                  <MenuItem value="today">درحال حاضر</MenuItem>
-                  <MenuItem value="weekly">هفتگی</MenuItem>
-                  <MenuItem value="monthly">ماهانه</MenuItem>
-                  <MenuItem value="year">سالانه</MenuItem>
-                </ContainedSelect>
-              </FormControl>
+                  <ContainedSelect
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectValue}
+                    label="سال"
+                    onChange={handleChangeDailyPercent}
+                    displayEmpty
+                  >
+                    <MenuItem value="today">درحال حاضر</MenuItem>
+                    <MenuItem value="weekly">هفتگی</MenuItem>
+                    <MenuItem value="monthly">ماهانه</MenuItem>
+                    <MenuItem value="year">سالانه</MenuItem>
+                  </ContainedSelect>
+                </FormControl>
+                {loading && (
+                  <CircularProgress
+                    size="1.5rem"
+                    sx={{
+                      marginY: "auto",
+                    }}
+                  />
+                )}
+              </>
             )}
           </Box>
           <Box
@@ -195,12 +208,14 @@ const Charts = ({province, isp, maxWidth}) => {
 
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChangeDailyPercent = (event) => {
     const selectedValue = event.target.value;
     setSelectedTime(selectedValue);
   };
   const fetchChartData = (type) => {
+    setLoading(true);
     services.dashboard
       .GetCharts(
         province
@@ -211,6 +226,7 @@ const Charts = ({province, isp, maxWidth}) => {
       )
       .then((response) => {
         const receivedData = response.data.data.data;
+        setLoading(false);
         if (selectedTime === "year") {
           receivedData.download.reverse();
           receivedData.upload.reverse();
@@ -227,6 +243,7 @@ const Charts = ({province, isp, maxWidth}) => {
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
+        setLoading(false);
       });
   };
 
@@ -252,6 +269,7 @@ const Charts = ({province, isp, maxWidth}) => {
         <Grid container gap={2.5}>
           {chartData?.map((item, index) => (
             <GridItem
+              loading={loading}
               key={index}
               theme={theme}
               rendered={rendered}
