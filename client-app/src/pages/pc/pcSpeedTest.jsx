@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   useMediaQuery,
@@ -11,8 +11,9 @@ import moment from "moment-jalaali";
 import io from "socket.io-client";
 import axios from "axios";
 
-import { STATUS_MAP } from "./constant";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {STATUS_MAP} from "./constant";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
+import storage from "../../app/api/storage";
 
 // Assets
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
@@ -33,6 +34,7 @@ import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -52,7 +54,12 @@ const fadeIn = keyframes`
 
 const PcspTest = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const {startAgain} = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [testAgain, setTestAgain] = useState(storage.get("testAgain", true));
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
   const [status, setStatus] = useState(2);
@@ -66,10 +73,13 @@ const PcspTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const [selectedServerURL, setSelectedServerURL] = useState("");
-  const { isFetchingServers, selectBestServer } = useFetchServers();
-  const [isServerSelected, setIsServerSelected] = useState(false);
-
+  const [selectedServerURL, setSelectedServerURL] = useState(
+    testAgain ? storage.get("selectedServer", true) : ""
+  );
+  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const [isServerSelected, setIsServerSelected] = useState(
+    testAgain ? true : false
+  );
 
   const getValue = () => {
     if (isStartButtonVisible) return null;
@@ -88,7 +98,6 @@ const PcspTest = () => {
       setIsServerSelected(true);
     }
   }, [selectedServerURL]);
-
 
   useEffect(() => {
     if (selectedServerURL) return;
@@ -141,15 +150,21 @@ const PcspTest = () => {
 
   const startPingTest = () => {
     if (!isServerSelected) return;
-    socket && socket.emit("ping_event", performance.now());
+    socket.emit("ping_event", performance.now());
   };
 
   const handleButtonClick = () => {
-    if (!isServerSelected) return;
+    if (!isServerSelected || !socket) return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
   };
+
+  useEffect(() => {
+    if (!testAgain) return;
+    handleButtonClick();
+    storage.set("testAgain", false, true);
+  }, [testAgain, isServerSelected, socket]);
 
   let flag = true;
 
@@ -245,7 +260,13 @@ const PcspTest = () => {
           flexWrap: "wrap",
           textAlign: "center",
           justifyContent: "center",
-          gap: "1rem",
+          gap: isSmScreen
+            ? "3rem"
+            : isMdScreen
+            ? "4rem"
+            : isLgScreen
+            ? "8rem"
+            : "3rem",
         }}
       >
         <PcSpeedBox
@@ -281,7 +302,7 @@ const PcspTest = () => {
           alignItems: "center",
         }}
       >
-        {isStartButtonVisible ? (
+        {isStartButtonVisible && !testAgain ? (
           <Button
             onClick={handleButtonClick}
             sx={{
@@ -290,26 +311,29 @@ const PcspTest = () => {
               border: "5.529px solid transparent",
 
               background:
-                " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                "linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+
+              padding: "5px",
+              transition: "background .25s",
               borderRadius: "50em",
               paddingTop: "1.8rem",
               color: "#FFF",
               textAlign: "center",
               cursor: "pointer",
               userSelect: "none",
-              ":hover": {
-                border: "5.529px solid transparent",
+              position: "relative",
+              zIndex: "10",
+              "&:hover": {
                 background:
-                  " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
-                borderRadius: "50em",
+                  "linear-gradient(#232323bb, #232323cc) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box ",
               },
             }}
           >
-            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
               START
             </Typography>
           </Button>
-        ) : isMeterVisible ? (
+        ) : isMeterVisible || testAgain ? (
           <Box
             sx={{
               position: "relative",
@@ -322,7 +346,11 @@ const PcspTest = () => {
             <PcDrawMeter
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                  ? "#45628A"
+                  ? isDl
+                    ? "rgba(250, 113, 116, .1)"
+                    : "#45628A"
+                  : isDl
+                  ? "rgba(250, 113, 116, .1)"
                   : "#1B70EE1C"
               }
               fg={"#1B70EE1C"}
@@ -361,7 +389,11 @@ const PcspTest = () => {
           </Box>
         ) : (
           <Button
-            onClick={() => window.location.reload(true)}
+            onClick={() => {
+              storage.set("testAgain", true, true);
+              storage.set("selectedServer", selectedServerURL, true);
+              navigate(0);
+            }}
             sx={{
               height: "clamp(15.5rem,20rem + 10vmin,16rem)",
               width: "clamp(15.5rem,20rem + 10vmin,16rem)",
@@ -385,7 +417,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
+              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
             >
               Test Again
             </Typography>

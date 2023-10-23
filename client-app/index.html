@@ -1,56 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO Optimized Title and Description -->
+    <title>Rayka Speed Test - Reliable Internet Speed Measurement</title>
+    <meta
+      name="description"
+      content="Test your internet speed with Rayka. Get accurate and reliable speed measurements for both download and upload speeds."
+    />
 
-  <!-- SEO Optimized Title and Description -->
-  <title>Rayka Speed Test - Reliable Internet Speed Measurement</title>
-  <meta name="description" content="Test your internet speed with Rayka. Get accurate and reliable speed measurements for both download and upload speeds.">
+    <!-- Canonical Link -->
+    <link rel="canonical" href="http://localhost:5173/" />
 
-  <!-- Canonical Link -->
-  <link rel="canonical" href="http://localhost:5173/">
-  
-  <!-- Favicons and Icons -->
-  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <!-- Favicons and Icons -->
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.webmanifest">
-  
-  <!-- Open Graph Meta Tags for better Social Media sharing -->
-  <meta property="og:title" content="Rayka Speed Test">
-  <meta property="og:description" content="Test your internet speed with Rayka. Get accurate and reliable speed measurements.">
-  <meta property="og:image" content="/social-image.png"> <!-- Consider adding a representative image for your website -->
-  <meta property="og:url" content="https://eyesp.live">
-  
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Rayka Speed Test">
-  <meta name="twitter:description" content="Test your internet speed with Rayka. Get accurate and reliable speed measurements.">
-  <meta name="twitter:image" content="/social-image.png">
-  <script type="text/javascript" src="/speedtest.js"></script>
-  <script>
-    const s = new Speedtest() //create speedtest object
-    const server = {
-      name: 'demo',
-      server: 'https://server1.eyesp.live',
-      dlURL: 'download/test',
-      ulURL: 'upload/server1',
-      pingURL: 'empty',
-      getIpURL: '',
-    }
-    s.setSelectedServer(server)
-    window.speedtest = s
-  </script>
-</head>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
+    <!-- Open Graph Meta Tags for better Social Media sharing -->
+    <meta property="og:title" content="Rayka Speed Test" />
+    <meta
+      property="og:description"
+      content="Test your internet speed with Rayka. Get accurate and reliable speed measurements."
+    />
+    <meta property="og:image" content="/social-image.png" />
+    <!-- Consider adding a representative image for your website -->
+    <meta property="og:url" content="https://eyesp.live" />
 
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rayka Speed Test" />
+    <meta
+      name="twitter:description"
+      content="Test your internet speed with Rayka. Get accurate and reliable speed measurements."
+    />
+    <meta name="twitter:image" content="/social-image.png" />
+    <script type="text/javascript" src="/speedtest.js"></script>
+    <script>
+      const s = new Speedtest(); //create speedtest object
+      const server = {
+        name: "demo",
+        server: "https://server1.eyesp.live",
+        dlURL: "download/test",
+        ulURL: "upload/server1",
+        pingURL: "empty",
+        getIpURL: "",
+      };
+      s.setSelectedServer(server);
+      window.speedtest = s;
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
