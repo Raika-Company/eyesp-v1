@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   useMediaQuery,
@@ -11,8 +11,9 @@ import moment from "moment-jalaali";
 import io from "socket.io-client";
 import axios from "axios";
 
-import { STATUS_MAP } from "./constant";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {STATUS_MAP} from "./constant";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
+import storage from "../../app/api/storage";
 
 // Assets
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
@@ -33,6 +34,7 @@ import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -52,6 +54,9 @@ const fadeIn = keyframes`
 
 const PcspTest = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [testAgain, setTestAgain] = useState(storage.get("testAgain", true));
+  const {startAgain} = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
@@ -66,10 +71,13 @@ const PcspTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const [selectedServerURL, setSelectedServerURL] = useState("");
-  const { isFetchingServers, selectBestServer } = useFetchServers();
-  const [isServerSelected, setIsServerSelected] = useState(false);
-
+  const [selectedServerURL, setSelectedServerURL] = useState(
+    testAgain ? storage.get("selectedServer", true) : ""
+  );
+  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const [isServerSelected, setIsServerSelected] = useState(
+    testAgain ? true : false
+  );
 
   const getValue = () => {
     if (isStartButtonVisible) return null;
@@ -88,7 +96,6 @@ const PcspTest = () => {
       setIsServerSelected(true);
     }
   }, [selectedServerURL]);
-
 
   useEffect(() => {
     if (selectedServerURL) return;
@@ -141,15 +148,21 @@ const PcspTest = () => {
 
   const startPingTest = () => {
     if (!isServerSelected) return;
-    socket && socket.emit("ping_event", performance.now());
+    socket.emit("ping_event", performance.now());
   };
 
   const handleButtonClick = () => {
-    if (!isServerSelected) return;
+    if (!isServerSelected || !socket) return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
   };
+
+  useEffect(() => {
+    if (!testAgain) return;
+    handleButtonClick();
+    storage.set("testAgain", false, true);
+  }, [testAgain, isServerSelected, socket]);
 
   let flag = true;
 
@@ -281,7 +294,7 @@ const PcspTest = () => {
           alignItems: "center",
         }}
       >
-        {isStartButtonVisible ? (
+        {isStartButtonVisible && !testAgain ? (
           <Button
             onClick={handleButtonClick}
             sx={{
@@ -305,11 +318,11 @@ const PcspTest = () => {
               },
             }}
           >
-            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
               START
             </Typography>
           </Button>
-        ) : isMeterVisible ? (
+        ) : isMeterVisible || testAgain ? (
           <Box
             sx={{
               position: "relative",
@@ -361,7 +374,11 @@ const PcspTest = () => {
           </Box>
         ) : (
           <Button
-            onClick={() => window.location.reload(true)}
+            onClick={() => {
+              storage.set("testAgain", true, true);
+              storage.set("selectedServer", selectedServerURL, true);
+              navigate(0);
+            }}
             sx={{
               height: "clamp(15.5rem,20rem + 10vmin,16rem)",
               width: "clamp(15.5rem,20rem + 10vmin,16rem)",
@@ -385,7 +402,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
+              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
             >
               Test Again
             </Typography>
