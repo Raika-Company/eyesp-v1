@@ -144,7 +144,7 @@ const CompareTable = ({
         </Typography>
       </Box>
       <Table visibleRows={visibleRows} showProvince={showProvince} />
-      {visibleRows < RawISPData.length && (
+      {visibleRows < RawISPData.length - 2 && (
         <Typography
           variant="body1"
           color="text.main"

@@ -25,5 +25,5 @@ export const MonthPercentage = async () =>
 export const YearPercentage = async () =>
   await axios.http.get(rootAddress + "/dashboard/stats/year");
 
-export const Operators = async (name) =>
+export const GetOperatorDetails = async (name) =>
   await axios.http.get(rootAddress + "/dashboard/my-isp/" + name);

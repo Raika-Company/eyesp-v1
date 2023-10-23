@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import {Box, Typography} from "@mui/material";
+import {useState, useEffect} from "react";
 
 const CircleChart = ({
   id,

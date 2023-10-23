@@ -9,10 +9,10 @@ import {
 import ConflictDetailsCard from "./components/ConflictDetailsCard";
 import AllSituationCard from "./components/AllSituationCard";
 import CompareTable from "./components/CompareTable";
-import { ContainedSelect } from "../../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../../app/common/ContainedSelect";
 import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
 import SetConflictModal from "./components/SetConflictModal";
 import services from "../../../app/api/index";
@@ -38,7 +38,6 @@ const NewDashboard = () => {
     services.dashboard
       .getGlobalStates()
       .then((response) => {
-        console.log("RRRRRRRRr", response.data.data);
         setGlobalStates(response.data.data);
       })
       .catch((e) => {
