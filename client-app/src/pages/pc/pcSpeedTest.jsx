@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   useMediaQuery,
@@ -11,8 +11,8 @@ import moment from "moment-jalaali";
 import io from "socket.io-client";
 import axios from "axios";
 
-import { STATUS_MAP } from "./constant";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {STATUS_MAP} from "./constant";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
 import storage from "../../app/api/storage";
 
 // Assets
@@ -24,17 +24,13 @@ import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoCol
 import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
 import server from "../../app/assets/image/Img-SpeedTest/server.svg";
 import client from "../../app/assets/image/Img-SpeedTest/user.svg";
-import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
-import virasty from "../../app/assets/image/Img-SpeedTest/virasty 1.svg";
-import Web from "../../app/assets/image/Img-SpeedTest/Web.svg";
 
 import PcSpeedBox from "./pcSpeedBox";
 import PcDrawMeter from "./pcDrawMeter";
-import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -55,7 +51,7 @@ const fadeIn = keyframes`
 const PcspTest = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { startAgain } = useParams();
+  const {startAgain} = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -76,7 +72,7 @@ const PcspTest = () => {
   const [selectedServerURL, setSelectedServerURL] = useState(
     testAgain ? storage.get("selectedServer", true) : ""
   );
-  const { isFetchingServers, selectBestServer } = useFetchServers();
+  const {isFetchingServers, selectBestServer} = useFetchServers();
   const [isServerSelected, setIsServerSelected] = useState(
     testAgain ? true : false
   );
@@ -160,6 +156,7 @@ const PcspTest = () => {
     handleStart();
   };
 
+  // This is where we handle the test again functionality.
   useEffect(() => {
     if (!testAgain) return;
     handleButtonClick();
@@ -338,7 +335,7 @@ const PcspTest = () => {
               },
             }}
           >
-            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
               START
             </Typography>
           </Button>
@@ -355,10 +352,10 @@ const PcspTest = () => {
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                   ? isDl
-                    ? "rgba(250, 113, 116, .1)"
+                    ? "#fa71741a"
                     : "#45628A"
                   : isDl
-                  ? "rgba(250, 113, 116, .1)"
+                  ? "#fa71741a"
                   : "#1B70EE1C"
               }
               fg={"#1B70EE1C"}
@@ -425,7 +422,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
+              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
             >
               Test Again
             </Typography>

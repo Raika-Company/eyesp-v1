@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 
 /**
  * DrawMeter Component
@@ -26,19 +26,35 @@ import React, {useRef, useEffect} from "react";
  *
  * @returns {React.Element} Rendered DrawMeter component.
  */
-function PcDrawMeter({
-  amount,
-  bk,
-  fg,
-  progress,
-  prog,
-  mbps = 0.0001,
-  isDl,
-  theme,
-}) {
+function PcDrawMeter({amount, bk, fg, mbps = 0.0001, isDl, theme}) {
   const canvasRef = useRef(null);
   mbps = Math.min(mbps, 100);
+
+  const currentMbpsRef = useRef(mbps);
+  const targetMbpsRef = useRef(mbps);
+  const rafRef = useRef();
+
   useEffect(() => {
+    targetMbpsRef.current = mbps;
+
+    const animate = () => {
+      const diff = targetMbpsRef.current - currentMbpsRef.current;
+
+      currentMbpsRef.current += diff * 0.1;
+
+      drawCanvas(currentMbpsRef.current);
+
+      if (Math.abs(diff) > 0.01) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [mbps]);
+
+  const drawCanvas = (mbpsValue) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const dp = window.devicePixelRatio || 1;
@@ -94,7 +110,7 @@ function PcDrawMeter({
       canvas.height - 78 * sizScale,
       Math.max(canvas.height / 1.5 - ctx.lineWidth, 0.1),
       startAngle,
-      startAngle + ((endAngle - startAngle) * mbps) / 100
+      startAngle + ((endAngle - startAngle) * mbpsValue) / 100
     );
     ctx.stroke();
 
@@ -124,7 +140,8 @@ function PcDrawMeter({
         canvas.height,
         ctx.lineWidth
       );
-      ctx.fillStyle = currentNumberIndex * 10 <= mbps ? "#fff" : numberColor;
+      ctx.fillStyle =
+        currentNumberIndex * 10 <= mbpsValue ? "#fff" : numberColor;
       ctx.fillText(currentNumberIndex * 10, position.x, position.y);
     }
 
@@ -166,9 +183,9 @@ function PcDrawMeter({
       ctx.restore();
     }
     var pointerAngle =
-      -startAngle + ((endAngle - startAngle) * mbps) / 100 + 0.3;
+      -startAngle + ((endAngle - startAngle) * mbpsValue) / 100 + 0.3;
     drawPointer(pointerAngle);
-  }, [amount, bk, fg, mbps, isDl, theme]);
+  };
 
   return (
     <canvas ref={canvasRef} style={{width: "100%", height: "100%"}}></canvas>
