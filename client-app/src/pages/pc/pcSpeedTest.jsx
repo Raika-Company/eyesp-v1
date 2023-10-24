@@ -164,6 +164,14 @@ const PcspTest = () => {
     if (!testAgain) return;
     handleButtonClick();
     storage.set("testAgain", false, true);
+
+    const timer = setTimeout(() => {
+      setTestAgain(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testAgain, isServerSelected, socket]);
 
   let flag = true;
@@ -242,6 +250,7 @@ const PcspTest = () => {
     }
   };
 
+  console.log(testAgain);
   return (
     <Box
       component="main"
