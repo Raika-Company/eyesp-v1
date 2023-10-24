@@ -44,7 +44,7 @@ const MyISP = () => {
       .GetOperatorDetails(operator)
       .then((response) => {
         console.log("Received Data: ", response.data);
-        setOperatorData(response.data.data.clients);
+        setOperatorData(response.data);
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);

@@ -105,7 +105,8 @@ const OperatorProfile = ({ operator, operatorData, openFeedbackDialog }) => {
           >
             <Typography variant="h3">رتبه کلی اپراتور</Typography>
             <Typography variant="mainDigits" marginTop="1rem">
-              {operatorData && operatorData.data.clients}
+              {/* {operatorData && operatorData.data.clients} */}
+              #1
             </Typography>
           </Box>
           <Box

@@ -89,7 +89,7 @@ const ISPDetail = ({ operator, data }) => {
           operator={operator}
           openFeedbackDialog={handleClickOpenFeedbackDialog}
         />
-        <PerformancePercentage operator={operator} />
+        <PerformancePercentage ispData={operator} />
       </Box>
       <Dialog
         open={openFeedBackDialog}
