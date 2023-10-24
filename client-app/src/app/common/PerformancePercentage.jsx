@@ -20,7 +20,7 @@ import CircleChart from "./CircleChart";
 
 let gradientColors = ["#0C6087", "#0C6087"];
 
-const OperatorProfile = () => {
+const OperatorProfile = ({ispData}) => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [percentage, setPercentage] = useState(65);
@@ -30,14 +30,14 @@ const OperatorProfile = () => {
 
   useEffect(() => {
     services.myISP
-      .nowPercentage()
+      .nowPercentage(ispData)
       .then((response) => {
         setPercentage(response.data.data.download);
       })
       .catch((e) => {
         console.error(e);
       });
-  }, []);
+  }, [ispData]);
 
   const handleChangeDailyPercent = (event) => {
     const selectedOption = event.target.value;
@@ -254,9 +254,6 @@ const OperatorProfile = () => {
               <ViewDetailsButton target="/isp-performance" />
             </Box>
           </Box>
-        </Box>
-        <Box mt={2} display="flex" justifyContent="center">
-          <ViewDetailsButton target="/isp-performance" />
         </Box>
       </NewCardContainer>
     </>

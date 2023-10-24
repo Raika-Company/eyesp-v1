@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
@@ -38,7 +38,7 @@ function getLabelText(value) {
 
 function getIcon(value, size = "default") {
   // default value if no size is specified
-  const commonStyle = {fontSize: size};
+  const commonStyle = { fontSize: size };
 
   if (value <= 1)
     return <SentimentVeryDissatisfiedIcon style={commonStyle} color="error" />;
@@ -51,7 +51,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ISPDetail = ({operator, data}) => {
+const ISPDetail = ({ operator, data }) => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -85,10 +85,11 @@ const ISPDetail = ({operator, data}) => {
     <>
       <Box display="flex" gap={2}>
         <OperatorProfile
+          operatorData={data}
           operator={operator}
           openFeedbackDialog={handleClickOpenFeedbackDialog}
         />
-        <PerformancePercentage />
+        <PerformancePercentage ispData={operator} />
       </Box>
       <Dialog
         open={openFeedBackDialog}
@@ -115,7 +116,7 @@ const ISPDetail = ({operator, data}) => {
             icon={getIcon(value, "3rem")}
             emptyIcon={
               <SentimentSatisfiedIcon
-                style={{fontSize: "3rem", opacity: 0.55}}
+                style={{ fontSize: "3rem", opacity: 0.55 }}
               />
             }
             onChange={(event, newValue) => {
@@ -126,7 +127,7 @@ const ISPDetail = ({operator, data}) => {
             }}
           />
           {value !== null && (
-            <Box sx={{ml: "1rem", fontSize: "1.3rem", userSelect: "none"}}>
+            <Box sx={{ ml: "1rem", fontSize: "1.3rem", userSelect: "none" }}>
               {labels[hover !== -1 ? hover : value]}
             </Box>
           )}
@@ -136,7 +137,7 @@ const ISPDetail = ({operator, data}) => {
             variant="button"
             color="success.main"
             onClick={handleDisturbanceClick}
-            sx={{cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
           >
             ثبت بازخورد
           </Typography>
@@ -145,7 +146,7 @@ const ISPDetail = ({operator, data}) => {
             color="error.main"
             autoFocus
             onClick={handleCloseFeedbackDialog}
-            sx={{cursor: "pointer", pr: "1rem"}}
+            sx={{ cursor: "pointer", pr: "1rem" }}
           >
             لغو
           </Typography>
