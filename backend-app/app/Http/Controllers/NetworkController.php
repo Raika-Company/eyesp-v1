@@ -355,7 +355,7 @@ class NetworkController extends Controller
         try {
             return response()->json([
                 'status' => true,
-                'data' => NetworkService::IspMetrics($request->isp),
+                'data' => NetworkService::IspMetrics([$request->isp]),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
