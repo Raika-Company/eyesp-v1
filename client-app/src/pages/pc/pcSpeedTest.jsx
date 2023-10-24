@@ -34,7 +34,7 @@ import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -160,6 +160,7 @@ const PcspTest = () => {
     handleStart();
   };
 
+  // This is where we handle the test again functionality.
   useEffect(() => {
     if (!testAgain) return;
     handleButtonClick();
@@ -250,7 +251,6 @@ const PcspTest = () => {
     }
   };
 
-  console.log(testAgain);
   return (
     <Box
       component="main"
@@ -356,10 +356,10 @@ const PcspTest = () => {
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
                   ? isDl
-                    ? "rgba(250, 113, 116, .1)"
+                    ? "#fa71741a"
                     : "#45628A"
                   : isDl
-                  ? "rgba(250, 113, 116, .1)"
+                  ? "#fa71741a"
                   : "#1B70EE1C"
               }
               fg={"#1B70EE1C"}

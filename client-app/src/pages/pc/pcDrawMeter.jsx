@@ -5,7 +5,7 @@
  */
 
 // External dependencies
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 
 /**
  * DrawMeter Component
@@ -26,16 +26,7 @@ import React, {useRef, useEffect} from "react";
  *
  * @returns {React.Element} Rendered DrawMeter component.
  */
-function PcDrawMeter({
-  amount,
-  bk,
-  fg,
-  progress,
-  prog,
-  mbps = 0.0001,
-  isDl,
-  theme,
-}) {
+function PcDrawMeter({amount, bk, fg, mbps = 0.0001, isDl, theme}) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
