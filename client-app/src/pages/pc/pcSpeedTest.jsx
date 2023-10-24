@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   useMediaQuery,
@@ -11,8 +11,8 @@ import moment from "moment-jalaali";
 import io from "socket.io-client";
 import axios from "axios";
 
-import {STATUS_MAP} from "./constant";
-import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
+import { STATUS_MAP } from "./constant";
+import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
 import storage from "../../app/api/storage";
 
 // Assets
@@ -34,7 +34,7 @@ import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -55,7 +55,7 @@ const fadeIn = keyframes`
 const PcspTest = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const {startAgain} = useParams();
+  const { startAgain } = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isLgScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -76,7 +76,7 @@ const PcspTest = () => {
   const [selectedServerURL, setSelectedServerURL] = useState(
     testAgain ? storage.get("selectedServer", true) : ""
   );
-  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const { isFetchingServers, selectBestServer } = useFetchServers();
   const [isServerSelected, setIsServerSelected] = useState(
     testAgain ? true : false
   );
@@ -245,16 +245,17 @@ const PcspTest = () => {
   return (
     <Box
       component="main"
-      height="calc(100vh - 10rem)"
-      gap=".5rem"
+      height="100dvh"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
+      justifyContent="space-evenly"
       alignItems="center"
+      dir="ltr"
+      bgcolor="#232323"
+      p="1rem"
     >
       <Box
         sx={{
-          marginTop: "1rem",
           display: "flex",
           minWidth: "360px",
           flexWrap: "wrap",
@@ -296,7 +297,7 @@ const PcspTest = () => {
       <Box
         sx={{
           width: "100%",
-          height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
+          // height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -329,7 +330,7 @@ const PcspTest = () => {
               },
             }}
           >
-            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
+            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
               START
             </Typography>
           </Button>
@@ -340,7 +341,6 @@ const PcspTest = () => {
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
               width: "clamp(21rem,21rem + 10vmin,16rem)",
-              marginBottom: "3rem",
             }}
           >
             <PcDrawMeter
@@ -417,7 +417,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
+              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
             >
               Test Again
             </Typography>
@@ -442,19 +442,6 @@ const PcspTest = () => {
             isStartButtonVisible || isTestEnds ? "Change Server" : null
           }
         />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: "1rem",
-          marginRight: "auto",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        {[virasty, tikRed, Web].map((iconSrc, index) => (
-          <PcAboutBox key={index} iconSrc={iconSrc} index={1} />
-        ))}
       </Box>
     </Box>
   );

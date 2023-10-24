@@ -37,7 +37,7 @@ function PcDrawMeter({
   theme,
 }) {
   const canvasRef = useRef(null);
-
+  mbps = Math.min(mbps, 100);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
