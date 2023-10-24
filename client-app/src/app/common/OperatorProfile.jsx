@@ -49,7 +49,7 @@ const getLocalOperatorName = (internationalName) => {
   return operator ? operator.localName : "";
 };
 
-const OperatorProfile = ({ operator, openFeedbackDialog }) => {
+const OperatorProfile = ({ operator, operatorData, openFeedbackDialog }) => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const backgroundColor = theme.palette.mode === "dark" ? "#303030" : "#F4F4F4";
@@ -91,9 +91,10 @@ const OperatorProfile = ({ operator, openFeedbackDialog }) => {
         >
           <Box
             sx={{
-              borderRadius: "1rem",
               backgroundColor: backgroundColor,
-              padding: "1.6rem 0.3rem",
+              flexBasis: isMdScreen ? "80%" : "50%",
+              borderRadius: "1rem",
+              padding: "1.6rem 0.9rem",
               mt: "1.6rem",
               boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
               display: "flex",
@@ -104,7 +105,7 @@ const OperatorProfile = ({ operator, openFeedbackDialog }) => {
           >
             <Typography variant="h3">رتبه کلی اپراتور</Typography>
             <Typography variant="mainDigits" marginTop="1rem">
-              #1
+              {operatorData && operatorData.data.clients}
             </Typography>
           </Box>
           <Box
@@ -112,7 +113,7 @@ const OperatorProfile = ({ operator, openFeedbackDialog }) => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            flexBasis={isMdScreen ? "100%" : "50%"}
+            flexBasis={isMdScreen ? "80%" : "50%"}
           >
             <Typography
               variant="h3"

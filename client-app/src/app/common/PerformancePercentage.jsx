@@ -255,9 +255,6 @@ const OperatorProfile = () => {
             </Box>
           </Box>
         </Box>
-        <Box mt={2} display="flex" justifyContent="center">
-          <ViewDetailsButton target="/isp-performance" />
-        </Box>
       </NewCardContainer>
     </>
   );

@@ -24,8 +24,8 @@ import {
 import Charts from "../../app/common/Charts";
 import ISPDetail from "../../app/common/ISPDetail";
 import MomentDisruption from "../../app/common/MomentDisruption";
-import {ContainedSelect} from "../../app/common/ContainedSelect";
-import {useEffect, useState} from "react";
+import { ContainedSelect } from "../../app/common/ContainedSelect";
+import { useEffect, useState } from "react";
 import services from "../../app/api/index";
 import ISPs from "../../../public/data/ISPs.json";
 
@@ -43,8 +43,8 @@ const MyISP = () => {
     services.myISP
       .GetOperatorDetails(operator)
       .then((response) => {
-        console.log("Received Data: ", response.data.data);
-        setOperatorData(response.data.data);
+        console.log("Received Data: ", response.data);
+        setOperatorData(response.data.data.clients);
       })
       .catch((error) => {
         console.log("خطا در بارگذاری اطلاعات", error);
@@ -52,7 +52,7 @@ const MyISP = () => {
   }, [operator]);
 
   return (
-    <Box sx={{maxWidth: "calc(100%)", flexDirection: "column"}}>
+    <Box sx={{ maxWidth: "calc(100%)", flexDirection: "column" }}>
       <Header
         isMdScreen={isMdScreen}
         operator={operator}
@@ -67,8 +67,8 @@ const MyISP = () => {
   );
 };
 
-const Header = ({isMdScreen, operator, handleChangeOperator}) => (
-  <Box sx={{display: "flex"}}>
+const Header = ({ isMdScreen, operator, handleChangeOperator }) => (
+  <Box sx={{ display: "flex" }}>
     <Typography
       variant="h1"
       component="h1"
@@ -76,7 +76,7 @@ const Header = ({isMdScreen, operator, handleChangeOperator}) => (
     >
       وضعیت اپراتور
     </Typography>
-    <FormControl sx={{width: "10rem", mr: "1rem", height: "60px"}}>
+    <FormControl sx={{ width: "10rem", mr: "1rem", height: "60px" }}>
       <ContainedSelect
         onChange={handleChangeOperator}
         value={operator}
@@ -95,7 +95,7 @@ const Header = ({isMdScreen, operator, handleChangeOperator}) => (
   </Box>
 );
 
-const Body = ({isMdScreen, operator, operatorData}) => (
+const Body = ({ isMdScreen, operator, operatorData }) => (
   <Box
     display="flex"
     sx={{
@@ -113,7 +113,7 @@ const Body = ({isMdScreen, operator, operatorData}) => (
       <ISPDetail operator={operator} data={operatorData} />
       <MomentDisruption data={operatorData} key={operator} />
     </Box>
-    <Charts isp={operator} />
+    <Charts isp={operator}/>
   </Box>
 );
 
