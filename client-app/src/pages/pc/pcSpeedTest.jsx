@@ -24,13 +24,9 @@ import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoCol
 import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
 import server from "../../app/assets/image/Img-SpeedTest/server.svg";
 import client from "../../app/assets/image/Img-SpeedTest/user.svg";
-import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
-import virasty from "../../app/assets/image/Img-SpeedTest/virasty 1.svg";
-import Web from "../../app/assets/image/Img-SpeedTest/Web.svg";
 
 import PcSpeedBox from "./pcSpeedBox";
 import PcDrawMeter from "./pcDrawMeter";
-import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
@@ -254,23 +250,24 @@ const PcspTest = () => {
   return (
     <Box
       component="main"
-      height="calc(100vh - 10rem)"
-      gap=".5rem"
+      height="100dvh"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
+      justifyContent="space-evenly"
       alignItems="center"
+      dir="ltr"
+      bgcolor="#232323"
+      p="1rem"
     >
       <Box
         sx={{
-          marginTop: "1rem",
           display: "flex",
-          minWidth: "360px",
+          // minWidth: "360px",
           flexWrap: "wrap",
           textAlign: "center",
           justifyContent: "center",
           gap: isSmScreen
-            ? "3rem"
+            ? "2rem"
             : isMdScreen
             ? "4rem"
             : isLgScreen
@@ -305,7 +302,7 @@ const PcspTest = () => {
       <Box
         sx={{
           width: "100%",
-          height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
+          // height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -348,8 +345,7 @@ const PcspTest = () => {
               position: "relative",
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
-              width: "clamp(21rem,21rem + 10vmin,16rem)",
-              marginBottom: "3rem",
+              width: "clamp(21rem,21rem + 10vmin,21rem)",
             }}
           >
             <PcDrawMeter
@@ -451,19 +447,6 @@ const PcspTest = () => {
             isStartButtonVisible || isTestEnds ? "Change Server" : null
           }
         />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: "1rem",
-          marginRight: "auto",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        {[virasty, tikRed, Web].map((iconSrc, index) => (
-          <PcAboutBox key={index} iconSrc={iconSrc} index={1} />
-        ))}
       </Box>
     </Box>
   );

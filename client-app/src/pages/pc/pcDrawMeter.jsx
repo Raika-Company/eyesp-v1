@@ -28,7 +28,7 @@ import React, {useRef, useEffect, useState} from "react";
  */
 function PcDrawMeter({amount, bk, fg, mbps = 0.0001, isDl, theme}) {
   const canvasRef = useRef(null);
-
+  mbps = Math.min(mbps, 100);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
