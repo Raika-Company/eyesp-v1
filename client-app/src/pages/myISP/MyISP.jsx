@@ -111,7 +111,7 @@ const Body = ({ isMdScreen, operator, operatorData }) => (
       flexBasis={isMdScreen ? "100%" : "50%"}
     >
       <ISPDetail operator={operator} data={operatorData} />
-      <MomentDisruption data={operatorData} key={operator} />
+      <MomentDisruption data={operatorData} />
     </Box>
     <Charts isp={operator}/>
   </Box>
