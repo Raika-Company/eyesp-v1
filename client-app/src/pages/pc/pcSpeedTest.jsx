@@ -236,6 +236,28 @@ const PcspTest = () => {
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
 
+          const sendTest = {
+            ping: latency,
+            speed_dl: dlStatus,
+            speed_ul: ulStatus,
+            test_type: "Fast",
+            server_name: "TIC",
+            jitter: 0,
+            packet_lost: 0,
+            service: "ADSL",
+            user_request: false,
+          };
+          axios
+            .post("https://speed-api.eyesp.live/api/v1/speed-test/", sendTest)
+            .then((response) => {
+              console.log("Response:", response.data);
+              setIsTestEnds(true);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+          setIsTestEnds(true);
+
           setIsTestEnds(true);
         }
       };
