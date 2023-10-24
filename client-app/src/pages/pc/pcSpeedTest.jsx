@@ -250,7 +250,6 @@ const PcspTest = () => {
     }
   };
 
-  console.log(testAgain);
   return (
     <Box
       component="main"
@@ -266,12 +265,12 @@ const PcspTest = () => {
       <Box
         sx={{
           display: "flex",
-          minWidth: "360px",
+          // minWidth: "360px",
           flexWrap: "wrap",
           textAlign: "center",
           justifyContent: "center",
           gap: isSmScreen
-            ? "3rem"
+            ? "2rem"
             : isMdScreen
             ? "4rem"
             : isLgScreen
@@ -349,7 +348,7 @@ const PcspTest = () => {
               position: "relative",
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
-              width: "clamp(21rem,21rem + 10vmin,16rem)",
+              width: "clamp(21rem,21rem + 10vmin,21rem)",
             }}
           >
             <PcDrawMeter
