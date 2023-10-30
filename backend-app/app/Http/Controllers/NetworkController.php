@@ -20,12 +20,21 @@ use Illuminate\Support\Str;
 
 class NetworkController extends Controller
 {
-    function getClientIp(Request $request)
+    /**
+     * Retrieves the client's IP address from the incoming request.
+     *
+     * @param Request $request The incoming HTTP request.
+     * @return \Illuminate\Http\JsonResponse JSON response with status, client's IP address, and optional message.
+     */
+    public function getClientIp(Request $request)
     {
         try {
+            // Validate that 'ip' parameter, if provided, is a valid IP address
             $validator = Validator::make($request->all(), [
-                'ip' => 'sometimes|ip', // Validate that 'ip' is a valid IP address
+                'ip' => 'sometimes|ip',
             ]);
+
+            // If 'ip' parameter is not a valid IP address, return an error response
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
@@ -34,6 +43,7 @@ class NetworkController extends Controller
                 ]);
             }
 
+            // Retrieve client's IP address from the request and return a JSON response with success status and the IP address
             return response()->json([
                 'status' => true,
                 'data' => ['ip' => $request->ip()],
@@ -41,6 +51,7 @@ class NetworkController extends Controller
             ]);
 
         } catch(\Exception $e) {
+            // If an exception occurs, return an error response with the exception message
             return response()->json([
                 'status' => false,
                 'data' => [],
@@ -49,16 +60,25 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Function that receives request data and stores it in the database.
+     *
+     * @param Request $request The incoming HTTP request containing the data.
+     * @return \Illuminate\Http\JsonResponse JSON response with status and corresponding message.
+     */
     public function setIpInfo(Request $request)
     {
         try {
+            // Stores the request data in the database.
             RstResult::InsertHelloRequest((object)$request->all());
 
+            // Returns a JSON response with success status and message.
             return response()->json([
                 'status' => true,
-                'message' => 'thank you. information was recorded!'
+                'message' => 'Yes, the information has been recorded!'
             ]);
         } catch(\Exception $e) {
+            // In case of an error, returns a JSON response with error message and status.
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -66,34 +86,76 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieve a list of servers, ping each server to determine the best one, 
+     * and return the servers along with the index of the best server.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function servers()
     {
+        // Retrieve all servers from the RstServer model
         $servers = RstServer::all();
+        
+        // Initialize an empty array to store ping values for each server
         $ping = [];
-        $best_server_index = 0;
+        
+        // Iterate through the servers and ping each server to measure response time
         $servers = $servers->map(function($server) use (&$ping){
+            // Use the NetworkService::Ping method to ping the server's URL with a timeout of 1 second
             $ping[$server->id] = NetworkService::Ping(Str::replace(['https://', 'http://'], '', $server->url), 1);
+            
+            // Set the 'best_server' property of the current server to false initially
             $server->best_server = false;
+            
+            // Return the updated server object
             return $server;
         });
+        
+        // Find the key (server ID) with the minimum ping value
         $minPingKey = current(array_keys($ping, min($ping)));
+        
+        // Iterate through servers again to mark the server with the minimum ping as the best server
+        $best_server_index = 0;
         foreach($servers as $index => $server) {
             if($server->id === $minPingKey) {
+                // Set the 'best_server' property to true for the server with the minimum ping
                 $server->best_server = true;
+                
+                // Store the index of the best server
                 $best_server_index = $index;
+                
+                // Break the loop after finding the best server
                 break;
             }
         }
+        
+        // Return a JSON response containing the list of servers and the index of the best server
         return response()->json(['servers' => $servers->toArray(), 'best_server_index' => $best_server_index]);
     }
 
+
+    /**
+     * Downloads the file from a given URL, calculates download speed, and stores it in the database.
+     *
+     * @param \Illuminate\Http\Request $request HTTP request containing download information (such as UID and CID).
+     * @return void
+     */
     public function downloadSpeed(Request $request)
     {
-        $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=".$request->uid;
+        // Generate download URL with user ID
+        $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=" . $request->uid;
+        
+        // Constants
         $chunkSize = 20000;
-        $handle = fopen($testUrl, 'rb');
+        
+        // Variables initialization
         $counter = 1;
         $s = microtime();
+        $mbPerSec = [];
+
+        // Download and calculate speed
+        $handle = fopen($testUrl, 'rb');
         while (!feof($handle)) {
             stream_get_contents($handle, $chunkSize, ($counter * $chunkSize));
             $duration = NetworkService::TakeTime($s);
@@ -108,6 +170,7 @@ class NetworkController extends Controller
             $counter++;
         }
 
+        // Update or create database record
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
@@ -116,6 +179,9 @@ class NetworkController extends Controller
             'download' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
             'download_duration' => $duration
         ]);
+
+        // Close file handle after download
+        fclose($handle);
     }
 
     public function uploadSpeed(Request $request)
