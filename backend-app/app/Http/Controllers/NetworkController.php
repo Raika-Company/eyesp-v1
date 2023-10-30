@@ -184,34 +184,54 @@ class NetworkController extends Controller
         fclose($handle);
     }
 
+
+    /**
+     * Handle the upload speed test request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function uploadSpeed(Request $request)
     {
+        // Destination server address
         $upload_server = "kar1.net";
+
+        // Data to be sent (1000kb of data)
         $data = "POST / HTTP/1.0\r\n"
             . "Host: " . $upload_server . "\r\n"
             . "\r\n"
-            . str_repeat("a", 1000000); // send 1000kb of data
+            . str_repeat("a", 1000000);
 
+        // Chunk size for sending data
         $chunkSize = 20000;
-        $counter = 1;
-        $start = microtime();
-        $f = @fsockopen($upload_server, 80);
-        while (($counter * $chunkSize) < strlen($data)) {
-            fwrite($f, substr($data, ($counter * $chunkSize), 20000));
-            $duration = NetworkService::TakeTime($start);
-            if ($duration > 0) {
-                $bytesPerSec = ($counter * $chunkSize) / $duration;
-                $kbPerSec = $bytesPerSec / 1024;
-                $mbPerSec[] = $kbPerSec / 1024;
-                echo json_encode(round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2)) . ' ';
-            }
-            ob_flush();
-            flush();
-            $counter++;
+        $mbPerSec = [];
+
+        // Start measuring time
+        $start = microtime(true);
+
+        // Calculate total data length
+        $dataLength = strlen($data);
+
+        // Send data in chunks
+        for ($i = 0; $i < $dataLength; $i += $chunkSize) {
+            $chunk = substr($data, $i, $chunkSize);
+            file_get_contents("http://{$upload_server}", false, stream_context_create([
+                'http' => [
+                    'method' => 'POST',
+                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'content' => $chunk
+                ]
+            ]));
+
+            // Calculate upload speed
+            $duration = microtime(true) - $start;
+            $bytesPerSec = $i / $duration;
+            $kbPerSec = $bytesPerSec / 1024;
+            $mbPerSec[] = $kbPerSec / 1024;
+            echo json_encode(round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2)) . ' ';
         }
 
-        fclose($f);
-
+        // Store the result in database
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
@@ -222,36 +242,64 @@ class NetworkController extends Controller
         ]);
     }
 
+
+    /**
+     * Handles the ping request and calculates average ping, packet loss, and jitter.
+     *
+     * @param  Request $request The incoming request object.
+     * @return int Returns the rounded average ping value.
+     */
     public function ping(Request $request)
     {
+        // Define the ping server and initialize variables
         $pingServer = "static.kar1.net";
         $counter = 0;
-        while($counter < 10) {
+        $pingTimes = [];
+        $packetLoss = [];
+
+        // Perform ping tests and collect results
+        while ($counter < 10) {
             list($pingTimes[], $packetLoss[]) = NetworkService::Ping($pingServer);
             $counter++;
         }
+
+        // Calculate average ping, total packet loss, and jitter
         $ping = round(array_sum($pingTimes) / count($pingTimes));
         $packetLoss = array_sum($packetLoss);
         $jitter = NetworkService::Jitter($pingTimes);
 
+        // Update or create a record with ping results for the given client and date
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
             'date' => today()->toDateString(),
-        ],[
+        ], [
             'ping' => $ping,
             'packet_loss' => $packetLoss,
             'jitter' => round($jitter, 0),
         ]);
 
+        // Return the rounded average ping value
         return round($ping, 0);
     }
 
+
+    /**
+     * Calculate ISP metrics based on the last 7 days' data.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ispMetrics(Request $request)
     {
         try {
+            // Retrieve ISP data from the application configuration
             $isp = collect(config('app.isps'));
+
+            // Retrieve ISP statistics from the database for the last 7 days
             $ispMetrics = RstIspStats::where('date', '>=', Carbon::today()->subDays(7))->get();
+
+            // Calculate various metrics based on the retrieved data
             $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
             $data['clients'] = $ispMetrics->sum('clients');
             $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
@@ -259,29 +307,33 @@ class NetworkController extends Controller
             $data['uploadAverage'] = round($ispMetrics->avg('upload_speed_average'), 0);
             $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
-            $data['isp'] = collect($isp)
-                ->flatMap(function ($item) use ($ispMetrics) {
-                    $metrics = $ispMetrics->where('isp', $item);
+            // Calculate ISP-specific metrics and organize the data in a structured format
+            $data['isp'] = collect($isp)->flatMap(function ($item) use ($ispMetrics) {
+                $metrics = $ispMetrics->where('isp', $item);
 
-                    if ($metrics->isEmpty()) {
-                        return [];
-                    }
-                    return [
-                        $item => [
-                            'downloadSpeedAverage' => round($metrics->avg('download_speed_average')),
-                            'uploadSpeedAverage' => round($metrics->avg('upload_speed_average')),
-                            'pingAverage' => round($metrics->avg('ping_average')),
-                            'packetLoss' => round($metrics->avg('packet_loss')),
-                            'totalQuality' => round($metrics->avg('total_quality_average')),
-                        ],
-                    ];
-                });
+                if ($metrics->isEmpty()) {
+                    return [];
+                }
+
+                return [
+                    $item => [
+                        'downloadSpeedAverage' => round($metrics->avg('download_speed_average')),
+                        'uploadSpeedAverage' => round($metrics->avg('upload_speed_average')),
+                        'pingAverage' => round($metrics->avg('ping_average')),
+                        'packetLoss' => round($metrics->avg('packet_loss')),
+                        'totalQuality' => round($metrics->avg('total_quality_average')),
+                    ],
+                ];
+            });
+
+            // Return the calculated metrics as a JSON response
             return response()->json([
                 'status' => true,
                 'data' => $data,
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle any exceptions that occur during the process and return an error response
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
