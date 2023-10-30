@@ -341,12 +341,20 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieves city metrics based on the given city and date range.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cityMetrics(Request $request)
     {
         try {
+            // Retrieve ISP metrics for the specified city and date range
             $ispMetrics = RstCityStats::where('city', $request->city)
                 ->where('date', '>=', Carbon::today()->subDays(7))->get();
 
+            // Retrieve disturbance issues for the specified city
             $stats = RstDisturbance::latest()->first();
             $description = json_decode($stats->description);
             $issues = [];
@@ -358,6 +366,7 @@ class NetworkController extends Controller
                 }
             }
 
+            // Prepare and return the response data
             $data = [
                 'totalQualityAverage' => round($ispMetrics->avg('total_quality_average'), 0),
                 'clients' => $ispMetrics->sum('clients'),
@@ -375,6 +384,7 @@ class NetworkController extends Controller
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -382,20 +392,30 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieves chart data based on the specified type, ISP, and optional city.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function charts(Request $request)
     {
         try {
+            // Determine the chart type and retrieve corresponding data
             $type = $request->type;
             $rstResult = RstResult::$type($request->isp, 1);
             if($request->city) {
                 $rstResult = $rstResult->where('city', $request->city);
             }
+
+            // Prepare and return the response data
             return response()->json([
                 'status' => true,
                 'data' => ChartService::$type($rstResult),
                 'message' => '',
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response
             return response()->json([
                 'status' => false,
                 'data' => [],
