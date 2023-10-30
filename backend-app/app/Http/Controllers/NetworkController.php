@@ -578,44 +578,63 @@ class NetworkController extends Controller
         } */
     }
 
+    
+    /**
+     * Get network issues for specified ISPs and metrics.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getIssues(Request $request)
     {
+        // Set maximum execution time to 1 hour
         set_time_limit(3600);
         try {
+            // List of metrics to analyze
             $metrics = ['download', 'upload', 'ping', 'packet_loss'];
-            if($request->isp)
-                $isp = [$request->isp];
-            else
-                $isp = config('app.isps');
 
-            foreach($isp as $item) {
+            // Determine ISPs to analyze, either from request or app configuration
+            $isp = $request->isp ? [$request->isp] : config('app.isps');
+            $result = [];
+            $disturbance = [];
+
+            // Iterate through ISPs and metrics to analyze network issues
+            foreach ($isp as $item) {
                 foreach ($metrics as $metric) {
                     $timeFrames = config('app.packet_loss');
+                    // Analyze network issues using NetworkService::IspAnalyze2 method
                     $res = NetworkService::IspAnalyze2($item, $metric, $timeFrames);
-                    if($res == [])
-                        continue;
-                    $result[$item][$metric] = $res;
-                    $disturbance[] = $metric;
+                    // If analysis result is not empty, store it and mark the metric as disturbance
+                    if (!empty($res)) {
+                        $result[$item][$metric] = $res;
+                        $disturbance[] = $metric;
+                    }
                 }
             }
+
+            // Get ISPs with disturbances and unique disturbance metrics
             $ispsHasDisturbance = array_keys($result);
             $disturbance = array_unique($disturbance);
+
+            // Store the analysis results in the database
             RstDisturbance::create([
                 'isps' => json_encode($ispsHasDisturbance),
                 'disturbances' => json_encode($disturbance),
                 'description' => json_encode($result),
-                //'created_at' => now()->toDateTimeString(),
             ]);
+
+            // Return the analysis results as JSON response
             return response()->json([
                 'status' => true,
                 'data' => $result,
                 'message' => 'done',
             ]);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            // Handle any exceptions that occur during the analysis process
             return response()->json([
                 'status' => false,
                 'data' => [],
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
