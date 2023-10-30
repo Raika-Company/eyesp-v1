@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   useMediaQuery,
@@ -11,8 +11,9 @@ import moment from "moment-jalaali";
 import io from "socket.io-client";
 import axios from "axios";
 
-import { STATUS_MAP } from "./constant";
-import { convertToPersianNumbers } from "../../app/utils/convertToPersianNumbers";
+import {STATUS_MAP} from "./constant";
+import {convertToPersianNumbers} from "../../app/utils/convertToPersianNumbers";
+import storage from "../../app/api/storage";
 
 // Assets
 import Download from "../../app/assets/image/Img-SpeedTest/PingUp.svg";
@@ -23,16 +24,13 @@ import downloadNoColor from "../../app/assets/image/Img-SpeedTest/download-NoCol
 import uploadNoColor from "../../app/assets/image/Img-SpeedTest/upload-NoColor.svg";
 import server from "../../app/assets/image/Img-SpeedTest/server.svg";
 import client from "../../app/assets/image/Img-SpeedTest/user.svg";
-import tikRed from "../../app/assets/image/Img-SpeedTest/tikRed.svg";
-import virasty from "../../app/assets/image/Img-SpeedTest/virasty 1.svg";
-import Web from "../../app/assets/image/Img-SpeedTest/Web.svg";
 
 import PcSpeedBox from "./pcSpeedBox";
 import PcDrawMeter from "./pcDrawMeter";
-import PcAboutBox from "./pcAboutBox";
 import PcInformationBox from "./pcInformationBox";
 import PcMiniSpeedBox from "./pcMiniSpeedBox";
 import useFetchServers from "../../app/hooks/useFetchServers";
+import {useNavigate, useParams} from "react-router-dom";
 
 /**
  * A keyframes animation for fading in elements.
@@ -52,7 +50,12 @@ const fadeIn = keyframes`
 
 const PcspTest = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const {startAgain} = useParams();
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isLgScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [testAgain, setTestAgain] = useState(storage.get("testAgain", true));
   const [isMeterVisible, setIsMeterVisible] = useState(true);
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(true);
   const [status, setStatus] = useState(2);
@@ -66,10 +69,13 @@ const PcspTest = () => {
   const [testStateNumber, setTestStateNumber] = useState(0);
   const [isDl, setIsDl] = useState(true);
   const [clientIp, setClientIp] = useState("");
-  const [selectedServerURL, setSelectedServerURL] = useState("");
-  const { isFetchingServers, selectBestServer } = useFetchServers();
-  const [isServerSelected, setIsServerSelected] = useState(false);
-
+  const [selectedServerURL, setSelectedServerURL] = useState(
+    testAgain ? storage.get("selectedServer", true) : ""
+  );
+  const {isFetchingServers, selectBestServer} = useFetchServers();
+  const [isServerSelected, setIsServerSelected] = useState(
+    testAgain ? true : false
+  );
 
   const getValue = () => {
     if (isStartButtonVisible) return null;
@@ -88,7 +94,6 @@ const PcspTest = () => {
       setIsServerSelected(true);
     }
   }, [selectedServerURL]);
-
 
   useEffect(() => {
     if (selectedServerURL) return;
@@ -141,15 +146,30 @@ const PcspTest = () => {
 
   const startPingTest = () => {
     if (!isServerSelected) return;
-    socket && socket.emit("ping_event", performance.now());
+    socket.emit("ping_event", performance.now());
   };
 
   const handleButtonClick = () => {
-    if (!isServerSelected) return;
+    if (!isServerSelected || !socket) return;
     setIsStartButtonVisible(false);
     startPingTest();
     handleStart();
   };
+
+  // This is where we handle the test again functionality.
+  useEffect(() => {
+    if (!testAgain) return;
+    handleButtonClick();
+    storage.set("testAgain", false, true);
+
+    const timer = setTimeout(() => {
+      setTestAgain(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testAgain, isServerSelected, socket]);
 
   let flag = true;
 
@@ -216,6 +236,28 @@ const PcspTest = () => {
           existingResults.push(testResults);
           localStorage.setItem("testResults", JSON.stringify(existingResults));
 
+          const sendTest = {
+            ping: latency,
+            speed_dl: dlStatus,
+            speed_ul: ulStatus,
+            test_type: "Fast",
+            server_name: "TIC",
+            jitter: 0,
+            packet_lost: 0,
+            service: "ADSL",
+            user_request: false,
+          };
+          axios
+            .post("https://speed-api.eyesp.live/api/v1/speed-test/", sendTest)
+            .then((response) => {
+              console.log("Response:", response.data);
+              setIsTestEnds(true);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+          setIsTestEnds(true);
+
           setIsTestEnds(true);
         }
       };
@@ -230,22 +272,29 @@ const PcspTest = () => {
   return (
     <Box
       component="main"
-      height="calc(100vh - 10rem)"
-      gap=".5rem"
+      height="100dvh"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
+      justifyContent="space-evenly"
       alignItems="center"
+      dir="ltr"
+      bgcolor="#232323"
+      p="1rem"
     >
       <Box
         sx={{
-          marginTop: "1rem",
           display: "flex",
-          minWidth: "360px",
+          // minWidth: "360px",
           flexWrap: "wrap",
           textAlign: "center",
           justifyContent: "center",
-          gap: "1rem",
+          gap: isSmScreen
+            ? "2rem"
+            : isMdScreen
+            ? "4rem"
+            : isLgScreen
+            ? "8rem"
+            : "3rem",
         }}
       >
         <PcSpeedBox
@@ -275,13 +324,13 @@ const PcspTest = () => {
       <Box
         sx={{
           width: "100%",
-          height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
+          // height: "clamp(17.6rem,17.6rem + 3vmin, 3rem)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        {isStartButtonVisible ? (
+        {isStartButtonVisible && !testAgain ? (
           <Button
             onClick={handleButtonClick}
             sx={{
@@ -290,39 +339,45 @@ const PcspTest = () => {
               border: "5.529px solid transparent",
 
               background:
-                " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+                "linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
+
+              padding: "5px",
+              transition: "background .25s",
               borderRadius: "50em",
               paddingTop: "1.8rem",
               color: "#FFF",
               textAlign: "center",
               cursor: "pointer",
               userSelect: "none",
-              ":hover": {
-                border: "5.529px solid transparent",
+              position: "relative",
+              zIndex: "10",
+              "&:hover": {
                 background:
-                  " linear-gradient(#232323, #232323) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box",
-                borderRadius: "50em",
+                  "linear-gradient(#232323bb, #232323cc) padding-box, linear-gradient(to right, rgba(186, 10, 10, 1), rgba(250, 83, 86, 1)) border-box ",
               },
             }}
           >
-            <Typography variant="text" sx={{ fontSize: "2.8rem" }}>
+            <Typography variant="text" sx={{fontSize: "2.8rem"}}>
               START
             </Typography>
           </Button>
-        ) : isMeterVisible ? (
+        ) : isMeterVisible || testAgain ? (
           <Box
             sx={{
               position: "relative",
               animation: `${fadeIn} 1s ease-in-out`,
               height: "clamp(9rem,9rem + 10vmin,16rem)",
-              width: "clamp(21rem,21rem + 10vmin,16rem)",
-              marginBottom: "3rem",
+              width: "clamp(21rem,21rem + 10vmin,21rem)",
             }}
           >
             <PcDrawMeter
               bk={
                 /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)
-                  ? "#45628A"
+                  ? isDl
+                    ? "#fa71741a"
+                    : "#45628A"
+                  : isDl
+                  ? "#fa71741a"
                   : "#1B70EE1C"
               }
               fg={"#1B70EE1C"}
@@ -361,7 +416,11 @@ const PcspTest = () => {
           </Box>
         ) : (
           <Button
-            onClick={() => window.location.reload(true)}
+            onClick={() => {
+              storage.set("testAgain", true, true);
+              storage.set("selectedServer", selectedServerURL, true);
+              navigate(0);
+            }}
             sx={{
               height: "clamp(15.5rem,20rem + 10vmin,16rem)",
               width: "clamp(15.5rem,20rem + 10vmin,16rem)",
@@ -385,7 +444,7 @@ const PcspTest = () => {
           >
             <Typography
               variant="text"
-              sx={{ fontSize: "2.6rem", textTransform: "capitalize" }}
+              sx={{fontSize: "2.6rem", textTransform: "capitalize"}}
             >
               Test Again
             </Typography>
@@ -410,19 +469,6 @@ const PcspTest = () => {
             isStartButtonVisible || isTestEnds ? "Change Server" : null
           }
         />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: "1rem",
-          marginRight: "auto",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        {[virasty, tikRed, Web].map((iconSrc, index) => (
-          <PcAboutBox key={index} iconSrc={iconSrc} index={1} />
-        ))}
       </Box>
     </Box>
   );

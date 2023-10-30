@@ -16,6 +16,12 @@ body {
   font-weight: 900;
   font-style: normal;
 }
+@font-face {
+  font-family: "PeydaBold";
+  src: url("assets/fonts/peyda-bold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
 
 @font-face {
   font-family: "YekanBakhBold";

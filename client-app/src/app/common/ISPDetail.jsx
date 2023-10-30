@@ -3,16 +3,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  Grid,
   Rating,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ContainedButton } from "./ContainedButton";
-import StatisticBox from "./StatisticBox";
-import CardContainer from "./CardContainer";
 
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
@@ -20,8 +16,6 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import CustomSnackbar from "./CustomSnackbar";
-import NewCardContainer from "./NewCardContainer";
-import Irancell from "../assets/image/irancell.svg";
 import PerformancePercentage from "./PerformancePercentage";
 import OperatorProfile from "./OperatorProfile";
 
@@ -57,7 +51,7 @@ function getIcon(value, size = "default") {
   return <SentimentVerySatisfiedIcon style={commonStyle} color="success" />;
 }
 
-const ISPDetail = () => {
+const ISPDetail = ({ operator, data }) => {
   const handleDisturbanceClick = () => {
     setOpenFeedBackDialog(false);
     setTimeout(() => {
@@ -90,8 +84,12 @@ const ISPDetail = () => {
   return (
     <>
       <Box display="flex" gap={2}>
-        <OperatorProfile openFeedbackDialog={handleClickOpenFeedbackDialog} />
-        <PerformancePercentage />
+        <OperatorProfile
+          operatorData={data}
+          operator={operator}
+          openFeedbackDialog={handleClickOpenFeedbackDialog}
+        />
+        <PerformancePercentage ispData={operator} />
       </Box>
       <Dialog
         open={openFeedBackDialog}

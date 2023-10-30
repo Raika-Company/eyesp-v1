@@ -1,9 +1,7 @@
-import React, { useState, useMemo } from "react";
-import CardContainer from "../../app/common/CardContainer";
+import {useState, useMemo, useEffect} from "react";
 import {
   Box,
   MenuItem,
-  Select,
   Typography,
   useMediaQuery,
   styled,
@@ -11,11 +9,10 @@ import {
   useTheme,
 } from "@mui/material";
 import ISPTable from "../../app/common/ISPTable";
-import useDynamicMP from "../../app/hooks/useDynamicMP";
 import ProvincesCompare from "./../../../public/data/ProvincesCompare.json";
-import RawISPData from "./../../../public/data/RowISPData.json";
-import NewCardContainer from "../../app/common/NewCardContainer";
-import { ContainedSelect } from "../../app/common/ContainedSelect";
+import {ContainedSelect} from "../../app/common/ContainedSelect";
+import services from "../../app/api/index";
+import convertToPersian from "../../app/utils/convertToPersian";
 
 /**
  * Raw data for the ISPs for comparison.
@@ -62,60 +59,23 @@ const ISPPerformance = () => {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
-  const mpCardContainers = useDynamicMP(390, 1440, 1.38, 2.38);
-
   const [sortCriteria, setSortCriteria] = useState("بیشترین اختلال");
   const [provinceData, setProvinceData] = useState(ProvincesCompare);
-  const [selectedProvince, setSelectedProvince] = useState("انتخاب کنید");
+  const [selectedProvince, setSelectedProvince] = useState("همه استان‌ها");
   const theme = useTheme();
-  const [visibleRows, setVisibleRows] = useState(6);
-  const sortFunctions = useMemo(
-    () => ({
-      "نام ISP": (a, b) => a.ISPname.localeCompare(b.ISPname),
-      "بیشترین اختلال": (a, b) =>
-        parseNumber(b.disturbance) - parseNumber(a.disturbance),
-      "کمترین اختلال": (a, b) =>
-        parseNumber(a.disturbance) - parseNumber(b.disturbance),
-      "بیشترین میانگین پینگ": (a, b) =>
-        parseNumber(b.pings) - parseNumber(a.pings),
-      "کمترین میانگین پینگ": (a, b) =>
-        parseNumber(a.pings) - parseNumber(b.pings),
-      "بیشترین میانگین سرعت": (a, b) =>
-        parseNumber(b.speed) - parseNumber(a.speed),
-      "کمترین میانگین سرعت": (a, b) =>
-        parseNumber(a.speed) - parseNumber(b.speed),
-    }),
-    []
-  );
+
   const handleProvinceChange = (e) => {
     setSelectedProvince((prevState) => e.target.value);
-    console.log("Selected Province:", e.target.value);
   };
 
-  const sortedISPData = useMemo(() => {
-    // Find the ISPs associated with the selected province
-
-    let provinceISPs = ProvincesCompare.find(
-      (p) => p.name === selectedProvince
-    )?.ISPs;
-    // If there are no ISPs for the selected province or if no province is selected, fall back to RawISPData
-    let dataToSort = provinceISPs || RawISPData;
-
-    const sortFunction = sortFunctions[sortCriteria];
-    if (sortFunction) {
-      return [...dataToSort].sort(sortFunction);
-    }
-    return dataToSort;
-  }, [sortCriteria, selectedProvince]);
-  const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  const StyledFormControl = styled(FormControl)(({theme}) => ({
     "& .css-1uk43v8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
       {
         padding: "5px 14px;",
       },
   }));
-  console.log("RRRRRRRr", sortedISPData);
 
-  const NewCard = styled(Box)(({ theme }) => ({
+  const NewCard = styled(Box)(({theme}) => ({
     maxHeight: "54em",
     overflowY: "auto",
     backgroundColor: "#121212",
@@ -130,6 +90,48 @@ const ISPPerformance = () => {
     // For Firefox to hide scrollbar
     "& scrollbarWidth": "none",
   }));
+
+  // Getting the data for chart
+  const [chartData, setChartData] = useState(null);
+  const sortFunctions = useMemo(
+    () => ({
+      "نام ISP": (a, b) =>
+        convertToPersian(a).localeCompare(convertToPersian(b)),
+      "بیشترین اختلال": (a, b) =>
+        (chartData.isp[b]?.disturbance || 0) -
+        (chartData.isp[a]?.disturbance || 0),
+      "کمترین اختلال": (a, b) =>
+        (chartData.isp[a]?.disturbance || 0) -
+        (chartData.isp[b]?.disturbance || 0),
+      "بیشترین میانگین پینگ": (a, b) =>
+        chartData.isp[b].pingAverage - chartData.isp[a].pingAverage,
+      "کمترین میانگین پینگ": (a, b) =>
+        chartData.isp[a].pingAverage - chartData.isp[b].pingAverage,
+      "بیشترین میانگین سرعت": (a, b) =>
+        chartData.isp[b].downloadSpeedAverage -
+        chartData.isp[a].downloadSpeedAverage,
+      "کمترین میانگین سرعت": (a, b) =>
+        chartData.isp[a].downloadSpeedAverage -
+        chartData.isp[b].downloadSpeedAverage,
+    }),
+    [chartData]
+  );
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    services.dashboard.getIspMetrics().then((response) => {
+      setChartData(response.data.data);
+      setLoading(false);
+    });
+  }, []);
+
+  const [sortedKeys, setSortedKeys] = useState([]);
+  useEffect(() => {
+    if (!chartData) return;
+    const sortFunction = sortFunctions[sortCriteria];
+    setSortedKeys(Object.keys(chartData.isp).sort(sortFunction));
+  }, [chartData, sortCriteria, sortFunctions]);
+
   return (
     <NewCard
       sx={{
@@ -154,28 +156,26 @@ const ISPPerformance = () => {
           fontSize="1.5rem"
           fontFamily="PeydaSemiBold"
           textAlign={isSmScreen ? "center" : "left"}
+          whiteSpace="nowrap"
         >
           رتبه بندی اپراتورها
         </Typography>
 
         <Box
           display={"flex"}
+          width="100%"
           justifyContent={"space-between"}
           alignItems={"center"}
           gap="0.94rem"
         >
-          <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
-            انتخاب استان:{" "}
-          </Typography>
-
-          <StyledFormControl sx={{ width: "11.75rem" }}>
+          <StyledFormControl sx={{width: "11.75rem", marginLeft: "auto"}}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={selectedProvince}
               onChange={handleProvinceChange}
               renderValue={(selectedValue) =>
-                selectedValue ? selectedValue : "انتخاب کنید"
+                selectedValue ? selectedValue : "همه استان‌ها"
               }
               sx={{
                 border: " 1.5px solid #F0F4F3",
@@ -194,12 +194,12 @@ const ISPPerformance = () => {
             </ContainedSelect>
           </StyledFormControl>
 
-          <Typography variant="h4" whiteSpace={"nowrap"}>
+          <Typography variant="h4" whiteSpace={"nowrap"} marginRight="auto">
             {" "}
             چینش براساس:
           </Typography>
 
-          <StyledFormControl sx={{ width: "11.75rem" }}>
+          <StyledFormControl sx={{width: "11.75rem"}}>
             <ContainedSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -217,7 +217,7 @@ const ISPPerformance = () => {
               {selectionItems.map((item) => (
                 <MenuItem
                   key={item}
-                  sx={{ color: "textColor.light" }}
+                  sx={{color: "textColor.light"}}
                   value={item}
                 >
                   {item}
@@ -240,14 +240,13 @@ const ISPPerformance = () => {
           },
         }}
       >
-        <Box
-          sx={{ width: isXsScreen ? "19em" : isMdScreen ? "51.5em" : "100%" }}
-        >
-          <ISPTable
-            isDetail={true}
-            ISPdata={sortedISPData.slice(0, visibleRows)}
-          />
-        </Box>
+        {!loading && chartData && (
+          <Box
+            sx={{width: isXsScreen ? "19em" : isMdScreen ? "51.5em" : "100%"}}
+          >
+            <ISPTable ISPData={chartData} sortedKeys={sortedKeys} />
+          </Box>
+        )}
       </Box>
     </NewCard>
   );

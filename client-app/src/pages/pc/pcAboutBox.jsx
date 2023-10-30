@@ -12,7 +12,7 @@ import {Box} from "@mui/material";
  *
  * @returns {JSX.Element} - The rendered PcAboutBox component.
  */
-const PcAboutBox = ({iconSrc, altText, index}) => {
+const PcAboutBox = ({iconSrc, altText}) => {
   return (
     <Box
       sx={{

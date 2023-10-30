@@ -1,6 +1,4 @@
-import {
-  createTheme
-} from "@mui/material";
+import { createTheme } from "@mui/material";
 
 var theme = createTheme();
 
@@ -116,6 +114,13 @@ const baseTheme = createTheme({
       },
       fontFamily: "TrenchThin",
     },
+    AI: {
+      fontSize: "20px",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "24px",
+      },
+      fontFamily: "PeydaBold",
+    },
     start: {
       fontSize: "1.5rem",
       [theme.breakpoints.up("md")]: {
@@ -129,7 +134,7 @@ const baseTheme = createTheme({
         fontSize: "2.25rem",
       },
       fontFamily: "YekanBakhBold",
-    }
+    },
   },
   components: {
     MuiInputLabel: {
@@ -190,29 +195,29 @@ export const lightTheme = createTheme({
     primary: {
       main: "#326589",
       light: "#0C6087",
-      dark: "#0C6087"
+      dark: "#0C6087",
     },
     secondary: {
       main: "#B3B3B3",
       light: "#D8D8D8",
-      dark: "#6A6861"
+      dark: "#6A6861",
     },
     thirdly: {
-      main: "#683C94"
+      main: "#683C94",
     },
     error: {
       main: "#9A0B0B",
       light: "#FF7A79",
-      dark: "#B72D2B"
+      dark: "#B72D2B",
     },
     warning: {
       main: "#F9CA32",
       light: "#7D6C41",
-      dark: "#6F4D25"
+      dark: "#6F4D25",
     },
     info: {
       main: "#C4E9FE",
-      light: "#00C2FF"
+      light: "#00C2FF",
     },
     success: {
       main: "#97C771",
@@ -226,7 +231,7 @@ export const lightTheme = createTheme({
       subTitle: "#878787",
       subHeading: "#434544",
       chartTitleColor: "#7D93AA",
-      number: "#47A100"
+      number: "#47A100",
     },
     background: {
       default: "#E9E9E9",
@@ -235,14 +240,14 @@ export const lightTheme = createTheme({
       main: "#E8E8E8",
     },
     button: {
-      main: "#0C6087"
+      main: "#0C6087",
     },
     border: {
-      main: "#434544"
+      main: "#434544",
     },
     Box: {
-      main: "#FFF"
-    }
+      main: "#FFF",
+    },
   },
 });
 
@@ -259,29 +264,29 @@ export const darkTheme = createTheme({
     primary: {
       main: "#326589",
       light: "#85CCF4",
-      dark: "#00C2FF"
+      dark: "#00C2FF",
     },
     secondary: {
       main: "#B3B3B3",
       light: "#404040",
-      dark: "#6A6861"
+      dark: "#6A6861",
     },
     thirdly: {
-      main: "#7342A3"
+      main: "#7342A3",
     },
     error: {
       main: "#9A0B0B",
       light: "#FF7A79",
-      dark: "#FE4543"
+      dark: "#FE4543",
     },
     warning: {
       main: "#F9CA32",
       light: "#7D6C41",
-      dark: "#6F4D25"
+      dark: "#6F4D25",
     },
     info: {
       main: "#86BBD8",
-      light: "#0C6087"
+      light: "#0C6087",
     },
     success: {
       main: "#97C771",
@@ -294,7 +299,7 @@ export const darkTheme = createTheme({
       textBlack: "#FFF",
       textInfo: "#FFF",
       subTitle: "#FFF",
-      number: "#70FF00" 
+      number: "#70FF00",
     },
     background: {
       default: "#262626",
@@ -303,14 +308,14 @@ export const darkTheme = createTheme({
       main: "#182633",
     },
     button: {
-      main: "#0C6087"
+      main: "#0C6087",
     },
     border: {
-      main: "#fff"
+      main: "#fff",
     },
     Box: {
-      main: "#1A1A1A"
-    }
+      main: "#1A1A1A",
+    },
   },
   // components: {
   //   MuiDrawer: {

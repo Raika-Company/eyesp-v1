@@ -1,6 +1,7 @@
-import {memo} from "react";
-import {styled, keyframes, IconButton, Box, Typography} from "@mui/material";
-import WestIcon from "@mui/icons-material/West";
+import {useEffect, useState} from "react";
+import {styled, keyframes, Box, Typography, useTheme} from "@mui/material";
+import services from "../../../../app/api/index";
+import convertToPersian from "../../../../app/utils/convertToPersian";
 
 /**
  * @description Keyframes animation for a fade-in effect.
@@ -35,22 +36,19 @@ const RowBox = styled(Box)(({delay, gradient}) => ({
   "& > *": {
     flex: 1,
     textAlign: "center",
-    fontSize: "1rem",
-    fontFamily: "PeydaLight",
-    color: "#676767",
   },
 }));
 
 /**
  * @description Array of gradient strings for styling the rows in the ISPTable.
  */
-const gradients = [
+const gradients = ["#7D6C41", "#6A6861", "#6F4D25", "#404040"];
+const light_gradients = [
   "linear-gradient(180deg, #BDFEAE 0%, #F2EFA5 0.01%, #F9F7EA 100%)",
   "linear-gradient(180deg, #DADADA 0%, #E1E1E1 0.01%, #F6F6F6 100%)",
   "linear-gradient(180deg, #D49A63 0%, #F1CBB0 0.01%, #F8F8F8 100%)",
   "linear-gradient(180deg, #D0E3ED 0%, #D0E2EC 0.01%, #EEF4F9 100%)",
 ];
-
 /**
  * @function ISPTable
  * @description React component for displaying a table of Internet Service Providers (ISPs).
@@ -59,14 +57,25 @@ const gradients = [
  * @param {Array} ISPdata - Array of objects representing data for each ISP.
  * @returns {JSX.Element}
  */
-const Table = ({ISPdata, isDetail, showProvince}) => {
-  const rowsHead = [
-    {unit: "(mb/s)", label: "سرعت میانگین دانلود"},
-    {unit: "(mb/s)", label: "سرعت میانگین آپلود"},
-    {unit: "(m/s)", label: "پینگ"},
-    {unit: "(m/s)", label: "پکت لاس"},
-    {unit: "(%)", label: "عملکرد"},
-  ];
+const Table = ({showProvince, visibleRows}) => {
+  const theme = useTheme(); // Get the current theme
+  const isDarkMode = theme.palette.mode === "dark";
+  const [chartData, setChartData] = useState(null);
+  const [sortedKeys, setSortedKeys] = useState([]);
+  useEffect(() => {
+    services.dashboard.getIspMetrics().then((response) => {
+      setSortedKeys(
+        Object.keys(response.data.data.isp).sort((a, b) => {
+          return (
+            response.data.data.isp[b].totalQuality -
+            response.data.data.isp[a].totalQuality
+          );
+        })
+      );
+      setChartData(response.data.data);
+    });
+  }, []);
+
   return (
     <Box
       sx={{
@@ -75,73 +84,38 @@ const Table = ({ISPdata, isDetail, showProvince}) => {
         marginBottom: "1rem",
       }}
     >
-      {isDetail ? (
-        <>
-          <RowBox sx={{width: "80em"}}>
-            <Typography variant="h4">رتبه</Typography>
-            <Typography variant="h4">نام</Typography>
-            {rowsHead.map((row) => {
-              return (
-                <Box
-                  key={row.label}
-                  display={"flex"}
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                >
-                  <Typography variant="h6">{row.unit}</Typography>
-                  <Typography variant="h4">{row.label}</Typography>
-                </Box>
-              );
-            })}
-            <Typography variant="h4">جزئیات</Typography>
+      <>
+        <RowBox>
+          <Typography variant="h4">رتبه</Typography>
+          <Typography variant="h4">نام</Typography>
+          <Typography variant="h4">درصد عملکرد</Typography>
+        </RowBox>
+        {sortedKeys.slice(0, visibleRows + 1).map((key, index) => (
+          <RowBox
+            key={index}
+            delay={index * 0.2}
+            gradient={
+              isDarkMode
+                ? gradients[index >= 3 ? 3 : index]
+                : light_gradients[index >= 3 ? 3 : index]
+            }
+            marginTop=".3rem"
+            color="#fff"
+            fontWeight="800"
+          >
+            <Typography variant="h3" component="h3">
+              {index + 1}
+            </Typography>
+            <Typography variant="h3" component="h3">
+              {convertToPersian(key)}
+            </Typography>
+            <Typography variant="h3" component="h3">
+              {chartData.isp[key].totalQuality}
+            </Typography>
           </RowBox>
-          {ISPdata.map((Items, index) => (
-            <RowBox
-              sx={{width: "80em"}}
-              key={Items.rank}
-              delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
-              marginTop="1rem"
-            >
-              <Typography variant="h5">{index + 1}</Typography>
-              <Typography variant="h5">{Items.ISPname}</Typography>
-              <Typography variant="h5" sx={{color: "primary"}}>
-                {Items.disturbance}
-              </Typography>
-              <Typography variant="h5">{Items.upload}</Typography>
-              <Typography variant="h5">{Items.pings}</Typography>
-              <Typography variant="h5">{Items.packet}</Typography>
-              <Typography variant="h5">{Items.performance}</Typography>
-              <IconButton aria-label={`more info about ${Items.ISPname}`}>
-                <WestIcon />
-              </IconButton>
-            </RowBox>
-          ))}
-        </>
-      ) : (
-        <>
-          <RowBox>
-            <Typography>رتبه</Typography>
-            <Typography>نام</Typography>
-            <Typography>درصد عملکرد</Typography>
-          </RowBox>
-          {ISPdata.map((Items, index) => (
-            <RowBox
-              key={Items.rank}
-              delay={index * 0.2}
-              gradient={gradients[index >= 3 ? 3 : index]}
-              marginTop=".3rem"
-            >
-              <Typography>{index + 1}</Typography>
-              <Typography>
-                {showProvince ? Items.province : Items.ISPname}
-              </Typography>
-              <Typography>{Items.performance}</Typography>
-            </RowBox>
-          ))}
-        </>
-      )}
+        ))}
+      </>
     </Box>
   );
 };
-export default memo(Table);
+export default Table;

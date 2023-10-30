@@ -98,7 +98,6 @@ const PcInformationBox = ({title, value, iconSrc, altText, buttonLabel}) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            cursor: "pointer",
           }}
         >
           <img

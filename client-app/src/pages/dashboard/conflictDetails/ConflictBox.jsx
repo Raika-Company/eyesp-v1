@@ -1,8 +1,7 @@
-import {Box, Stack, Typography, Button, useTheme} from "@mui/material";
-import {Link} from "react-router-dom";
-import leftArrow from "../../../app/assets/image/leftArrow.svg";
+import {Box, Stack, Typography, useTheme} from "@mui/material";
 import ConflictDetailsCard from "./ConflictDetailsCard";
 import ViewDetailsButton from "../../../app/common/ViewDetailsButton";
+import convertToPersian from "../../../app/utils/convertToPersian";
 
 const ConflictBox = ({title, data}) => {
   const keys = Object.keys(data);
@@ -30,7 +29,7 @@ const ConflictBox = ({title, data}) => {
             fontWeight: "800",
           }}
         >
-          {title}
+          {convertToPersian(title)}
         </Typography>
         <ViewDetailsButton
           sx={{

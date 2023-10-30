@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\IspPacketlossAnalysis;
 use App\Jobs\IspPingAnalysis;
 use App\Jobs\IspSpeedAnalysis;
+use App\Models\RstCityStats;
 use App\Models\RstDisturbance;
 use App\Models\RstIspStats;
 use App\Models\RstResult;
@@ -222,6 +223,47 @@ class NetworkController extends Controller
         }
     }
 
+    public function cityMetrics(Request $request)
+    {
+        try {
+            $ispMetrics = RstCityStats::where('city', $request->city)
+                ->where('date', '>=', Carbon::today()->subDays(7))->get();
+
+            $stats = RstDisturbance::latest()->first();
+            $description = json_decode($stats->description);
+            $issues = [];
+            foreach ($description as $ispInfos) {
+                foreach ($ispInfos as $metric => $metricInfos) {
+                    if(Str::lower(key($metricInfos)) == Str::lower($request->city)) {
+                        $issues[] = $metric;
+                    }
+                }
+            }
+
+            $data = [
+                'totalQualityAverage' => round($ispMetrics->avg('total_quality_average'), 0),
+                'clients' => $ispMetrics->sum('clients'),
+                'speedAverage' => round($ispMetrics->avg('speed_average'), 0),
+                'downloadAverage' => round($ispMetrics->avg('download_speed_average'), 0),
+                'uploadAverage' => round($ispMetrics->avg('upload_speed_average'), 0),
+                'pingAverage' => round($ispMetrics->avg('ping_average'), 0),
+                'issuesCount' => count(array_unique($issues)),
+                'issues' => array_unique($issues)
+            ];
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => ''
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function charts(Request $request)
     {
         try {
@@ -278,19 +320,19 @@ class NetworkController extends Controller
             $response = [
                 'download' => [
                     'avg' => round($downloadAvg, 2),
-                    'percentage' => round($downloadAvg * 100 / $threshold->download)
+                    'percentage' => round(100 / (1 + exp(-0.2334 * ($downloadAvg - 12.81)))),
                 ],
                 'upload' => [
                     'avg' => round($uploadAvg, 2),
-                    'percentage' => round($uploadAvg * 100 / $threshold->upload)
+                    'percentage' => round(100 / (1 + exp(-0.2334 * ($downloadAvg - 12.81))))
                 ],
                 'ping' => [
                     'avg' => round($pingAvg, 2),
-                    'percentage' => round((($pingAvg - $threshold->ping) / $threshold->ping) * 100)
+                    'percentage' => round(107.33 * exp(-0.0155 * $pingAvg))
                 ],
                 'packet_loss' => [
                     'avg' => round($packetLossAvg, 2),
-                    'percentage' => round((($packetLossAvg - $threshold->packet_loss) / $threshold->packet_loss) * 100)
+                    'percentage' => round(107.33 * exp(-0.0155 * $packetLossAvg))
                 ],
             ];
 
@@ -311,10 +353,9 @@ class NetworkController extends Controller
     public function myIspMetrics(Request $request)
     {
         try {
-            $isp = [0 => 'irancell'];
             return response()->json([
                 'status' => true,
-                'data' => NetworkService::IspMetrics($isp),
+                'data' => NetworkService::IspMetrics([$request->isp]),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
@@ -372,6 +413,7 @@ class NetworkController extends Controller
 
     public function getIssues(Request $request)
     {
+        set_time_limit(3600);
         try {
             $metrics = ['download', 'upload', 'ping', 'packet_loss'];
             if($request->isp)
@@ -423,8 +465,8 @@ class NetworkController extends Controller
                     'names' => json_decode($stats->disturbances)
                 ];
                 $response['isp'] = [
-                    'count' => count(collect(json_decode($stats->isps))),
-                    'names' => json_decode($stats->isps)
+                    'count' => count(collect($description)),
+                    'names' => array_keys((array)$description)
                 ];
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {

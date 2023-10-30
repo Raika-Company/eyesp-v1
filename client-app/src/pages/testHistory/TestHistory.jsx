@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import HistoryTable from "./HistoryTable";
-import YAxisLine from "../../app/common/YAxisLine";
+import AxisLine from "../../app/common/AxisLine";
 import XAxisLine from "./XAxisLine";
 import {
   Bar,
@@ -115,7 +115,6 @@ const GridItem = ({
   unit,
   selectedIds,
   type,
-  showXAxis,
 }) => {
   const isSmScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   // Note: Moved barColors and related logic here for clarity.
@@ -178,7 +177,7 @@ const GridItem = ({
           <Typography color="text.main" variant="h4" gutterBottom>
             {title}
           </Typography>
-          <Box borderRadius="3rem" padding="1rem" width="100%" height="321px">
+          <Box borderRadius="3rem" padding="1rem" width="100%" height="360px">
             {rendered && (
               <ResponsiveContainer width="100%" height={261}>
                 <BarChart width="100%" height="100%" data={data}>
@@ -222,13 +221,11 @@ const GridItem = ({
               </ResponsiveContainer>
             )}
           </Box>
-          {showXAxis && (
-            <XAxisLine
-              max={Math.max(...data.map((line) => line.value))}
-              unit={unit}
-              selectedIds={selectedIds}
-            />
-          )}
+          <XAxisLine
+            max={Math.max(...data.map((line) => line.value))}
+            unit={unit}
+            selectedIds={selectedIds}
+          />
         </Box>
         <Box
           sx={{
@@ -237,7 +234,12 @@ const GridItem = ({
             top: "1.5rem",
           }}
         >
-          <YAxisLine max={computeMaxValue(data)} unit={unit} />
+          <AxisLine
+            max={Math.ceil(computeMaxValue(data))}
+            unit={unit}
+            direction="Y"
+            height="16rem"
+          />
         </Box>
       </Box>
     </Grid>
@@ -253,7 +255,6 @@ const GridItem = ({
 const NewTestHistory = ({ openNav }) => {
   const [tableData, setTableData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  const [showXAxis, setShowXAxis] = useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -264,6 +265,10 @@ const NewTestHistory = ({ openNav }) => {
       localStorage.getItem("testResults") || "[]"
     );
     setTableData(localStorageData);
+
+    if (localStorageData.length >= 4) {
+      setSelectedIds(["0", "1", "2", "3"]);
+    }
   }, []);
 
   useEffect(() => {
@@ -323,12 +328,11 @@ const NewTestHistory = ({ openNav }) => {
       </Box>
       <HistoryTable
         setSelectedIds={setSelectedIds}
-        onRadioClick={() => setShowXAxis(true)}
+        initialSelectedIds={selectedIds}
       />
       <Grid container>
         {titlesChart.map((line, index) => (
           <GridItem
-            showXAxis={showXAxis}
             selectedIds={selectedIds}
             key={index}
             theme={theme}

@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ed2d9223-faed-4ee6-81ca-490b50bee761",
+		"_postman_id": "750775b8-492b-40ea-a3c5-c9529b22a350",
 		"name": "Rayka",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2304304"
+		"_exporter_id": "21970374",
+		"_collection_link": "https://winter-astronaut-872850.postman.co/workspace/eyesp.live~1cc9da12-6f36-42e7-94ba-8be11a332978/collection/2304304-750775b8-492b-40ea-a3c5-c9529b22a350?action=share&source=collection_link&creator=21970374"
 	},
 	"item": [
 		{
@@ -306,7 +307,10 @@
 					"name": "Get Servers",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -388,7 +392,10 @@
 					"name": "Ping",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -396,10 +403,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
 								"url": {
 									"raw": "{{base_url}}/{{prefix}}/ping?cid=example-cid&uid=example-uid",
 									"host": [
@@ -479,7 +482,10 @@
 					"name": "Download",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -646,7 +652,10 @@
 					"name": "IspMetrics",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -718,6 +727,1622 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"totalQualityAverage\": 59,\n        \"clients\": 85387,\n        \"speedAverage\": 29,\n        \"pingAverage\": 110,\n        \"isp\": {\n            \"irancell\": {\n                \"downloadSpeedAverage\": 54,\n                \"uploadSpeedAverage\": 6,\n                \"pingAverage\": 113,\n                \"packetLoss\": 6,\n                \"totalQuality\": 58\n            },\n            \"hamrah aval\": {\n                \"downloadSpeedAverage\": 55,\n                \"uploadSpeedAverage\": 6,\n                \"pingAverage\": 106,\n                \"packetLoss\": 5,\n                \"totalQuality\": 61\n            },\n            \"shatel\": {\n                \"downloadSpeedAverage\": 43,\n                \"uploadSpeedAverage\": 6,\n                \"pingAverage\": 109,\n                \"packetLoss\": 7,\n                \"totalQuality\": 59\n            }\n        }\n    },\n    \"message\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "CityMetrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": [
+						{
+							"name": "CityMetrics",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/city-metrics/tehran",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"city-metrics",
+										"tehran"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 17:00:41 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 19 Oct 2023 17:00:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"totalQualityAverage\": 39,\n        \"clients\": 4861,\n        \"speedAverage\": 8,\n        \"downloadAverage\": 11,\n        \"uploadAverage\": 5,\n        \"pingAverage\": 5,\n        \"issuesCount\": 3,\n        \"issues\": [\n            \"ping\",\n            \"download\",\n            \"packet_loss\"\n        ]\n    },\n    \"message\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "MyIspMetrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{prefix}}/dashboard/my-isp/irancell",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{prefix}}",
+								"dashboard",
+								"my-isp",
+								"irancell"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://95.38.58.11:8000/api/v1/dashboard/my-isp/irancell",
+									"protocol": "http",
+									"host": [
+										"95",
+										"38",
+										"58",
+										"11"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"dashboard",
+										"my-isp",
+										"irancell"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 11:51:46 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 11:51:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.12-1ubuntu4.3"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"totalQualityAverage\": 58,\n        \"clients\": 49967,\n        \"speedAverage\": 29,\n        \"pingAverage\": 113,\n        \"isp\": {\n            \"irancell\": {\n                \"downloadSpeedAverage\": 54,\n                \"uploadSpeedAverage\": 6,\n                \"pingAverage\": 113,\n                \"packetLoss\": 6,\n                \"totalQuality\": 58,\n                \"score\": 4\n            }\n        }\n    },\n    \"message\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Charts",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "today",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/charts/today/irancell/Tehran",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"charts",
+										"today",
+										"irancell",
+										"Tehran"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:34:46 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:34:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "54"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": \"today\",\n        \"data\": {\n            \"download\": [\n                {\n                    \"name\": \"0-2\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"2-4\",\n                    \"value\": 47.17\n                },\n                {\n                    \"name\": \"4-6\",\n                    \"value\": 45.9\n                },\n                {\n                    \"name\": \"6-8\",\n                    \"value\": 58.38\n                },\n                {\n                    \"name\": \"8-10\",\n                    \"value\": 41.27\n                },\n                {\n                    \"name\": \"10-12\",\n                    \"value\": 52.79\n                },\n                {\n                    \"name\": \"12-14\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"14-16\",\n                    \"value\": 47.17\n                }\n            ],\n            \"upload\": [\n                {\n                    \"name\": \"0-2\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"2-4\",\n                    \"value\": 16.78\n                },\n                {\n                    \"name\": \"4-6\",\n                    \"value\": 15.81\n                },\n                {\n                    \"name\": \"6-8\",\n                    \"value\": 14.27\n                },\n                {\n                    \"name\": \"8-10\",\n                    \"value\": 14.35\n                },\n                {\n                    \"name\": \"10-12\",\n                    \"value\": 14.84\n                },\n                {\n                    \"name\": \"12-14\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"14-16\",\n                    \"value\": 16.78\n                }\n            ],\n            \"ping\": [\n                {\n                    \"name\": \"0-2\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"2-4\",\n                    \"value\": 75.08\n                },\n                {\n                    \"name\": \"4-6\",\n                    \"value\": 73.87\n                },\n                {\n                    \"name\": \"6-8\",\n                    \"value\": 71.62\n                },\n                {\n                    \"name\": \"8-10\",\n                    \"value\": 90.31\n                },\n                {\n                    \"name\": \"10-12\",\n                    \"value\": 63.58\n                },\n                {\n                    \"name\": \"12-14\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"14-16\",\n                    \"value\": 75.08\n                }\n            ],\n            \"packet_loss\": [\n                {\n                    \"name\": \"0-2\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"2-4\",\n                    \"value\": 56.06\n                },\n                {\n                    \"name\": \"4-6\",\n                    \"value\": 42.94\n                },\n                {\n                    \"name\": \"6-8\",\n                    \"value\": 47.95\n                },\n                {\n                    \"name\": \"8-10\",\n                    \"value\": 56.38\n                },\n                {\n                    \"name\": \"10-12\",\n                    \"value\": 55.16\n                },\n                {\n                    \"name\": \"12-14\",\n                    \"value\": 0\n                },\n                {\n                    \"name\": \"14-16\",\n                    \"value\": 56.06\n                }\n            ]\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "weekly",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/charts/weekly/irancell/Tehran",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"charts",
+										"weekly",
+										"irancell",
+										"Tehran"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:35:11 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:35:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": \"weekly\",\n        \"data\": {\n            \"download\": [\n                {\n                    \"name\": \"17/07/02 دوشنبه\",\n                    \"value\": 52.03\n                },\n                {\n                    \"name\": \"18/07/02 سه\\u200cشنبه\",\n                    \"value\": 47.07\n                },\n                {\n                    \"name\": \"19/07/02 چهارشنبه\",\n                    \"value\": 46.82\n                },\n                {\n                    \"name\": \"20/07/02 پنج\\u200cشنبه\",\n                    \"value\": 49.25\n                },\n                {\n                    \"name\": \"21/07/02 جمعه\",\n                    \"value\": 47.72\n                },\n                {\n                    \"name\": \"22/07/02 شنبه\",\n                    \"value\": 50.22\n                },\n                {\n                    \"name\": \"23/07/02 یکشنبه\",\n                    \"value\": 50.27\n                }\n            ],\n            \"upload\": [\n                {\n                    \"name\": \"17/07/02 دوشنبه\",\n                    \"value\": 13.49\n                },\n                {\n                    \"name\": \"18/07/02 سه\\u200cشنبه\",\n                    \"value\": 17.41\n                },\n                {\n                    \"name\": \"19/07/02 چهارشنبه\",\n                    \"value\": 14.38\n                },\n                {\n                    \"name\": \"20/07/02 پنج\\u200cشنبه\",\n                    \"value\": 14.31\n                },\n                {\n                    \"name\": \"21/07/02 جمعه\",\n                    \"value\": 14.85\n                },\n                {\n                    \"name\": \"22/07/02 شنبه\",\n                    \"value\": 15.68\n                },\n                {\n                    \"name\": \"23/07/02 یکشنبه\",\n                    \"value\": 15.13\n                }\n            ],\n            \"ping\": [\n                {\n                    \"name\": \"17/07/02 دوشنبه\",\n                    \"value\": 88.19\n                },\n                {\n                    \"name\": \"18/07/02 سه\\u200cشنبه\",\n                    \"value\": 67.21\n                },\n                {\n                    \"name\": \"19/07/02 چهارشنبه\",\n                    \"value\": 77.03\n                },\n                {\n                    \"name\": \"20/07/02 پنج\\u200cشنبه\",\n                    \"value\": 80.33\n                },\n                {\n                    \"name\": \"21/07/02 جمعه\",\n                    \"value\": 70.42\n                },\n                {\n                    \"name\": \"22/07/02 شنبه\",\n                    \"value\": 72.32\n                },\n                {\n                    \"name\": \"23/07/02 یکشنبه\",\n                    \"value\": 75.22\n                }\n            ],\n            \"packet_loss\": [\n                {\n                    \"name\": \"17/07/02 دوشنبه\",\n                    \"value\": 49.27\n                },\n                {\n                    \"name\": \"18/07/02 سه\\u200cشنبه\",\n                    \"value\": 53.34\n                },\n                {\n                    \"name\": \"19/07/02 چهارشنبه\",\n                    \"value\": 50.42\n                },\n                {\n                    \"name\": \"20/07/02 پنج\\u200cشنبه\",\n                    \"value\": 52.95\n                },\n                {\n                    \"name\": \"21/07/02 جمعه\",\n                    \"value\": 50.35\n                },\n                {\n                    \"name\": \"22/07/02 شنبه\",\n                    \"value\": 49.81\n                },\n                {\n                    \"name\": \"23/07/02 یکشنبه\",\n                    \"value\": 51.37\n                }\n            ]\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/charts/year/irancell/Tehran",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"charts",
+										"year",
+										"irancell",
+										"Tehran"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:35:33 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:35:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": \"monthly\",\n        \"data\": {\n            \"download\": [\n                {\n                    \"name\": \"مهر-01\",\n                    \"value\": 61.1\n                },\n                {\n                    \"name\": \"مهر-02\",\n                    \"value\": 49.74\n                },\n                {\n                    \"name\": \"مهر-03\",\n                    \"value\": 54.18\n                },\n                {\n                    \"name\": \"مهر-04\",\n                    \"value\": 51.43\n                },\n                {\n                    \"name\": \"مهر-05\",\n                    \"value\": 51.67\n                },\n                {\n                    \"name\": \"مهر-06\",\n                    \"value\": 46.51\n                },\n                {\n                    \"name\": \"مهر-07\",\n                    \"value\": 47.95\n                },\n                {\n                    \"name\": \"مهر-08\",\n                    \"value\": 54.31\n                },\n                {\n                    \"name\": \"مهر-09\",\n                    \"value\": 45.33\n                },\n                {\n                    \"name\": \"مهر-10\",\n                    \"value\": 43.6\n                },\n                {\n                    \"name\": \"مهر-11\",\n                    \"value\": 53.44\n                },\n                {\n                    \"name\": \"مهر-12\",\n                    \"value\": 43.62\n                },\n                {\n                    \"name\": \"مهر-13\",\n                    \"value\": 59.41\n                },\n                {\n                    \"name\": \"مهر-14\",\n                    \"value\": 49.19\n                },\n                {\n                    \"name\": \"مهر-15\",\n                    \"value\": 53.41\n                },\n                {\n                    \"name\": \"مهر-16\",\n                    \"value\": 55\n                },\n                {\n                    \"name\": \"مهر-17\",\n                    \"value\": 52.03\n                },\n                {\n                    \"name\": \"مهر-18\",\n                    \"value\": 47.07\n                },\n                {\n                    \"name\": \"مهر-19\",\n                    \"value\": 46.82\n                },\n                {\n                    \"name\": \"مهر-20\",\n                    \"value\": 49.25\n                },\n                {\n                    \"name\": \"مهر-21\",\n                    \"value\": 47.72\n                },\n                {\n                    \"name\": \"مهر-22\",\n                    \"value\": 50.22\n                }\n            ],\n            \"upload\": [\n                {\n                    \"name\": \"مهر-01\",\n                    \"value\": 13.65\n                },\n                {\n                    \"name\": \"مهر-02\",\n                    \"value\": 15.21\n                },\n                {\n                    \"name\": \"مهر-03\",\n                    \"value\": 14.55\n                },\n                {\n                    \"name\": \"مهر-04\",\n                    \"value\": 16.49\n                },\n                {\n                    \"name\": \"مهر-05\",\n                    \"value\": 16.36\n                },\n                {\n                    \"name\": \"مهر-06\",\n                    \"value\": 14.3\n                },\n                {\n                    \"name\": \"مهر-07\",\n                    \"value\": 15.07\n                },\n                {\n                    \"name\": \"مهر-08\",\n                    \"value\": 15.22\n                },\n                {\n                    \"name\": \"مهر-09\",\n                    \"value\": 15.48\n                },\n                {\n                    \"name\": \"مهر-10\",\n                    \"value\": 13.52\n                },\n                {\n                    \"name\": \"مهر-11\",\n                    \"value\": 14.39\n                },\n                {\n                    \"name\": \"مهر-12\",\n                    \"value\": 14.49\n                },\n                {\n                    \"name\": \"مهر-13\",\n                    \"value\": 12.18\n                },\n                {\n                    \"name\": \"مهر-14\",\n                    \"value\": 13.27\n                },\n                {\n                    \"name\": \"مهر-15\",\n                    \"value\": 15.68\n                },\n                {\n                    \"name\": \"مهر-16\",\n                    \"value\": 16.67\n                },\n                {\n                    \"name\": \"مهر-17\",\n                    \"value\": 13.49\n                },\n                {\n                    \"name\": \"مهر-18\",\n                    \"value\": 17.41\n                },\n                {\n                    \"name\": \"مهر-19\",\n                    \"value\": 14.38\n                },\n                {\n                    \"name\": \"مهر-20\",\n                    \"value\": 14.31\n                },\n                {\n                    \"name\": \"مهر-21\",\n                    \"value\": 14.85\n                },\n                {\n                    \"name\": \"مهر-22\",\n                    \"value\": 15.68\n                }\n            ],\n            \"ping\": [\n                {\n                    \"name\": \"مهر-01\",\n                    \"value\": 82.58\n                },\n                {\n                    \"name\": \"مهر-02\",\n                    \"value\": 64.45\n                },\n                {\n                    \"name\": \"مهر-03\",\n                    \"value\": 84.16\n                },\n                {\n                    \"name\": \"مهر-04\",\n                    \"value\": 89.8\n                },\n                {\n                    \"name\": \"مهر-05\",\n                    \"value\": 74.53\n                },\n                {\n                    \"name\": \"مهر-06\",\n                    \"value\": 75.19\n                },\n                {\n                    \"name\": \"مهر-07\",\n                    \"value\": 83.83\n                },\n                {\n                    \"name\": \"مهر-08\",\n                    \"value\": 59.78\n                },\n                {\n                    \"name\": \"مهر-09\",\n                    \"value\": 77.63\n                },\n                {\n                    \"name\": \"مهر-10\",\n                    \"value\": 72.87\n                },\n                {\n                    \"name\": \"مهر-11\",\n                    \"value\": 62.89\n                },\n                {\n                    \"name\": \"مهر-12\",\n                    \"value\": 72.46\n                },\n                {\n                    \"name\": \"مهر-13\",\n                    \"value\": 63.15\n                },\n                {\n                    \"name\": \"مهر-14\",\n                    \"value\": 94.19\n                },\n                {\n                    \"name\": \"مهر-15\",\n                    \"value\": 71.14\n                },\n                {\n                    \"name\": \"مهر-16\",\n                    \"value\": 89.08\n                },\n                {\n                    \"name\": \"مهر-17\",\n                    \"value\": 88.19\n                },\n                {\n                    \"name\": \"مهر-18\",\n                    \"value\": 67.21\n                },\n                {\n                    \"name\": \"مهر-19\",\n                    \"value\": 77.03\n                },\n                {\n                    \"name\": \"مهر-20\",\n                    \"value\": 80.33\n                },\n                {\n                    \"name\": \"مهر-21\",\n                    \"value\": 70.42\n                },\n                {\n                    \"name\": \"مهر-22\",\n                    \"value\": 72.32\n                }\n            ],\n            \"packet_loss\": [\n                {\n                    \"name\": \"مهر-01\",\n                    \"value\": 53.75\n                },\n                {\n                    \"name\": \"مهر-02\",\n                    \"value\": 44.71\n                },\n                {\n                    \"name\": \"مهر-03\",\n                    \"value\": 50.97\n                },\n                {\n                    \"name\": \"مهر-04\",\n                    \"value\": 47.17\n                },\n                {\n                    \"name\": \"مهر-05\",\n                    \"value\": 54.14\n                },\n                {\n                    \"name\": \"مهر-06\",\n                    \"value\": 60.84\n                },\n                {\n                    \"name\": \"مهر-07\",\n                    \"value\": 52.07\n                },\n                {\n                    \"name\": \"مهر-08\",\n                    \"value\": 55.19\n                },\n                {\n                    \"name\": \"مهر-09\",\n                    \"value\": 48.7\n                },\n                {\n                    \"name\": \"مهر-10\",\n                    \"value\": 53.35\n                },\n                {\n                    \"name\": \"مهر-11\",\n                    \"value\": 55.75\n                },\n                {\n                    \"name\": \"مهر-12\",\n                    \"value\": 43.62\n                },\n                {\n                    \"name\": \"مهر-13\",\n                    \"value\": 53.44\n                },\n                {\n                    \"name\": \"مهر-14\",\n                    \"value\": 49.69\n                },\n                {\n                    \"name\": \"مهر-15\",\n                    \"value\": 49.14\n                },\n                {\n                    \"name\": \"مهر-16\",\n                    \"value\": 52.9\n                },\n                {\n                    \"name\": \"مهر-17\",\n                    \"value\": 49.27\n                },\n                {\n                    \"name\": \"مهر-18\",\n                    \"value\": 53.34\n                },\n                {\n                    \"name\": \"مهر-19\",\n                    \"value\": 50.42\n                },\n                {\n                    \"name\": \"مهر-20\",\n                    \"value\": 52.95\n                },\n                {\n                    \"name\": \"مهر-21\",\n                    \"value\": 50.35\n                },\n                {\n                    \"name\": \"مهر-22\",\n                    \"value\": 49.81\n                }\n            ]\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "year",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/charts/year/irancell/Tehran",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"charts",
+										"year",
+										"irancell",
+										"Tehran"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:36:02 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 11:36:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"id\": \"yearly\",\n        \"data\": {\n            \"download\": [\n                {\n                    \"name\": \"مهر\",\n                    \"value\": 49.04\n                },\n                {\n                    \"name\": \"شهریور\",\n                    \"value\": 49.61\n                },\n                {\n                    \"name\": \"مرداد\",\n                    \"value\": 50.43\n                },\n                {\n                    \"name\": \"تیر\",\n                    \"value\": 47.87\n                },\n                {\n                    \"name\": \"خرداد\",\n                    \"value\": 49.66\n                },\n                {\n                    \"name\": \"اردیبهشت\",\n                    \"value\": 48.26\n                },\n                {\n                    \"name\": \"فروردین\",\n                    \"value\": 49.34\n                }\n            ],\n            \"upload\": [\n                {\n                    \"name\": \"مهر\",\n                    \"value\": 14.82\n                },\n                {\n                    \"name\": \"شهریور\",\n                    \"value\": 15.09\n                },\n                {\n                    \"name\": \"مرداد\",\n                    \"value\": 14.64\n                },\n                {\n                    \"name\": \"تیر\",\n                    \"value\": 14.76\n                },\n                {\n                    \"name\": \"خرداد\",\n                    \"value\": 15.06\n                },\n                {\n                    \"name\": \"اردیبهشت\",\n                    \"value\": 14.63\n                },\n                {\n                    \"name\": \"فروردین\",\n                    \"value\": 14.65\n                }\n            ],\n            \"ping\": [\n                {\n                    \"name\": \"مهر\",\n                    \"value\": 75.29\n                },\n                {\n                    \"name\": \"شهریور\",\n                    \"value\": 75.1\n                },\n                {\n                    \"name\": \"مرداد\",\n                    \"value\": 73.58\n                },\n                {\n                    \"name\": \"تیر\",\n                    \"value\": 74.61\n                },\n                {\n                    \"name\": \"خرداد\",\n                    \"value\": 75.55\n                },\n                {\n                    \"name\": \"اردیبهشت\",\n                    \"value\": 74.01\n                },\n                {\n                    \"name\": \"فروردین\",\n                    \"value\": 75.57\n                }\n            ],\n            \"packet_loss\": [\n                {\n                    \"name\": \"مهر\",\n                    \"value\": 51.01\n                },\n                {\n                    \"name\": \"شهریور\",\n                    \"value\": 51.11\n                },\n                {\n                    \"name\": \"مرداد\",\n                    \"value\": 50.77\n                },\n                {\n                    \"name\": \"تیر\",\n                    \"value\": 49.51\n                },\n                {\n                    \"name\": \"خرداد\",\n                    \"value\": 49.25\n                },\n                {\n                    \"name\": \"اردیبهشت\",\n                    \"value\": 50.64\n                },\n                {\n                    \"name\": \"فروردین\",\n                    \"value\": 48.93\n                }\n            ]\n        }\n    },\n    \"message\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Stats",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "3 hours ago",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 12:47:12 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 12:47:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 50.23,\n            \"percentage\": 56\n        },\n        \"upload\": {\n            \"avg\": 14.9,\n            \"percentage\": 24\n        },\n        \"ping\": {\n            \"avg\": 74.43,\n            \"percentage\": 148\n        },\n        \"packet_loss\": {\n            \"avg\": 50.38,\n            \"percentage\": 320\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Now",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/now",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"now"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:40:41 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:40:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 0,\n            \"percentage\": 0\n        },\n        \"upload\": {\n            \"avg\": 0,\n            \"percentage\": 0\n        },\n        \"ping\": {\n            \"avg\": 0,\n            \"percentage\": -100\n        },\n        \"packet_loss\": {\n            \"avg\": 0,\n            \"percentage\": -100\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Today",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/today",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"today"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:41:47 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:41:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 0,\n            \"percentage\": 0\n        },\n        \"upload\": {\n            \"avg\": 0,\n            \"percentage\": 0\n        },\n        \"ping\": {\n            \"avg\": 0,\n            \"percentage\": -100\n        },\n        \"packet_loss\": {\n            \"avg\": 0,\n            \"percentage\": -100\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Yesterday",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/yesterday",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"yesterday"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:41:21 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:41:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 10.9,\n            \"percentage\": 84\n        },\n        \"upload\": {\n            \"avg\": 5.5,\n            \"percentage\": 137\n        },\n        \"ping\": {\n            \"avg\": 94.49,\n            \"percentage\": 136\n        },\n        \"packet_loss\": {\n            \"avg\": 4.98,\n            \"percentage\": 0\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Week",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/week",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"week"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:42:15 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:42:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 10.97,\n            \"percentage\": 84\n        },\n        \"upload\": {\n            \"avg\": 5.51,\n            \"percentage\": 138\n        },\n        \"ping\": {\n            \"avg\": 94.58,\n            \"percentage\": 136\n        },\n        \"packet_loss\": {\n            \"avg\": 5.02,\n            \"percentage\": 0\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/month",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"month"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:42:49 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:42:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 10.97,\n            \"percentage\": 84\n        },\n        \"upload\": {\n            \"avg\": 5.51,\n            \"percentage\": 138\n        },\n        \"ping\": {\n            \"avg\": 94.54,\n            \"percentage\": 136\n        },\n        \"packet_loss\": {\n            \"avg\": 5.02,\n            \"percentage\": 0\n        }\n    },\n    \"message\": \"\"\n}"
+						},
+						{
+							"name": "Year",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/stats/year",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"stats",
+										"year"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:43:14 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 Oct 2023 08:43:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"download\": {\n            \"avg\": 10.97,\n            \"percentage\": 84\n        },\n        \"upload\": {\n            \"avg\": 5.51,\n            \"percentage\": 138\n        },\n        \"ping\": {\n            \"avg\": 94.54,\n            \"percentage\": 136\n        },\n        \"packet_loss\": {\n            \"avg\": 5.02,\n            \"percentage\": 0\n        }\n    },\n    \"message\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "GetIssueStats",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "stats",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/get-issue-stats/stats",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"get-issue-stats",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:56:40 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:56:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"issues\": {\n            \"count\": 3,\n            \"names\": [\n                \"download\",\n                \"ping\",\n                \"packet_loss\"\n            ]\n        },\n        \"isp\": {\n            \"count\": 0,\n            \"names\": null\n        },\n        \"cities\": {\n            \"count\": 1,\n            \"names\": [\n                \"Tehran\"\n            ]\n        }\n    },\n    \"message\": \"done\"\n}"
+						},
+						{
+							"name": "issues",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/get-issue-stats/issues",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"get-issue-stats",
+										"issues"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:58:04 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:58:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"ping\": {\n            \"Tehran\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mobinnet\",\n                \"Samantel\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ]\n        },\n        \"download\": {\n            \"Tehran\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mobinnet\",\n                \"Samantel\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ]\n        },\n        \"packet_loss\": {\n            \"Tehran\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ]\n        }\n    },\n    \"message\": \"done\"\n}"
+						},
+						{
+							"name": "cities",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/get-issue-stats/cities",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"get-issue-stats",
+										"cities"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:58:46 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:58:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"Tehran\": {\n            \"ping\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mobinnet\",\n                \"Samantel\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ],\n            \"download\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mobinnet\",\n                \"Samantel\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ],\n            \"packet_loss\": [\n                \"Hiweb\",\n                \"Zitel\",\n                \"Shatel\",\n                \"Irancell\",\n                \"Mokhaberat\",\n                \"Hamraheaval\"\n            ]\n        }\n    },\n    \"message\": \"done\"\n}"
+						},
+						{
+							"name": "isp",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/get-issue-stats/isp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"get-issue-stats",
+										"isp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:59:11 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 15:59:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"Hiweb\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        },\n        \"Zitel\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        },\n        \"Shatel\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        },\n        \"Irancell\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        },\n        \"Mobinnet\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\"\n            ]\n        },\n        \"Samantel\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\"\n            ]\n        },\n        \"Mokhaberat\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        },\n        \"Hamraheaval\": {\n            \"Tehran\": [\n                \"ping\",\n                \"download\",\n                \"packet_loss\"\n            ]\n        }\n    },\n    \"message\": \"done\"\n}"
+						},
+						{
+							"name": "info",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/dashboard/get-issue-stats/info",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"dashboard",
+										"get-issue-stats",
+										"info"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 16:06:15 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Oct 2023 16:06:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.10-2ubuntu1"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": {\n        \"Hiweb\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 96.72 hourly 1 dataAvg:95.95 hourly 2 dataAvg:95.92 hourly 3 dataAvg:95.51 hourly 12 dataAvg:95.25 daily 1 dataAvg:93.78 daily 2 dataAvg:93.92 daily 4 dataAvg:94.71 daily 5 dataAvg:94.51 weekly 1 dataAvg:94.47 weekly 2 dataAvg:94.47 weekly 3 dataAvg:94.47 monthly 1 dataAvg:94.47 monthly 3 dataAvg:94.47 monthly 6 dataAvg:94.47 Tehran ping issue: ping thresholds is: 40 now: 96.72 hourly 1 dataAvg:95.95 hourly 2 dataAvg:95.92 hourly 3 dataAvg:95.51 hourly 12 dataAvg:95.25 daily 1 dataAvg:93.78 daily 2 dataAvg:93.92 daily 4 dataAvg:94.71 daily 5 dataAvg:94.51 weekly 1 dataAvg:94.47 weekly 2 dataAvg:94.47 weekly 3 dataAvg:94.47 monthly 1 dataAvg:94.47 monthly 3 dataAvg:94.47 monthly 6 dataAvg:94.47 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 11.46 hourly 1 dataAvg:11.25 hourly 2 dataAvg:11.12 hourly 3 dataAvg:11.05 hourly 12 dataAvg:10.85 daily 1 dataAvg:10.85 daily 2 dataAvg:10.89 daily 4 dataAvg:10.91 daily 5 dataAvg:10.91 weekly 1 dataAvg:10.92 weekly 2 dataAvg:10.92 weekly 3 dataAvg:10.92 monthly 1 dataAvg:10.92 monthly 3 dataAvg:10.92 monthly 6 dataAvg:10.92 Tehran download issue: download thresholds is: 13 now: 11.46 hourly 1 dataAvg:11.25 hourly 2 dataAvg:11.12 hourly 3 dataAvg:11.05 hourly 12 dataAvg:10.85 daily 1 dataAvg:10.85 daily 2 dataAvg:10.89 daily 4 dataAvg:10.91 daily 5 dataAvg:10.91 weekly 1 dataAvg:10.92 weekly 2 dataAvg:10.92 weekly 3 dataAvg:10.92 monthly 1 dataAvg:10.92 monthly 3 dataAvg:10.92 monthly 6 dataAvg:10.92 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.06 hourly 1 dataAvg:4.98 hourly 2 dataAvg:4.91 hourly 3 dataAvg:4.86 hourly 12 dataAvg:4.92 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.06 hourly 1 dataAvg:4.98 hourly 2 dataAvg:4.91 hourly 3 dataAvg:4.86 hourly 12 dataAvg:4.92 \"\n            }\n        },\n        \"Zitel\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 91.51 hourly 1 dataAvg:92.44 hourly 2 dataAvg:93.82 hourly 3 dataAvg:94.27 hourly 12 dataAvg:92.94 daily 1 dataAvg:95.45 daily 2 dataAvg:95.17 daily 4 dataAvg:94.52 daily 5 dataAvg:94.43 weekly 1 dataAvg:94.31 weekly 2 dataAvg:94.31 weekly 3 dataAvg:94.31 monthly 1 dataAvg:94.31 monthly 3 dataAvg:94.31 monthly 6 dataAvg:94.31 Tehran ping issue: ping thresholds is: 40 now: 91.51 hourly 1 dataAvg:92.44 hourly 2 dataAvg:93.82 hourly 3 dataAvg:94.27 hourly 12 dataAvg:92.94 daily 1 dataAvg:95.45 daily 2 dataAvg:95.17 daily 4 dataAvg:94.52 daily 5 dataAvg:94.43 weekly 1 dataAvg:94.31 weekly 2 dataAvg:94.31 weekly 3 dataAvg:94.31 monthly 1 dataAvg:94.31 monthly 3 dataAvg:94.31 monthly 6 dataAvg:94.31 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 10.63 hourly 1 dataAvg:10.57 hourly 2 dataAvg:10.77 hourly 3 dataAvg:10.71 hourly 12 dataAvg:10.71 daily 1 dataAvg:10.79 daily 2 dataAvg:10.85 daily 4 dataAvg:10.92 daily 5 dataAvg:10.89 weekly 1 dataAvg:10.88 weekly 2 dataAvg:10.88 weekly 3 dataAvg:10.88 monthly 1 dataAvg:10.88 monthly 3 dataAvg:10.88 monthly 6 dataAvg:10.88 Tehran download issue: download thresholds is: 13 now: 10.63 hourly 1 dataAvg:10.57 hourly 2 dataAvg:10.77 hourly 3 dataAvg:10.71 hourly 12 dataAvg:10.71 daily 1 dataAvg:10.79 daily 2 dataAvg:10.85 daily 4 dataAvg:10.92 daily 5 dataAvg:10.89 weekly 1 dataAvg:10.88 weekly 2 dataAvg:10.88 weekly 3 dataAvg:10.88 monthly 1 dataAvg:10.88 monthly 3 dataAvg:10.88 monthly 6 dataAvg:10.88 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.75 hourly 1 dataAvg:5.62 hourly 2 dataAvg:5.6 hourly 3 dataAvg:5.48 hourly 12 dataAvg:5.27 daily 1 dataAvg:5.11 daily 2 dataAvg:5.12 daily 4 dataAvg:5.1 daily 5 dataAvg:5.1 weekly 1 dataAvg:5.1 weekly 2 dataAvg:5.1 weekly 3 dataAvg:5.1 monthly 1 dataAvg:5.1 monthly 3 dataAvg:5.1 monthly 6 dataAvg:5.1 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.75 hourly 1 dataAvg:5.62 hourly 2 dataAvg:5.6 hourly 3 dataAvg:5.48 hourly 12 dataAvg:5.27 daily 1 dataAvg:5.11 daily 2 dataAvg:5.12 daily 4 dataAvg:5.1 daily 5 dataAvg:5.1 weekly 1 dataAvg:5.1 weekly 2 dataAvg:5.1 weekly 3 dataAvg:5.1 monthly 1 dataAvg:5.1 monthly 3 dataAvg:5.1 monthly 6 dataAvg:5.1 \"\n            }\n        },\n        \"Shatel\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 92.61 hourly 1 dataAvg:91.87 hourly 2 dataAvg:92.71 hourly 3 dataAvg:91.35 hourly 12 dataAvg:93.84 daily 1 dataAvg:93.97 daily 2 dataAvg:94.38 daily 4 dataAvg:94.78 daily 5 dataAvg:95.03 weekly 1 dataAvg:94.9 weekly 2 dataAvg:94.9 weekly 3 dataAvg:94.9 monthly 1 dataAvg:94.9 monthly 3 dataAvg:94.9 monthly 6 dataAvg:94.9 Tehran ping issue: ping thresholds is: 40 now: 92.61 hourly 1 dataAvg:91.87 hourly 2 dataAvg:92.71 hourly 3 dataAvg:91.35 hourly 12 dataAvg:93.84 daily 1 dataAvg:93.97 daily 2 dataAvg:94.38 daily 4 dataAvg:94.78 daily 5 dataAvg:95.03 weekly 1 dataAvg:94.9 weekly 2 dataAvg:94.9 weekly 3 dataAvg:94.9 monthly 1 dataAvg:94.9 monthly 3 dataAvg:94.9 monthly 6 dataAvg:94.9 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 10.54 hourly 1 dataAvg:10.53 hourly 2 dataAvg:10.61 hourly 3 dataAvg:10.74 hourly 12 dataAvg:10.78 daily 1 dataAvg:10.99 daily 2 dataAvg:10.98 daily 4 dataAvg:10.96 daily 5 dataAvg:10.96 weekly 1 dataAvg:10.99 weekly 2 dataAvg:10.99 weekly 3 dataAvg:10.99 monthly 1 dataAvg:10.99 monthly 3 dataAvg:10.99 monthly 6 dataAvg:10.99 Tehran download issue: download thresholds is: 13 now: 10.54 hourly 1 dataAvg:10.53 hourly 2 dataAvg:10.61 hourly 3 dataAvg:10.74 hourly 12 dataAvg:10.78 daily 1 dataAvg:10.99 daily 2 dataAvg:10.98 daily 4 dataAvg:10.96 daily 5 dataAvg:10.96 weekly 1 dataAvg:10.99 weekly 2 dataAvg:10.99 weekly 3 dataAvg:10.99 monthly 1 dataAvg:10.99 monthly 3 dataAvg:10.99 monthly 6 dataAvg:10.99 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.14 hourly 1 dataAvg:5.24 hourly 2 dataAvg:5.2 hourly 3 dataAvg:5.13 hourly 12 dataAvg:5.09 daily 1 dataAvg:4.97 daily 2 dataAvg:4.99 daily 4 dataAvg:5.02 daily 5 dataAvg:5.03 weekly 1 dataAvg:5.01 weekly 2 dataAvg:5.01 weekly 3 dataAvg:5.01 monthly 1 dataAvg:5.01 monthly 3 dataAvg:5.01 monthly 6 dataAvg:5.01 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.14 hourly 1 dataAvg:5.24 hourly 2 dataAvg:5.2 hourly 3 dataAvg:5.13 hourly 12 dataAvg:5.09 daily 1 dataAvg:4.97 daily 2 dataAvg:4.99 daily 4 dataAvg:5.02 daily 5 dataAvg:5.03 weekly 1 dataAvg:5.01 weekly 2 dataAvg:5.01 weekly 3 dataAvg:5.01 monthly 1 dataAvg:5.01 monthly 3 dataAvg:5.01 monthly 6 dataAvg:5.01 \"\n            }\n        },\n        \"Irancell\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 96.05 hourly 1 dataAvg:97.21 hourly 2 dataAvg:95.36 hourly 3 dataAvg:95.07 hourly 12 dataAvg:96.03 daily 1 dataAvg:94.11 daily 2 dataAvg:94.38 daily 4 dataAvg:94.58 daily 5 dataAvg:94.39 weekly 1 dataAvg:94.31 weekly 2 dataAvg:94.31 weekly 3 dataAvg:94.31 monthly 1 dataAvg:94.31 monthly 3 dataAvg:94.31 monthly 6 dataAvg:94.31 Tehran ping issue: ping thresholds is: 40 now: 96.05 hourly 1 dataAvg:97.21 hourly 2 dataAvg:95.36 hourly 3 dataAvg:95.07 hourly 12 dataAvg:96.03 daily 1 dataAvg:94.11 daily 2 dataAvg:94.38 daily 4 dataAvg:94.58 daily 5 dataAvg:94.39 weekly 1 dataAvg:94.31 weekly 2 dataAvg:94.31 weekly 3 dataAvg:94.31 monthly 1 dataAvg:94.31 monthly 3 dataAvg:94.31 monthly 6 dataAvg:94.31 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 10.84 hourly 1 dataAvg:10.89 hourly 2 dataAvg:10.9 hourly 3 dataAvg:10.92 hourly 12 dataAvg:11.04 daily 1 dataAvg:11.07 daily 2 dataAvg:11.08 daily 4 dataAvg:11.06 daily 5 dataAvg:11.04 weekly 1 dataAvg:11.01 weekly 2 dataAvg:11.01 weekly 3 dataAvg:11.01 monthly 1 dataAvg:11.01 monthly 3 dataAvg:11.01 monthly 6 dataAvg:11.01 Tehran download issue: download thresholds is: 13 now: 10.84 hourly 1 dataAvg:10.89 hourly 2 dataAvg:10.9 hourly 3 dataAvg:10.92 hourly 12 dataAvg:11.04 daily 1 dataAvg:11.07 daily 2 dataAvg:11.08 daily 4 dataAvg:11.06 daily 5 dataAvg:11.04 weekly 1 dataAvg:11.01 weekly 2 dataAvg:11.01 weekly 3 dataAvg:11.01 monthly 1 dataAvg:11.01 monthly 3 dataAvg:11.01 monthly 6 dataAvg:11.01 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.4 hourly 1 dataAvg:5.46 hourly 2 dataAvg:5.38 hourly 3 dataAvg:5.5 hourly 12 dataAvg:5.14 daily 1 dataAvg:5.07 daily 2 dataAvg:5.03 daily 4 dataAvg:5.02 daily 5 dataAvg:5.02 weekly 1 dataAvg:5.01 weekly 2 dataAvg:5.01 weekly 3 dataAvg:5.01 monthly 1 dataAvg:5.01 monthly 3 dataAvg:5.01 monthly 6 dataAvg:5.01 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.4 hourly 1 dataAvg:5.46 hourly 2 dataAvg:5.38 hourly 3 dataAvg:5.5 hourly 12 dataAvg:5.14 daily 1 dataAvg:5.07 daily 2 dataAvg:5.03 daily 4 dataAvg:5.02 daily 5 dataAvg:5.02 weekly 1 dataAvg:5.01 weekly 2 dataAvg:5.01 weekly 3 dataAvg:5.01 monthly 1 dataAvg:5.01 monthly 3 dataAvg:5.01 monthly 6 dataAvg:5.01 \"\n            }\n        },\n        \"Mobinnet\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 91.66 hourly 1 dataAvg:91.46 hourly 2 dataAvg:90.93 hourly 3 dataAvg:91.29 hourly 12 dataAvg:92.6 daily 1 dataAvg:94.89 daily 2 dataAvg:94.72 daily 4 dataAvg:94.9 daily 5 dataAvg:94.84 weekly 1 dataAvg:94.76 weekly 2 dataAvg:94.76 weekly 3 dataAvg:94.76 monthly 1 dataAvg:94.76 monthly 3 dataAvg:94.76 monthly 6 dataAvg:94.76 Tehran ping issue: ping thresholds is: 40 now: 91.66 hourly 1 dataAvg:91.46 hourly 2 dataAvg:90.93 hourly 3 dataAvg:91.29 hourly 12 dataAvg:92.6 daily 1 dataAvg:94.89 daily 2 dataAvg:94.72 daily 4 dataAvg:94.9 daily 5 dataAvg:94.84 weekly 1 dataAvg:94.76 weekly 2 dataAvg:94.76 weekly 3 dataAvg:94.76 monthly 1 dataAvg:94.76 monthly 3 dataAvg:94.76 monthly 6 dataAvg:94.76 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 11.06 hourly 1 dataAvg:10.97 hourly 2 dataAvg:11.13 hourly 3 dataAvg:11.18 hourly 12 dataAvg:11.1 daily 1 dataAvg:10.99 daily 2 dataAvg:10.97 daily 4 dataAvg:11 daily 5 dataAvg:11 weekly 1 dataAvg:11 weekly 2 dataAvg:11 weekly 3 dataAvg:11 monthly 1 dataAvg:11 monthly 3 dataAvg:11 monthly 6 dataAvg:11 Tehran download issue: download thresholds is: 13 now: 11.06 hourly 1 dataAvg:10.97 hourly 2 dataAvg:11.13 hourly 3 dataAvg:11.18 hourly 12 dataAvg:11.1 daily 1 dataAvg:10.99 daily 2 dataAvg:10.97 daily 4 dataAvg:11 daily 5 dataAvg:11 weekly 1 dataAvg:11 weekly 2 dataAvg:11 weekly 3 dataAvg:11 monthly 1 dataAvg:11 monthly 3 dataAvg:11 monthly 6 dataAvg:11 \"\n            }\n        },\n        \"Samantel\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 98.03 hourly 1 dataAvg:97.87 hourly 2 dataAvg:99.05 hourly 3 dataAvg:99.3 hourly 12 dataAvg:96.51 daily 1 dataAvg:95.07 daily 2 dataAvg:94.85 daily 4 dataAvg:94.63 daily 5 dataAvg:94.42 weekly 1 dataAvg:94.42 weekly 2 dataAvg:94.42 weekly 3 dataAvg:94.42 monthly 1 dataAvg:94.42 monthly 3 dataAvg:94.42 monthly 6 dataAvg:94.42 Tehran ping issue: ping thresholds is: 40 now: 98.03 hourly 1 dataAvg:97.87 hourly 2 dataAvg:99.05 hourly 3 dataAvg:99.3 hourly 12 dataAvg:96.51 daily 1 dataAvg:95.07 daily 2 dataAvg:94.85 daily 4 dataAvg:94.63 daily 5 dataAvg:94.42 weekly 1 dataAvg:94.42 weekly 2 dataAvg:94.42 weekly 3 dataAvg:94.42 monthly 1 dataAvg:94.42 monthly 3 dataAvg:94.42 monthly 6 dataAvg:94.42 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 11.75 hourly 1 dataAvg:11.74 hourly 2 dataAvg:11.75 hourly 3 dataAvg:11.52 hourly 12 dataAvg:11.02 daily 1 dataAvg:10.91 daily 2 dataAvg:10.99 daily 4 dataAvg:11.03 daily 5 dataAvg:10.98 weekly 1 dataAvg:10.99 weekly 2 dataAvg:10.99 weekly 3 dataAvg:10.99 monthly 1 dataAvg:10.99 monthly 3 dataAvg:10.99 monthly 6 dataAvg:10.99 Tehran download issue: download thresholds is: 13 now: 11.75 hourly 1 dataAvg:11.74 hourly 2 dataAvg:11.75 hourly 3 dataAvg:11.52 hourly 12 dataAvg:11.02 daily 1 dataAvg:10.91 daily 2 dataAvg:10.99 daily 4 dataAvg:11.03 daily 5 dataAvg:10.98 weekly 1 dataAvg:10.99 weekly 2 dataAvg:10.99 weekly 3 dataAvg:10.99 monthly 1 dataAvg:10.99 monthly 3 dataAvg:10.99 monthly 6 dataAvg:10.99 \"\n            }\n        },\n        \"Mokhaberat\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 95.66 hourly 1 dataAvg:96.54 hourly 2 dataAvg:96.17 hourly 3 dataAvg:96.64 hourly 12 dataAvg:95.37 daily 1 dataAvg:93.59 daily 2 dataAvg:93.74 daily 4 dataAvg:94.43 daily 5 dataAvg:94.48 weekly 1 dataAvg:94.4 weekly 2 dataAvg:94.4 weekly 3 dataAvg:94.4 monthly 1 dataAvg:94.4 monthly 3 dataAvg:94.4 monthly 6 dataAvg:94.4 Tehran ping issue: ping thresholds is: 40 now: 95.66 hourly 1 dataAvg:96.54 hourly 2 dataAvg:96.17 hourly 3 dataAvg:96.64 hourly 12 dataAvg:95.37 daily 1 dataAvg:93.59 daily 2 dataAvg:93.74 daily 4 dataAvg:94.43 daily 5 dataAvg:94.48 weekly 1 dataAvg:94.4 weekly 2 dataAvg:94.4 weekly 3 dataAvg:94.4 monthly 1 dataAvg:94.4 monthly 3 dataAvg:94.4 monthly 6 dataAvg:94.4 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 10.89 hourly 1 dataAvg:10.99 hourly 2 dataAvg:10.97 hourly 3 dataAvg:10.98 hourly 12 dataAvg:10.92 daily 1 dataAvg:11.08 daily 2 dataAvg:10.96 daily 4 dataAvg:10.95 daily 5 dataAvg:10.97 weekly 1 dataAvg:10.96 weekly 2 dataAvg:10.96 weekly 3 dataAvg:10.96 monthly 1 dataAvg:10.96 monthly 3 dataAvg:10.96 monthly 6 dataAvg:10.96 Tehran download issue: download thresholds is: 13 now: 10.89 hourly 1 dataAvg:10.99 hourly 2 dataAvg:10.97 hourly 3 dataAvg:10.98 hourly 12 dataAvg:10.92 daily 1 dataAvg:11.08 daily 2 dataAvg:10.96 daily 4 dataAvg:10.95 daily 5 dataAvg:10.97 weekly 1 dataAvg:10.96 weekly 2 dataAvg:10.96 weekly 3 dataAvg:10.96 monthly 1 dataAvg:10.96 monthly 3 dataAvg:10.96 monthly 6 dataAvg:10.96 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.07 hourly 1 dataAvg:5.02 hourly 2 dataAvg:5.14 hourly 3 dataAvg:5.2 hourly 12 dataAvg:5.08 daily 1 dataAvg:4.94 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 5.07 hourly 1 dataAvg:5.02 hourly 2 dataAvg:5.14 hourly 3 dataAvg:5.2 hourly 12 dataAvg:5.08 daily 1 dataAvg:4.94 \"\n            }\n        },\n        \"Hamraheaval\": {\n            \"ping\": {\n                \"Tehran\": \"Tehran ping issue: ping thresholds is: 40 now: 91.39 hourly 1 dataAvg:92.93 hourly 2 dataAvg:94.32 hourly 3 dataAvg:94.56 hourly 12 dataAvg:94.86 daily 1 dataAvg:94.61 daily 2 dataAvg:94.66 daily 4 dataAvg:94.54 daily 5 dataAvg:94.81 weekly 1 dataAvg:94.89 weekly 2 dataAvg:94.89 weekly 3 dataAvg:94.89 monthly 1 dataAvg:94.89 monthly 3 dataAvg:94.89 monthly 6 dataAvg:94.89 Tehran ping issue: ping thresholds is: 40 now: 91.39 hourly 1 dataAvg:92.93 hourly 2 dataAvg:94.32 hourly 3 dataAvg:94.56 hourly 12 dataAvg:94.86 daily 1 dataAvg:94.61 daily 2 dataAvg:94.66 daily 4 dataAvg:94.54 daily 5 dataAvg:94.81 weekly 1 dataAvg:94.89 weekly 2 dataAvg:94.89 weekly 3 dataAvg:94.89 monthly 1 dataAvg:94.89 monthly 3 dataAvg:94.89 monthly 6 dataAvg:94.89 \"\n            },\n            \"download\": {\n                \"Tehran\": \"Tehran download issue: download thresholds is: 13 now: 11.27 hourly 1 dataAvg:11.22 hourly 2 dataAvg:11.18 hourly 3 dataAvg:11.13 hourly 12 dataAvg:11.04 daily 1 dataAvg:10.92 daily 2 dataAvg:10.93 daily 4 dataAvg:10.98 daily 5 dataAvg:10.98 weekly 1 dataAvg:11.01 weekly 2 dataAvg:11.01 weekly 3 dataAvg:11.01 monthly 1 dataAvg:11.01 monthly 3 dataAvg:11.01 monthly 6 dataAvg:11.01 Tehran download issue: download thresholds is: 13 now: 11.27 hourly 1 dataAvg:11.22 hourly 2 dataAvg:11.18 hourly 3 dataAvg:11.13 hourly 12 dataAvg:11.04 daily 1 dataAvg:10.92 daily 2 dataAvg:10.93 daily 4 dataAvg:10.98 daily 5 dataAvg:10.98 weekly 1 dataAvg:11.01 weekly 2 dataAvg:11.01 weekly 3 dataAvg:11.01 monthly 1 dataAvg:11.01 monthly 3 dataAvg:11.01 monthly 6 dataAvg:11.01 \"\n            },\n            \"packet_loss\": {\n                \"Tehran\": \"Tehran packet_loss issue: packet_loss thresholds is: 5 now: 4.76 hourly 1 dataAvg:4.79 Tehran packet_loss issue: packet_loss thresholds is: 5 now: 4.76 hourly 1 dataAvg:4.79 \"\n            }\n        }\n    },\n    \"message\": \"done\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Report",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "cid",
+									"value": "example-cid",
+									"type": "text"
+								},
+								{
+									"key": "isp",
+									"value": "irancell",
+									"type": "text"
+								},
+								{
+									"key": "province",
+									"value": "Tehran",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Tehran",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "low download speed",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/{{prefix}}/client/report",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{prefix}}",
+								"client",
+								"report"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "cid",
+											"value": "example-cid",
+											"type": "text"
+										},
+										{
+											"key": "isp",
+											"value": "irancell",
+											"type": "text"
+										},
+										{
+											"key": "province",
+											"value": "Tehran",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Tehran",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "low download speed",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/client/report",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"client",
+										"report"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 07:14:17 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 07:14:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.12-1ubuntu4.3"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": [],\n    \"message\": \"thank you. information was recorded!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Feedback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "cid",
+									"value": "example-cid",
+									"type": "text"
+								},
+								{
+									"key": "isp",
+									"value": "irancell",
+									"type": "text"
+								},
+								{
+									"key": "score",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/{{prefix}}/client/feedback",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{prefix}}",
+								"client",
+								"feedback"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "cid",
+											"value": "example-cid",
+											"type": "text"
+										},
+										{
+											"key": "isp",
+											"value": "irancell",
+											"type": "text"
+										},
+										{
+											"key": "score",
+											"value": "4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/{{prefix}}/client/feedback",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{prefix}}",
+										"client",
+										"feedback"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 07:31:56 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 07 Oct 2023 07:31:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.12-1ubuntu4.3"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, GET"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"data\": [],\n    \"message\": \"thank you. information was recorded!\"\n}"
 						}
 					]
 				}

@@ -15,6 +15,9 @@ const ViewDetailsButton = ({ target, sx }) => {
         color: theme.palette.mode === "dark" ? "#85CCF4" : "#0C6087",
         fontFamily: "YekanBakh",
         ...sx,
+        px: "0rem",
+        py: "0.4rem",
+        textAlign:'center'
       }}
       endIcon={<WestIcon sx={{ marginRight: "1rem" }} />}
     >

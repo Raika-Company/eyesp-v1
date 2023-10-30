@@ -5,17 +5,18 @@ import {
   Button,
   useMediaQuery,
   useTheme,
+  Typography,
 } from "@mui/material";
 import ConflictDetailsCard from "./components/ConflictDetailsCard";
 import AllSituationCard from "./components/AllSituationCard";
 import CompareTable from "./components/CompareTable";
 import { ContainedSelect } from "../../../app/common/ContainedSelect";
-import provinces from "../../../../public/data/provinces.json";
 import provincesCoords from "../../../../public/data/provincesCoords.json";
 import ISPList from "../../../../public/data/RowISPData.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundSvg from "../../../app/common/BackgroundSvg";
 import SetConflictModal from "./components/SetConflictModal";
+import services from "../../../app/api/index";
 
 const NewDashboard = () => {
   const theme = useTheme();
@@ -33,19 +34,31 @@ const NewDashboard = () => {
     setSelectedISP(event.target.value);
   };
 
+  const [globalStates, setGlobalStates] = useState(null);
+  useEffect(() => {
+    services.dashboard
+      .getGlobalStates()
+      .then((response) => {
+        setGlobalStates(response.data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <div>
       <BackgroundSvg
         provinces={
           province
-            ? [provincesCoords[province]]
-            : [
-                provincesCoords["تهران"],
-                provincesCoords["خوزستان"],
-                provincesCoords["قم"],
-                provincesCoords["یزد"],
-              ]
+            ? [provincesCoords[province.toLowerCase()]]
+            : globalStates
+            ? globalStates.cities.names.map(
+                (cityName) => provincesCoords[cityName.toLowerCase()]
+              )
+            : []
         }
+        selectedProvince={province}
       />
       <Box
         sx={{
@@ -62,7 +75,10 @@ const NewDashboard = () => {
           padding="2rem"
           whiteSpace="nowrap"
         >
-          <ConflictDetailsCard onOpenModal={() => setOpenConflictModal(true)} />
+          <ConflictDetailsCard
+            onOpenModal={() => setOpenConflictModal(true)}
+            globalStates={globalStates}
+          />
           <AllSituationCard />
           <Stack direction="row" gap="2rem">
             <CompareTable title="اپراتور‌های برتر" />
@@ -71,9 +87,12 @@ const NewDashboard = () => {
         </Stack>
         <Box
           sx={{
+            width: "30rem",
+            justifyContent: "center",
             justifySelf: isMdScreen ? "self-end" : "center",
             alignSelf: "self-start",
             display: "flex",
+            flexWrap: "wrap",
             background: isDark
               ? "rgba(55, 55, 55, 0.40)"
               : "paint0_radial_202_4189",
@@ -85,49 +104,59 @@ const NewDashboard = () => {
             zIndex: 2,
           }}
         >
-          <Box>
-            <ContainedSelect
-              labelId="change-province-label"
-              id="change-province"
-              label="انتخاب استان"
-              value={province}
-              onChange={handleProvinceChange}
-              displayEmpty
-              sx={{
-                paddingLeft: "2rem",
-                minWidth: "10rem",
-                background: isDark ? "" : "#FFF",
-              }}
-            >
-              <MenuItem value="">انتخاب استان</MenuItem>
-              {provinces.map((provinceItem) => (
-                <MenuItem key={provinceItem.name} value={provinceItem.name}>
-                  {provinceItem.name}
-                </MenuItem>
-              ))}
-            </ContainedSelect>
-          </Box>
-          <Box>
-            <ContainedSelect
-              labelId="change-province-label"
-              id="change-province"
-              label="انتخاب اپراتور"
-              value={selectedISP}
-              onChange={handleISPChange}
-              displayEmpty
-              sx={{
-                paddingLeft: "2rem",
-                minWidth: "10rem",
-                background: isDark ? "" : "#FFF",
-              }}
-            >
-              <MenuItem value="">انتخاب اپراتور</MenuItem>
-              {ISPList.map((isp) => (
-                <MenuItem key={isp.ISPname} value={isp.ISPname}>
-                  {isp.ISPname}
-                </MenuItem>
-              ))}
-            </ContainedSelect>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              <ContainedSelect
+                labelId="change-province-label"
+                id="change-province"
+                label="انتخاب استان"
+                value={province}
+                onChange={handleProvinceChange}
+                displayEmpty
+                sx={{
+                  minWidth: "11.45rem",
+                  background: isDark ? "" : "#FFF",
+                }}
+              >
+                <MenuItem value="">انتخاب استان</MenuItem>
+                {Object.keys(provincesCoords).map((provinceName) => (
+                  <MenuItem
+                    key={provincesCoords[provinceName]}
+                    value={provinceName}
+                  >
+                    {provincesCoords[provinceName].name}
+                  </MenuItem>
+                ))}
+              </ContainedSelect>
+            </Box>
+            <Typography sx={{ mx: "1.5rem" }}>و /{""} یا</Typography>
+            <Box>
+              <ContainedSelect
+                labelId="change-province-label"
+                id="change-province"
+                label="انتخاب اپراتور"
+                value={selectedISP}
+                onChange={handleISPChange}
+                displayEmpty
+                sx={{
+                  minWidth: "11.45rem",
+                  background: isDark ? "" : "#FFF",
+                }}
+              >
+                <MenuItem value="">انتخاب اپراتور</MenuItem>
+                {ISPList.map((isp) => (
+                  <MenuItem key={isp.ISPname} value={isp.ISPname}>
+                    {isp.ISPname}
+                  </MenuItem>
+                ))}
+              </ContainedSelect>
+            </Box>
           </Box>
           <Button
             variant="text.main"
@@ -135,7 +164,8 @@ const NewDashboard = () => {
             to=""
             sx={{
               borderRadius: "1rem",
-              padding: "1rem",
+              py: "1rem",
+              px: "11rem",
               background: "#0C6087",
               whiteSpace: "nowrap",
               color: "#FFF",

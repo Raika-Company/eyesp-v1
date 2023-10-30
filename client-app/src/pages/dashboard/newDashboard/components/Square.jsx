@@ -1,7 +1,6 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 
-const Square = ({ value, unit, title, background, color }) => {
-  const theme = useTheme();
+const Square = ({value, unit, title, background, color}) => {
   return (
     <Box
       sx={{
