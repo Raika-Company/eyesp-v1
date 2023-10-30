@@ -639,26 +639,41 @@ class NetworkController extends Controller
         }
     }
 
+
+    /**
+     * Get statistics related to issues, ISPs, cities, or specific information based on the provided type.
+     *
+     * @param Request $request The HTTP request object containing input data.
+     * @param string $type The type of information to retrieve ('stats', 'issues', 'cities', 'isp', 'info').
+     * @return \Illuminate\Http\JsonResponse JSON response containing status, data, and message.
+     */
     public function getIssueStats(Request $request, $type)
     {
+        // Retrieve the latest disturbance stats
         $stats = RstDisturbance::latest()->first();
+        // Parse the description JSON
         $description = json_decode($stats->description);
-
-        switch($type) {
+    
+        switch ($type) {
             case 'stats':
+                // Calculate the count and names of issues
                 $response['issues'] = [
                     'count' => count(collect(json_decode($stats->disturbances))),
                     'names' => json_decode($stats->disturbances)
                 ];
+                // Calculate the count and names of ISPs
                 $response['isp'] = [
                     'count' => count(collect($description)),
                     'names' => array_keys((array)$description)
                 ];
+                $cities = [];
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Extract city names
                         $cities[] = key($metricInfos);
                     }
                 }
+                // Calculate the count and names of cities
                 $response['cities'] = [
                     'count' => count(array_unique($cities)),
                     'names' => array_unique($cities)
@@ -667,6 +682,7 @@ class NetworkController extends Controller
             case 'issues':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group ISPs by issue and metric
                         $response[$metric][key($metricInfos)][] = $isp;
                     }
                 }
@@ -674,6 +690,7 @@ class NetworkController extends Controller
             case 'cities':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group cities by ISP and metric
                         $response[key($metricInfos)][$metric][] = $isp;
                     }
                 }
@@ -681,24 +698,27 @@ class NetworkController extends Controller
             case 'isp':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group metrics by ISP and city
                         $response[$isp][key($metricInfos)][] = $metric;
                     }
                 }
                 break;
             case 'info':
-                if(isset($request->isp)) {
+                if (isset($request->isp)) {
                     $isp = $request->isp;
                     $issue = $request->issue;
                     $city = $request->city;
+                    // Retrieve specific information based on ISP, issue, and city
                     $response = $description->$isp->$issue->$city;
-                }else {
+                } else {
                     foreach ($description as $isp => $ispInfos) {
+                        // Get all information for ISPs
                         $response[$isp] = $ispInfos;
                     }
                 }
         }
-
-
+    
+        // Return JSON response with status, data, and message
         return response()->json([
             'status' => true,
             'data' => $response,
