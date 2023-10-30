@@ -500,16 +500,23 @@ class NetworkController extends Controller
         }
     }
 
-
+    /**
+     * Retrieve ISP-specific metrics based on the provided ISP name.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function myIspMetrics(Request $request)
     {
         try {
+            // Retrieve ISP-specific metrics using the provided ISP name
             return response()->json([
                 'status' => true,
                 'data' => NetworkService::IspMetrics([$request->isp]),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response if an error occurs
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -517,17 +524,24 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieve reports and perform comparisons for the specified ISP.
+     *
+     * @param  string  $isp
+     * @return array
+     */
     public function reports($isp)
     {
+        // Define the metrics to be compared
         $metrics = ['download', 'ping', 'packet_loss'];
         $isps = collect(config('app.isps'));
-        
-        // Fetching reports for all ISPs
+
+        // Fetch reports for all ISPs and store them in an array
         $reports = $isps->mapWithKeys(fn($item) => [
             $item => NetworkService::GetReports($item, $metrics)
         ]);
 
-        // Comparing metrics for the specified ISP
+        // Compare metrics for the specified ISP and add consistency metric for comparison
         $metrics[] = 'consistency';
         $comparison = collect($metrics)
             ->mapWithKeys(fn($metric) => [
@@ -535,11 +549,13 @@ class NetworkController extends Controller
             ])
             ->toArray();
 
+        // Return the reports and comparisons in an array format
         return [
             'reports' => $reports->toArray(),
             'comparison' => $comparison,
         ];
     }
+
 
     public function reports2($isp)
     {
