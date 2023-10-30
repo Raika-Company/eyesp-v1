@@ -424,9 +424,17 @@ class NetworkController extends Controller
         }
     }
 
+
+    /**
+     * Retrieve statistics based on the provided request type.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function stats(Request $request)
     {
         try {
+            // Determine the type of statistics based on the request
             switch ($request->type) {
                 case 'recent':
                     $data = RstResult::recent();
@@ -450,11 +458,13 @@ class NetworkController extends Controller
                     $data = RstResult::hourly(null, 3);
                     break;
             }
-            $threshold = NetworkService::GetThresholds();
+
+            // Calculate average values and percentages for different metrics
             $downloadAvg = $data->avg('download');
             $uploadAvg = $data->avg('upload');
             $pingAvg = $data->avg('ping');
             $packetLossAvg = $data->avg('packet_loss');
+
             $response = [
                 'download' => [
                     'avg' => round($downloadAvg, 2),
@@ -474,12 +484,14 @@ class NetworkController extends Controller
                 ],
             ];
 
+            // Return the JSON response with the calculated statistics
             return response()->json([
                 'status' => true,
                 'data' => $response,
                 'message' => '',
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response if an error occurs
             return response()->json([
                 'status' => false,
                 'data' => [],
@@ -487,6 +499,7 @@ class NetworkController extends Controller
             ]);
         }
     }
+
 
     public function myIspMetrics(Request $request)
     {
@@ -508,7 +521,7 @@ class NetworkController extends Controller
     {
         $metrics = ['download', 'ping', 'packet_loss'];
         $isps = collect(config('app.isps'));
-
+        
         // Fetching reports for all ISPs
         $reports = $isps->mapWithKeys(fn($item) => [
             $item => NetworkService::GetReports($item, $metrics)
