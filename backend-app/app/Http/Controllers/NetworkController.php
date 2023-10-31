@@ -20,12 +20,21 @@ use Illuminate\Support\Str;
 
 class NetworkController extends Controller
 {
-    function getClientIp(Request $request)
+    /**
+     * Retrieves the client's IP address from the incoming request.
+     *
+     * @param Request $request The incoming HTTP request.
+     * @return \Illuminate\Http\JsonResponse JSON response with status, client's IP address, and optional message.
+     */
+    public function getClientIp(Request $request)
     {
         try {
+            // Validate that 'ip' parameter, if provided, is a valid IP address
             $validator = Validator::make($request->all(), [
-                'ip' => 'sometimes|ip', // Validate that 'ip' is a valid IP address
+                'ip' => 'sometimes|ip',
             ]);
+
+            // If 'ip' parameter is not a valid IP address, return an error response
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
@@ -34,6 +43,7 @@ class NetworkController extends Controller
                 ]);
             }
 
+            // Retrieve client's IP address from the request and return a JSON response with success status and the IP address
             return response()->json([
                 'status' => true,
                 'data' => ['ip' => $request->ip()],
@@ -41,6 +51,7 @@ class NetworkController extends Controller
             ]);
 
         } catch(\Exception $e) {
+            // If an exception occurs, return an error response with the exception message
             return response()->json([
                 'status' => false,
                 'data' => [],
@@ -49,16 +60,25 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Function that receives request data and stores it in the database.
+     *
+     * @param Request $request The incoming HTTP request containing the data.
+     * @return \Illuminate\Http\JsonResponse JSON response with status and corresponding message.
+     */
     public function setIpInfo(Request $request)
     {
         try {
+            // Stores the request data in the database.
             RstResult::InsertHelloRequest((object)$request->all());
 
+            // Returns a JSON response with success status and message.
             return response()->json([
                 'status' => true,
-                'message' => 'thank you. information was recorded!'
+                'message' => 'Yes, the information has been recorded!'
             ]);
         } catch(\Exception $e) {
+            // In case of an error, returns a JSON response with error message and status.
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -66,34 +86,76 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieve a list of servers, ping each server to determine the best one, 
+     * and return the servers along with the index of the best server.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function servers()
     {
+        // Retrieve all servers from the RstServer model
         $servers = RstServer::all();
+        
+        // Initialize an empty array to store ping values for each server
         $ping = [];
-        $best_server_index = 0;
+        
+        // Iterate through the servers and ping each server to measure response time
         $servers = $servers->map(function($server) use (&$ping){
+            // Use the NetworkService::Ping method to ping the server's URL with a timeout of 1 second
             $ping[$server->id] = NetworkService::Ping(Str::replace(['https://', 'http://'], '', $server->url), 1);
+            
+            // Set the 'best_server' property of the current server to false initially
             $server->best_server = false;
+            
+            // Return the updated server object
             return $server;
         });
+        
+        // Find the key (server ID) with the minimum ping value
         $minPingKey = current(array_keys($ping, min($ping)));
+        
+        // Iterate through servers again to mark the server with the minimum ping as the best server
+        $best_server_index = 0;
         foreach($servers as $index => $server) {
             if($server->id === $minPingKey) {
+                // Set the 'best_server' property to true for the server with the minimum ping
                 $server->best_server = true;
+                
+                // Store the index of the best server
                 $best_server_index = $index;
+                
+                // Break the loop after finding the best server
                 break;
             }
         }
+        
+        // Return a JSON response containing the list of servers and the index of the best server
         return response()->json(['servers' => $servers->toArray(), 'best_server_index' => $best_server_index]);
     }
 
+
+    /**
+     * Downloads the file from a given URL, calculates download speed, and stores it in the database.
+     *
+     * @param \Illuminate\Http\Request $request HTTP request containing download information (such as UID and CID).
+     * @return void
+     */
     public function downloadSpeed(Request $request)
     {
-        $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=".$request->uid;
+        // Generate download URL with user ID
+        $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=" . $request->uid;
+        
+        // Constants
         $chunkSize = 20000;
-        $handle = fopen($testUrl, 'rb');
+        
+        // Variables initialization
         $counter = 1;
         $s = microtime();
+        $mbPerSec = [];
+
+        // Download and calculate speed
+        $handle = fopen($testUrl, 'rb');
         while (!feof($handle)) {
             stream_get_contents($handle, $chunkSize, ($counter * $chunkSize));
             $duration = NetworkService::TakeTime($s);
@@ -108,6 +170,7 @@ class NetworkController extends Controller
             $counter++;
         }
 
+        // Update or create database record
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
@@ -116,36 +179,59 @@ class NetworkController extends Controller
             'download' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
             'download_duration' => $duration
         ]);
+
+        // Close file handle after download
+        fclose($handle);
     }
 
+
+    /**
+     * Handle the upload speed test request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function uploadSpeed(Request $request)
     {
+        // Destination server address
         $upload_server = "kar1.net";
+
+        // Data to be sent (1000kb of data)
         $data = "POST / HTTP/1.0\r\n"
             . "Host: " . $upload_server . "\r\n"
             . "\r\n"
-            . str_repeat("a", 1000000); // send 1000kb of data
+            . str_repeat("a", 1000000);
 
+        // Chunk size for sending data
         $chunkSize = 20000;
-        $counter = 1;
-        $start = microtime();
-        $f = @fsockopen($upload_server, 80);
-        while (($counter * $chunkSize) < strlen($data)) {
-            fwrite($f, substr($data, ($counter * $chunkSize), 20000));
-            $duration = NetworkService::TakeTime($start);
-            if ($duration > 0) {
-                $bytesPerSec = ($counter * $chunkSize) / $duration;
-                $kbPerSec = $bytesPerSec / 1024;
-                $mbPerSec[] = $kbPerSec / 1024;
-                echo json_encode(round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2)) . ' ';
-            }
-            ob_flush();
-            flush();
-            $counter++;
+        $mbPerSec = [];
+
+        // Start measuring time
+        $start = microtime(true);
+
+        // Calculate total data length
+        $dataLength = strlen($data);
+
+        // Send data in chunks
+        for ($i = 0; $i < $dataLength; $i += $chunkSize) {
+            $chunk = substr($data, $i, $chunkSize);
+            file_get_contents("http://{$upload_server}", false, stream_context_create([
+                'http' => [
+                    'method' => 'POST',
+                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'content' => $chunk
+                ]
+            ]));
+
+            // Calculate upload speed
+            $duration = microtime(true) - $start;
+            $bytesPerSec = $i / $duration;
+            $kbPerSec = $bytesPerSec / 1024;
+            $mbPerSec[] = $kbPerSec / 1024;
+            echo json_encode(round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2)) . ' ';
         }
 
-        fclose($f);
-
+        // Store the result in database
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
@@ -156,36 +242,64 @@ class NetworkController extends Controller
         ]);
     }
 
+
+    /**
+     * Handles the ping request and calculates average ping, packet loss, and jitter.
+     *
+     * @param  Request $request The incoming request object.
+     * @return int Returns the rounded average ping value.
+     */
     public function ping(Request $request)
     {
+        // Define the ping server and initialize variables
         $pingServer = "static.kar1.net";
         $counter = 0;
-        while($counter < 10) {
+        $pingTimes = [];
+        $packetLoss = [];
+
+        // Perform ping tests and collect results
+        while ($counter < 10) {
             list($pingTimes[], $packetLoss[]) = NetworkService::Ping($pingServer);
             $counter++;
         }
+
+        // Calculate average ping, total packet loss, and jitter
         $ping = round(array_sum($pingTimes) / count($pingTimes));
         $packetLoss = array_sum($packetLoss);
         $jitter = NetworkService::Jitter($pingTimes);
 
+        // Update or create a record with ping results for the given client and date
         RstResult::updateOrCreate([
             'cid' => $request->cid,
             'uuid' => $request->uid,
             'date' => today()->toDateString(),
-        ],[
+        ], [
             'ping' => $ping,
             'packet_loss' => $packetLoss,
             'jitter' => round($jitter, 0),
         ]);
 
+        // Return the rounded average ping value
         return round($ping, 0);
     }
 
+
+    /**
+     * Calculate ISP metrics based on the last 7 days' data.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ispMetrics(Request $request)
     {
         try {
+            // Retrieve ISP data from the application configuration
             $isp = collect(config('app.isps'));
+
+            // Retrieve ISP statistics from the database for the last 7 days
             $ispMetrics = RstIspStats::where('date', '>=', Carbon::today()->subDays(7))->get();
+
+            // Calculate various metrics based on the retrieved data
             $data['totalQualityAverage'] = round($ispMetrics->avg('total_quality_average'), 0);
             $data['clients'] = $ispMetrics->sum('clients');
             $data['speedAverage'] = round($ispMetrics->avg('speed_average'), 0);
@@ -193,29 +307,33 @@ class NetworkController extends Controller
             $data['uploadAverage'] = round($ispMetrics->avg('upload_speed_average'), 0);
             $data['pingAverage'] = round($ispMetrics->avg('ping_average'), 0);
 
-            $data['isp'] = collect($isp)
-                ->flatMap(function ($item) use ($ispMetrics) {
-                    $metrics = $ispMetrics->where('isp', $item);
+            // Calculate ISP-specific metrics and organize the data in a structured format
+            $data['isp'] = collect($isp)->flatMap(function ($item) use ($ispMetrics) {
+                $metrics = $ispMetrics->where('isp', $item);
 
-                    if ($metrics->isEmpty()) {
-                        return [];
-                    }
-                    return [
-                        $item => [
-                            'downloadSpeedAverage' => round($metrics->avg('download_speed_average')),
-                            'uploadSpeedAverage' => round($metrics->avg('upload_speed_average')),
-                            'pingAverage' => round($metrics->avg('ping_average')),
-                            'packetLoss' => round($metrics->avg('packet_loss')),
-                            'totalQuality' => round($metrics->avg('total_quality_average')),
-                        ],
-                    ];
-                });
+                if ($metrics->isEmpty()) {
+                    return [];
+                }
+
+                return [
+                    $item => [
+                        'downloadSpeedAverage' => round($metrics->avg('download_speed_average')),
+                        'uploadSpeedAverage' => round($metrics->avg('upload_speed_average')),
+                        'pingAverage' => round($metrics->avg('ping_average')),
+                        'packetLoss' => round($metrics->avg('packet_loss')),
+                        'totalQuality' => round($metrics->avg('total_quality_average')),
+                    ],
+                ];
+            });
+
+            // Return the calculated metrics as a JSON response
             return response()->json([
                 'status' => true,
                 'data' => $data,
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle any exceptions that occur during the process and return an error response
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -223,12 +341,20 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieves city metrics based on the given city and date range.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cityMetrics(Request $request)
     {
         try {
+            // Retrieve ISP metrics for the specified city and date range
             $ispMetrics = RstCityStats::where('city', $request->city)
                 ->where('date', '>=', Carbon::today()->subDays(7))->get();
 
+            // Retrieve disturbance issues for the specified city
             $stats = RstDisturbance::latest()->first();
             $description = json_decode($stats->description);
             $issues = [];
@@ -240,6 +366,7 @@ class NetworkController extends Controller
                 }
             }
 
+            // Prepare and return the response data
             $data = [
                 'totalQualityAverage' => round($ispMetrics->avg('total_quality_average'), 0),
                 'clients' => $ispMetrics->sum('clients'),
@@ -257,6 +384,7 @@ class NetworkController extends Controller
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -264,20 +392,30 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieves chart data based on the specified type, ISP, and optional city.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function charts(Request $request)
     {
         try {
+            // Determine the chart type and retrieve corresponding data
             $type = $request->type;
             $rstResult = RstResult::$type($request->isp, 1);
             if($request->city) {
                 $rstResult = $rstResult->where('city', $request->city);
             }
+
+            // Prepare and return the response data
             return response()->json([
                 'status' => true,
                 'data' => ChartService::$type($rstResult),
                 'message' => '',
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response
             return response()->json([
                 'status' => false,
                 'data' => [],
@@ -286,9 +424,17 @@ class NetworkController extends Controller
         }
     }
 
+
+    /**
+     * Retrieve statistics based on the provided request type.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function stats(Request $request)
     {
         try {
+            // Determine the type of statistics based on the request
             switch ($request->type) {
                 case 'recent':
                     $data = RstResult::recent();
@@ -312,11 +458,13 @@ class NetworkController extends Controller
                     $data = RstResult::hourly(null, 3);
                     break;
             }
-            $threshold = NetworkService::GetThresholds();
+
+            // Calculate average values and percentages for different metrics
             $downloadAvg = $data->avg('download');
             $uploadAvg = $data->avg('upload');
             $pingAvg = $data->avg('ping');
             $packetLossAvg = $data->avg('packet_loss');
+
             $response = [
                 'download' => [
                     'avg' => round($downloadAvg, 2),
@@ -336,12 +484,14 @@ class NetworkController extends Controller
                 ],
             ];
 
+            // Return the JSON response with the calculated statistics
             return response()->json([
                 'status' => true,
                 'data' => $response,
                 'message' => '',
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response if an error occurs
             return response()->json([
                 'status' => false,
                 'data' => [],
@@ -350,15 +500,23 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieve ISP-specific metrics based on the provided ISP name.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function myIspMetrics(Request $request)
     {
         try {
+            // Retrieve ISP-specific metrics using the provided ISP name
             return response()->json([
                 'status' => true,
                 'data' => NetworkService::IspMetrics([$request->isp]),
                 'message' => ''
             ]);
         } catch(\Exception $e) {
+            // Handle exceptions and return error response if an error occurs
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage()
@@ -366,17 +524,24 @@ class NetworkController extends Controller
         }
     }
 
+    /**
+     * Retrieve reports and perform comparisons for the specified ISP.
+     *
+     * @param  string  $isp
+     * @return array
+     */
     public function reports($isp)
     {
+        // Define the metrics to be compared
         $metrics = ['download', 'ping', 'packet_loss'];
         $isps = collect(config('app.isps'));
 
-        // Fetching reports for all ISPs
+        // Fetch reports for all ISPs and store them in an array
         $reports = $isps->mapWithKeys(fn($item) => [
             $item => NetworkService::GetReports($item, $metrics)
         ]);
 
-        // Comparing metrics for the specified ISP
+        // Compare metrics for the specified ISP and add consistency metric for comparison
         $metrics[] = 'consistency';
         $comparison = collect($metrics)
             ->mapWithKeys(fn($metric) => [
@@ -384,11 +549,13 @@ class NetworkController extends Controller
             ])
             ->toArray();
 
+        // Return the reports and comparisons in an array format
         return [
             'reports' => $reports->toArray(),
             'comparison' => $comparison,
         ];
     }
+
 
     public function reports2($isp)
     {
@@ -411,68 +578,102 @@ class NetworkController extends Controller
         } */
     }
 
+    
+    /**
+     * Get network issues for specified ISPs and metrics.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getIssues(Request $request)
     {
+        // Set maximum execution time to 1 hour
         set_time_limit(3600);
         try {
+            // List of metrics to analyze
             $metrics = ['download', 'upload', 'ping', 'packet_loss'];
-            if($request->isp)
-                $isp = [$request->isp];
-            else
-                $isp = config('app.isps');
 
-            foreach($isp as $item) {
+            // Determine ISPs to analyze, either from request or app configuration
+            $isp = $request->isp ? [$request->isp] : config('app.isps');
+            $result = [];
+            $disturbance = [];
+
+            // Iterate through ISPs and metrics to analyze network issues
+            foreach ($isp as $item) {
                 foreach ($metrics as $metric) {
                     $timeFrames = config('app.packet_loss');
+                    // Analyze network issues using NetworkService::IspAnalyze2 method
                     $res = NetworkService::IspAnalyze2($item, $metric, $timeFrames);
-                    if($res == [])
-                        continue;
-                    $result[$item][$metric] = $res;
-                    $disturbance[] = $metric;
+                    // If analysis result is not empty, store it and mark the metric as disturbance
+                    if (!empty($res)) {
+                        $result[$item][$metric] = $res;
+                        $disturbance[] = $metric;
+                    }
                 }
             }
+
+            // Get ISPs with disturbances and unique disturbance metrics
             $ispsHasDisturbance = array_keys($result);
             $disturbance = array_unique($disturbance);
+
+            // Store the analysis results in the database
             RstDisturbance::create([
                 'isps' => json_encode($ispsHasDisturbance),
                 'disturbances' => json_encode($disturbance),
                 'description' => json_encode($result),
-                //'created_at' => now()->toDateTimeString(),
             ]);
+
+            // Return the analysis results as JSON response
             return response()->json([
                 'status' => true,
                 'data' => $result,
                 'message' => 'done',
             ]);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            // Handle any exceptions that occur during the analysis process
             return response()->json([
                 'status' => false,
                 'data' => [],
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
 
+
+    /**
+     * Get statistics related to issues, ISPs, cities, or specific information based on the provided type.
+     *
+     * @param Request $request The HTTP request object containing input data.
+     * @param string $type The type of information to retrieve ('stats', 'issues', 'cities', 'isp', 'info').
+     * @return \Illuminate\Http\JsonResponse JSON response containing status, data, and message.
+     */
     public function getIssueStats(Request $request, $type)
     {
+        // Retrieve the latest disturbance stats
         $stats = RstDisturbance::latest()->first();
+        // Parse the description JSON
         $description = json_decode($stats->description);
-
-        switch($type) {
+    
+        switch ($type) {
             case 'stats':
+                // Calculate the count and names of issues
                 $response['issues'] = [
                     'count' => count(collect(json_decode($stats->disturbances))),
                     'names' => json_decode($stats->disturbances)
                 ];
+                // Calculate the count and names of ISPs
                 $response['isp'] = [
                     'count' => count(collect($description)),
                     'names' => array_keys((array)$description)
                 ];
+                $cities = [];
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Extract city names
                         $cities[] = key($metricInfos);
                     }
                 }
+                // Calculate the count and names of cities
                 $response['cities'] = [
                     'count' => count(array_unique($cities)),
                     'names' => array_unique($cities)
@@ -481,6 +682,7 @@ class NetworkController extends Controller
             case 'issues':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group ISPs by issue and metric
                         $response[$metric][key($metricInfos)][] = $isp;
                     }
                 }
@@ -488,6 +690,7 @@ class NetworkController extends Controller
             case 'cities':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group cities by ISP and metric
                         $response[key($metricInfos)][$metric][] = $isp;
                     }
                 }
@@ -495,24 +698,27 @@ class NetworkController extends Controller
             case 'isp':
                 foreach ($description as $isp => $ispInfos) {
                     foreach ($ispInfos as $metric => $metricInfos) {
+                        // Group metrics by ISP and city
                         $response[$isp][key($metricInfos)][] = $metric;
                     }
                 }
                 break;
             case 'info':
-                if(isset($request->isp)) {
+                if (isset($request->isp)) {
                     $isp = $request->isp;
                     $issue = $request->issue;
                     $city = $request->city;
+                    // Retrieve specific information based on ISP, issue, and city
                     $response = $description->$isp->$issue->$city;
-                }else {
+                } else {
                     foreach ($description as $isp => $ispInfos) {
+                        // Get all information for ISPs
                         $response[$isp] = $ispInfos;
                     }
                 }
         }
-
-
+    
+        // Return JSON response with status, data, and message
         return response()->json([
             'status' => true,
             'data' => $response,
