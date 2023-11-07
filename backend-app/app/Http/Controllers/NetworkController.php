@@ -143,7 +143,7 @@ class NetworkController extends Controller
      */
     public function downloadSpeed(Request $request)
     {
-        // Find the server
+        // Find the server by id
         $server = RstServer::query()->findOrFail($request->server_id);
 
         // Generate download URL with user ID
@@ -196,8 +196,11 @@ class NetworkController extends Controller
      */
     public function uploadSpeed(Request $request)
     {
+        // Find the server by id
+        $server = RstServer::query()->findOrFail($request->server_id);
+
         // Destination server address
-        $upload_server = "kar1.net";
+        $upload_server = $server->url;
 
         // Data to be sent (1000kb of data)
         $data = "POST / HTTP/1.0\r\n"
@@ -250,12 +253,16 @@ class NetworkController extends Controller
      * Handles the ping request and calculates average ping, packet loss, and jitter.
      *
      * @param  Request $request The incoming request object.
-     * @return int Returns the rounded average ping value.
+     * @return float Returns the rounded average ping value.
      */
     public function ping(Request $request)
     {
+        // Find the server by id
+        $server = RstServer::query()->findOrFail($request->server_id);
+
         // Define the ping server and initialize variables
-        $pingServer = "static.kar1.net";
+        $pingServer = $server->url;
+
         $counter = 0;
         $pingTimes = [];
         $packetLoss = [];
