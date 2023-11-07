@@ -87,7 +87,7 @@ class NetworkController extends Controller
     }
 
     /**
-     * Retrieve a list of servers, ping each server to determine the best one, 
+     * Retrieve a list of servers, ping each server to determine the best one,
      * and return the servers along with the index of the best server.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -96,40 +96,40 @@ class NetworkController extends Controller
     {
         // Retrieve all servers from the RstServer model
         $servers = RstServer::all();
-        
+
         // Initialize an empty array to store ping values for each server
         $ping = [];
-        
+
         // Iterate through the servers and ping each server to measure response time
         $servers = $servers->map(function($server) use (&$ping){
             // Use the NetworkService::Ping method to ping the server's URL with a timeout of 1 second
             $ping[$server->id] = NetworkService::Ping(Str::replace(['https://', 'http://'], '', $server->url), 1);
-            
+
             // Set the 'best_server' property of the current server to false initially
             $server->best_server = false;
-            
+
             // Return the updated server object
             return $server;
         });
-        
+
         // Find the key (server ID) with the minimum ping value
         $minPingKey = current(array_keys($ping, min($ping)));
-        
+
         // Iterate through servers again to mark the server with the minimum ping as the best server
         $best_server_index = 0;
         foreach($servers as $index => $server) {
             if($server->id === $minPingKey) {
                 // Set the 'best_server' property to true for the server with the minimum ping
                 $server->best_server = true;
-                
+
                 // Store the index of the best server
                 $best_server_index = $index;
-                
+
                 // Break the loop after finding the best server
                 break;
             }
         }
-        
+
         // Return a JSON response containing the list of servers and the index of the best server
         return response()->json(['servers' => $servers->toArray(), 'best_server_index' => $best_server_index]);
     }
@@ -143,12 +143,15 @@ class NetworkController extends Controller
      */
     public function downloadSpeed(Request $request)
     {
+        // Find the server
+        $server = RstServer::query()->findOrFail($request->server_id);
+
         // Generate download URL with user ID
-        $testUrl = "https://static.kar1.net/general/kar-future-3.mp4?uuid=" . $request->uid;
-        
+        $testUrl = "{$server->url}/kar-future-3.mp4?uuid=" . $request->uid;
+
         // Constants
         $chunkSize = 20000;
-        
+
         // Variables initialization
         $counter = 1;
         $s = microtime();
@@ -578,7 +581,7 @@ class NetworkController extends Controller
         } */
     }
 
-    
+
     /**
      * Get network issues for specified ISPs and metrics.
      *
@@ -653,7 +656,7 @@ class NetworkController extends Controller
         $stats = RstDisturbance::latest()->first();
         // Parse the description JSON
         $description = json_decode($stats->description);
-    
+
         switch ($type) {
             case 'stats':
                 // Calculate the count and names of issues
@@ -717,7 +720,7 @@ class NetworkController extends Controller
                     }
                 }
         }
-    
+
         // Return JSON response with status, data, and message
         return response()->json([
             'status' => true,
