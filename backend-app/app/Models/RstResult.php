@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class RstResult extends Model
 {
@@ -49,6 +50,32 @@ class RstResult extends Model
             'lat' => $ipInfo->lat,
             'lon' => $ipInfo->lon,
             'type' => $ipInfo->test_type,
+        ]);
+
+        // Store data in Redis
+        self::storeInRedis($ipInfo);
+    }
+
+    /**
+     * Store in redis.
+     *
+     * @param  mixed $data
+     * @return void
+     */
+    private function storeInRedis(mixed $data)
+    {
+        Redis::connection()->set($data->uid, [
+            'uuid' => $data->uid,
+            'cid' => $data->cid,
+            'ip' => $data->ip,
+            'country' => $data->country,
+            'city' => $data->city,
+            'isp' => $data->isp,
+            'lat' => $data->lat,
+            'lon' => $data->lon,
+            'type' => $data->test_type,
+            'date' => today()->toDateString(),
+            'time' => now()->toTimeString(),
         ]);
     }
 
