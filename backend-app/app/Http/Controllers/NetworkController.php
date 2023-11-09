@@ -173,16 +173,6 @@ class NetworkController extends Controller
             $counter++;
         }
 
-        // Update or create database record
-        RstResult::updateOrCreate([
-            'cid' => $request->cid,
-            'uuid' => $request->uid,
-            'date' => today()->toDateString(),
-        ],[
-            'download' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
-            'download_duration' => $duration
-        ]);
-
         // Close file handle after download
         fclose($handle);
     }
@@ -236,16 +226,6 @@ class NetworkController extends Controller
             $mbPerSec[] = $kbPerSec / 1024;
             echo json_encode(round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2)) . ' ';
         }
-
-        // Store the result in database
-        RstResult::updateOrCreate([
-            'cid' => $request->cid,
-            'uuid' => $request->uid,
-            'date' => today()->toDateString(),
-        ],[
-            'upload' => round(array_sum($mbPerSec) / count($mbPerSec) * 8, 2),
-            'upload_duration' => $duration
-        ]);
     }
 
 
@@ -277,17 +257,6 @@ class NetworkController extends Controller
         $ping = round(array_sum($pingTimes) / count($pingTimes));
         $packetLoss = array_sum($packetLoss);
         $jitter = NetworkService::Jitter($pingTimes);
-
-        // Update or create a record with ping results for the given client and date
-        RstResult::updateOrCreate([
-            'cid' => $request->cid,
-            'uuid' => $request->uid,
-            'date' => today()->toDateString(),
-        ], [
-            'ping' => $ping,
-            'packet_loss' => $packetLoss,
-            'jitter' => round($jitter, 0),
-        ]);
 
         // Return the rounded average ping value
         return round($ping, 0);
